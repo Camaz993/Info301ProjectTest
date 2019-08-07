@@ -1,4 +1,4 @@
-package domain;
+package main.domain;
 
 public class contract {
 	
@@ -91,6 +91,14 @@ public class contract {
 	}
 	public void setRelated_agreements(String related_agreements) {
 		this.related_agreements = related_agreements;
+	}
+
+	@Override
+	public String toString() {
+		return "contract [requestid=" + requestid + ", userid=" + userid + ", statusid=" + statusid
+				+ ", agreement_title=" + agreement_title + ", agreement_type=" + agreement_type + ", description="
+				+ description + ", agreement_location=" + agreement_location + ", language=" + language + ", region="
+				+ region + ", related_agreements=" + related_agreements + "]";
 	}
 	
 	
