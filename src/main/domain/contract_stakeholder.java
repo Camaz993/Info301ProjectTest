@@ -1,10 +1,16 @@
 package main.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+@Entity
+@Table(name = contract_stakeholders.TABLE_NAME)
 public class contract_stakeholder {
+	
+	public static final String TABLE_NAME = "CONTRACT_STAKEHOLDERS";
 	
 	@NotNull
 	@Column(name = "RequestID")

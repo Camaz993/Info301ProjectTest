@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @Table(name = expired.TABLE_NAME)
 public class expired {
 	
-	public static final String TABLE_NAME = "AUDIT";
+	public static final String TABLE_NAME = "EXPIRED";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 @Table(name = external_stakeholders.TABLE_NAME)
 public class external_stakeholders {
 	
-	public static final String TABLE_NAME = "AUDIT";
+	public static final String TABLE_NAME = "EXTERNAL_STAKEHOLDERS";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
