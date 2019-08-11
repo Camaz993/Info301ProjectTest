@@ -15,13 +15,37 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+@Entity
+@Table(name = audit.TABLE_NAME)
 public class audit {
+	
+	public static final String TABLE_NAME = "AUDIT";
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "AuditID")
 	private Integer auditid;
+	
+	@ManyToOne
 	private Integer userid;
+	
+	@ManyToOne
 	private Integer requestedid;
+	
+	@NotNull
+	@Column(name = "Date")
 	private Date date;
+	
+	@NotNull
+	@Column(name = "Field_Updated")
 	private String field_updated;
+	
+	@NotNull
+	@Column(name = "Field_Before")
 	private String field_before;
+	
+	@NotNull
+	@Column(name = "Field_After")
 	private String field_after;
 	
 	public Integer getAuditid() {

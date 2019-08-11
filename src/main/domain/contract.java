@@ -1,16 +1,62 @@
 package main.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = contract.TABLE_NAME)
 public class contract {
 	
+	public static final String TABLE_NAME = "CONTRACT";
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "RequestID")
 	private Integer requestid;
+	
+	@ManyToOne
 	private Integer userid;
+	
+	@NotNull
+	@Column(name = "Status_ID")
 	private Integer statusid;
+	
+	@NotNull
+	@Column(name = "Agreement_Title")
 	private String agreement_title;
+	
+	@NotNull
+	@Column(name = "Agreement_Type")
 	private String agreement_type;
+	
+	@NotNull
+	@Column(name = "Description")
 	private String description;
+	
+	@NotNull
+	@Column(name = "Agreement_Location")
 	private String agreement_location;
+	
+	@NotNull
+	@Column(name = "Language")
 	private String language;
+	
+	@NotNull
+	@Column(name = "Region")
 	private String region;
+	
+	@NotNull
+	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	
 	public contract(Integer requestid, Integer userid, Integer statusid, String agreement_title, String agreement_type,
