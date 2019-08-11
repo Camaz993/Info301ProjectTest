@@ -2,7 +2,6 @@ package main.domain;
 import java.util.Date;
 
 
-
 public class audit {
 	private Integer auditid;
 	private Integer userid;
