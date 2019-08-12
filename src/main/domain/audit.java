@@ -27,10 +27,12 @@ public class audit {
 	private Integer auditid;
 	
 	@ManyToOne
-	private Integer userid;
+	@JoinColumn(name = "userid")
+	private User userid;
 	
 	@ManyToOne
-	private Integer requestedid;
+	@JoinColumn(name = "requestid")
+	private Contract requestedid;
 	
 	@NotNull
 	@Column(name = "Date")

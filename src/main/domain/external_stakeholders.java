@@ -24,17 +24,17 @@ public class external_stakeholders {
 	@Column(name = "Business_Name")
 	private String businessname;
 	
-	@Column(name = "ADDRESS", length = 128)
-	@Size(min = 10, max = 128, message = "Address must contain between 10 and 128 characters.")
+	@Column(name = "Address", length = 128)
+	@Size(min = 5, max = 128, message = "Address must contain between 10 and 128 characters.")
 	private String address;
 	
-	@Column(name = "PHONE", length = 11)
-	@Size(min = 9, max = 11, message = "Phone number length must be between 9 and 11 characters. Be sure to include the area code but not country code.")
+	@Column(name = "Phone", length = 11)
+	@Size(min = 5, max = 11, message = "Phone number length must be between 9 and 11 characters. Be sure to include the area code but not country code.")
 	@Pattern(regexp = "([0-9]){9,11}", message = "Phone number must be numerical")
 	private String phone;
 	
 	@NotNull
-	@Column(name = "EMAIL", length = 254)
+	@Column(name = "Email", length = 254)
 	@Size(min = 3, max = 254, message = "Email address must contain between 3 and 254 characters.")
 	// Email address regex from http://emailregex.com (works for 99.99% of email
 	// addresses - as good as it gets!)
