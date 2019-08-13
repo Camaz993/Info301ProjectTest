@@ -1,14 +1,53 @@
 package main.domain;
+
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
+@Entity
+@Table(name = audit.TABLE_NAME)
 public class audit {
+	
+	public static final String TABLE_NAME = "AUDIT";
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "AuditID")
 	private Integer auditid;
-	private Integer userid;
-	private Integer requestedid;
+	
+	@ManyToOne
+	@JoinColumn(name = "userid")
+	private User userid;
+	
+	@ManyToOne
+	@JoinColumn(name = "requestid")
+	private Contract requestedid;
+	
+	@NotNull
+	@Column(name = "Date")
 	private Date date;
+	
+	@NotNull
+	@Column(name = "Field_Updated")
 	private String field_updated;
+	
+	@NotNull
+	@Column(name = "Field_Before")
 	private String field_before;
+	
+	@NotNull
+	@Column(name = "Field_After")
 	private String field_after;
 	
 	public Integer getAuditid() {

@@ -1,24 +1,74 @@
 package main.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.JoinColumn;
+
+@Entity
+@Table(name = contract.TABLE_NAME)
 public class contract {
 	
+	public static final String TABLE_NAME = "CONTRACT";
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "RequestID")
 	private Integer requestid;
-	private Integer userid;
-	private Integer statusid;
+	
+	@ManyToOne
+	@JoinColumn(name = "userid")
+	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name = "statusid")
+	private List<Status> statusList = new ArrayList<status>();
+	
+	@NotNull
+	@Column(name = "Agreement_Title")
 	private String agreement_title;
+	
+	@NotNull
+	@Column(name = "Agreement_Type")
 	private String agreement_type;
+	
+	@NotNull
+	@Column(name = "Description")
 	private String description;
+	
+	@NotNull
+	@Column(name = "Agreement_Location")
 	private String agreement_location;
+	
+	@NotNull
+	@Column(name = "Language")
 	private String language;
+	
+	@NotNull
+	@Column(name = "Region")
 	private String region;
+	
+	@NotNull
+	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	
-	public contract(Integer requestid, Integer userid, Integer statusid, String agreement_title, String agreement_type,
+	contract(){}
+	
+	public contract(Integer requestid, User user, List<Status> statusList, String agreement_title, String agreement_type,
 			String description, String agreement_location, String language, String region, String related_agreements) {
 		super();
 		this.requestid = requestid;
-		this.userid = userid;
-		this.statusid = statusid;
+		this.user = user;
+		this.statusList = status;
 		this.agreement_title = agreement_title;
 		this.agreement_type = agreement_type;
 		this.description = description;
@@ -38,17 +88,17 @@ public class contract {
 	public void setRequestid(Integer requestid) {
 		this.requestid = requestid;
 	}
-	public Integer getUserid() {
-		return userid;
+	public User getUser() {
+		return user;
 	}
-	public void setUserid(Integer userid) {
-		this.userid = userid;
+	public void setUserid(User user) {
+		this.user = user;
 	}
-	public Integer getStatusid() {
-		return statusid;
+	public List<Status> getStatusList() {
+		return statusList;
 	}
-	public void setStatusid(Integer statusid) {
-		this.statusid = statusid;
+	public void setStatusid(List<Status> statusList) {
+		this.statusList = statusList;
 	}
 	public String getAgreement_title() {
 		return agreement_title;

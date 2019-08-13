@@ -1,12 +1,48 @@
 package main.domain;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = expired.TABLE_NAME)
 public class expired {
+	
+	public static final String TABLE_NAME = "EXPIRED";
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "RequestID")
 	private Integer requestid;
+	
+	@NotNull
+	@Column(name = "Ending_Reason")
 	private String ending_reason;
+	
+	@NotNull
+	@Column(name = "Expiry_Date")
 	private Date expiry_date;
+	
+	@NotNull
+	@Column(name = "Termination_Date")
 	private Date termination_date;
+	
+	@NotNull
+	@Column(name = "Termination_Notice_Date")
 	private String termination_notice_date;
+	
+	@NotNull
+	@Column(name = "Binding_Terms_Active")
 	private String binding_terms_active;
 	
 	public expired(Integer requestid, String ending_reason, Date expiry_date, Date termination_date,
