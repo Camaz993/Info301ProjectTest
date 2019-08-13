@@ -19,10 +19,15 @@ public class ContractController {
 		this.repository=repository;
 	}
 	
-
+	
 	@PostMapping("/contracts")
 	contract newContract(@RequestBody contract newContract) {
 		return repository.save(newContract);
+	}
+	
+	@GetMapping("/allcontracts")
+	List<contract> all(){
+		return repository.findAll();
 	}
 
 }
