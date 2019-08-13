@@ -1,5 +1,6 @@
 package main.repositories;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public class ContractRepository {
+public interface ContractRepository extends JpaRepository<Contract, Long> {
 
 }
