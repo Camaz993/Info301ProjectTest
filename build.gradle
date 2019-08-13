@@ -5,7 +5,15 @@
  * For more details take a look at the Java Libraries chapter in the Gradle
  * User Manual available at https://docs.gradle.org/5.4/userguide/java_library_plugin.html
  */
- 
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.6.RELEASE")
+	}
+}
+
 plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
@@ -15,6 +23,13 @@ plugins {
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'java'
+
+bootJar {
+    baseName = 'gs-accessing-data-mysql'
+    version =  '0.1.0'
+}
  
 repositories {
     // Use jcenter for resolving your dependencies.
@@ -34,5 +49,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     // https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
 	compile group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+	
+    compile("org.springframework.boot:spring-boot-starter-web")
+ 
+    // JPA Data (We are going to use Repositories, Entities, Hibernate, etc...)
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+ 
+    // Use MySQL Connector-J
+    compile 'mysql:mysql-connector-java'
+ 
+    testCompile('org.springframework.boot:spring-boot-starter-test')
     
 }
