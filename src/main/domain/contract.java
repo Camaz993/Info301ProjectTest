@@ -61,6 +61,8 @@ public class contract {
 	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	
+	contract(){}
+	
 	public contract(Integer requestid, User user, List<Status> statusList, String agreement_title, String agreement_type,
 			String description, String agreement_location, String language, String region, String related_agreements) {
 		super();
