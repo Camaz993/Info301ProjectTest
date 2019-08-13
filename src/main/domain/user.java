@@ -1,14 +1,75 @@
 package main.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = User.TABLE_NAME)
+//@SecondaryTable(name = Audit.TALBE_NAME)
+//@SecondaryTable(name = Contract.TABLE_NAME)
+
+
 public class user {
-	private Integer userid;
-	private String first_name;
-	private String last_name;
-	private String role;
-	private String username;
-	private String passowrd;
-	private boolean locked;
 	
+	public static final String TABLE_NAME = "USER";
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="userid")
+	private Integer userid;
+	
+	@NotNull
+	@Column(name="first_name")
+	private String first_name;
+	
+	@NotNull
+	@Column(name="last_name")
+	private String last_name;
+	
+	@NotNull
+	@Column(name="role")
+	private String role;
+	
+	@NotNull
+	@Column(name="username")
+	private String username;
+	
+	@NotNull
+	@Column(name="password")
+	@Size(min = 8, max= 40, message = "Password must be between 8 and 40 characters")
+	//@JSONIgnore
+	private String password;
+	
+	 @NotNull
+	 @Column(name = "locked")
+	private boolean locked = false;
+	
+	//Constructor 
+	public user(Integer userid, String first_name, String last_name, String role, String username, String passowrd,
+			boolean locked) {
+		super();
+		this.userid = userid;
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.role = role;
+		this.username = username;
+		this.password = password;
+		this.locked = locked;
+		}
+	 
+	//Getters and setters
 	public Integer getUserid() {
 		return userid;
 	}
@@ -52,18 +113,6 @@ public class user {
 		this.locked = locked;
 	}
 	
-	//Constructor 
-	public user(Integer userid, String first_name, String last_name, String role, String username, String passowrd,
-			boolean locked) {
-		super();
-		this.userid = userid;
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.role = role;
-		this.username = username;
-		this.passowrd = passowrd;
-		this.locked = locked;
-	}
 	
 	@Override
 	public String toString() {
