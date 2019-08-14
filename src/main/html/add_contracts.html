@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Form</h1>
-    <form action="#" th:action="@{/api/contracts}" th:object="${greeting}" method="post">
-    	<p>Id: <input type="text" th:field="*{id}" /></p>
-        <p>Message: <input type="text" th:field="*{content}" /></p>
+	<h1>Add Contracts</h1>
+    <form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="post">
+    	<p>Id: <input type="text" th:field="*{user}" /></p>
+    	<p>Id: <input type="text" th:field="*{statusList}" /></p>
+    	<p>Id: <input type="text" th:field="*{agreement_title}" /></p>
+    	<p>Id: <input type="text" th:field="*{agreement_type}" /></p>
+        <p>Id: <input type="text" th:field="*{agreement_location}" /></p>
+        <p>Id: <input type="text" th:field="*{language}" /></p>
+        <p>Id: <input type="text" th:field="*{agreement_type}" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 </body>
