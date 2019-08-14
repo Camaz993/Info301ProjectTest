@@ -21,5 +21,11 @@ public class ContractService {
 		}
 		
 	}
+	
+	@Override 
+	public List<contract> getAllContracts(){
+		return contractRepository.findAll();
+	}
+	
 
 }

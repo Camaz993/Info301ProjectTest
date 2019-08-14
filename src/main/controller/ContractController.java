@@ -39,9 +39,9 @@ public class ContractController {
 	}
 	
 	
-	@GetMapping("/api/allcontracts")
-	List<contract> all(){
-		return repository.findAll();
+	@GetMapping("/api/contracts")
+	List<contract> searchAllContracts(){
+		return contractService.getAll();
 	}
 
 }

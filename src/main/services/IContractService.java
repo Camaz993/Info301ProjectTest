@@ -5,5 +5,7 @@ import main.domain.contract;
 public interface IContractService {
 	
 	public void addContract(contract newContract);
+	
+	public List<contract> searchAllContracts();
 
 }
