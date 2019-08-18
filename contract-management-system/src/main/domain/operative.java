@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -40,7 +42,7 @@ public class operative {
 	
 	@OneToOne
     @MapsId
-	private Contract contract;
+	private contract contract;
 	
 	//Constructor method
 	public operative(Integer requestid, Date date_signed, Date date_commenced, Date date_expire, String verification, Contract contract) {
@@ -62,7 +64,7 @@ public class operative {
 		this.requestid = requestid;
 	}
 	
-	public Contract getContract() {
+	public contract getContract() {
 		return contract;
 	}
 	

@@ -1,4 +1,4 @@
-package main.testing;
+package src.main.testing;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,9 +13,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.info310.medicinedelivery.backend.entity.contract;
-import com.info310.medicinedelivery.backend.repository.ContractRepository;
-import com.info310.medicinedelivery.backend.service.ContractService;
+import src.main.domain.contract;
+import src.main.repositories.ContractRepository;
+import src.main.services.ContractService;
+
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class ContractServiceUnitTests {	
@@ -33,42 +35,42 @@ public class ContractServiceUnitTests {
 	public void setUp()
 	{
 		contract1 = new contract();
-		contract1.setUser("abc123");
-		contract1.setStatusList("1");
-		contract1.setAgreementTitle("contract_1");
-		contract1.setAgreementType("contract");
+		//contract1.setUserid("abc123");
+		//contract1.setStatusid("1");
+		contract1.setAgreement_title("contract_1");
+		contract1.setAgreement_type("contract");
 		contract1.setDescription("a contract");
-		contract1.setAgreementLocation("new zealand");
+		contract1.setAgreement_location("new zealand");
 		contract1.setLanguage("english");
 		contract1.setRegion("otago");
-		contract1.setRelatedAgreements("different contract");
+		contract1.setRelated_agreements("different contract");
 		
 
 		contract2 = new contract();
-		contract2.setUser("def456");
-		contract2.setStatusList("2");
-		contract2.setAgreementTitle("contract_2");
-		contract2.setAgreementType("lawsuit");
+		//contract2.setUserid("def456");
+		//contract2.setStatusid("2");
+		contract2.setAgreement_title("contract_2");
+		contract2.setAgreement_type("lawsuit");
 		contract2.setDescription("a lawsuit");
-		contract2.setAgreementLocation("australia");
+		contract2.setAgreement_location("australia");
 		contract2.setLanguage("spanish");
 		contract2.setRegion("queensland");
-		contract2.setRelatedAgreements("different lawsuit");
+		contract2.setRelated_agreements("different lawsuit");
 	}
 	
 	@Test
 	public void test_add_contract()
 	{
 		contract contract_test = new contract();
-		contract_test.setUser("gef456");
-		contract_test.setStatusList("3");
-		contract_test.setAgreementTitle("contract_3");
-		contract_test.setAgreementType("IP");
+		//contract_test.setUserid("gef456");
+		//contract_test.setStatusid("3");
+		contract_test.setAgreement_title("contract_3");
+		contract_test.setAgreement_type("IP");
 		contract_test.setDescription("intellectual property");
-		contract_test.setAgreementLocation("england");
+		contract_test.setAgreement_location("england");
 		contract_test.setLanguage("french");
 		contract_test.setRegion("nottingham");
-		contract_test.setRelatedAgreements("different IP's");
+		contract_test.setRelated_agreements("different IP's");
 
 		contractService.addContract(contract_test);
 
@@ -92,12 +94,4 @@ public class ContractServiceUnitTests {
 		}
 	}
 	*/
-	
-	
-	
-	
-	
-	
-	
-	
 }

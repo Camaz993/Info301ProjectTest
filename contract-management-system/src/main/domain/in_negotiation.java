@@ -1,4 +1,4 @@
-package main.domain;
+package src.main.domain;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -28,37 +30,36 @@ public class in_negotiation {
 	
 	@OneToOne
     @MapsId
-	private Contract contract;
+	private contract contract;
+
+	public in_negotiation(Integer requestid, String comments, contract contract) {
+		super();
+		this.requestid = requestid;
+		this.comments = comments;
+		this.contract = contract;
+	}
 	
-}
-
-public operative(Integer requestid, String comments, Contract contract) {
-	super();
-	this.requestid = requestid;
-	this.comments = comments;
-	this.contract = contract;
-}
-
-public Integer getRequestId() {
-	return requestid;
-}
-
-public void setRequestId(Integer requestid) {
-	this.requestid = requestid;
-}
-
-public String getComments() {
-	return comments;
-}
-
-public void setComments(String comments) {
-	this.comments = comments;
-}
-
-public Contract getContract() {
-	return contract;
-}
-
-public void setContract() {
-	this.contract = contract;
+	public Integer getRequestId() {
+		return requestid;
+	}
+	
+	public void setRequestId(Integer requestid) {
+		this.requestid = requestid;
+	}
+	
+	public String getComments() {
+		return comments;
+	}
+	
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+	
+	public contract getContract() {
+		return contract;
+	}
+	
+	public void setContract() {
+		this.contract = contract;
+	}
 }

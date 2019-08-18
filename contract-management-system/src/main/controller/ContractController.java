@@ -1,16 +1,21 @@
-package main.controller;
+package src.main.controller;
 
 import java.util.List;
-import main.domain.contract;
-import 
+import src.main.domain.contract;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import src.main.services.IContractService;
 
 @RestController
 public class ContractController {
@@ -22,7 +27,7 @@ public class ContractController {
 	public ResponseEntity<String> addContract(@RequestParam User user, @RequestParam List<Status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
 			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements)
 	{
-		Contract contract = new contract();
+		contract contract = new contract();
 		contract.setUser(user);
 		contract.setStatusList(statusList);
 		contract.setAgreementTitle(agreement_title);

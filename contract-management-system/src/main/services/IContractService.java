@@ -1,6 +1,6 @@
-package Contract.Management.System.Gradle;
+package src.main.services;
 
-import main.domain.contract;
+import src.main.domain.contract;
 import java.util.List;
 
 public interface IContractService {

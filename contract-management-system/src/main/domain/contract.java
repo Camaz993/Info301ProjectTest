@@ -1,4 +1,7 @@
-package main.domain;
+package src.main.domain;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +15,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import javax.validation.constraints.JoinColumn;
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = contract.TABLE_NAME)
@@ -31,7 +34,7 @@ public class contract {
 	
 	@ManyToOne
 	@JoinColumn(name = "statusid")
-	private List<Status> statusList = new ArrayList<status>();
+	private List<status> statusList = new ArrayList<status>();
 	
 	@NotNull
 	@Column(name = "Agreement_Title")
@@ -61,7 +64,7 @@ public class contract {
 	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	
-	contract(){}
+	public contract(){}
 	
 	public contract(Integer requestid, User user, List<Status> statusList, String agreement_title, String agreement_type,
 			String description, String agreement_location, String language, String region, String related_agreements) {
@@ -94,10 +97,10 @@ public class contract {
 	public void setUserid(User user) {
 		this.user = user;
 	}
-	public List<Status> getStatusList() {
+	public List<status> getStatusList() {
 		return statusList;
 	}
-	public void setStatusid(List<Status> statusList) {
+	public void setStatusid(List<status> statusList) {
 		this.statusList = statusList;
 	}
 	public String getAgreement_title() {

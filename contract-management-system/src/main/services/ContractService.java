@@ -1,8 +1,9 @@
-package main.services;
+package src.main.services;
 
 import java.util.List;
 
-import main.domain.contract;
+import src.main.domain.contract;
+import src.main.repositories.ContractRepository;
 
 public class ContractService {
 	
@@ -17,7 +18,7 @@ public class ContractService {
 		} catch(javax.validation.ConstraintViolationException e)
 		{ 
 			throw new IllegalArgumentException(e.getConstraintViolations().iterator().next().getmessage());
-		}catch (Excpetion e2)
+		}catch (Exception e2)
 		{
 			e2.printStackTrace();
 		}
