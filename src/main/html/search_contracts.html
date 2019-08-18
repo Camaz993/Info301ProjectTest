@@ -6,15 +6,7 @@
 </head>
 <body>
 	<h1>Search for Contracts</h1>
-    <form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="post">
-    	<p>User: <input type="text" th:field="*{user}" /></p>
-    	<p>Status: <input type="text" th:field="*{statusList}" /></p>
-    	<p>Agreement Title: <input type="text" th:field="*{agreement_title}" /></p>
-    	<p>Agreement Type: <input type="text" th:field="*{agreement_type}" /></p>
-        <p>Agreement Location: <input type="text" th:field="*{agreement_location}" /></p>
-        <p>Language: <input type="text" th:field="*{language}" /></p>
-        <p>Region: <input type="text" th:field="*{region}" /></p>
-        <p>Related Agreements: <input type="text" th:field="*{related_agreements}" /></p>
+    <form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 </body>
