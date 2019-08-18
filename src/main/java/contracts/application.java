@@ -2,7 +2,7 @@ package contracts;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-3
+
 
 @SpringBootApplication
 

@@ -13,9 +13,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import contracts.ContractRepository;
-import contracts.ContractService;
-import contracts.contract;
+import domain.contract;
+import repository.ContractRepository;
+import service.ContractService;
 
 
 

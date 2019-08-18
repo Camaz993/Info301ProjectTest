@@ -27,9 +27,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import contracts.ContractService;
 import contracts.application;
-import contracts.contract;
+import domain.contract;
+import service.ContractService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = application.class)

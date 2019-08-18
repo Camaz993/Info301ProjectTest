@@ -1,8 +1,12 @@
-package contracts;
+package service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import domain.contract;
+import repository.ContractRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ContractService {
