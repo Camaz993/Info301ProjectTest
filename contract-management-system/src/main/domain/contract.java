@@ -10,11 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import javax.persistence.JoinColumn;
 
 @Entity
@@ -30,7 +26,7 @@ public class contract {
 	
 	@ManyToOne
 	@JoinColumn(name = "userid")
-	private User user;
+	private user user;
 	
 	@ManyToOne
 	@JoinColumn(name = "statusid")
@@ -64,14 +60,14 @@ public class contract {
 	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	
-	public contract(){}
+	//public contract(){}
 	
-	public contract(Integer requestid, User user, List<Status> statusList, String agreement_title, String agreement_type,
+	public contract(Integer requestid, user user, List<status> statusList, String agreement_title, String agreement_type,
 			String description, String agreement_location, String language, String region, String related_agreements) {
 		super();
 		this.requestid = requestid;
 		this.user = user;
-		this.statusList = status;
+		this.statusList = statusList;
 		this.agreement_title = agreement_title;
 		this.agreement_type = agreement_type;
 		this.description = description;
@@ -91,10 +87,10 @@ public class contract {
 	public void setRequestid(Integer requestid) {
 		this.requestid = requestid;
 	}
-	public User getUser() {
+	public user getUser() {
 		return user;
 	}
-	public void setUserid(User user) {
+	public void setUserid(user user) {
 		this.user = user;
 	}
 	public List<status> getStatusList() {
@@ -148,7 +144,7 @@ public class contract {
 
 	@Override
 	public String toString() {
-		return "contract [requestid=" + requestid + ", userid=" + userid + ", statusid=" + statusid
+		return "contract [requestid=" + requestid + ", userid=" + user + ", statusid=" + statusList
 				+ ", agreement_title=" + agreement_title + ", agreement_type=" + agreement_type + ", description="
 				+ description + ", agreement_location=" + agreement_location + ", language=" + language + ", region="
 				+ region + ", related_agreements=" + related_agreements + "]";

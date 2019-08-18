@@ -5,11 +5,15 @@ import java.util.List;
 import src.main.domain.contract;
 import src.main.repositories.ContractRepository;
 
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class ContractService {
 	
+	@Autowired
 	ContractRepository contractRepository;
 	
-	@Override
+	//@Override
 	public void addContract(contract newContract) {
 		
 		try
@@ -17,7 +21,7 @@ public class ContractService {
 			contractRepository.save(newContract);
 		} catch(javax.validation.ConstraintViolationException e)
 		{ 
-			throw new IllegalArgumentException(e.getConstraintViolations().iterator().next().getmessage());
+			throw new IllegalArgumentException(e.getConstraintViolations().iterator().next().getMessage());
 		}catch (Exception e2)
 		{
 			e2.printStackTrace();
@@ -25,7 +29,7 @@ public class ContractService {
 		
 	}
 	
-	@Override
+	//@Override
 	public List<contract> getAllContracts() {
 		return contractRepository.findAll();
 	}

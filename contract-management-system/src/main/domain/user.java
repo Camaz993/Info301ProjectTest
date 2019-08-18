@@ -53,7 +53,7 @@ public class user {
 	private boolean locked = false;
 	
 	//Constructor 
-	public user(Integer userid, String first_name, String last_name, String role, String username, String passowrd,
+	public user(Integer userid, String first_name, String last_name, String role, String username, String password,
 			boolean locked) {
 		super();
 		this.userid = userid;

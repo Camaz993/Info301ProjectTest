@@ -76,22 +76,22 @@ public class ContractServiceUnitTests {
 
 		Mockito.verify(contractRepository, Mockito.times(1)).save(contract_test);
 	}
-/*
+
 	@Test
 	public void test_get_all_contracts()
 	{
-		List<Medication> medications = new ArrayList<Medication>();
-		medications.add(med1);
-		medications.add(med2);
+		List<contract> contracts = new ArrayList<contract>();
+		contracts.add(contract1);
+		contracts.add(contract2);
 
-		Mockito.when(medicationRepository.findAll()).thenReturn(medications);
+		Mockito.when(contractRepository.findAll()).thenReturn(contracts);
 
-		List<Medication> result = medicationService.getAllMedications();
-		assertEquals(result.size(), medications.size());
+		List<contract> result = contractService.getAllContracts();
+		assertEquals(result.size(), contracts.size());
 		for (int i = 0; i < result.size(); i++)
 		{
-			assertEquals(result.get(i), medications.get(i));
+			assertEquals(result.get(i), contracts.get(i));
 		}
 	}
-	*/
+	
 }

@@ -2,16 +2,14 @@ package src.main.controller;
 
 import java.util.List;
 import src.main.domain.contract;
+import src.main.domain.status;
+import src.main.domain.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,19 +22,19 @@ public class ContractController {
 	private IContractService contractService;
 	
 	@PostMapping("/api/contracts")
-	public ResponseEntity<String> addContract(@RequestParam User user, @RequestParam List<Status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
+	public ResponseEntity<String> addContract(@RequestParam user user, @RequestParam List<status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
 			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements)
 	{
 		contract contract = new contract();
-		contract.setUser(user);
-		contract.setStatusList(statusList);
-		contract.setAgreementTitle(agreement_title);
-		contract.setAgreementType(agreement_type);
+		contract.setUserid(user);
+		contract.setStatusid(statusList);
+		contract.setAgreement_title(agreement_title);
+		contract.setAgreement_type(agreement_type);
 		contract.setDescription(description);
-		contract.setAgreementLocation(agreement_location);
+		contract.setAgreement_location(agreement_location);
 		contract.setLanguage(language);
 		contract.setRegion(region);
-		contract.setRelatedAgreements(related_agreements);
+		contract.setRelated_agreements(related_agreements);
 		
 		contractService.addContract(contract);
 		
@@ -46,7 +44,7 @@ public class ContractController {
 	
 	@GetMapping("/api/allcontracts")
 	public List<contract> getAllContracts() {
-		return contractService.getAllContracts;
+		return contractService.getAllContracts();
 	}
 
 }
