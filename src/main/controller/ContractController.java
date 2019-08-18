@@ -40,8 +40,8 @@ public class ContractController {
 	
 	
 	@GetMapping("/api/allcontracts")
-	List<contract> all(){
-		return repository.findAll();
+	public List<contract> getAllContracts() {
+		return contractService.getAllContracts;
 	}
 
 }

@@ -1,5 +1,7 @@
 package main.services;
 
+import java.util.List;
+
 import main.domain.contract;
 
 public class ContractService {
@@ -20,6 +22,11 @@ public class ContractService {
 			e2.printStackTrace();
 		}
 		
+	}
+	
+	@Override
+	public List<contract> getAllContracts() {
+		return contractRepository.findAll();
 	}
 
 }
