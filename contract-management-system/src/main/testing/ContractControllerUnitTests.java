@@ -77,24 +77,25 @@ public class ContractControllerUnitTests {
 	}
 	
 	@Test
-	public void test_create_medication() throws Exception
+	public void test_add_contract() throws Exception
 	{
-		MvcResult result = mvc.perform(post("/api/medication").param("name", "Test Medication 2")
-				.param("description", "Test Medication").param("units", "20").param("supplier", "Pharma").param("price", "100")).andReturn();
+		MvcResult result = mvc.perform(post("/api/contracts").param("agreement_title", "Test Contract 2")
+				.param("agreement_type", "Test Contract").param("description", "Test Contract").param("agreement_location", "America").param("language", "american")
+				.param("region", "New York").param("related_agreements", "None")).andReturn();
 
 		int status = result.getResponse().getStatus();
 		assertEquals(201, status);
 	}
 
 	@Test
-	public void test_get_all_medications() throws Exception
+	public void test_get_all_contracts() throws Exception
 	{
 		List<contract> contractList = new ArrayList<contract>();
 		contractList.add(contract1);
 		contractList.add(contract2);
 		Mockito.when(contractService.getAllContracts()).thenReturn(contractList);
 
-		MvcResult result = mvc.perform(get("/api/medication").accept(MediaType.APPLICATION_JSON_VALUE))
+		MvcResult result = mvc.perform(get("/api/allcontracts").accept(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn();
 
 		List<contract> resList = objectMapper.readValue(result.getResponse().getContentAsString(),
