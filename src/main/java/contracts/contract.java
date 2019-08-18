@@ -1,4 +1,4 @@
-package src.main.domain;
+package contracts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.persistence.JoinColumn;
@@ -28,7 +29,7 @@ public class contract {
 	@JoinColumn(name = "userid")
 	private user user;
 	
-	@ManyToOne
+	@OneToMany
 	@JoinColumn(name = "statusid")
 	private List<status> statusList = new ArrayList<status>();
 	

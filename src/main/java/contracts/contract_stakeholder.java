@@ -1,9 +1,10 @@
-package src.main.domain;
+package contracts;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.persistence.Id;
 
 @Entity
 @Table(name = contract_stakeholder.TABLE_NAME)
@@ -11,6 +12,7 @@ public class contract_stakeholder {
 	
 	public static final String TABLE_NAME = "CONTRACT_STAKEHOLDERS";
 	
+	@Id
 	@NotNull
 	@Column(name = "RequestID")
 	private Integer requestid;

@@ -1,4 +1,4 @@
-package src.main.domain;
+package contracts;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

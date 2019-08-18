@@ -1,4 +1,4 @@
-package src.main.testing;
+package test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +27,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import src.main.application;
-import src.main.domain.contract;
-import src.main.services.ContractService;
+import contracts.ContractService;
+import contracts.application;
+import contracts.contract;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = application.class)

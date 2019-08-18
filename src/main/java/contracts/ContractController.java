@@ -1,9 +1,6 @@
-package src.main.controller;
+package contracts;
 
 import java.util.List;
-import src.main.domain.contract;
-import src.main.domain.status;
-import src.main.domain.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import src.main.services.IContractService;
 
 @RestController
 public class ContractController {
