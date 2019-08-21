@@ -3,7 +3,7 @@ package contracts.service;
 import java.util.List;
 
 import contracts.domain.user;
-import contracts.repository.ContractRepository;
+import contracts.repository.AccountRepository;
 
 @Service
 public class AccountService implements IAccountService {
