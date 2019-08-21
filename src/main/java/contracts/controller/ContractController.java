@@ -1,4 +1,4 @@
-package controller;
+package contracts.controller;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import domain.contract;
-import domain.status;
-import domain.user;
-import service.IContractService;
+import contracts.domain.contract;
+import contracts.domain.status;
+import contracts.domain.user;
+import contracts.service.IContractService;
 
 @RestController
 public class ContractController {

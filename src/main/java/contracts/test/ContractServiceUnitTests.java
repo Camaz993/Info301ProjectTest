@@ -1,4 +1,4 @@
-package test;
+package contracts.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,9 +13,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import domain.contract;
-import repository.ContractRepository;
-import service.ContractService;
+import contracts.domain.contract;
+import contracts.repository.ContractRepository;
+import contracts.service.ContractService;
 
 
 
