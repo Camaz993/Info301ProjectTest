@@ -80,8 +80,8 @@ public class ContractControllerUnitTests {
 	public void test_add_contract() throws Exception
 	{
 		MvcResult result = mvc.perform(post("/api/contracts").param("agreement_title", "Test Contract 2")
-				.param("agreement_type", "Test Contract").param("description", "Test Contract").param("agreement_location", "America").param("language", "american")
-				.param("region", "New York").param("related_agreements", "None")).andReturn();
+				.param("agreement_type", "Test Contract").param("description", "Test Contract").param("agreement_location", "America")
+				.param("language", "american").param("region", "New York").param("related_agreements", "None")).andReturn();
 
 		int status = result.getResponse().getStatus();
 		assertEquals(201, status);
