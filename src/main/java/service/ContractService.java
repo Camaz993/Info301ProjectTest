@@ -9,12 +9,13 @@ import repository.ContractRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class ContractService {
+@Service
+public class ContractService implements IContractService{
 	
 	@Autowired
 	ContractRepository contractRepository;
 	
-	//@Override
+	@Override
 	public void addContract(contract newContract) {
 		
 		try
@@ -30,7 +31,7 @@ public class ContractService {
 		
 	}
 	
-	//@Override
+	@Override
 	public List<contract> getAllContracts() {
 		return contractRepository.findAll();
 	}
