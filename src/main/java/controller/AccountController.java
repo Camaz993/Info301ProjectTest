@@ -10,18 +10,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import contracts.service.IContractService;
 import domain.user;
 import service.IAccountService;
 
 @RestController
 public class AccountController {
 	
+	@Autowired
+	private IAccountService accountService;
+	
 	@PostMapping("/api/staff")
 	public ResponseEntity<String> createAccount(@RequestParam String first_name, @RequestParam String last_name, @RequestParam String role, 
 			@RequestParam String username, @RequestParam String password, @RequestParam boolean locked)
 	
 	{
-		Account account = new Account();
+		user account = new user();
 		account.setFirstName(first_name);
 		account.setLastName(last_name);
 		account.setRole(role);
@@ -29,16 +33,10 @@ public class AccountController {
 		account.setPassword(password);
 		account.setLocked(locked);
 		
+		accountService.addAccount(account);
+		
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 		
 	}
-	
-	
-	this.first_name = first_name;
-	this.last_name = last_name;
-	this.role = role;
-	this.username = username;
-	this.password = password;
-	this.locked = locked;
 
 }
