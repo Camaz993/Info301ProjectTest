@@ -1,4 +1,4 @@
-package domain;
+package contracts.domain;
 
 import java.util.Date;
 

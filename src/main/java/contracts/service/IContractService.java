@@ -1,8 +1,8 @@
-package service;
+package contracts.service;
 
 import java.util.List;
 
-import domain.contract;
+import contracts.domain.contract;
 
 public interface IContractService {
 	
