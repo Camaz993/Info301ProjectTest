@@ -35,5 +35,11 @@ public class ContractService implements IContractService{
 	public List<contract> getAllContracts() {
 		return contractRepository.findAll();
 	}
+	
+	@Override
+	public List<contract> searchContracts(String search) {
+		return contractRepository.searchContracts(search);
+	}
+	
 
 }
