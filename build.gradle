@@ -44,6 +44,7 @@ dependencies {
  
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:27.0.1-jre'
+<<<<<<< HEAD
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -52,9 +53,25 @@ dependencies {
 	implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.1.6.RELEASE'
 	implementation group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.5.RELEASE'
 	implementation group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.2.RELEASE'
+=======
+    
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.1.6.RELEASE'
+	implementation group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.5.RELEASE'
+	implementation group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.2.RELEASE'
+	
+	implementation 'io.springfox:springfox-swagger2:2.9.2'
+	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+	
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: '4.0.0.RELEASE'
+>>>>>>> branch 'development_testing' of https://isgb.otago.ac.nz/info301/git/grana036/contract-mgmt-system.git
  
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+    
     // https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
 	compile group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
 	

@@ -1,22 +1,18 @@
-package main.domain;
+package contracts.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = User.TABLE_NAME)
+@Table(name = user.TABLE_NAME)
 //@SecondaryTable(name = Audit.TALBE_NAME)
 //@SecondaryTable(name = Contract.TABLE_NAME)
 
@@ -57,7 +53,7 @@ public class user {
 	private boolean locked = false;
 	
 	//Constructor 
-	public user(Integer userid, String first_name, String last_name, String role, String username, String passowrd,
+	public user(Integer userid, String first_name, String last_name, String role, String username, String password,
 			boolean locked) {
 		super();
 		this.userid = userid;
@@ -101,10 +97,10 @@ public class user {
 		this.username = username;
 	}
 	public String getPassowrd() {
-		return passowrd;
+		return password;
 	}
 	public void setPassowrd(String passowrd) {
-		this.passowrd = passowrd;
+		this.password = passowrd;
 	}
 	public boolean isLocked() {
 		return locked;
@@ -117,7 +113,7 @@ public class user {
 	@Override
 	public String toString() {
 		return "user [userid=" + userid + ", first_name=" + first_name + ", last_name=" + last_name + ", role=" + role
-				+ ", username=" + username + ", passowrd=" + passowrd + ", locked=" + locked + "]";
+				+ ", username=" + username + ", passowrd=" + password + ", locked=" + locked + "]";
 	}
 	
 	

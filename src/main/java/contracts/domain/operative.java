@@ -1,22 +1,19 @@
-package main.domain;
+package contracts.domain;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = operative.TABLE_NAME)
 //@SecondaryTable (name = Contract.TABLE_NAME)
 public class operative {
+	
+	public static final String TABLE_NAME = "OPERATIVE";
 	
 	@Id
 	@Column(name = "requestid")
@@ -40,10 +37,10 @@ public class operative {
 	
 	@OneToOne
     @MapsId
-	private Contract contract;
+	private contract contract;
 	
 	//Constructor method
-	public operative(Integer requestid, Date date_signed, Date date_commenced, Date date_expire, String verification, Contract contract) {
+	public operative(Integer requestid, Date date_signed, Date date_commenced, Date date_expire, String verification, contract contract) {
 		super();
 		this.requestid = requestid;
 		this.date_signed = date_signed;
@@ -62,7 +59,7 @@ public class operative {
 		this.requestid = requestid;
 	}
 	
-	public Contract getContract() {
+	public contract getContract() {
 		return contract;
 	}
 	
