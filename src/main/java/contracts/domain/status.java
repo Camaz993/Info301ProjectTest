@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -16,25 +15,23 @@ public class status {
 	
 	public static final String TABLE_NAME = "STATUS";
 	
+	public status() {
+		
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "statusid")
-	//@OnetoOne(mappedBy = previousstatus)
 	private Integer statusid;
-	
-	//Foreign key of statusid (self-referencing integrity)
-	@OneToOne
-	private status previousstatus;
 	
 	@NotNull
 	@Column(name = "active")
 	private String active;
 	
 	//Constructor
-	public status(Integer statusid, status previousstatus, String active) {
+	public status(Integer statusid, String active) {
 		super();
 		this.statusid = statusid;
-		this.previousstatus = previousstatus;
 		this.active = active;
 	}
 
@@ -47,14 +44,6 @@ public class status {
 		this.statusid = statusid;
 	}
 
-	public status getPreviousstatus() {
-		return previousstatus;
-	}
-
-	public void setPreviousstatus(status previousstatus) {
-		this.previousstatus = previousstatus;
-	}
-
 	public String getActive() {
 		return active;
 	}
@@ -65,7 +54,7 @@ public class status {
 
 	@Override
 	public String toString() {
-		return "status [statusid=" + statusid + ", previousstatus=" + previousstatus + ", active=" + active + "]";
+		return "status [statusid=" + statusid + ", active=" + active + "]";
 	}
 	
 	
