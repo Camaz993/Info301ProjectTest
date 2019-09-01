@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Add Contracts</title>
+<title>Add Contract</title>
+<link href="StyleSheet.css" rel="stylesheet" type="text/css">
 <style>
 	h1 {
 	font-family: verdana;
@@ -10,8 +11,16 @@
 	}
 </style>
 </head>
+<div class="sidenav">
+		<h2 id="CMS">CMS</h2>
+ 		 <a>Home</a></li>
+ 		 <a href="add_contracts.html">New Contract</a></li>
+ 		 <a href="search_contracts.html">Search Contacts</a></li>
+ 		 <a>My Contracts</a></li>
+	</div>
 <body>
-	<h1>Add Contracts</h1>
+	<h1><b>Add Contracts</b></h1>
+	<div class="content">
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post">
    		<p>User: <input type="text" th:field="*{user}" /></p>
     	<p>Agreement Title: <input type="text" th:field="*{agreement_title}" /></p>
@@ -23,5 +32,6 @@
         <p>Related Agreements: <input type="text" th:field="*{related_agreements}" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
+    </div>
 </body>
 </html>
