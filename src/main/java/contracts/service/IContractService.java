@@ -11,4 +11,8 @@ public interface IContractService {
 	public List<contract> getAllContracts();
 	
 	public List<contract> searchContracts(String search);
+	
+	public List<contract> searchLocation(String search);
+	
+	public List<contract> searchContractType(String search);
 }
