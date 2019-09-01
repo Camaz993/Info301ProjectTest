@@ -27,11 +27,11 @@ public class AccountController {
 	
 	{
 		user account = new user();
-		account.setFirstName(first_name);
-		account.setLastName(last_name);
+		account.setFirst_name(first_name);
+		account.setLast_name(last_name);
 		account.setRole(role);
 		account.setUsername(username);
-		account.setPassword(password);
+		account.setPassowrd(password);
 		account.setLocked(locked);
 		
 		accountService.addAccount(account);
