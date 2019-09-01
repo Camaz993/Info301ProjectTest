@@ -14,6 +14,10 @@ public class in_negotiation {
 	
 	public static final String TABLE_NAME = "IN_NEGOTIATION";
 	
+	public in_negotiation() {
+		
+	}
+	
 	@Id
 	@Column(name = "requestid")
 	private Integer requestid;
