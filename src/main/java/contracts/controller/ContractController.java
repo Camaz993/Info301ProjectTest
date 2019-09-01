@@ -23,6 +23,32 @@ public class ContractController {
 	@Autowired
 	private IContractService contractService;
 	
+	@GetMapping("/add_contracts")
+    public String showSignUpForm(Model model) {
+		model.addAttribute("contract", new contract());
+        return "add_contracts";
+    }
+	
+	@PostMapping("/api/contracts")
+	public ResponseEntity<String> addContract(@RequestParam Integer user, @RequestParam String agreement_title, @RequestParam String agreement_type,
+			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements)
+	{
+		contract contract = new contract();
+		user userFind = contractService.findById(user).orElse(new user());
+		contract.setUserid(userFind);
+		contract.setAgreement_title(agreement_title);
+		contract.setAgreement_type(agreement_type);
+		contract.setDescription(description);
+		contract.setAgreement_location(agreement_location);
+		contract.setLanguage(language);
+		contract.setRegion(region);
+		contract.setRelated_agreements(related_agreements);
+		
+		contractService.addContract(contract);
+		
+		return new ResponseEntity<String>(HttpStatus.CREATED);
+	}
+	
 	@PostMapping("/api/contracts")
 	public ResponseEntity<String> addContract(@RequestParam user user, @RequestParam List<status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
 			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements)
