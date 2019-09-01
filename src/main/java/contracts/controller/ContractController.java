@@ -53,13 +53,13 @@ public class ContractController {
 		return contractService.searchContracts(search);
 	}
 	
-	@PostMapping("/api/contracts/search")
+	@PostMapping("/api/contracts/search/location")
 	public List<contract> searchLocation(@RequestParam String search)
 	{
 		return contractService.searchLocation(search);
 	}
 	
-	@PostMapping("/api/contracts/search")
+	@PostMapping("/api/contracts/search/type")
 	public List<contract> searchContractType(@RequestParam String search)
 	{
 		return contractService.searchContractType(search);
