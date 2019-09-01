@@ -15,6 +15,10 @@ public class operative {
 	
 	public static final String TABLE_NAME = "OPERATIVE";
 	
+	public operative() {
+		
+	}
+	
 	@Id
 	@Column(name = "requestid")
 	private Integer requestid;
