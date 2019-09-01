@@ -12,11 +12,11 @@
 </head>
 <body>
 	<h1>Add Contracts</h1>
-    <form action="index.html" th:action="@{/api/contracts}" th:object="${contracts}" method="post">
-    	<p>User: <input type="text" th:field="*{user}" /></p>
-    	<p>Status: <input type="text" th:field="*{statusList}" /></p>
+    <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post">
+   		<p>User: <input type="text" th:field="*{user}" /></p>
     	<p>Agreement Title: <input type="text" th:field="*{agreement_title}" /></p>
     	<p>Agreement Type: <input type="text" th:field="*{agreement_type}" /></p>
+    	<p>Description: <input type="text" th:field="*{description}" /></p>
         <p>Agreement Location: <input type="text" th:field="*{agreement_location}" /></p>
         <p>Language: <input type="text" th:field="*{language}" /></p>
         <p>Region: <input type="text" th:field="*{region}" /></p>
