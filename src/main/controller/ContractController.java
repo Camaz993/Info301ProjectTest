@@ -22,9 +22,6 @@ public class ContractController {
 	public ResponseEntity<String> addContract(@RequestParam User user, @RequestParam List<Status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
 			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements)
 	{
-		//if (contract.hasErrors()) {
-        //    return "error";
-       // }
 		
 		Contract contract = new contract();
 		contract.setUser(user);
