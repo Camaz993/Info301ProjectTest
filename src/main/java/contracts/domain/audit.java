@@ -1,4 +1,4 @@
-package main.domain;
+package contracts.domain;
 
 import java.util.Date;
 
@@ -7,13 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = audit.TABLE_NAME)
@@ -28,11 +25,11 @@ public class audit {
 	
 	@ManyToOne
 	@JoinColumn(name = "userid")
-	private User userid;
+	private user userid;
 	
 	@ManyToOne
 	@JoinColumn(name = "requestid")
-	private Contract requestedid;
+	private contract requestid;
 	
 	@NotNull
 	@Column(name = "Date")
@@ -56,17 +53,17 @@ public class audit {
 	public void setAuditid(Integer auditid) {
 		this.auditid = auditid;
 	}
-	public Integer getUserid() {
+	public user getUserid() {
 		return userid;
 	}
-	public void setUserid(Integer userid) {
+	public void setUserid(user userid) {
 		this.userid = userid;
 	}
-	public Integer getRequestedid() {
-		return requestedid;
+	public contract getRequestedid() {
+		return requestid;
 	}
-	public void setRequestedid(Integer requestedid) {
-		this.requestedid = requestedid;
+	public void setRequestedid(contract requestid) {
+		this.requestid = requestid;
 	}
 	public Date getDate() {
 		return date;
@@ -92,12 +89,12 @@ public class audit {
 	public void setField_after(String field_after) {
 		this.field_after = field_after;
 	}
-	public audit(Integer auditid, Integer userid, Integer requestedid, Date date, String field_updated,
+	public audit(Integer auditid, user userid, contract requestid, Date date, String field_updated,
 			String field_before, String field_after) {
 		super();
 		this.auditid = auditid;
 		this.userid = userid;
-		this.requestedid = requestedid;
+		this.requestid = requestid;
 		this.date = date;
 		this.field_updated = field_updated;
 		this.field_before = field_before;
@@ -105,7 +102,7 @@ public class audit {
 	}
 	@Override
 	public String toString() {
-		return "audit [auditid=" + auditid + ", userid=" + userid + ", requestedid=" + requestedid + ", date=" + date
+		return "audit [auditid=" + auditid + ", userid=" + userid + ", requestedid=" + requestid + ", date=" + date
 				+ ", field_updated=" + field_updated + ", field_before=" + field_before + ", field_after=" + field_after
 				+ "]";
 	}

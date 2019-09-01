@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h1>Add Contracts</h1>
-    <form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="post">
+    <form action="index.html" th:action="@{/api/contracts}" th:object="${contracts}" method="post">
     	<p>User: <input type="text" th:field="*{user}" /></p>
     	<p>Status: <input type="text" th:field="*{statusList}" /></p>
     	<p>Agreement Title: <input type="text" th:field="*{agreement_title}" /></p>
