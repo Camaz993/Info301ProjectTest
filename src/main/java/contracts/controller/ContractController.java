@@ -42,7 +42,7 @@ public class ContractController {
 	}
 	
 	
-	@GetMapping("/api/allcontracts")
+	@GetMapping("/search_contracts")
 	public List<contract> getAllContracts() {
 		return contractService.getAllContracts();
 	}
