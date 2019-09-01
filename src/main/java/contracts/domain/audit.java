@@ -17,6 +17,10 @@ import javax.validation.constraints.NotNull;
 public class audit {
 	
 	public static final String TABLE_NAME = "AUDIT";
+	
+	public audit () {
+	
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

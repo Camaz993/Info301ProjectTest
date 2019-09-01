@@ -9,7 +9,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-//import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = user.TABLE_NAME)
@@ -21,18 +20,22 @@ public class user {
 	
 	public static final String TABLE_NAME = "USER";
 	
+	public user () {
+		
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="userid")
 	private Integer userid;
 	
 	@NotNull
-	@Column(name="first_name")
-	private String first_name;
+	@Column(name="firstname")
+	private String firstname;
 	
 	@NotNull
-	@Column(name="last_name")
-	private String last_name;
+	@Column(name="lastname")
+	private String lastname;
 	
 	@NotNull
 	@Column(name="role")
@@ -53,12 +56,12 @@ public class user {
 	private boolean locked = false;
 	
 	//Constructor 
-	public user(Integer userid, String first_name, String last_name, String role, String username, String password,
+	public user(Integer userid, String firstname, String lastname, String role, String username, String password,
 			boolean locked) {
 		super();
 		this.userid = userid;
-		this.first_name = first_name;
-		this.last_name = last_name;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.role = role;
 		this.username = username;
 		this.password = password;
@@ -73,16 +76,16 @@ public class user {
 		this.userid = userid;
 	}
 	public String getFirst_name() {
-		return first_name;
+		return firstname;
 	}
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirst_name(String firstname) {
+		this.firstname = firstname;
 	}
 	public String getLast_name() {
-		return last_name;
+		return lastname;
 	}
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLast_name(String lastname) {
+		this.lastname = lastname;
 	}
 	public String getRole() {
 		return role;
@@ -112,12 +115,9 @@ public class user {
 	
 	@Override
 	public String toString() {
-		return "user [userid=" + userid + ", first_name=" + first_name + ", last_name=" + last_name + ", role=" + role
+		return "user [userid=" + userid + ", firstname=" + firstname + ", lastname=" + lastname + ", role=" + role
 				+ ", username=" + username + ", passowrd=" + password + ", locked=" + locked + "]";
 	}
-	
-	
-	
 	
 	
 }

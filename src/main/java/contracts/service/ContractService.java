@@ -1,10 +1,13 @@
 package contracts.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import contracts.domain.contract;
+import contracts.domain.user;
+import contracts.repository.AccountRepository;
 import contracts.repository.ContractRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,9 @@ public class ContractService implements IContractService{
 	
 	@Autowired
 	ContractRepository contractRepository;
+	
+	@Autowired
+	AccountRepository accountRepository;
 	
 	@Override
 	public void addContract(contract newContract) {
@@ -35,6 +41,11 @@ public class ContractService implements IContractService{
 	public List<contract> getAllContracts() {
 		return contractRepository.findAll();
 	}
+	
+	@Override
+    public Optional<user> findById(Integer id) {
+        return accountRepository.findById(id);
+    }
 	
 	@Override
 	public List<contract> searchContracts(String search) {

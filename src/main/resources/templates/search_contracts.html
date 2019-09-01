@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Contract Search</title>
+<style>
+	body {
+	font-family: verdana;
+	}
+	h1 {
+	font-family: verdana;
+	color:teal;
+	}
+    #viewcontracts td {
+    padding:20px;
+    text-align:left;
+    background-color: #888888;
+    font-weight: lighter;
+    font-variant-caps: all-small-caps;
+    }
+    #viewcontracts th {
+    background-color: #eeeeee;
+    text-align:left;
+    padding: 10px;
+    font-weight:lighter;
+    }
+</style>
+</head>
+<body>
+	<h1>Search for Contracts</h1>
+    <form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
+    <label for="search">Search:</label><input name="search" id="search">
+    <p><input type="submit" value="Submit" /> </p>
+    </form>
+    <h1>Contracts</h1>
+	<table id="viewcontracts">
+	<tr>
+	<td>Request Id</td>
+    <td>Agreement Title</td>
+    </tr>
+    <tr th:each="contract : ${contracts}">
+        <th th:text="${contract.requestid}"></th>
+        <th th:text="${contract.agreement_title}"></th>
+    </tr>
+    </table>
+</body>
+</html>

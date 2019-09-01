@@ -15,6 +15,10 @@ import javax.validation.constraints.NotNull;
 public class expired {
 	
 	public static final String TABLE_NAME = "EXPIRED";
+	
+	public expired() {
+		
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

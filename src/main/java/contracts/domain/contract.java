@@ -22,7 +22,7 @@ public class contract {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "RequestID")
+	@Column(name = "requestid")
 	private Integer requestid;
 	
 	@ManyToOne
@@ -31,7 +31,7 @@ public class contract {
 	
 	@OneToMany
 	@JoinColumn(name = "statusid")
-	private List<status> statusList = new ArrayList<status>();
+	private List<status> statusid = new ArrayList<status>();
 	
 	@NotNull
 	@Column(name = "Agreement_Title")
@@ -61,14 +61,12 @@ public class contract {
 	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	
-	//public contract(){}
-	
-	public contract(Integer requestid, user user, List<status> statusList, String agreement_title, String agreement_type,
+	public contract(Integer requestid, user user, List<status> statusid, String agreement_title, String agreement_type,
 			String description, String agreement_location, String language, String region, String related_agreements) {
 		super();
 		this.requestid = requestid;
 		this.user = user;
-		this.statusList = statusList;
+		this.statusid = statusid;
 		this.agreement_title = agreement_title;
 		this.agreement_type = agreement_type;
 		this.description = description;
@@ -91,14 +89,15 @@ public class contract {
 	public user getUser() {
 		return user;
 	}
+
 	public void setUserid(user user) {
 		this.user = user;
 	}
 	public List<status> getStatusList() {
-		return statusList;
+		return statusid;
 	}
-	public void setStatusid(List<status> statusList) {
-		this.statusList = statusList;
+	public void setStatusid(List<status> statusid) {
+		this.statusid = statusid;
 	}
 	public String getAgreement_title() {
 		return agreement_title;
@@ -145,7 +144,7 @@ public class contract {
 
 	@Override
 	public String toString() {
-		return "contract [requestid=" + requestid + ", userid=" + user + ", statusid=" + statusList
+		return "contract [requestid=" + requestid + ", userid=" + user + ", statusid=" + statusid
 				+ ", agreement_title=" + agreement_title + ", agreement_type=" + agreement_type + ", description="
 				+ description + ", agreement_location=" + agreement_location + ", language=" + language + ", region="
 				+ region + ", related_agreements=" + related_agreements + "]";
