@@ -12,6 +12,10 @@ public class contract_stakeholder {
 	
 	public static final String TABLE_NAME = "CONTRACT_STAKEHOLDERS";
 	
+	public contract_stakeholder () {
+		
+	}
+	
 	@Id
 	@NotNull
 	@Column(name = "RequestID")
