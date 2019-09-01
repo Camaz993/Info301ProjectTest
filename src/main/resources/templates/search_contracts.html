@@ -16,5 +16,12 @@
     <label for="search">Search:</label><input name="search" id="search">
     <p><input type="submit" value="Submit" /> </p>
     </form>
+    <h1>Contracts</h1>
+	<table id="viewcontracts">
+    <tr th:each="contract : ${contracts}">
+        <td th:text="${contract.requestid}"></td>
+        <td th:text="${contract.agreement_title}"></td>
+    </tr>
+    </table>
 </body>
 </html>
