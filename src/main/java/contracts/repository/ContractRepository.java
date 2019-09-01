@@ -16,4 +16,7 @@ public interface ContractRepository extends JpaRepository<contract, Long> {
     
 	@Query(value = "SELECT * FROM CONTRACT WHERE LOWER(Agreement_Location) LIKE CONCAT(LOWER(:search), '%') OR RequestID LIKE CONCAT(:search, '%')", nativeQuery = true)
     public List<contract> searchLocation(@Param("search") String search);
+    
+    @Query(value = "SELECT * FROM CONTRACT WHERE LOWER(Agreement_Type) LIKE CONCAT(LOWER(:search), '%') OR RequestID LIKE CONCAT(:search, '%')", nativeQuery = true)
+    public List<contract> searchContractType(@Param("search") String search);
 }
