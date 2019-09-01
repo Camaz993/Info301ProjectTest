@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Contract Search</title>
+<style>
+	h1 {
+	font-family: verdana;
+	}
+</style>
+</head>
+<body>
+	<h1>Search for Contracts</h1>
+    <form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
+    <label for="search_input">Search:</label><input name="search" id="search">
+    <p><input type="submit" value="Submit" /> </p>
+    </form>
+</body>
+</html>
