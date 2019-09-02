@@ -5,21 +5,30 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
+
+import contracts.domain.contract;
 import contracts.domain.user;
 import contracts.service.IAccountService;
 import contracts.service.AccountService;
 import contracts.repository.AccountRepository;
 
-@RestController
+@Controller
 public class AccountController {
 	
 	@Autowired
 	private IAccountService accountService;
+	
+	@GetMapping("/create_account")
+    public String showSignUpForm(Model model) {
+		model.addAttribute("user", new user());
+        return "create_account";
+    }
 	
 	@PostMapping("/api/staff")
 	public ResponseEntity<String> createAccount(@RequestParam String first_name, @RequestParam String last_name, @RequestParam String role, 
