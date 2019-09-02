@@ -7,16 +7,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import contracts.domain.contract;
+import contracts.domain.Contract;
 
-public interface ContractRepository extends JpaRepository<contract, Long> {
+@Repository
+public interface ContractRepository extends JpaRepository<Contract, Long> {
 
 	@Query(value = "SELECT * FROM CONTRACT WHERE LOWER(Agreement_Title) LIKE CONCAT(LOWER(:search), '%') OR RequestID LIKE CONCAT(:search, '%')", nativeQuery = true)
-    public List<contract> searchContracts(@Param("search") String search);
+    public List<Contract> searchContracts(@Param("search") String search);
     
 	@Query(value = "SELECT * FROM CONTRACT WHERE LOWER(Agreement_Location) LIKE CONCAT(LOWER(:search), '%') OR RequestID LIKE CONCAT(:search, '%')", nativeQuery = true)
-    public List<contract> searchLocation(@Param("search") String search);
+    public List<Contract> searchLocation(@Param("search") String search);
     
     @Query(value = "SELECT * FROM CONTRACT WHERE LOWER(Agreement_Type) LIKE CONCAT(LOWER(:search), '%') OR RequestID LIKE CONCAT(:search, '%')", nativeQuery = true)
-    public List<contract> searchContractType(@Param("search") String search);
+    public List<Contract> searchContractType(@Param("search") String search);
 }

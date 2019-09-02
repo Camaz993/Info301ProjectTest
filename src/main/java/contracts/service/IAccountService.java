@@ -1,9 +1,9 @@
 package contracts.service;
 
-import contracts.domain.user;
+import contracts.domain.User;
 
 public interface IAccountService {
 	
-	public void addAccount(user newAccount);
+	public void addAccount(User newAccount);
 
 }

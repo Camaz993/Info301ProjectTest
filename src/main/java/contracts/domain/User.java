@@ -11,16 +11,16 @@ import javax.validation.constraints.Size;
 
 
 @Entity
-@Table(name = user.TABLE_NAME)
+@Table(name = User.TABLE_NAME)
 //@SecondaryTable(name = Audit.TALBE_NAME)
 //@SecondaryTable(name = Contract.TABLE_NAME)
 
 
-public class user {
+public class User {
 	
 	public static final String TABLE_NAME = "USER";
 	
-	public user () {
+	public User () {
 		
 	}
 	
@@ -56,7 +56,7 @@ public class user {
 	private boolean locked = false;
 	
 	//Constructor 
-	public user(Integer userid, String firstname, String lastname, String role, String username, String password,
+	public User(Integer userid, String firstname, String lastname, String role, String username, String password,
 			boolean locked) {
 		super();
 		this.userid = userid;

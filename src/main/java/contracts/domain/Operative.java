@@ -9,13 +9,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = operative.TABLE_NAME)
+@Table(name = Operative.TABLE_NAME)
 //@SecondaryTable (name = Contract.TABLE_NAME)
-public class operative {
+public class Operative {
 	
 	public static final String TABLE_NAME = "OPERATIVE";
 	
-	public operative() {
+	public Operative() {
 		
 	}
 	
@@ -41,10 +41,10 @@ public class operative {
 	
 	@OneToOne
     @MapsId
-	private contract contract;
+	private Contract contract;
 	
 	//Constructor method
-	public operative(Integer requestid, Date date_signed, Date date_commenced, Date date_expire, String verification, contract contract) {
+	public Operative(Integer requestid, Date date_signed, Date date_commenced, Date date_expire, String verification, Contract contract) {
 		super();
 		this.requestid = requestid;
 		this.date_signed = date_signed;
@@ -63,7 +63,7 @@ public class operative {
 		this.requestid = requestid;
 	}
 	
-	public contract getContract() {
+	public Contract getContract() {
 		return contract;
 	}
 	

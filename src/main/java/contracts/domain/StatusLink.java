@@ -11,13 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Id;
 
 @Entity
-@Table(name = status_link.TABLE_NAME)
+@Table(name = StatusLink.TABLE_NAME)
 
-public class status_link implements Serializable {
+public class StatusLink implements Serializable {
 	
 	public static final String TABLE_NAME = "STATUS_LINK";
 	
-	public status_link () {
+	public StatusLink () {
 		
 	}
 	
@@ -25,33 +25,33 @@ public class status_link implements Serializable {
 	@OneToOne
 	@NotNull
 	@Id
-	private status statusid;
+	private Status statusid;
 	
 	@JoinColumn (name = "statusid")
 	@OneToOne
 	@Null
-	private status previousstatus;
+	private Status previousstatus;
 
-	public status_link(status statusid, status previousstatus) {
+	public StatusLink(Status statusid, Status previousstatus) {
 		this.statusid = statusid;
 		this.previousstatus = previousstatus;
 	}
 	
 	//Getters and Setters
 	
-	public status getStatusid() {
+	public Status getStatusid() {
 		return statusid;
 	}
 
-	public void setStatusid(status statusid) {
+	public void setStatusid(Status statusid) {
 		this.statusid = statusid;
 	}
 
-	public status getPreviousStatus() {
+	public Status getPreviousStatus() {
 		return previousstatus;
 	}
 
-	public void setPreviousStatus(status previousstatus) {
+	public void setPreviousStatus(Status previousstatus) {
 		this.previousstatus = previousstatus;
 	}
 	

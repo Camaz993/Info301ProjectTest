@@ -15,8 +15,8 @@ import javax.validation.constraints.NotNull;
 import javax.persistence.JoinColumn;
 
 @Entity
-@Table(name = contract.TABLE_NAME)
-public class contract {
+@Table(name = Contract.TABLE_NAME)
+public class Contract {
 	
 	public static final String TABLE_NAME = "CONTRACT";
 
@@ -27,11 +27,11 @@ public class contract {
 	
 	@ManyToOne
 	@JoinColumn(name = "userid")
-	private user user;
+	private User user;
 	
 	@OneToMany
 	@JoinColumn(name = "statusid")
-	private List<status> statusid = new ArrayList<status>();
+	private List<Status> statusid = new ArrayList<Status>();
 	
 	@NotNull
 	@Column(name = "Agreement_Title")
@@ -61,7 +61,7 @@ public class contract {
 	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	
-	public contract(Integer requestid, user user, List<status> statusid, String agreement_title, String agreement_type,
+	public Contract(Integer requestid, User user, List<Status> statusid, String agreement_title, String agreement_type,
 			String description, String agreement_location, String language, String region, String related_agreements) {
 		super();
 		this.requestid = requestid;
@@ -76,7 +76,7 @@ public class contract {
 		this.related_agreements = related_agreements;
 	}
 	
-	public contract() {
+	public Contract() {
 		
 	}
 	
@@ -86,17 +86,17 @@ public class contract {
 	public void setRequestid(Integer requestid) {
 		this.requestid = requestid;
 	}
-	public user getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUserid(user user) {
+	public void setUserid(User user) {
 		this.user = user;
 	}
-	public List<status> getStatusList() {
+	public List<Status> getStatusList() {
 		return statusid;
 	}
-	public void setStatusid(List<status> statusid) {
+	public void setStatusid(List<Status> statusid) {
 		this.statusid = statusid;
 	}
 	public String getAgreement_title() {

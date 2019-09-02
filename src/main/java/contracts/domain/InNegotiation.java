@@ -8,13 +8,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = in_negotiation.TABLE_NAME)
+@Table(name = InNegotiation.TABLE_NAME)
 //@SecondaryTable (name = Contract.TABLE_NAME)
-public class in_negotiation {
+public class InNegotiation {
 	
 	public static final String TABLE_NAME = "IN_NEGOTIATION";
 	
-	public in_negotiation() {
+	public InNegotiation() {
 		
 	}
 	
@@ -27,9 +27,9 @@ public class in_negotiation {
 	
 	@OneToOne
     @MapsId
-	private contract contract;
+	private Contract contract;
 
-	public in_negotiation(Integer requestid, String comments, contract contract) {
+	public InNegotiation(Integer requestid, String comments, Contract contract) {
 		super();
 		this.requestid = requestid;
 		this.comments = comments;
@@ -52,7 +52,7 @@ public class in_negotiation {
 		this.comments = comments;
 	}
 	
-	public contract getContract() {
+	public Contract getContract() {
 		return contract;
 	}
 	

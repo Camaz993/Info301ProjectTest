@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import contracts.domain.contract;
+import contracts.domain.Contract;
 import contracts.repository.ContractRepository;
 import contracts.service.ContractService;
 
@@ -28,13 +28,13 @@ public class ContractServiceUnitTests {
 	@InjectMocks
 	ContractService contractService;
 
-	private contract contract1;
-	private contract contract2;
+	private Contract contract1;
+	private Contract contract2;
 	
 	@Before
 	public void setUp()
 	{
-		contract1 = new contract();
+		contract1 = new Contract();
 		//contract1.setUserid("abc123");
 		//contract1.setStatusid("1");
 		contract1.setAgreement_title("contract_1");
@@ -46,7 +46,7 @@ public class ContractServiceUnitTests {
 		contract1.setRelated_agreements("different contract");
 		
 
-		contract2 = new contract();
+		contract2 = new Contract();
 		//contract2.setUserid("def456");
 		//contract2.setStatusid("2");
 		contract2.setAgreement_title("contract_2");
@@ -61,7 +61,7 @@ public class ContractServiceUnitTests {
 	@Test
 	public void test_add_contract()
 	{
-		contract contract_test = new contract();
+		Contract contract_test = new Contract();
 		//contract_test.setUserid("gef456");
 		//contract_test.setStatusid("3");
 		contract_test.setAgreement_title("contract_3");
@@ -80,13 +80,13 @@ public class ContractServiceUnitTests {
 	@Test
 	public void test_get_all_contracts()
 	{
-		List<contract> contracts = new ArrayList<contract>();
+		List<Contract> contracts = new ArrayList<Contract>();
 		contracts.add(contract1);
 		contracts.add(contract2);
 
 		Mockito.when(contractRepository.findAll()).thenReturn(contracts);
 
-		List<contract> result = contractService.getAllContracts();
+		List<Contract> result = contractService.getAllContracts();
 		assertEquals(result.size(), contracts.size());
 		for (int i = 0; i < result.size(); i++)
 		{
