@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-import contracts.domain.contract;
-import contracts.domain.user;
+import contracts.domain.Contract;
+import contracts.domain.User;
 import contracts.service.IAccountService;
 import contracts.service.AccountService;
 import contracts.repository.AccountRepository;
@@ -26,7 +26,7 @@ public class AccountController {
 	
 	@GetMapping("/create_account")
     public String showSignUpForm(Model model) {
-		model.addAttribute("user", new user());
+		model.addAttribute("user", new User());
         return "create_account";
     }
 	
@@ -35,7 +35,7 @@ public class AccountController {
 			@RequestParam String username, @RequestParam String password, @RequestParam boolean locked)
 	
 	{
-		user account = new user();
+		User account = new User();
 		account.setFirst_name(first_name);
 		account.setLast_name(last_name);
 		account.setRole(role);

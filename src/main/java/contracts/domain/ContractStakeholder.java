@@ -7,12 +7,12 @@ import javax.validation.constraints.NotNull;
 import javax.persistence.Id;
 
 @Entity
-@Table(name = contract_stakeholder.TABLE_NAME)
-public class contract_stakeholder {
+@Table(name = ContractStakeholder.TABLE_NAME)
+public class ContractStakeholder {
 	
 	public static final String TABLE_NAME = "CONTRACT_STAKEHOLDERS";
 	
-	public contract_stakeholder () {
+	public ContractStakeholder () {
 		
 	}
 	
@@ -39,7 +39,7 @@ public class contract_stakeholder {
 		this.businessname = businessname;
 	}
 	
-	public contract_stakeholder(Integer requestid, String businessname) {
+	public ContractStakeholder(Integer requestid, String businessname) {
 		super();
 		this.requestid = requestid;
 		this.businessname = businessname;

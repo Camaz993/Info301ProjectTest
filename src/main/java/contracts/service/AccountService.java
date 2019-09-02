@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import contracts.domain.user;
+import contracts.domain.User;
 import contracts.repository.AccountRepository;
 
 @Service
@@ -15,7 +15,7 @@ public class AccountService implements IAccountService {
 	AccountRepository accountRepository;
 	
 	@Override
-	public void addAccount(user newAccount) {
+	public void addAccount(User newAccount) {
 		
 		try
 		{

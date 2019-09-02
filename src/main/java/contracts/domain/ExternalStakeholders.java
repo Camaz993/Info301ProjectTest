@@ -11,12 +11,12 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = external_stakeholders.TABLE_NAME)
-public class external_stakeholders {
+@Table(name = ExternalStakeholders.TABLE_NAME)
+public class ExternalStakeholders {
 	
 	public static final String TABLE_NAME = "EXTERNAL_STAKEHOLDERS";
 	
-	public external_stakeholders() {
+	public ExternalStakeholders() {
 		
 	}
 
@@ -86,7 +86,7 @@ public class external_stakeholders {
 	public void setClient_name(String client_name) {
 		this.client_name = client_name;
 	}
-	public external_stakeholders(String businessname, String address, String phone, String email, String fax,
+	public ExternalStakeholders(String businessname, String address, String phone, String email, String fax,
 			String client_name) {
 		super();
 		this.businessname = businessname;
