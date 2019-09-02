@@ -9,13 +9,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = status.TABLE_NAME)
+@Table(name = Status.TABLE_NAME)
 //@SecondaryTable (name = Contract.TABLE_NAME)
-public class status {
+public class Status {
 	
 	public static final String TABLE_NAME = "STATUS";
 	
-	public status() {
+	public Status() {
 		
 	}
 	
@@ -29,7 +29,7 @@ public class status {
 	private String active;
 	
 	//Constructor
-	public status(Integer statusid, String active) {
+	public Status(Integer statusid, String active) {
 		super();
 		this.statusid = statusid;
 		this.active = active;

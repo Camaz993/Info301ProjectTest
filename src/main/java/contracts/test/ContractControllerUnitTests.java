@@ -28,7 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import contracts.application;
-import contracts.domain.contract;
+import contracts.domain.Contract;
 import contracts.service.ContractService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -45,7 +45,7 @@ public class ContractControllerUnitTests {
 	private MockMvc mvc;
 	private ObjectMapper objectMapper;
 
-	private contract contract1, contract2;
+	private Contract contract1, contract2;
 
 	@Before
 	public void setUp()
@@ -53,7 +53,7 @@ public class ContractControllerUnitTests {
 		mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		objectMapper = new ObjectMapper();
 
-		contract1 = new contract();
+		contract1 = new Contract();
 		//contract1.setUserid("abc123");
 		//contract1.setStatusid("1");
 		contract1.setAgreement_title("contract_1");
@@ -64,7 +64,7 @@ public class ContractControllerUnitTests {
 		contract1.setRegion("otago");
 		contract1.setRelated_agreements("different contract");
 
-		contract2 = new contract();
+		contract2 = new Contract();
 		//contract2.setUserid("def456");
 		//contract2.setStatusid("2");
 		contract2.setAgreement_title("contract_2");
@@ -90,7 +90,7 @@ public class ContractControllerUnitTests {
 	@Test
 	public void test_get_all_contracts() throws Exception
 	{
-		List<contract> contractList = new ArrayList<contract>();
+		List<Contract> contractList = new ArrayList<Contract>();
 		contractList.add(contract1);
 		contractList.add(contract2);
 		Mockito.when(contractService.getAllContracts()).thenReturn(contractList);
@@ -98,8 +98,8 @@ public class ContractControllerUnitTests {
 		MvcResult result = mvc.perform(get("/api/allcontracts").accept(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn();
 
-		List<contract> resList = objectMapper.readValue(result.getResponse().getContentAsString(),
-				objectMapper.getTypeFactory().constructCollectionType(List.class, contract.class));
+		List<Contract> resList = objectMapper.readValue(result.getResponse().getContentAsString(),
+				objectMapper.getTypeFactory().constructCollectionType(List.class, Contract.class));
 
 		assertEquals(resList.size(), contractList.size());
 		for (int i = 0; i < contractList.size(); i++)

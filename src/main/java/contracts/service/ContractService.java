@@ -5,8 +5,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import contracts.domain.contract;
-import contracts.domain.user;
+import contracts.domain.Contract;
+import contracts.domain.Status;
+import contracts.domain.User;
 import contracts.repository.AccountRepository;
 import contracts.repository.ContractRepository;
 
@@ -22,7 +23,7 @@ public class ContractService implements IContractService{
 	AccountRepository accountRepository;
 	
 	@Override
-	public void addContract(contract newContract) {
+	public void addContract(Contract newContract) {
 		
 		try
 		{
@@ -38,28 +39,47 @@ public class ContractService implements IContractService{
 	}
 	
 	@Override
-	public List<contract> getAllContracts() {
+	public List<Contract> getAllContracts() {
 		return contractRepository.findAll();
 	}
 	
 	@Override
-    public Optional<user> findById(Integer id) {
+    public Optional<User> findById(Integer id) {
         return accountRepository.findById(id);
     }
 	
 	@Override
-	public List<contract> searchContracts(String search) {
+	public List<Contract> searchContracts(String search) {
 		return contractRepository.searchContracts(search);
 	}
 	
 	@Override
-	public List<contract> searchLocation(String search) {
+	public List<Contract> searchLocation(String search) {
 		return contractRepository.searchLocation(search);
 	}
 	
 	@Override
-	public List<contract> searchContractType(String search) {
+	public List<Contract> searchContractType(String search) {
 		return contractRepository.searchContractType(search);
+	}
+	
+	@Override
+	public void updateDetails(Long requestid, User user, List<Status> statusList, String agreement_title, 
+			String agreement_type, String description, String agreement_location, String language, 
+			String region, String related_agreements) {
+		
+		Optional<Contract> Optionalcontract = contractRepository.findById(requestid);
+		Contract contract = Optionalcontract.get();
+		contract.setUserid(user);
+		contract.setStatusid(statusList);
+		contract.setAgreement_title(agreement_title);
+		contract.setAgreement_type(agreement_type);
+		contract.setDescription(description);
+		contract.setAgreement_location(agreement_location);
+		contract.setLanguage(language);
+		contract.setRegion(region);
+		contract.setRelated_agreements(related_agreements);
+		contractRepository.save(contract);
 	}
 
 }

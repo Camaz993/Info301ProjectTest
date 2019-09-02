@@ -13,12 +13,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = audit.TABLE_NAME)
-public class audit {
+@Table(name = Audit.TABLE_NAME)
+public class Audit {
 	
 	public static final String TABLE_NAME = "AUDIT";
 	
-	public audit () {
+	public Audit () {
 	
 	}
 
@@ -29,11 +29,11 @@ public class audit {
 	
 	@ManyToOne
 	@JoinColumn(name = "userid")
-	private user userid;
+	private User userid;
 	
 	@ManyToOne
 	@JoinColumn(name = "requestid")
-	private contract requestid;
+	private Contract requestid;
 	
 	@NotNull
 	@Column(name = "Date")
@@ -57,16 +57,16 @@ public class audit {
 	public void setAuditid(Integer auditid) {
 		this.auditid = auditid;
 	}
-	public user getUserid() {
+	public User getUserid() {
 		return userid;
 	}
-	public void setUserid(user userid) {
+	public void setUserid(User userid) {
 		this.userid = userid;
 	}
-	public contract getRequestedid() {
+	public Contract getRequestedid() {
 		return requestid;
 	}
-	public void setRequestedid(contract requestid) {
+	public void setRequestedid(Contract requestid) {
 		this.requestid = requestid;
 	}
 	public Date getDate() {
@@ -93,7 +93,7 @@ public class audit {
 	public void setField_after(String field_after) {
 		this.field_after = field_after;
 	}
-	public audit(Integer auditid, user userid, contract requestid, Date date, String field_updated,
+	public Audit(Integer auditid, User userid, Contract requestid, Date date, String field_updated,
 			String field_before, String field_after) {
 		super();
 		this.auditid = auditid;

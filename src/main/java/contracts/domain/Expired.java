@@ -11,12 +11,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = expired.TABLE_NAME)
-public class expired {
+@Table(name = Expired.TABLE_NAME)
+public class Expired {
 	
 	public static final String TABLE_NAME = "EXPIRED";
 	
-	public expired() {
+	public Expired() {
 		
 	}
 
@@ -45,7 +45,7 @@ public class expired {
 	@Column(name = "Binding_Terms_Active")
 	private String binding_terms_active;
 	
-	public expired(Integer requestid, String ending_reason, Date expiry_date, Date termination_date,
+	public Expired(Integer requestid, String ending_reason, Date expiry_date, Date termination_date,
 			String termination_notice_date, String binding_terms_active) {
 		super();
 		this.requestid = requestid;

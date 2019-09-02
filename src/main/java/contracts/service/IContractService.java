@@ -3,20 +3,26 @@ package contracts.service;
 import java.util.List;
 import java.util.Optional;
 
-import contracts.domain.contract;
-import contracts.domain.user;
+import contracts.domain.Contract;
+import contracts.domain.Status;
+import contracts.domain.User;
 
 public interface IContractService {
 	
-	public void addContract(contract newContract);
+	public void addContract(Contract newContract);
 
-	public List<contract> getAllContracts();
+	public List<Contract> getAllContracts();
 	
-	public Optional<user> findById(Integer id);
+	public Optional<User> findById(Integer id);
 	
-	public List<contract> searchContracts(String search);
+	public List<Contract> searchContracts(String search);
 	
-	public List<contract> searchLocation(String search);
+	public List<Contract> searchLocation(String search);
 	
-	public List<contract> searchContractType(String search);
+	public List<Contract> searchContractType(String search);
+	
+	public void updateDetails(Long requestid, User user, List<Status> statusList, String agreement_title, 
+			String agreement_type, String description, String agreement_location, String language, 
+			String region, String related_agreements);
+
 }
