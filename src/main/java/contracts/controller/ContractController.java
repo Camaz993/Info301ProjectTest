@@ -3,12 +3,16 @@ package contracts.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,9 +38,10 @@ public class ContractController {
     }
 	
 	@PostMapping("/api/contracts")
-	public ResponseEntity<String> addContract(@RequestParam Integer user, @RequestParam String agreement_title, @RequestParam String agreement_type,
+	public String addContract(@Valid @RequestParam Integer user, @RequestParam String agreement_title, @RequestParam String agreement_type,
 			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements)
 	{
+
 		Contract contract = new Contract();
 		User userFind = contractService.findById(user).orElse(new User());
 		contract.setUserid(userFind);
@@ -50,9 +55,7 @@ public class ContractController {
 		
 		contractService.addContract(contract);
 		
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Location", "/");
-		return new ResponseEntity<String>(headers, HttpStatus.MOVED_PERMANENTLY);
+		return "index";
 	}
 	
 	@GetMapping("/search_contracts")

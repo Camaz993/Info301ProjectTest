@@ -82,7 +82,7 @@ p{
 	<div class="content">
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
    		<p>User: <input type="text" th:field="*{user}" /></p>
-    	<p>Agreement Title: <input type="text" th:field="*{agreement_title}" /></p>
+    	<p>Agreement Title: <input type="text" th:field="*{agreement_title}" th:class="${#fields.hasErrors('agreement_title')}? fieldError"/></p>
     	<p>Agreement Type: <input type="text" th:field="*{agreement_type}" /></p>
     	<p>Description: <input type="text" th:field="*{description}" /></p>
         <p>Agreement Location: <input type="text" th:field="*{agreement_location}" /></p>
