@@ -44,6 +44,11 @@ public class ContractService implements IContractService{
 	}
 	
 	@Override
+	public List<User> getAllUsers() {
+		return accountRepository.findAll();
+	}
+	
+	@Override
     public Optional<User> findById(Integer id) {
         return accountRepository.findById(id);
     }

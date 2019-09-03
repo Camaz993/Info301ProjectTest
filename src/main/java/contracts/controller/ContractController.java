@@ -30,16 +30,18 @@ public class ContractController {
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
 		model.addAttribute("contract", new Contract());
+		List <User> users = contractService.getAllUsers();
+		model.addAttribute("users", users);
         return "add_contracts";
     }
 	
 	@PostMapping("/api/contracts")
-	public ResponseEntity<String> addContract(@RequestParam Integer user, @RequestParam String agreement_title, @RequestParam String agreement_type,
+	public ResponseEntity<String> addContract(@RequestParam("userid") User user, @RequestParam String agreement_title, @RequestParam String agreement_type,
 			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements)
 	{
 		Contract contract = new Contract();
-		User userFind = contractService.findById(user).orElse(new User());
-		contract.setUserid(userFind);
+		
+		contract.setUserid(user);
 		contract.setAgreement_title(agreement_title);
 		contract.setAgreement_type(agreement_type);
 		contract.setDescription(description);
