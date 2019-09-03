@@ -5,10 +5,6 @@
 <title>Add Contract</title>
 <link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
 <style>
-	h1 {
-	font-family: verdana;
-	color:teal;
-	}
 	h1{
   color: black;
   font-family: verdana;
@@ -18,11 +14,15 @@
 
 #addContract {
 width: 50%;
-
 }
 
 #addContract input[type=text]  {
-	width: 90%;
+	width: 100%;
+	align: right;
+}
+
+#addContract select {
+	width: 100%;
 	align: right;
 }
 
@@ -80,8 +80,13 @@ p{
 <body>
 	<h1><b>Add Contracts</b></h1>
 	<div class="content">
-    <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
-   		<p>User: <input type="text" th:field="*{user}" /></p>
+   <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
+    	 <p>User: <select id="userid" name="userid">
+    	<option value="">Select a user</option>
+    	<option th:each="user : ${users}"
+    	th:value="${user.userid}"
+    	th:utext="${user.first_name} + ' ' + ${user.last_name}"/>
+    	</select></p>
     	<p>Agreement Title: <input type="text" th:field="*{agreement_title}" /></p>
     	<p>Agreement Type: <input type="text" th:field="*{agreement_type}" /></p>
     	<p>Description: <input type="text" th:field="*{description}" /></p>
