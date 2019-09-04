@@ -11,7 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+
 import javax.persistence.JoinColumn;
 
 @Entity
@@ -33,31 +36,31 @@ public class Contract {
 	@JoinColumn(name = "statusid")
 	private List<Status> statusid = new ArrayList<Status>();
 	
-	@NotNull
+	@NotBlank(message="Agreement title cannot be empty")
 	@Column(name = "Agreement_Title")
 	private String agreement_title;
 	
-	@NotNull
+	@NotBlank(message="Agreement type cannot be empty")
 	@Column(name = "Agreement_Type")
 	private String agreement_type;
 	
-	@NotNull
+	@NotBlank(message="Description cannot be empty")
 	@Column(name = "Description")
 	private String description;
 	
-	@NotNull
+	@NotBlank(message="Agreement location cannot be empty")
 	@Column(name = "Agreement_Location")
 	private String agreement_location;
 	
-	@NotNull
+	@NotBlank(message="Language cannot be empty")
 	@Column(name = "Language")
 	private String language;
 	
-	@NotNull
+	@NotBlank(message="Region cannot be empty")
 	@Column(name = "Region")
 	private String region;
 	
-	@NotNull
+	@NotBlank(message="Related agreements cannot be null")
 	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	

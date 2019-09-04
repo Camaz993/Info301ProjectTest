@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,20 +39,26 @@ public class ContractController {
     }
 	
 	@PostMapping("/api/contracts")
-	public String addContract(@Valid @RequestParam Integer user, @RequestParam String agreement_title, @RequestParam String agreement_type,
-			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements)
+	public String addContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
 	{
 
-		Contract contract = new Contract();
-		User userFind = contractService.findById(user).orElse(new User());
-		contract.setUserid(userFind);
-		contract.setAgreement_title(agreement_title);
-		contract.setAgreement_type(agreement_type);
-		contract.setDescription(description);
-		contract.setAgreement_location(agreement_location);
-		contract.setLanguage(language);
-		contract.setRegion(region);
-		contract.setRelated_agreements(related_agreements);
+		if(br.hasErrors()) {
+		return "add_contracts";
+		}
+		
+		User user = contract.getUser();
+		if(user==null) {
+			user = new User();
+		} else {
+			contract.setUserid(user);
+		}
+		contract.setAgreement_title(contract.getAgreement_title());
+		contract.setAgreement_type(contract.getAgreement_type());
+		contract.setDescription(contract.getDescription());
+		contract.setAgreement_location(contract.getAgreement_location());
+		contract.setLanguage(contract.getLanguage());
+		contract.setRegion(contract.getRegion());
+		contract.setRelated_agreements(contract.getRelated_agreements());
 		
 		contractService.addContract(contract);
 		
