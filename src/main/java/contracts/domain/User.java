@@ -1,11 +1,14 @@
 package contracts.domain;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,27 +32,32 @@ public class User {
 	@Column(name="userid")
 	private Integer userid;
 	
-	@NotNull
+	@NotBlank(message="Name cannot be blank")
 	@Column(name="firstname")
 	private String firstname;
 	
-	@NotNull
+	@NotBlank(message="Name cannot be blank")
 	@Column(name="lastname")
 	private String lastname;
 	
-	@NotNull
+	@NotBlank(message="Role cannot be blank")
 	@Column(name="role")
 	private String role;
 	
-	@NotNull
+	@NotBlank(message="Username cannot be blank")
 	@Column(name="username")
 	private String username;
 	
-	@NotNull
+	@NotBlank(message="Password cannot be blank")
 	@Column(name="password")
 	@Size(min = 8, max= 40, message = "Password must be between 8 and 40 characters")
 	//@JSONIgnore
 	private String password;
+	
+	@NotBlank(message="Please repeat your password")
+	@Transient
+	private String pswrepeat;
+	
 	
 	 @NotNull
 	 @Column(name = "locked")
@@ -99,11 +107,14 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPassowrd() {
+	public String getPassword() {
 		return password;
 	}
-	public void setPassowrd(String passowrd) {
-		this.password = passowrd;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getPswrepeat() {
+		return pswrepeat;
 	}
 	public boolean isLocked() {
 		return locked;

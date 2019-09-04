@@ -6,13 +6,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,24 +42,8 @@ public class ContractController {
 
 		if(br.hasErrors()) {
 		return "add_contracts";
-		}
-		
-		User user = contract.getUser();
-		if(user==null) {
-			user = new User();
-		} else {
-			contract.setUserid(user);
-		}
-		contract.setAgreement_title(contract.getAgreement_title());
-		contract.setAgreement_type(contract.getAgreement_type());
-		contract.setDescription(contract.getDescription());
-		contract.setAgreement_location(contract.getAgreement_location());
-		contract.setLanguage(contract.getLanguage());
-		contract.setRegion(contract.getRegion());
-		contract.setRelated_agreements(contract.getRelated_agreements());
-		
+		}		
 		contractService.addContract(contract);
-		
 		return "index";
 	}
 	
