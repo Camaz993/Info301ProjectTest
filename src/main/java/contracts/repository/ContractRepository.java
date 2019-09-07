@@ -1,6 +1,7 @@
 package contracts.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +21,6 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     
     @Query(value = "SELECT * FROM CONTRACT WHERE LOWER(Agreement_Type) LIKE CONCAT(LOWER(:search), '%') OR RequestID LIKE CONCAT(:search, '%')", nativeQuery = true)
     public List<Contract> searchContractType(@Param("search") String search);
+
+	public Optional<Contract> findOne(Integer requestid);
 }

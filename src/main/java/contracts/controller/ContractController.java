@@ -2,6 +2,7 @@ package contracts.controller;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -90,4 +91,15 @@ public class ContractController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
+	@GetMapping("/api/contracts")
+	public List<Contract> allContracts()
+	{
+		return contractService.getAllContracts();
+	}
+	
+	@GetMapping("/api/contracts/{requestid}")
+	public Optional<Contract> getContract(@PathVariable(name = "requestid")Integer requestid) {
+		return contractService.getContract(requestid);
+	}
 }
+	

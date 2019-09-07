@@ -22,6 +22,10 @@ public class ContractService implements IContractService{
 	@Autowired
 	AccountRepository accountRepository;
 	
+	public void setContractRepository(ContractRepository contractRepository) {
+		this.contractRepository = contractRepository;
+	}
+	
 	@Override
 	public void addContract(Contract newContract) {
 		
@@ -85,6 +89,11 @@ public class ContractService implements IContractService{
 		contract.setRegion(region);
 		contract.setRelated_agreements(related_agreements);
 		contractRepository.save(contract);
+	}
+	
+	@Override
+	public Optional<Contract> getContract(Integer requestid) {
+		return contractRepository.findOne(requestid);
 	}
 
 }
