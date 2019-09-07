@@ -93,7 +93,7 @@ public class ContractService implements IContractService{
 	
 	@Override
 	public Optional<Contract> getContract(Integer requestid) {
-		return contractRepository.findOne(requestid);
+		return contractRepository.findById(requestid);
 	}
 
 }
