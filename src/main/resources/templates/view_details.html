@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Contract Details</title>
+</head>
+
+<link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
+<style>
+	h1{
+  color: black;
+  font-family: verdana;
+  font-size: 200%;
+  margin-left: 170px;
+}
+
+#addContract {
+width: 50%;
+}
+
+#addContract input[type=text]  {
+	width: 100%;
+	align: right;
+}
+
+#addContract select {
+	width: 100%;
+	align: right;
+}
+
+body {
+  background-color: aliceblue;
+}
+.sidenav {
+  height: 100%; 
+  width: 160px;
+  position: fixed; 
+  z-index: 1; 
+  top: 0px;
+  left: 10px;
+  background-color: darkgray; 
+  overflow-x: hidden;
+  padding-top: 20px;
+  font-family: verdana;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 15px;
+  color: dimgray;
+  display: block;
+  font-family: verdana;
+}
+
+#CMS{
+	
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.content {
+    margin-left: 170px;
+    font-family: verdana;
+}
+
+p{
+	margin-left: 15px;
+}
+
+</style>
+</head>
+<div class="sidenav">
+		<h2 id="CMS">CMS</h2>
+ 		 <a href="/">Home</a>
+ 		 <a href="/add_contracts">New Contract</a>
+ 		 <a href="/search_contracts">Search Contacts</a>
+ 		 <a>My Contracts</a>
+	</div>
+<body>
+
+
+
+ <form action="#" th:action="@{/api/contracts/{requestid}" th:object="${contract}" method="get" id="viewDetails">
+ 
+ <h1>Details</h1>
+ 
+ </form>
+
+</body>
+</html>

@@ -83,7 +83,7 @@ public class ContractController {
 	}
 	
 	@PutMapping("/api/contracts/{requestid}") 
-	public ResponseEntity<String> updateDetails(@PathVariable(name = "requestid") Long requestid, @RequestParam User user, @RequestParam List<Status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
+	public ResponseEntity<String> updateDetails(@PathVariable(name = "requestid") Integer requestid, @RequestParam User user, @RequestParam List<Status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
 			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements) {
 		
 		contractService.updateDetails(requestid, user, statusList, agreement_title, agreement_type, description, agreement_location, language, region, related_agreements);
