@@ -33,6 +33,8 @@ public class ContractController {
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
 		model.addAttribute("contract", new Contract());
+		List <User> users = contractService.getAllUsers();
+		model.addAttribute("users", users);
         return "add_contracts";
     }
 	

@@ -122,24 +122,6 @@ p{
         <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
     </tr>
         </table>
-=======
-   <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
-    	 <p>User: <select id="userid" name="userid">
-    	<option value="">Select a user</option>
-    	<option th:each="user : ${users}"
-    	th:value="${user.userid}"
-    	th:utext="${user.first_name} + ' ' + ${user.last_name}"/>
-    	</select></p>
-    	<p>Agreement Title: <input type="text" th:field="*{agreement_title}" /></p>
-    	<p>Agreement Type: <input type="text" th:field="*{agreement_type}" /></p>
-    	<p>Description: <input type="text" th:field="*{description}" /></p>
-        <p>Agreement Location: <input type="text" th:field="*{agreement_location}" /></p>
-        <p>Language: <input type="text" th:field="*{language}" /></p>
-        <p>Region: <input type="text" th:field="*{region}" /></p>
-        <p>Related Agreements: <input type="text" th:field="*{related_agreements}" /></p>
-        <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
->>>>>>> branch 'development_release2' of https://isgb.otago.ac.nz/info301/git/grana036/contract-mgmt-system.git
-    </form>
     </div>
 </body>
 </html>
