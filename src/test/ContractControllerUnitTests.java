@@ -1,4 +1,4 @@
-package test;
+package contracts.test;
 
 import java.util.ArrayList;
 import java.util.List;

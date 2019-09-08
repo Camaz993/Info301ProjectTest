@@ -80,12 +80,15 @@ p{
 <body>
 	<h1><b>Add Contracts</b></h1>
 	<div class="content">
-<<<<<<< HEAD
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
     <table>
     <tr>
-   		<td>User: <input type="text" th:field="*{user}" /></td>
-   		<td th:if="${#fields.hasErrors('user')}" th:errors="*{user}">User Error</td>
+        <td>User: <select id="userid" name="userid">
+    	<option value="">Select a user</option>
+    	<option th:each="user : ${users}"
+    	th:value="${user.userid}"
+    	th:utext="${user.first_name} + ' ' + ${user.last_name}"/>
+    	</select></td>
    	</tr>
    	<tr>
     	<td>Agreement Title: <input type="text"  th:field="*{agreement_title}"/></td>
