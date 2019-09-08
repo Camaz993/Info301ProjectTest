@@ -25,4 +25,6 @@ public interface IContractService {
 			String agreement_type, String description, String agreement_location, String language, 
 			String region, String related_agreements);
 
+	public List<User> getAllUsers();
+
 }

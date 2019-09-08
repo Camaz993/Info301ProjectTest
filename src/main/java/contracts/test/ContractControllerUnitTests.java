@@ -45,7 +45,7 @@ public class ContractControllerUnitTests {
 	private MockMvc mvc;
 	private ObjectMapper objectMapper;
 
-	private Contract contract1, contract2;
+	private Contract contract1, contract2, contract3;
 
 	@Before
 	public void setUp()
@@ -74,6 +74,19 @@ public class ContractControllerUnitTests {
 		contract2.setLanguage("spanish");
 		contract2.setRegion("queensland");
 		contract2.setRelated_agreements("different lawsuit");
+		
+		contract3 = new Contract();
+		//contract3.setUserid("ghi789");
+		//contract3.setStatusid("3");
+		contract3.setAgreement_title(null);
+		contract3.setAgreement_type("contract");
+		contract3.setDescription("contract");
+		contract3.setAgreement_location("nz");
+		contract3.setLanguage("english/maori");
+		contract3.setRegion("auckland");
+		contract3.setRelated_agreements("1");
+		
+		
 	}
 	
 	@Test
@@ -87,6 +100,17 @@ public class ContractControllerUnitTests {
 		assertEquals(201, status);
 	}
 
+	//@Test
+	//public void test_add_incomplete_contract() throws Exception
+	//{
+	//	MvcResult result = mvc.perform(post("/api/contracts").param("agreement_title", "Test Contract 2")
+	//			.param("agreement_type", "Test Contract").param("description", "Test Contract").param("agreement_location", "America")
+	//			.param("language", "american").param("region", "New York").param("related_agreements", "None")).andReturn();
+	//	
+	//	int status 
+//
+	//}
+	
 	@Test
 	public void test_get_all_contracts() throws Exception
 	{
