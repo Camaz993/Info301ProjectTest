@@ -76,6 +76,12 @@ p{
 	</div>
 	<div class="content">
 	<h2>Welcome to the Contract Management System</h2>
+	<div>
+    <div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
+            <form th:action="@{/logout}" method="post"> 
+                <input type="submit" value="Logout"/> 
+            </form>
+        </div>
 	</div>
 </body>
 </html>
