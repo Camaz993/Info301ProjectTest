@@ -87,6 +87,44 @@ p{
  
  <h1>Details</h1>
  
+ <table>
+ 
+ <tr>
+ <td>Request Id </td> <td th:text="${contract.requestid}"></td>
+ </tr>
+ <tr>
+ <td>User </td> <td th:text="${contract.user.username}"></td>
+  </tr>
+ <tr>
+ <td>Agreement Title </td> <td th:text="${contract.agreement_title}"></td>
+  </tr>
+ <tr>
+ <td>Agreement Type </td> <td th:text="${contract.agreement_type}"></td>
+  </tr>
+ <tr>
+ <td>Description </td> <td th:text="${contract.description}"></td>
+  </tr>
+ <tr>
+ <td>Agreement Location</td> <td th:text="${contract.agreement_location}"></td>
+  </tr>
+ <tr>
+ <td>Language </td> <td th:text="${contract.language}"></td>
+  </tr>
+ <tr>
+ <td>Region </td> <td th:text="${contract.region}"></td>
+  </tr>
+  <tr>
+ <td>Related Agreements </td> <td th:text="${contract.related_agreements}"></td>
+  </tr>
+   <tr>
+ <td>Status </td> <td th:text="${contract.statusList.statusid}"></td>
+  </tr>
+  <tr>
+   <td>Active </td> <td th:text="${contract.statusList.active}"></td>
+  </tr>
+ 
+ </table>
+ 
  </form>
 
 </body>
