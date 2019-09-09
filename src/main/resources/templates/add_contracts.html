@@ -80,22 +80,48 @@ p{
 <body>
 	<h1><b>Add Contracts</b></h1>
 	<div class="content">
-   <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
-    	 <p>User: <select id="userid" name="userid">
+    <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
+    <table>
+    <tr>
+        <td>User: <select id="userid" name="userid">
     	<option value="">Select a user</option>
     	<option th:each="user : ${users}"
     	th:value="${user.userid}"
     	th:utext="${user.first_name} + ' ' + ${user.last_name}"/>
-    	</select></p>
-    	<p>Agreement Title: <input type="text" th:field="*{agreement_title}" /></p>
-    	<p>Agreement Type: <input type="text" th:field="*{agreement_type}" /></p>
-    	<p>Description: <input type="text" th:field="*{description}" /></p>
-        <p>Agreement Location: <input type="text" th:field="*{agreement_location}" /></p>
-        <p>Language: <input type="text" th:field="*{language}" /></p>
-        <p>Region: <input type="text" th:field="*{region}" /></p>
-        <p>Related Agreements: <input type="text" th:field="*{related_agreements}" /></p>
-        <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
-    </form>
+    	</select></td>
+   	</tr>
+   	<tr>
+    	<td>Agreement Title: <input type="text"  th:field="*{agreement_title}"/></td>
+    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}">Title Error</td>
+    </tr>
+    <tr>
+    	<td>Agreement Type: <input type="text"  th:field="*{agreement_type}" /></td>
+    	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}">Type Error</td>
+    </tr>
+    <tr>
+    	<td>Description: <input type="text"  th:field="*{description}" /></td>
+    	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
+    </tr>
+    <tr>
+        <td>Agreement Location: <input type="text"  th:field="*{agreement_location}" /></td>
+        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
+    </tr>
+    <tr>
+        <td>Language: <input type="text"  th:field="*{language}" /></td>
+        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Language Error</td>
+    </tr>
+    <tr>
+        <td>Region: <input type="text"  th:field="*{region}" /></td>
+        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
+    </tr>
+    <tr>
+        <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
+        <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error</td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+    </tr>
+        </table>
     </div>
 </body>
 </html>

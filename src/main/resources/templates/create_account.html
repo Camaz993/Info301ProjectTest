@@ -10,29 +10,38 @@
 </style>
 </head>
 <body>
-<form>
+<form action="#" th:action="@{/api/staff}" th:object="${user}" method="post" id="addUser">
 	<h1>Add New User</h1>
-	<p> Fill in this form to create an account </p>
-   	<label for="first_name"><b>First Name</b></label>
-    <input type="text" placeholder="Enter First Name" name="first_name" required>
-    
-    <label for="last_name"><b>Last Name</b></label>
-    <input type="text" placeholder="Enter Last Name" name="last_name" required>
-	
-	<label for="role"><b>Role</b></label>
-    <input type="text" placeholder="Enter Role" name="role" required>
-   
-    <label for="username"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="username" required>
-   
-    <label for="password"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
-
-    <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
-    <hr>
-    
-    <button type="submit" class="registerbtn">Register</button>
+	<p> Fill in this form to create an account </p>    
+    <table>
+    <tr>
+   		<td>First Name: <input type="text" th:field="*{firstname}" /></td>
+   		<td th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Name Error</td>
+   	</tr>
+   	<tr>
+    	<td>Last Name: <input type="text"  th:field="*{lastname}"/></td>
+    	<td th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Name Error</td>
+    </tr>
+    <tr>
+    	<td>Role: <input type="text"  th:field="*{role}" /></td>
+    	<td th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</td>
+    </tr>
+    <tr>
+    	<td>Username: <input type="text"  th:field="*{username}" /></td>
+    	<td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</td>
+    </tr>
+    <tr>
+        <td>Password: <input type="text"  th:field="*{password}" /></td>
+        <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
+    </tr>
+    <tr>
+        <td>Repeat password: <input type="text"  th:field="*{pswrepeat}" /></td>
+        <td th:if="${#fields.hasErrors('pswrepeat')}" th:errors="*{pswrepeat}">Password Error</td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+    </tr>
+    </table>
 </form>
 
 </body>

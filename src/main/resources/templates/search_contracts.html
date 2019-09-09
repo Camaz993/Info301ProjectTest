@@ -78,12 +78,15 @@ p{
 <body>
 	<h1>Search for Contracts</h1>
 	<div class="content">
-    <form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
-    <label for="search">Search:</label><input name="search" id="search">
+    <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
+      <label for="search">Search:</label><input name="search" id="search"> 
     <p><input type="submit" value="Submit" /> </p>
     </form>
+    -->
+    <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
     <h2>Contracts</h2>
 	<table id="viewcontracts">
+	<thead>
 	<tr>
 	<td>Request Id</td>
     <td>Agreement Title</td>
@@ -91,6 +94,8 @@ p{
     <td>Description</td>
     <td>Agreement Location</td>
     </tr>
+    </thead>
+    </tbody>
     <tr th:each="contract : ${contracts}">
         <th th:text="${contract.requestid}"></th>
         <th th:text="${contract.agreement_title}"></th>
@@ -98,7 +103,46 @@ p{
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.agreement_location}"></th>
     </tr>
+    </tbody>
     </table>
     </div>
+    
+<script>
+// Accordion 
+function searchID() {
+
+	  // Declare variables 
+	  var input = document.getElementById("myInput");
+	  var filter = input.value.toUpperCase();
+	  var table = document.getElementById("viewcontracts");
+	  var trs = table.tBodies[0].getElementsByTagName("tr");
+
+	  // Loop through first tbody's rows
+	  for (var i = 0; i < trs.length; i++) {
+
+	    // define the row's cells
+	    var tds = trs[i].getElementsByTagName("th");
+
+	    // hide the row
+	    trs[i].style.display = "none";
+
+	    // loop through row cells
+	    for (var i2 = 0; i2 < tds.length; i2++) {
+
+	      // if there's a match
+	      if (tds[i2].innerHTML.toUpperCase().indexOf(filter) > -1) {
+
+	        // show the row
+	        trs[i].style.display = "";
+
+	        // skip to the next row
+	     	continue;
+
+	      }
+	    }
+	  }
+
+	}
+</script>
 </body>
 </html>
