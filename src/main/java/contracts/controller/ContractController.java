@@ -102,10 +102,10 @@ public class ContractController {
 		return contractService.getAllContracts();
 	}
 	
-	@RequestMapping("/contract/{requestid}")
+	@RequestMapping("/view_details/{requestid}")
 	@ResponseBody
-	public String getContract(@PathVariable("requestid") int requestid) {
-		return repo.findById(requestid).toString();
+	public Optional<Contract> getContract(@PathVariable("requestid") int requestid) {
+		return repo.findById(requestid);
 	}
 }
 	
