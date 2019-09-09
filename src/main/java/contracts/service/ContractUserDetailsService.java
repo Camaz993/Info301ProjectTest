@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import contracts.domain.User;
+import contracts.domain.CurrentUser;
 import contracts.repository.AccountRepository;
 
 @Service
@@ -23,7 +24,7 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
 		throw new UsernameNotFoundException("User not found!");
 	}
 	
-	return new UserPrincipal(user);
+	return new CurrentUser(user);
 
 }
 }

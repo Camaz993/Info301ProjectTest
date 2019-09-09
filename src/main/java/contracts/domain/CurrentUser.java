@@ -1,19 +1,19 @@
-package contracts.service;
+package contracts.domain;
 
 import java.util.Collection;
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import contracts.domain.User;
-
-public class UserPrincipal implements UserDetails {
+public class CurrentUser implements UserDetails {
 
 	private User user;
 	
-	public UserPrincipal(User user) {
+	public CurrentUser(User user) {
 		super();
 		this.user = user;
 	}
