@@ -90,10 +90,5 @@ public class ContractService implements IContractService{
 		contract.setRelated_agreements(related_agreements);
 		contractRepository.save(contract);
 	}
-	
-	@Override
-	public Optional<Contract> getContract(Integer requestid) {
-		return contractRepository.findById(requestid);
-	}
 
 }

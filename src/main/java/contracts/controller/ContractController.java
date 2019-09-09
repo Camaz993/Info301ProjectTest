@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import contracts.domain.Contract;
 import contracts.domain.Status;
 import contracts.domain.User;
+import contracts.repository.ContractRepository;
 import contracts.service.IContractService;
 
 @Controller
@@ -27,6 +29,9 @@ public class ContractController {
 	
 	@Autowired
 	private IContractService contractService;
+	
+	@Autowired
+	private ContractRepository repo;
 	
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
@@ -97,9 +102,10 @@ public class ContractController {
 		return contractService.getAllContracts();
 	}
 	
-	@GetMapping("/view_details/{requestid}")
-	public Optional<Contract> getContract(@PathVariable(name = "requestid")Integer requestid) {
-		return contractService.getContract(requestid);
+	@RequestMapping("/contract/{requestid}")
+	@ResponseBody
+	public String getContract(@PathVariable("requestid") int requestid) {
+		return repo.findById(requestid).toString();
 	}
 }
 	
