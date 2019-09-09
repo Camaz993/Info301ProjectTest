@@ -80,52 +80,61 @@ p{
  		 <a>My Contracts</a>
 	</div>
 <body>
-
-
-
- <form action="getContract">
+<div class = "content">
+ <form action=getContract>
  
  <h1>Details</h1>
  
- <table>
+  <table border="1">
  
  <tr>
- <td>Request Id </td> <td th:text="${contract.requestid}"></td>
+ <th>Request Id </th>
+ <td></td>
  </tr>
  <tr>
- <td>User </td> <td th:text="${contract.user.username}"></td>
+ <th>User </th> 
+ <td>User</td>
   </tr>
  <tr>
- <td>Agreement Title </td> <td th:text="${contract.agreement_title}"></td>
+ <th>Agreement Title </th> 
+ <td>AT</td>
   </tr>
  <tr>
- <td>Agreement Type </td> <td th:text="${contract.agreement_type}"></td>
+ <th>Agreement Type </th> 
+ <td>AT</td>
   </tr>
  <tr>
- <td>Description </td> <td th:text="${contract.description}"></td>
+ <th>Description </th> 
+ <td>D</td>
   </tr>
  <tr>
- <td>Agreement Location</td> <td th:text="${contract.agreement_location}"></td>
+ <th>Agreement Location</th> 
+ <td>AL</td>
   </tr>
  <tr>
- <td>Language </td> <td th:text="${contract.language}"></td>
+ <th>Language </th> 
+ <td>Lang</td>
   </tr>
  <tr>
- <td>Region </td> <td th:text="${contract.region}"></td>
+ <th>Region </th> 
+ <td>Reg</td>
   </tr>
   <tr>
- <td>Related Agreements </td> <td th:text="${contract.related_agreements}"></td>
+ <th>Related Agreements </th>
+ <td>RA</td>
   </tr>
    <tr>
- <td>Status </td> <td th:text="${contract.statusList.statusid}"></td>
+ <th>Status </th> 
+ <td>Stat</td>
   </tr>
   <tr>
-   <td>Active </td> <td th:text="${contract.statusList.active}"></td>
+   <th>Active </th> 
+   <td>Act</td>
   </tr>
  
  </table>
  
  </form>
-
+</div>
 </body>
 </html>
