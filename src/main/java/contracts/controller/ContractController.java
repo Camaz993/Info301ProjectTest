@@ -97,7 +97,7 @@ public class ContractController {
 		return contractService.getAllContracts();
 	}
 	
-	@GetMapping("/api/contracts/{requestid}")
+	@GetMapping("/view_details/{requestid}")
 	public Optional<Contract> getContract(@PathVariable(name = "requestid")Integer requestid) {
 		return contractService.getContract(requestid);
 	}
