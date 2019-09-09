@@ -92,8 +92,11 @@ p{
     <td>Agreement Location</td>
     </tr>
     <tr th:each="contract : ${contracts}">
-        <th th:text="${contract.requestid}"></th>
-        <th th:text="${contract.agreement_title}"></th>
+        <th>
+        	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}"></a>
+       		
+        </th>
+        <th th:text=${contract.agreement_title}></th>	 
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.agreement_location}"></th>
