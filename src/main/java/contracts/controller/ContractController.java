@@ -103,14 +103,18 @@ public class ContractController {
 	}
 	
 	@GetMapping("/contract/{requestid}")
+	@ResponseBody 
 	public Optional<Contract> getContract(@PathVariable("requestid") int requestid) {
 		return repo.findById(requestid);
 	}
 	
+	
+	
 	@GetMapping("/view_details/{requestid}")
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
-		model.addAttribute("contract", repo.findById(requestid));
+		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		return "view_details";
 	}
+
 }
 	
