@@ -93,7 +93,7 @@ p{
     </tr>
     <tr th:each="contract : ${contracts}">
         <th>
-        	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}"></a>
+        	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" target="_blank"></a>
         </th>
         <th th:text=${contract.agreement_title}></th>	 
         <th th:text="${contract.agreement_type}"></th>
