@@ -4,9 +4,68 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Create Account</title>
 <style>
-	h1 {
-	font-family: verdana;
-	}
+		h1{
+  color: black;
+  font-family: verdana;
+  font-size: 200%;
+  margin-left: 170px;
+}
+
+#addContract {
+width: 50%;
+}
+
+#addContract input[type=text]  {
+	width: 100%;
+	align: right;
+}
+
+#addContract select {
+	width: 100%;
+	align: right;
+}
+
+body {
+  background-color: aliceblue;
+}
+.sidenav {
+  height: 100%; 
+  width: 160px;
+  position: fixed; 
+  z-index: 1; 
+  top: 0px;
+  left: 10px;
+  background-color: darkgray; 
+  overflow-x: hidden;
+  padding-top: 20px;
+  font-family: verdana;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 15px;
+  color: dimgray;
+  display: block;
+  font-family: verdana;
+}
+
+#CMS{
+	
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.content {
+    margin-left: 170px;
+    font-family: verdana;
+}
+
+p{
+	margin-left: 15px;
+}
 </style>
 </head>
 <body>
@@ -33,10 +92,6 @@
     <tr>
         <td>Password: <input type="text"  th:field="*{password}" /></td>
         <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
-    </tr>
-    <tr>
-        <td>Repeat password: <input type="text"  th:field="*{pswrepeat}" /></td>
-        <td th:if="${#fields.hasErrors('pswrepeat')}" th:errors="*{pswrepeat}">Password Error</td>
     </tr>
     <tr>
         <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
