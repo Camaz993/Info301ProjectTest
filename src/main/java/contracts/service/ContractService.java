@@ -13,6 +13,7 @@ import contracts.repository.ContractRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 @Service
 public class ContractService implements IContractService{
 	
@@ -56,6 +57,11 @@ public class ContractService implements IContractService{
 	@Override
 	public List<Contract> searchContracts(String search) {
 		return contractRepository.searchContracts(search);
+	}
+	
+	@Override 
+	public List<Contract> findAllByOrderByIdAsc(){
+		return contractRepository.findAllByOrderByIdAsc();
 	}
 	
 	@Override

@@ -25,9 +25,9 @@ public class CurrentUser implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return user.getPassowrd();
+		return user.getPassword();
 	}
-
+	
 	@Override
 	public String getUsername() {
 		return user.getUsername();

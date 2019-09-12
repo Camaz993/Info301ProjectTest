@@ -53,6 +53,12 @@ public class ContractController {
 		return "search_contracts";
 	}
 	
+	@GetMapping("/index")
+	public String mostRecent(Model model) {
+		model.addAttribute("contracts", contractService.findAllByOrderByIdAsc());
+		return "index";
+	}
+	
 	@PostMapping("/api/contracts/search")
 	public List<Contract> searchContracts(@RequestParam String search)
 	{

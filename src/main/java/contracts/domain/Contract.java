@@ -1,5 +1,6 @@
 package contracts.domain;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,10 @@ public class Contract {
 	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	
+	@NotBlank(message="Date Updated cannot be null")
+	@Column(name = "date_updated")
+	private Date date_updated;
+	
 	public Contract(Integer requestid, User user, List<Status> statusid, String agreement_title, String agreement_type,
 			String description, String agreement_location, String language, String region, String related_agreements) {
 		super();
@@ -76,12 +81,21 @@ public class Contract {
 		this.language = language;
 		this.region = region;
 		this.related_agreements = related_agreements;
+		this.date_updated = date_updated;
 	}
 	
 	public Contract() {
 		
 	}
-	
+
+	public Date getDate_updated() {
+		return date_updated;
+	}
+
+	public void setDate_updated(Date date_updated) {
+		this.date_updated = date_updated;
+	}
+
 	public Integer getRequestid() {
 		return requestid;
 	}

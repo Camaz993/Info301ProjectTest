@@ -27,4 +27,6 @@ public interface IContractService {
 
 	public List<User> getAllUsers();
 
+	public List<Contract> findAllByOrderByIdAsc();
+
 }
