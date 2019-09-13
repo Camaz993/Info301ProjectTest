@@ -1,9 +1,11 @@
 package contracts.domain;
 
 import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -64,12 +66,11 @@ public class Contract {
 	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	
-	@NotBlank(message="Date Updated cannot be null")
 	@Column(name = "date_updated")
 	private Date date_updated;
 	
 	public Contract(Integer requestid, User user, List<Status> statusid, String agreement_title, String agreement_type,
-			String description, String agreement_location, String language, String region, String related_agreements) {
+			String description, String agreement_location, String language, String region, String related_agreements, Date date_updated) {
 		super();
 		this.requestid = requestid;
 		this.user = user;
@@ -86,7 +87,7 @@ public class Contract {
 	
 	public Contract() {
 		
-	}
+	} 
 
 	public Date getDate_updated() {
 		return date_updated;
