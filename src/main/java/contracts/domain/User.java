@@ -49,14 +49,8 @@ public class User {
 	
 	@NotBlank(message="Password cannot be blank")
 	@Column(name="password")
-	@Size(min = 8, max= 40, message = "Password must be between 8 and 40 characters")
 	//@JSONIgnore
 	private String password;
-	
-	@NotBlank(message="Please repeat your password")
-	@Transient
-	private String pswrepeat;
-	
 	
 	 @NotNull
 	 @Column(name = "locked")
@@ -112,9 +106,6 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getPswrepeat() {
-		return pswrepeat;
-	}
 	public boolean isLocked() {
 		return locked;
 	}
@@ -126,7 +117,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "user [userid=" + userid + ", firstname=" + firstname + ", lastname=" + lastname + ", role=" + role
-				+ ", username=" + username + ", passowrd=" + password + ", locked=" + locked + "]";
+				+ ", username=" + username + ", password=" + password + ", locked=" + locked + "]";
 	}
 	
 	

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Login Form</title>
+<link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
+<style>
+	h1{
+  color: black;
+  font-family: verdana;
+  font-size: 200%;
+  margin-left: 170px;
+}
+
+#addContract {
+width: 50%;
+}
+
+#addContract input[type=text]  {
+	width: 100%;
+	align: right;
+}
+
+#addContract select {
+	width: 100%;
+	align: right;
+}
+
+body {
+  background-color: aliceblue;
+}
+.sidenav {
+  height: 100%; 
+  width: 160px;
+  position: fixed; 
+  z-index: 1; 
+  top: 0px;
+  left: 10px;
+  background-color: darkgray; 
+  overflow-x: hidden;
+  padding-top: 20px;
+  font-family: verdana;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 15px;
+  color: dimgray;
+  display: block;
+  font-family: verdana;
+}
+
+#CMS{
+	
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.content {
+    margin-left: 170px;
+    font-family: verdana;
+}
+
+p{
+	margin-left: 15px;
+}
+
+</style>
+</head>
+<div class="sidenav">
+		<h2 id="CMS">CMS</h2>
+ 		 <a href="/">Home</a></li>
+ 		 <a href="/add_contracts">New Contract</a></li>
+ 		 <a href="/search_contracts">Search Contacts</a></li>
+ 		 <a>My Contracts</a></li>
+	</div>
+<body>
+	<h1><b>Add Contracts</b></h1>
+	<div class="content">
+    <table>
+   	<tr>
+    	<td>Username: <input type="text"  th:field="*{username}"/></td>
+    </tr>
+    <tr>
+    	<td>Password: <input type="text"  th:field="*{password}" /></td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+    </tr>
+        </table>
+    </div>
+</body>
+</html>
