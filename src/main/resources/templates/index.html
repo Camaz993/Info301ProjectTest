@@ -5,7 +5,7 @@
 <style>
 @charset "ISO-8859-1";
 
-#mostrecent td {
+#viewcontracts td {
     padding:20px;
     text-align:left;
     background-color: #888888;
@@ -96,7 +96,10 @@ p{
                 <input type="submit" value="Logout"/> 
             </form>
         </div>
-    <table id="mostrecent">
+    <div>
+    <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
+    <h2>Contracts</h2>
+	<table id="viewcontracts">
 	<thead>
 	<tr>
 	<td>Request Id</td>
@@ -104,6 +107,7 @@ p{
     <td>Agreement Type</td>
     <td>Description</td>
     <td>Agreement Location</td>
+    <td>Date Updated</td>
     </tr>
     </thead>
     </tbody>
@@ -113,9 +117,48 @@ p{
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.agreement_location}"></th>
+        <th th:text="${contract.date_updated}"></th>
     </tr>
     </tbody>
     </table>
-	</div>
+    </div>
+    
+<script>
+// Accordion 
+function searchID() {
+
+	  // Declare variables 
+	  var input = document.getElementById("myInput");
+	  var filter = input.value.toUpperCase();
+	  var table = document.getElementById("viewcontracts");
+	  var trs = table.tBodies[0].getElementsByTagName("tr");
+
+	  // Loop through first tbody's rows
+	  for (var i = 0; i < trs.length; i++) {
+
+	    // define the row's cells
+	    var tds = trs[i].getElementsByTagName("th");
+
+	    // hide the row
+	    trs[i].style.display = "none";
+
+	    // loop through row cells
+	    for (var i2 = 0; i2 < tds.length; i2++) {
+
+	      // if there's a match
+	      if (tds[i2].innerHTML.toUpperCase().indexOf(filter) > -1) {
+
+	        // show the row
+	        trs[i].style.display = "";
+
+	        // skip to the next row
+	     	continue;
+
+	      }
+	    }
+	  }
+
+	}
+</script>
 </body>
 </html>
