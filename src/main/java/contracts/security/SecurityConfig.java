@@ -37,9 +37,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	.and()
         .formLogin()
             .loginPage("/login")
-        	.defaultSuccessUrl("/index", true)
+        	.defaultSuccessUrl("/", true)
         	.permitAll()
-            .usernameParameter("username").passwordParameter("password");
+            .usernameParameter("username").passwordParameter("password")
+            .and()
+        .logout()                                    
+            .permitAll();
     }
 	
 	@RequestMapping(value = "/username", method = RequestMethod.GET)
