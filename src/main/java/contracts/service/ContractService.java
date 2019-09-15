@@ -73,18 +73,13 @@ public class ContractService implements IContractService{
 	}
 	
 	@Override
-	public void updateDetails(Integer requestid, User user, List<Status> statusList, String agreement_title, 
-			String agreement_type, String description, String agreement_location, String language, 
-			String region, String related_agreements) {
+	public void update(Integer requestid) {
 		
-		Optional<Contract> Optionalcontract = contractRepository.findById(requestid);
-		Contract contract = Optionalcontract.get();
-		contract.setUserid(user);
-		contract.setStatusid(statusList);
-		contract.setAgreement_title(agreement_title);
-		contract.setAgreement_type(agreement_type);
-		contract.setDescription(description);
-		contract.setAgreement_location(agreement_location);
+		Contract contract = contractRepository.findById(requestid).orElse(new Contract());
+		contract.setAgreement_title(contract.getAgreement_title());
+		contract.setAgreement_type(contract.getAgreement_type());
+		contract.setDescription(contract.getDescription());
+		contract.setAgreement_location(contract.getAgreement_location());
 		contract.setLanguage(language);
 		contract.setRegion(region);
 		contract.setRelated_agreements(related_agreements);

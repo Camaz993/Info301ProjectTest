@@ -79,11 +79,10 @@ public class ContractController {
 	}
 	
 	@GetMapping("/update_details") 
-	public String updateDetails(Integer requestid, @RequestParam User user, @RequestParam List<Status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
-			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements)
+	public String updateDetails(Integer requestid)
 	{
 		
-		contractService.updateDetails(requestid, user, statusList, agreement_title, agreement_type, description, agreement_location, language, region, related_agreements);
+		contractService.update(requestid);
  
 		return "update_details";
 		//return new ResponseEntity<>(HttpStatus.NO_CONTENT);
