@@ -47,16 +47,17 @@ public class ContractController {
 		return "index";
 	}
 	
-	@GetMapping("/search_contracts")
+	@GetMapping("search_contracts")
 	public String getAllContracts(Model model) {
 		model.addAttribute("contracts", contractService.getAllContracts());
 		return "search_contracts";
 	}
 	
-	@GetMapping("/index")
+	
+	@GetMapping("/")
 	public String mostRecent(Model model) {
-		model.addAttribute("contracts", contractService.findAllByOrderByIdAsc());
-		return "index";
+		model.addAttribute("contracts", contractService.getAllContracts());
+		return "";
 	}
 	
 	@PostMapping("/api/contracts/search")
