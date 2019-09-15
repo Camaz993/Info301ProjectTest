@@ -11,16 +11,16 @@
   margin-left: 170px;
 }
 
-#addContract {
+#addUser {
 width: 50%;
 }
 
-#addContract input[type=text]  {
+#addUser input[type=text]  {
 	width: 100%;
 	align: right;
 }
 
-#addContract select {
+#addUser select {
 	width: 100%;
 	align: right;
 }
@@ -50,10 +50,6 @@ body {
   font-family: verdana;
 }
 
-#CMS{
-	
-}
-
 .sidenav a:hover {
   color: #f1f1f1;
 }
@@ -69,6 +65,15 @@ p{
 </style>
 </head>
 <body>
+<div class="sidenav">
+		<h2>CMS</h2>
+ 		 <a href="/">Home</a></li>
+ 		 <a href="/add_contracts">New Contract</a></li>
+ 		 <a href="/search_contracts">Search Contacts</a></li>
+ 		 <a>Create Account</a></li>
+ 		 <a>My Contracts</a></li>
+	</div>
+<div class="content">
 <form action="#" th:action="@{/api/staff}" th:object="${user}" method="post" id="addUser">
 	<h1>Add New User</h1>
 	<p> Fill in this form to create an account </p>    
@@ -98,6 +103,6 @@ p{
     </tr>
     </table>
 </form>
-
+</div>
 </body>
 </html>
