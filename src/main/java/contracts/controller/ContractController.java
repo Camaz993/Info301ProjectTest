@@ -78,7 +78,7 @@ public class ContractController {
 		return contractService.searchContractType(search);
 	}
 	
-	@GetMapping("/update_details") 
+	@PutMapping("/update_details") 
 	public String updateDetails(Integer requestid, @RequestParam User user, @RequestParam List<Status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
 			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements)
 	{
@@ -105,6 +105,14 @@ public class ContractController {
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		return "view_details";
+	}
+	
+	@PostMapping("/archive_contracts")
+	public String archiveContract(Contract archivedContract) {
+		
+		contractService.archiveContract(archivedContract);
+		
+		return "archive_contracts";
 	}
 
 }
