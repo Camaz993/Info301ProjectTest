@@ -93,6 +93,7 @@ p{
     <td>Agreement Type</td>
     <td>Description</td>
     <td>Agreement Location</td>
+    <td>Update Details</td>
     </tr>
     </thead>
     </tbody>
@@ -104,6 +105,9 @@ p{
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.agreement_location}"></th>
+        <th>
+        	<a href="@{/update_details}" target="_blank">Update</a>
+        </th>
     </tr>
     </tbody>
     </table>

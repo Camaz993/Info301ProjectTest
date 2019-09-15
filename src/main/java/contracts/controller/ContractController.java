@@ -78,13 +78,15 @@ public class ContractController {
 		return contractService.searchContractType(search);
 	}
 	
-	@PutMapping("/api/contracts/{requestid}") 
-	public ResponseEntity<String> updateDetails(@PathVariable(name = "requestid") Integer requestid, @RequestParam User user, @RequestParam List<Status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
-			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements) {
+	@GetMapping("/update_details") 
+	public String updateDetails(Integer requestid, @RequestParam User user, @RequestParam List<Status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
+			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements)
+	{
 		
 		contractService.updateDetails(requestid, user, statusList, agreement_title, agreement_type, description, agreement_location, language, region, related_agreements);
  
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		return "update_details";
+		//return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 	@GetMapping("/api/contracts")
@@ -98,8 +100,6 @@ public class ContractController {
 	public Optional<Contract> getContract(@PathVariable("requestid") int requestid) {
 		return repo.findById(requestid);
 	}
-	
-	
 	
 	@GetMapping("/view_details/{requestid}")
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
