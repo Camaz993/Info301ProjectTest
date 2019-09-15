@@ -70,10 +70,10 @@ p{
 </head>
 <div class="sidenav">
 		<h2>CMS</h2>
- 		 <a href="/">Home</a></li>
- 		 <a href="/add_contracts">New Contract</a></li>
- 		 <a href="/search_contracts">Search Contacts</a></li>
- 		 <a>My Contracts</a></li>
+ 		 <a href="/">Home</a>
+ 		 <a href="/add_contracts">New Contract</a>
+ 		 <a href="/search_contracts">Search Contacts</a>
+ 		 <a>My Contracts</a>
 	</div>
 <body>
 	<h1>Search for Contracts</h1>
@@ -97,8 +97,10 @@ p{
     </thead>
     </tbody>
     <tr th:each="contract : ${contracts}">
-        <th th:text="${contract.requestid}"></th>
-        <th th:text="${contract.agreement_title}"></th>
+        <th>
+        	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" target="_blank"></a>
+        </th>
+        <th th:text=${contract.agreement_title}></th>	 
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.agreement_location}"></th>

@@ -21,7 +21,7 @@ public interface IContractService {
 	
 	public List<Contract> searchContractType(String search);
 	
-	public void updateDetails(Long requestid, User user, List<Status> statusList, String agreement_title, 
+	public void updateDetails(Integer requestid, User user, List<Status> statusList, String agreement_title, 
 			String agreement_type, String description, String agreement_location, String language, 
 			String region, String related_agreements);
 
