@@ -106,7 +106,7 @@ p{
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.agreement_location}"></th>
         <th>
-        	<a th:href="@{/update_details}" target="_blank">Update</a>
+        	<a th:href="@{/update_details/{requestid}(requestid=${contract.requestid})}" target="_blank">Update</a>
         </th>
     </tr>
     </tbody>

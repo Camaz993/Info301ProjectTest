@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -77,16 +78,6 @@ public class ContractController {
 	{
 		return contractService.searchContractType(search);
 	}
-	
-	@GetMapping("/update_details") 
-	public String updateDetails(Integer requestid)
-	{
-		
-		contractService.update(requestid);
- 
-		return "update_details";
-		//return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
 
 	@GetMapping("/api/contracts")
 	public List<Contract> allContracts()
@@ -104,6 +95,21 @@ public class ContractController {
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		return "view_details";
+	}
+	
+	@GetMapping("/update_details/{requestid}")
+	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
+		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
+		List <User> users = contractService.getAllUsers();
+		model.addAttribute("users", users);
+		return "update_details";
+	}
+	
+	@PostMapping("/api/updates")
+	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
+	{	
+		contractService.update(contract);
+		return "index";
 	}
 
 }

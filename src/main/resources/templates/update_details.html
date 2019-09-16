@@ -80,14 +80,16 @@ p{
 <body>
 	<h1><b>Update Details</b></h1>
 	<div class="content">
-    <form action="#" th:action="@{/update_details}" th:object="${contract}" method="get" id="updateContract">
+    <form action="#" th:action="@{/api/updates}" th:object="${contract}" method="post" id="updateContract">
+    <input type="hidden" th:field="*{requestid}"/>
     <table>
     <tr>
         <td>User: <select id="userid" name="userid">
     	<option value="">Select a user</option>
     	<option th:each="user : ${users}"
     	th:value="${user.userid}"
-    	th:utext="${user.first_name} + ' ' + ${user.last_name}"/>
+    	th:utext="${user.first_name} + ' ' + ${user.last_name}"
+    	th:selected="${user.userid==contract?.user?.userid}"/>
     	</select></td>
    	</tr>
    	<tr>

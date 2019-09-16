@@ -21,7 +21,7 @@ public interface IContractService {
 	
 	public List<Contract> searchContractType(String search);
 	
-	public void update(Integer requestid);
+	public Contract update(Contract contract);
 
 	public List<User> getAllUsers();
 
