@@ -103,6 +103,7 @@ p{
         <td>Password Repeat: <input type="password" th:field="*{passrepeat}"/></td>
         <td th:if="${#fields.hasErrors('passrepeat')}" th:errors="*{passrepeat}">Password Error</td>
         <td th:text="${message2}"></td>
+        <td th:text="${message3}"></td>
     </tr>
     <tr>
         <td><input type="submit" value="Submit"/></td>

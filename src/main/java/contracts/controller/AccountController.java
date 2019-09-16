@@ -30,6 +30,7 @@ public class AccountController {
 	private IAccountService accountService;
 
 	
+	
 	@GetMapping("/create_account")
     public String showSignUpForm(Model model) {
 		model.addAttribute("user", new User());
@@ -61,6 +62,15 @@ public class AccountController {
 		}
 		catch (IllegalArgumentException e){
 			model.addAttribute("message2", e.getMessage());
+			return "create_account";
+		}
+		try {	
+			if (accountService.validate(user.getPassword())==false) {
+				throw new IllegalArgumentException("Password must be between 6 and 20 characters, contain 1 digit, 1 lowercase letter, 1 uppercase letter and 1 special symbol @#$%");
+			}
+		}
+		catch (IllegalArgumentException e){
+			model.addAttribute("message3", e.getMessage());
 			return "create_account";
 		}
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
