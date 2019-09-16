@@ -63,8 +63,11 @@ public class Contract {
 	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	
+	@Column(name = "archived")
+	private String archived;
+	
 	public Contract(Integer requestid, User user, List<Status> statusid, String agreement_title, String agreement_type,
-			String description, String agreement_location, String language, String region, String related_agreements) {
+			String description, String agreement_location, String language, String region, String related_agreements, String archived) {
 		super();
 		this.requestid = requestid;
 		this.user = user;
@@ -76,6 +79,7 @@ public class Contract {
 		this.language = language;
 		this.region = region;
 		this.related_agreements = related_agreements;
+		this.archived = archived;
 	}
 	
 	public Contract() {
@@ -143,13 +147,21 @@ public class Contract {
 	public void setRelated_agreements(String related_agreements) {
 		this.related_agreements = related_agreements;
 	}
+	
+	public String getArchived() {
+		return archived;
+	}
+	
+	public void setArchived(String archived) {
+		this.archived = archived;
+	}
 
 	@Override
 	public String toString() {
 		return "contract [requestid=" + requestid + ", userid=" + user + ", statusid=" + statusid
 				+ ", agreement_title=" + agreement_title + ", agreement_type=" + agreement_type + ", description="
 				+ description + ", agreement_location=" + agreement_location + ", language=" + language + ", region="
-				+ region + ", related_agreements=" + related_agreements + "]";
+				+ region + ", related_agreements=" + related_agreements + ", archived=" + archived +"]";
 	}
 	
 	

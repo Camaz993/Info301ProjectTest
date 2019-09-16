@@ -49,7 +49,8 @@ public class ContractController {
 
 		if(br.hasErrors()) {
 		return "add_contracts";
-		}		
+		}
+		contract.setArchived("F");
 		contractService.addContract(contract);
 		return "index";
 	}
