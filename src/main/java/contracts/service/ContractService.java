@@ -76,6 +76,12 @@ public class ContractService implements IContractService{
 	public Contract update(Contract contract) {	
 		return contractRepository.save(contract);
 	}
+	
+	@Override
+	public void archiveContract(Contract archivedContract) {
+		contractRepository.archiveContract(archivedContract);
+		
+	}
 
 
 }

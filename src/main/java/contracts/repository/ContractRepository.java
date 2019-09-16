@@ -24,9 +24,7 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     @Query(value = "SELECT * FROM CONTRACT WHERE LOWER(Agreement_Type) LIKE CONCAT(LOWER(:search), '%') OR RequestID LIKE CONCAT(:search, '%')", nativeQuery = true)
     public List<Contract> searchContractType(@Param("search") String search);
     
-    /*@Modifying
-	@Query(value = "UPDATE CONTRACT SET userid = :user, Agreement_Title = :agreement_title, Agreement_Type = :agreement_type, Description = :description, Agreement_Location = :agreement_location, Language = :language, Region = :region, Related_Agreements = :related_agreements", nativeQuery = true)
-	public void updateDetails(@Param("user") User user, @Param("agreement_title") String agreement_title,
-			@Param("agreement_type") String agreement_type, @Param("description") String description, @Param("agreement_location") String agreement_location, 
-			@Param("language") String language, @Param("region") String region, @Param("related_agreements") String related_agreements);*/
+    @Query(value = "INSERT INTO ARCHIVED FROM CONTRACT WHERE ARCHIVED = 'true'", nativeQuery = true)
+    public void archiveContract(Contract archivedContract);
 }
+

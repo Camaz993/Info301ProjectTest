@@ -24,5 +24,7 @@ public interface IContractService {
 	public Contract update(Contract contract);
 
 	public List<User> getAllUsers();
+	
+	public void archiveContract(Contract archivedContract);
 
 }

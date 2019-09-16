@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -110,6 +109,14 @@ public class ContractController {
 	{	
 		contractService.update(contract);
 		return "index";
+	}
+	
+	@PostMapping("/archive_contracts")
+	public String archiveContract(Contract archivedContract) {
+		
+		contractService.archiveContract(archivedContract);
+		
+		return "archive_contracts";
 	}
 
 }
