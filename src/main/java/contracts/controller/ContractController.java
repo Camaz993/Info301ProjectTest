@@ -1,6 +1,7 @@
 package contracts.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import contracts.domain.Contract;
 import contracts.domain.Status;
 import contracts.domain.User;
+import contracts.repository.ContractRepository;
 import contracts.service.IContractService;
 
 @Controller
@@ -27,6 +31,9 @@ public class ContractController {
 	
 	@Autowired
 	private IContractService contractService;
+	
+	@Autowired
+	private ContractRepository repo;
 	
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
@@ -72,7 +79,7 @@ public class ContractController {
 	}
 	
 	@PutMapping("/api/contracts/{requestid}") 
-	public ResponseEntity<String> updateDetails(@PathVariable(name = "requestid") Long requestid, @RequestParam User user, @RequestParam List<Status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
+	public ResponseEntity<String> updateDetails(@PathVariable(name = "requestid") Integer requestid, @RequestParam User user, @RequestParam List<Status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
 			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements) {
 		
 		contractService.updateDetails(requestid, user, statusList, agreement_title, agreement_type, description, agreement_location, language, region, related_agreements);
@@ -80,4 +87,25 @@ public class ContractController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
+	@GetMapping("/api/contracts")
+	public List<Contract> allContracts()
+	{
+		return contractService.getAllContracts();
+	}
+	
+	@GetMapping("/contract/{requestid}")
+	@ResponseBody 
+	public Optional<Contract> getContract(@PathVariable("requestid") int requestid) {
+		return repo.findById(requestid);
+	}
+	
+	
+	
+	@GetMapping("/view_details/{requestid}")
+	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
+		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
+		return "view_details";
+	}
+
 }
+	
