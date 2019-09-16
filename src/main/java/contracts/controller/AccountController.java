@@ -42,7 +42,6 @@ public class AccountController {
 			return "create_account";
 		}
 		try {
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			if (accountService.userExists(user.getUsername())==true) {
 				Random r = new Random();
 			    String randomNumber = String.format("%04d", r.nextInt(1000));
@@ -52,9 +51,20 @@ public class AccountController {
 		}
 		}
 		catch (IllegalArgumentException e){
-			model.addAttribute("message", e.getMessage());
+			model.addAttribute("message1", e.getMessage());
 			return "create_account";
 		}
+		try {	
+			if (!(user.getPassword().equals(user.getPassrepeat()))) {
+				throw new IllegalArgumentException("Password must match password repeat");
+			}
+		}
+		catch (IllegalArgumentException e){
+			model.addAttribute("message2", e.getMessage());
+			return "create_account";
+		}
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setPassrepeat(passwordEncoder.encode(user.getPassrepeat()));
 		accountService.addAccount(user);
 		return "index";
 	}
