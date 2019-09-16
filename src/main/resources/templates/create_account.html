@@ -93,9 +93,14 @@ p{
     <tr>
     	<td>Username: <input type="text"  th:field="*{username}" /></td>
     	<td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</td>
+        <td th:text="${message}"></td>
     </tr>
     <tr>
-        <td>Password: <input type="text"  th:field="*{password}" /></td>
+        <td>Password: <input type="password"  th:field="*{password}" /></td>
+        <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
+    </tr>
+     <tr>
+        <td>Password Repeat: <input type="password"/></td>
         <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
     </tr>
     <tr>

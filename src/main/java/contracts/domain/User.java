@@ -12,6 +12,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.checkerframework.common.aliasing.qual.Unique;
+
 @Entity
 @Table(name = User.TABLE_NAME)
 //@SecondaryTable(name = Audit.TALBE_NAME)
@@ -44,7 +46,7 @@ public class User {
 	private String role;
 	
 	@NotBlank(message="Username cannot be blank")
-	@Column(name="username")
+	@Column(name="username", unique=true)
 	private String username;
 	
 	@NotBlank(message="Password cannot be blank")
