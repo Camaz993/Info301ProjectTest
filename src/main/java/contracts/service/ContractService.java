@@ -90,5 +90,10 @@ public class ContractService implements IContractService{
 		contract.setRelated_agreements(related_agreements);
 		contractRepository.save(contract);
 	}
+	
+	@Override
+	public void archiveContract(Integer requestid, String archived) {
+		contractRepository.archiveContract(requestid, archived);
+	}
 
 }

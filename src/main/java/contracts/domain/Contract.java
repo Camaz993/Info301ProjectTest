@@ -1,8 +1,9 @@
-package contracts.domain;
 
+package contracts.domain;
+ 
 import java.util.ArrayList;
 import java.util.List;
-
+ 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,16 +13,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-
-
+ 
+ 
 import javax.persistence.JoinColumn;
-
+ 
 @Entity
 @Table(name = Contract.TABLE_NAME)
 public class Contract {
 	
 	public static final String TABLE_NAME = "CONTRACT";
-
+ 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "requestid")
@@ -95,7 +96,7 @@ public class Contract {
 	public User getUser() {
 		return user;
 	}
-
+ 
 	public void setUserid(User user) {
 		this.user = user;
 	}
@@ -155,7 +156,7 @@ public class Contract {
 	public void setArchived(String archived) {
 		this.archived = archived;
 	}
-
+ 
 	@Override
 	public String toString() {
 		return "contract [requestid=" + requestid + ", userid=" + user + ", statusid=" + statusid

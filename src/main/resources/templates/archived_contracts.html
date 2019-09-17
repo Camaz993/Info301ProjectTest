@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Contract Search</title>
+<title>Archived Contracts</title>
 <link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
 <style>
     #viewcontracts td {
@@ -105,10 +105,6 @@ p{
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.agreement_location}"></th>
-         <th >
-       		<!--<input type="checkbox" th:field="${contract}">Archive</input>-->
-        	<button type="submit" onClick="return confirm('Are you sure you want to archive this contract?')" th:action="@{/archive_contracts/{requestid}}" th:object="${contract}" method="put"/>
-     	</th>
     </tr>
     </tbody>
     </table>

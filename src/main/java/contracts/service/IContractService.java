@@ -26,5 +26,7 @@ public interface IContractService {
 			String region, String related_agreements);
 
 	public List<User> getAllUsers();
+	
+	public void archiveContract(Integer requestid, String archived);
 
 }

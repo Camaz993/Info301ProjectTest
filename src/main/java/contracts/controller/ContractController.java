@@ -100,13 +100,18 @@ public class ContractController {
 		return repo.findById(requestid);
 	}
 	
-	
-	
 	@GetMapping("/view_details/{requestid}")
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		return "view_details";
 	}
-
+	
+	@PutMapping("/archive_contracts/{requestid}")
+	public ResponseEntity<String> archiveContract(@PathVariable(name = "requestid") Integer requestid, String archived) {
+		
+		contractService.archiveContract(requestid, archived);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }
 	
