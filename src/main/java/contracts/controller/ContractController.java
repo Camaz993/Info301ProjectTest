@@ -121,7 +121,7 @@ public class ContractController {
 	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
 	{	
 		contractService.update(contract);
-		return "index";
+		return "redirect:/";
 	}
 	
 	@PostMapping("/archive_contracts")
