@@ -87,7 +87,7 @@ p{
     	<option value="">Select a user</option>
     	<option th:each="user : ${users}"
     	th:value="${user.userid}"
-    	th:utext="${user.first_name} + ' ' + ${user.last_name}"/>
+    	th:utext="${user.firstname} + ' ' + ${user.lastname}"/>
     	</select></td>
    	</tr>
    	<tr>

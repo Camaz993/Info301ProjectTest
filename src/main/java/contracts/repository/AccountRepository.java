@@ -8,6 +8,6 @@ import contracts.domain.User;
 @Repository
 public interface AccountRepository extends JpaRepository<User, Integer> {
 	
-	User findByUsername(String username);
+	public User findByUsername(String username);
 
 }
