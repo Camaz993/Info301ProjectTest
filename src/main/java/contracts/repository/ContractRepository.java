@@ -22,6 +22,11 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     @Query(value = "SELECT * FROM CONTRACT WHERE LOWER(Agreement_Type) LIKE CONCAT(LOWER(:search), '%') OR RequestID LIKE CONCAT(:search, '%')", nativeQuery = true)
     public List<Contract> searchContractType(@Param("search") String search);
     
-    @Query(value = "UPDATE CONTRACT SET ARCHIVED = T", nativeQuery = true)
-    public void archiveContract(Contract contract);
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'T'", 
+    		  nativeQuery = true)
+    public List<Contract> getArchivedContracts();
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F' OR c.archived IS NULL", 
+  		  nativeQuery = true)
+  public List<Contract> getCurrentContracts();
 }

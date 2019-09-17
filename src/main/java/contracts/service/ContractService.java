@@ -44,8 +44,13 @@ public class ContractService implements IContractService{
 	
 	@Override
 	public List<Contract> getAllContracts() {
-		return contractRepository.findAll();
+		return contractRepository.getCurrentContracts();
 	}
+	
+	@Override
+    public Optional<Contract> findContract(Integer id) {
+        return contractRepository.findById(id);
+    }
 	
 	@Override
 	public List<User> getAllUsers() {
@@ -92,8 +97,8 @@ public class ContractService implements IContractService{
 	}
 	
 	@Override
-	public void archiveContract(Contract contract) {
-		contractRepository.archiveContract(contract);
+	public List<Contract> getArchivedContracts() {
+		return contractRepository.getArchivedContracts();
 	}
 
 }

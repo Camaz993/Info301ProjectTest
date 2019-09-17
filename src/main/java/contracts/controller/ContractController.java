@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -106,12 +107,17 @@ public class ContractController {
 		return "view_details";
 	}
 	
-	@PutMapping("/archive_contracts")
-	public String archiveContract(Contract contract) {
-		
-		contract.setArchived("T");
-		contractService.archiveContract(contract);
-		
+	@PostMapping("/archive_contracts/{requestid}")
+	public String archiveContract(@PathVariable("requestid") int requestid, Model model) {
+		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
+		foundContract.setArchived("T");
+		contractService.addContract(foundContract);
+		return "redirect:/archive_contracts";
+	}
+	
+	@GetMapping("/archive_contracts")
+	public String getArchivedContracts(Model model) {
+		model.addAttribute("contracts", contractService.getArchivedContracts());
 		return "archive_contracts";
 	}
 }

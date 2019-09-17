@@ -107,7 +107,10 @@ p{
         <th th:text="${contract.agreement_location}"></th>
          <th>
        		<!--<input type="checkbox" th:field="${contract}">Archive</input>-->
-        	<button type="submit" onClick="return confirm('Are you sure you want to archive this contract?')" th:action="@{/archive_contracts}" th:object="${contract}" method="put"/>
+       		<form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
+  				<input type="hidden"/>
+  				<button type="submit" id="submitButton"> </button>
+			</form>
      	</th>
     </tr>
     </tbody>
