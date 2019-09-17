@@ -27,6 +27,6 @@ public interface IContractService {
 
 	public List<User> getAllUsers();
 	
-	public void archiveContract(Integer requestid, String archived);
+	public void archiveContract(Contract contract);
 
 }

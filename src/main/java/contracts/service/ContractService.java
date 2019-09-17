@@ -92,8 +92,8 @@ public class ContractService implements IContractService{
 	}
 	
 	@Override
-	public void archiveContract(Integer requestid, String archived) {
-		contractRepository.archiveContract(requestid, archived);
+	public void archiveContract(Contract contract) {
+		contractRepository.archiveContract(contract);
 	}
 
 }

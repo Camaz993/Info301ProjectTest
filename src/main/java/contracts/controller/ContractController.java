@@ -106,12 +106,13 @@ public class ContractController {
 		return "view_details";
 	}
 	
-	@PutMapping("/archive_contracts/{requestid}")
-	public ResponseEntity<String> archiveContract(@PathVariable(name = "requestid") Integer requestid, String archived) {
+	@PutMapping("/archive_contracts")
+	public String archiveContract(Contract contract) {
 		
-		contractService.archiveContract(requestid, archived);
+		contract.setArchived("T");
+		contractService.archiveContract(contract);
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		return "archive_contracts";
 	}
 }
 	
