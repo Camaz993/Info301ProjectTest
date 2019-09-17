@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Contract Search</title>
+<title>Archived Contracts</title>
 <link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
 <style>
     #viewcontracts td {
@@ -76,7 +76,7 @@ p{
  		 <a>My Contracts</a>
 	</div>
 <body>
-	<h1>Search for Contracts</h1>
+	<h1>Archived Contracts</h1>
 	<div class="content">
     <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
       <label for="search">Search:</label><input name="search" id="search"> 
@@ -94,7 +94,6 @@ p{
     <td>Description</td>
     <td>Agreement Location</td>
     <td>Update Details</td>
-    <td>Archive Contract</td>
     </tr>
     </thead>
     </tbody>
@@ -107,12 +106,8 @@ p{
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.agreement_location}"></th>
         <th>
-        	<a th:href="@{/update_details/{requestid}(requestid=${contract.requestid})}" target="_blank">Update</a>
+        	<a th:href="@{/update_details}" target="_blank">Update</a>
         </th>
-        <th >
-       		<!--<input type="checkbox" th:field="${contract}">Archive</input>-->
-        	<input type="submit" onClick="return confirm('Are you sure you want to archive this contract?')" th:action="@{/archive_contracts}" th:object="${contract}" method="post"/>
-     	</th>
     </tr>
     </tbody>
     </table>

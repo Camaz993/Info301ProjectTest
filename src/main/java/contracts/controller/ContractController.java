@@ -78,15 +78,6 @@ public class ContractController {
 	{
 		return contractService.searchContractType(search);
 	}
-	
-	@PutMapping("/api/contracts/{requestid}") 
-	public ResponseEntity<String> updateDetails(@PathVariable(name = "requestid") Integer requestid, @RequestParam User user, @RequestParam List<Status> statusList, @RequestParam String agreement_title, @RequestParam String agreement_type,
-			@RequestParam String description, @RequestParam String agreement_location, @RequestParam String language, @RequestParam String region, @RequestParam String related_agreements) {
-		
-		contractService.updateDetails(requestid, user, statusList, agreement_title, agreement_type, description, agreement_location, language, region, related_agreements);
- 
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
 
 	@GetMapping("/api/contracts")
 	public List<Contract> allContracts()
@@ -100,12 +91,33 @@ public class ContractController {
 		return repo.findById(requestid);
 	}
 	
-	
-	
 	@GetMapping("/view_details/{requestid}")
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		return "view_details";
+	}
+	
+	@GetMapping("/update_details/{requestid}")
+	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
+		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
+		List <User> users = contractService.getAllUsers();
+		model.addAttribute("users", users);
+		return "update_details";
+	}
+	
+	@PostMapping("/api/updates")
+	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
+	{	
+		contractService.update(contract);
+		return "index";
+	}
+	
+	@PostMapping("/archive_contracts")
+	public String archiveContract(Contract archivedContract) {
+		
+		contractService.archiveContract(archivedContract);
+		
+		return "archive_contracts";
 	}
 
 }

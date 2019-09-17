@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Add Contract</title>
+<link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
+<style>
+	h1{
+  color: black;
+  font-family: verdana;
+  font-size: 200%;
+  margin-left: 170px;
+}
+
+#addContract {
+width: 50%;
+}
+
+#addContract input[type=text]  {
+	width: 100%;
+	align: right;
+}
+
+#addContract select {
+	width: 100%;
+	align: right;
+}
+
+body {
+  background-color: aliceblue;
+}
+.sidenav {
+  height: 100%; 
+  width: 160px;
+  position: fixed; 
+  z-index: 1; 
+  top: 0px;
+  left: 10px;
+  background-color: darkgray; 
+  overflow-x: hidden;
+  padding-top: 20px;
+  font-family: verdana;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 15px;
+  color: dimgray;
+  display: block;
+  font-family: verdana;
+}
+
+#CMS{
+	
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.content {
+    margin-left: 170px;
+    font-family: verdana;
+}
+
+p{
+	margin-left: 15px;
+}
+
+</style>
+</head>
+<div class="sidenav">
+		<h2 id="CMS">CMS</h2>
+ 		 <a href="/">Home</a></li>
+ 		 <a href="/add_contracts">New Contract</a></li>
+ 		 <a href="/search_contracts">Search Contacts</a></li>
+ 		 <a>My Contracts</a></li>
+	</div>
+<body>
+	<h1><b>Update Details</b></h1>
+	<div class="content">
+    <form action="#" th:action="@{/api/updates}" th:object="${contract}" method="post" id="updateContract">
+    <input type="hidden" th:field="*{requestid}"/>
+    <table>
+    <tr>
+        <td>User: <select id="userid" name="userid">
+    	<option value="">Select a user</option>
+    	<option th:each="user : ${users}"
+    	th:value="${user.userid}"
+    	th:utext="${user.first_name} + ' ' + ${user.last_name}"
+    	th:selected="${user.userid==contract?.user?.userid}"/>
+    	</select></td>
+   	</tr>
+   	<tr>
+    	<td>Agreement Title: <input type="text"  th:field="*{agreement_title}"/></td>
+    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}">Title Error</td>
+    </tr>
+    <tr>
+    	<td>Agreement Type: <input type="text"  th:field="*{agreement_type}" /></td>
+    	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}">Type Error</td>
+    </tr>
+    <tr>
+    	<td>Description: <input type="text"  th:field="*{description}" /></td>
+    	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
+    </tr>
+    <tr>
+        <td>Agreement Location: <input type="text"  th:field="*{agreement_location}" /></td>
+        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
+    </tr>
+    <tr>
+        <td>Language: <input type="text"  th:field="*{language}" /></td>
+        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Language Error</td>
+    </tr>
+    <tr>
+        <td>Region: <input type="text"  th:field="*{region}" /></td>
+        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
+    </tr>
+    <tr>
+        <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
+        <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error</td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+    </tr>
+        </table>
+    </div>
+</body>
+</html>
