@@ -1,8 +1,11 @@
 package contracts.domain;
 
+import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -66,8 +69,11 @@ public class Contract {
 	@Column(name = "archived")
 	private String archived;
 	
+	@Column(name = "date_updated")
+	private Date date_updated;
+	
 	public Contract(Integer requestid, User user, List<Status> statusid, String agreement_title, String agreement_type,
-			String description, String agreement_location, String language, String region, String related_agreements, String archived) {
+			String description, String agreement_location, String language, String region, String related_agreements, String archived, Date date_updated) {
 		super();
 		this.requestid = requestid;
 		this.user = user;
@@ -80,10 +86,19 @@ public class Contract {
 		this.region = region;
 		this.related_agreements = related_agreements;
 		this.archived = archived;
+		this.date_updated = date_updated;
 	}
 	
 	public Contract() {
 		
+	} 
+
+	public Date getDate_updated() {
+		return date_updated;
+	}
+
+	public void setDate_updated(Date date_updated) {
+		this.date_updated = date_updated;
 	}
 	
 	public Integer getRequestid() {

@@ -1,5 +1,8 @@
 package contracts.controller;
 
+import java.sql.Date;
+
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,14 +54,23 @@ public class ContractController {
 		return "add_contracts";
 		}
 		contract.setArchived("F");
+		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		contract.setDate_updated(timeNow);
 		contractService.addContract(contract);
-		return "index";
+		return "redirect:/";
 	}
 	
 	@GetMapping("/search_contracts")
 	public String getAllContracts(Model model) {
 		model.addAttribute("contracts", contractService.getAllContracts());
 		return "search_contracts";
+	}
+	
+	
+	@GetMapping("/")
+	public String mostRecent(Model model) {
+		model.addAttribute("contracts", contractService.getAllContracts());
+		return "/index";
 	}
 	
 	@PostMapping("/api/contracts/search")

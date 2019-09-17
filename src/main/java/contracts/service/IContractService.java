@@ -27,4 +27,5 @@ public interface IContractService {
 	
 	public void archiveContract(Contract archivedContract);
 
+	public List<Contract> findAllByOrderByIdAsc();
 }
