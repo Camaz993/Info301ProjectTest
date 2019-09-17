@@ -1,7 +1,6 @@
 package contracts.controller;
 
 import java.sql.Date;
-
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +8,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -109,26 +109,17 @@ public class ContractController {
 		return "view_details";
 	}
 	
-	@GetMapping("/update_details/{requestid}")
-	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
-		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
-		List <User> users = contractService.getAllUsers();
-		model.addAttribute("users", users);
-		return "update_details";
+	@PostMapping("/archive_contracts/{requestid}")
+	public String archiveContract(@PathVariable("requestid") int requestid, Model model) {
+		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
+		foundContract.setArchived("T");
+		contractService.addContract(foundContract);
+		return "redirect:/archive_contracts";
 	}
 	
-	@PostMapping("/api/updates")
-	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
-	{	
-		contractService.update(contract);
-		return "redirect:/";
-	}
-	
-	@PostMapping("/archive_contracts")
-	public String archiveContract(Contract archivedContract) {
-		
-		contractService.archiveContract(archivedContract);
-		
+	@GetMapping("/archive_contracts")
+	public String getArchivedContracts(Model model) {
+		model.addAttribute("contracts", contractService.getArchivedContracts());
 		return "archive_contracts";
 	}
 

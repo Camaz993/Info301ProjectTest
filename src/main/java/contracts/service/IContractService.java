@@ -10,6 +10,8 @@ import contracts.domain.User;
 public interface IContractService {
 	
 	public void addContract(Contract newContract);
+	
+	public Optional<Contract> findContract(Integer id);
 
 	public List<Contract> getAllContracts();
 	
@@ -26,6 +28,8 @@ public interface IContractService {
 	public List<User> getAllUsers();
 	
 	public void archiveContract(Contract archivedContract);
+	
+	public List<Contract> getArchivedContracts();
 
 	public List<Contract> findAllByOrderByIdAsc();
 }
