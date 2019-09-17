@@ -6,7 +6,7 @@
 <link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
 <style>
 @charset "ISO-8859-1";
-
+ 
 #viewcontracts td {
     padding:20px;
     text-align:left;
@@ -20,18 +20,18 @@
     padding: 10px;
     font-weight:lighter;
     }
-
+ 
 h1{
   color: black;
   font-family: verdana;
   font-size: 200%;
   margin-left: 170px;
 }
-
+ 
 body {
   background-color: aliceblue;
 }
-
+ 
 .sidenav {
   height: 100%; 
   width: 160px;
@@ -44,7 +44,7 @@ body {
   padding-top: 20px;
   font-family: verdana;
 }
-
+ 
 .sidenav a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
@@ -53,20 +53,20 @@ body {
   display: block;
   font-family: verdana;
 }
-
+ 
 #CMS{
 	
 }
-
+ 
 .sidenav a:hover {
   color: #f1f1f1;
 }
-
+ 
 .content {
     margin-left: 170px;
     font-family: verdana;
 }
-
+ 
 p{
 	margin-left: 15px;
 }
@@ -124,43 +124,43 @@ p{
     </tbody>
     </table>
     </div>
-
+ 
     
 <script>
 // Accordion 
 function searchID() {
-
+ 
 	  // Declare variables 
 	  var input = document.getElementById("myInput");
 	  var filter = input.value.toUpperCase();
 	  var table = document.getElementById("viewcontracts");
 	  var trs = table.tBodies[0].getElementsByTagName("tr");
-
+ 
 	  // Loop through first tbody's rows
 	  for (var i = 0; i < trs.length; i++) {
-
+ 
 	    // define the row's cells
 	    var tds = trs[i].getElementsByTagName("th");
-
+ 
 	    // hide the row
 	    trs[i].style.display = "none";
-
+ 
 	    // loop through row cells
 	    for (var i2 = 0; i2 < tds.length; i2++) {
-
+ 
 	      // if there's a match
 	      if (tds[i2].innerHTML.toUpperCase().indexOf(filter) > -1) {
-
+ 
 	        // show the row
 	        trs[i].style.display = "";
-
+ 
 	        // skip to the next row
 	     	continue;
-
+ 
 	      }
 	    }
 	  }
-
+ 
 	}
 </script>
 </body>

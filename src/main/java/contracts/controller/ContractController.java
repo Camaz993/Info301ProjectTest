@@ -57,7 +57,7 @@ public class ContractController {
 	@GetMapping("/")
 	public String mostRecent(Model model) {
 		model.addAttribute("contracts", contractService.getAllContracts());
-		return "";
+		return "/";
 	}
 	
 	@PostMapping("/api/contracts/search")
