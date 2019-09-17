@@ -1,5 +1,7 @@
 package contracts.controller;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -42,7 +44,9 @@ public class ContractController {
 
 		if(br.hasErrors()) {
 		return "add_contracts";
-		}		
+		}
+		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		contract.setDate_updated(timeNow);
 		contractService.addContract(contract);
 		return "redirect:/";
 	}
