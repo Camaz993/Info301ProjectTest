@@ -44,7 +44,7 @@ public class ContractController {
 		return "add_contracts";
 		}		
 		contractService.addContract(contract);
-		return "index";
+		return "redirect:/";
 	}
 	
 	@GetMapping("search_contracts")
@@ -57,7 +57,7 @@ public class ContractController {
 	@GetMapping("/")
 	public String mostRecent(Model model) {
 		model.addAttribute("contracts", contractService.getAllContracts());
-		return "/";
+		return "/index";
 	}
 	
 	@PostMapping("/api/contracts/search")
