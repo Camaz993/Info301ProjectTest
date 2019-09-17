@@ -91,8 +91,9 @@ p{
  		 <a>My Contracts</a></li>
  		 <p class="sub">View your assigned contracts</p>
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<div class="content">
-	<body>
+	<body onload="sortByDate(); showTen();">
 	<h2>Welcome to the Contract Management System</h2>
 	<div>
     <div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
@@ -101,7 +102,6 @@ p{
             </form>
         </div>
     <div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<table id="viewcontracts">
 	<thead>
 	<tr>
@@ -124,15 +124,15 @@ p{
     </tr>
     </tbody>
     </table>
-    <button>Sort by date</button>
     </div>
  
      
 <script>
-$("table > tbody > tr").hide().slice(0, 10).show();
-$(".show-all").on("click", function() {
-  $("tbody > tr", $(this).prev()).show();
-});
+function showTen(){
+	$("table > tbody > tr").hide().slice(0, 10).show();
+	$(".show-all").on("click", function() {
+	  $("tbody > tr", $(this).prev()).show();
+	});}
 
 function convertDate(d) {
 	  var p = d.split("-");
