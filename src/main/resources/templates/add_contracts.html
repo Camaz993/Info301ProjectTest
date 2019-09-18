@@ -5,58 +5,120 @@
 <title>Add Contract</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
-<div class="sidenav">
-		<h2 id="CMS">CMS</h2>
- 		 <a href="/">Home</a></li>
- 		 <a href="/add_contracts">New Contract</a></li>
- 		 <a href="/search_contracts">Search Contacts</a></li>
- 		 <a>My Contracts</a></li>
-	</div>
 <body>
-	<h1><b>Add Contracts</b></h1>
-	<div class="content">
-    <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
-    <table>
-    <tr>
-        <td>User: <select id="userid" name="userid">
-    	<option value="">Select a user</option>
-    	<option th:each="user : ${users}"
-    	th:value="${user.userid}"
-    	th:utext="${user.first_name} + ' ' + ${user.last_name}"/>
-    	</select></td>
-   	</tr>
-   	<tr>
-    	<td>Agreement Title: <input type="text"  th:field="*{agreement_title}"/></td>
-    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}">Title Error</td>
-    </tr>
-    <tr>
-    	<td>Agreement Type: <input type="text"  th:field="*{agreement_type}" /></td>
-    	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}">Type Error</td>
-    </tr>
-    <tr>
-    	<td>Description: <input type="text"  th:field="*{description}" /></td>
-    	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
-    </tr>
-    <tr>
-        <td>Agreement Location: <input type="text"  th:field="*{agreement_location}" /></td>
-        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
-    </tr>
-    <tr>
-        <td>Language: <input type="text"  th:field="*{language}" /></td>
-        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Language Error</td>
-    </tr>
-    <tr>
-        <td>Region: <input type="text"  th:field="*{region}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
-    </tr>
-    <tr>
-        <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
-        <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error</td>
-    </tr>
-    <tr>
-        <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
-    </tr>
-        </table>
+	<div class="header">
+		<h1>Contract Management</h1>
+	</div>
+	<div class="sidenav">
+			<div>
+	 		<a href="/">Home</a>
+	 		</div>
+	 		<div>
+	 		<a href="/add_contracts">New Contract</a></li>
+	 		<p class="sub">Create a new contract</p>
+	 		</div>
+	 		<div>
+	 		<a href="/search_contracts">Search Contacts</a></li>
+	 		<p class="sub">Search for a contract</p>
+	 		</div>
+	 		<div>
+	 		<a>My Contracts</a></li>
+	 		<p class="sub">View your assigned contracts</p>
+ 			</div>
+	</div>
+        
+    <div class="content">
+    	<h2>Select Contract Type: </h2>    
+    	<select id="dropdown" onchange="changeStatus()">
+		    <option value="-1">Select Contract Type</option>
+		    <option value="in_negotiation">In Negotiation</option>
+		    <option value="operative">Operative</option>
+		    <option value="expired">Expired</option>
+		</select>
+    <p><br></p>
+    <h2>Enter Contract Details:</h2>
+	   <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract"> 
+	    
+	   <table>
+	    <tr>
+	        <td>User: <select id="userid" name="userid">
+	    	<option value="">Select a user</option>
+	    	<option th:each="user : ${users}"
+	    	th:value="${user.userid}"
+	    	th:utext="${user.first_name} + ' ' + ${user.last_name}"/>
+	    	</select></td>
+	   	</tr>
+	   	
+	   	<tr>
+	    	<td>Agreement Title: <input type="text"  th:field="*{agreement_title}"/></td>
+	    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}">Title Error</td>
+	    </tr>
+	    <tr>
+	    	<td>Agreement Type: <input type="text"  th:field="*{agreement_type}" /></td>
+	    	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}">Type Error</td>
+	    </tr>
+	    <tr>
+	    	<td>Description: <input type="text"  th:field="*{description}"/></td>
+	    	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
+	    </tr>
+	    <tr>
+	        <td>Agreement Location: <input type="text"  th:field="*{agreement_location}" /></td>
+	        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
+	    </tr>
+	    <tr>
+	        <td>Language: <input type="text"  th:field="*{language}" /></td>
+	        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Language Error</td>
+	    </tr>
+	    <tr>
+	        <td>Region: <input type="text"  th:field="*{region}" /></td>
+	        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
+	    </tr>
+	    <tr>
+	        <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
+	        <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error</td>
+	    </tr>
+	        </table>
+	        
+	    </form>
+	    
+	    
+	    
+	    
+	    <form action="#" id="in_negotiation" class="display-none" method="post">
+	    <table>
+	    	<tr>
+	    		<td>Active: <input type="text" /></td>
+	    	</tr>
+	    </table>
+	    </form> 
+	    
+		
+		<p><input type="button" value="Submit" onclick="submit()"/> <input type="reset" value="Reset"/></p>
+		 
+		<script type="text/javascript">
+		 
+		    function changeStatus() {
+		        var allForms = document.getElementsByTagName('form');
+		        var dropdown = document.getElementById("dropdown");
+		        if (dropdown.value != "-1") {
+		            var form = document.getElementById(dropdown.value);
+		            for (var i = 0; i < allForms.length; i++) {
+		                allForms[i].setAttribute("class", "display-none");
+		            }
+		            form.setAttribute("class", "");
+		        }
+		        var contractForm = document.getElementById("addContract");
+		        contractForm.setAttribute("class", "");
+		    }
+		    
+		    function submit(){
+		    	document.getElementById("addContract").submit();
+   				document.getElementById(dropdown.value).submit();
+		    }
+		</script>
+    
+    
+       
     </div>
 </body>
 </html>
