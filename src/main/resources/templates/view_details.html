@@ -3,26 +3,40 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title th:text ="${selectedContract.agreement_title}"></title>
-</head>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
-<div class="sidenav">
-		<h2 id="CMS">CMS</h2>
- 		 <a href="/">Home</a>
- 		 <a href="/add_contracts">New Contract</a>
- 		 <a href="/search_contracts">Search Contacts</a>
- 		 <a>My Contracts</a>
-	</div>
 <body>
-<div class = "content">
+<div class="header">
+	<h1>Contract Management</h1>
+</div>
+
+<div class="sidenav">
+			<div>
+	 		<a href="/">Home</a>
+	 		</div>
+	 		<div>
+	 		<a href="/add_contracts">New Contract</a></li>
+	 		<p class="sub">Create a new contract</p>
+	 		</div>
+	 		<div>
+	 		<a href="/search_contracts">Search Contacts</a></li>
+	 		<p class="sub">Search for a contract</p>
+	 		</div>
+	 		<div>
+	 		<a>My Contracts</a></li>
+	 		<p class="sub">View your assigned contracts</p>
+ 			</div>
+</div>
+
+<div class="content">
  <form>
  
- <h1 th:text ="${selectedContract.agreement_title}"></h1>
+ <h2 th:text ="${selectedContract.agreement_title}"></h2>
  
-  <table>
+  <table class = "viewdetails">
  
  <tr>
- <th>Request Id </th>
+ <th>Request Id</th>
  <td th:text ="${selectedContract.requestid}"/>
  </tr>
  <tr>
