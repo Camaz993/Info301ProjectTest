@@ -83,16 +83,16 @@ public class User {
 	public void setUserid(Integer userid) {
 		this.userid = userid;
 	}
-	public String getFirst_name() {
+	public String getFirstname() {
 		return firstname;
 	}
-	public void setFirst_name(String firstname) {
+	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-	public String getLast_name() {
+	public String getLastname() {
 		return lastname;
 	}
-	public void setLast_name(String lastname) {
+	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
 	public String getRole() {
