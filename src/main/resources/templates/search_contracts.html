@@ -112,7 +112,7 @@ p{
         <th>
         	<a th:href="@{/update_details/{requestid}(requestid=${contract.requestid})}" target="_blank">Update</a>
         </th>
-<th>
+		<th>
        		<form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
   				<button onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>

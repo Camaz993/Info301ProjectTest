@@ -98,6 +98,15 @@ public class ContractService implements IContractService{
 	public List<Contract> getArchivedContracts() {
 		return contractRepository.getArchivedContracts();
 	}
+	
+	@Override
+	public void unarchiveContract(Contract unarchiveContract) {
+		contractRepository.unarchiveContract(unarchiveContract);
+	}
 
+	@Override
+	public List<Contract> getUnarchivedContracts() {
+		return contractRepository.getCurrentContracts();
+	}
 
 }

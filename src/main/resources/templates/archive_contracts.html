@@ -94,6 +94,7 @@ p{
     <td>Agreement Type</td>
     <td>Description</td>
     <td>Agreement Location</td>
+    <td>Unarchive Contract</td>
     </tr>
     </thead>
     </tbody>
@@ -105,6 +106,12 @@ p{
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.agreement_location}"></th>
+        <th>
+       		<form action="#" th:action="@{/unarchive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
+  				<input type="hidden"/>
+  				<button onclick="return confirm('Are you sure want to unarchive this?');" type="submit" id="submitButton">Unarchive</button>
+			</form>
+     	</th>
     </tr>
     </tbody>
     </table>
