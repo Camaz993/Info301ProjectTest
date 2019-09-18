@@ -5,48 +5,66 @@
 <title>Contract Search</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
-<div class="sidenav">
-		<h2>CMS</h2>
- 		 <a href="/">Home</a>
- 		 <a href="/add_contracts">New Contract</a>
- 		 <a href="/search_contracts">Search Contacts</a>
- 		 <a>My Contracts</a>
-	</div>
 <body>
-	<h1>Search for Contracts</h1>
+
+	<div class="header">
+	<h1>Contract Management</h1>
+	</div>
+	
+	<div class="sidenav">
+			<div>
+	 		<a href="/">Home</a>
+	 		</div>
+	 		<div>
+	 		<a href="/add_contracts">New Contract</a></li>
+	 		<p class="sub">Create a new contract</p>
+	 		</div>
+	 		<div>
+	 		<a href="/search_contracts">Search Contacts</a></li>
+	 		<p class="sub">Search for a contract</p>
+	 		</div>
+	 		<div>
+	 		<a>My Contracts</a></li>
+	 		<p class="sub">View your assigned contracts</p>
+ 			</div>
+	</div>
+	
 	<div class="content">
-    <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
-      <label for="search">Search:</label><input name="search" id="search"> 
-    <p><input type="submit" value="Submit" /> </p>
-    </form>
-    -->
-    <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
-    <h2>Contracts</h2>
-	<table id="viewcontracts">
-	<thead>
-	<tr>
-	<td>Request Id</td>
-    <td>Agreement Title</td>
-    <td>Agreement Type</td>
-    <td>Description</td>
-    <td>Agreement Location</td>
-    </tr>
-    </thead>
-    </tbody>
-    <tr th:each="contract : ${contracts}">
-        <th>
-        	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" target="_blank"></a>
-        </th>
-        <th th:text=${contract.agreement_title}></th>	 
-        <th th:text="${contract.agreement_type}"></th>
-        <th th:text="${contract.description}"></th>
-        <th th:text="${contract.agreement_location}"></th>
-    </tr>
-    </tbody>
-    </table>
+		<h2>Search for Contracts</h2>
+	
+	    <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
+	      <label for="search">Search:</label><input name="search" id="search"> 
+	    <p><input type="submit" value="Submit" /> </p>
+	    </form>
+	    -->
+	    <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
+	    <h2>Contracts</h2>
+		<table id="viewcontracts" class="viewcontracts">
+			<thead>
+				<tr>
+					<th>Request Id</th>
+				    <th>Agreement Title</th>
+				    <th>Agreement Type</th>
+				    <th>Description</th>
+				    <th>Agreement Location</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+		    	<tr th:each="contract : ${contracts}">
+			        <td>
+			        	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" target="_blank"></a>
+			        </td>
+			        <td th:text=${contract.agreement_title}></td>	 
+			        <td th:text="${contract.agreement_type}"></td>
+			        <td th:text="${contract.description}"></td>
+			        <td th:text="${contract.agreement_location}"></td>
+		    	</tr>
+		    </tbody>
+	    </table>
     </div>
     
 <script>
+
 // Accordion 
 function searchID() {
 
@@ -60,7 +78,7 @@ function searchID() {
 	  for (var i = 0; i < trs.length; i++) {
 
 	    // define the row's cells
-	    var tds = trs[i].getElementsByTagName("th");
+	    var tds = trs[i].getElementsByTagName("td");
 
 	    // hide the row
 	    trs[i].style.display = "none";
