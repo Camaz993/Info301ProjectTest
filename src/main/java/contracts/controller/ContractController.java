@@ -109,6 +109,21 @@ public class ContractController {
 		return "view_details";
 	}
 	
+	@GetMapping("/update_details/{requestid}")
+	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
+		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
+		List <User> users = contractService.getAllUsers();
+		model.addAttribute("users", users);
+		return "update_details";
+	}
+	
+	@PostMapping("/api/updates")
+	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
+	{	
+		contractService.update(contract);
+		return "index";
+	}
+	
 	@PostMapping("/archive_contracts/{requestid}")
 	public String archiveContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
