@@ -32,4 +32,8 @@ public interface IContractService {
 	public List<Contract> getArchivedContracts();
 
 	public List<Contract> findAllByOrderByIdAsc();
+	
+	public void unarchiveContract(Contract unarchiveContract);
+	
+	public List<Contract> getUnarchivedContracts();
 }
