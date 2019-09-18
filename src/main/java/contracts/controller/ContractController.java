@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +29,7 @@ import contracts.domain.Contract;
 import contracts.domain.Status;
 import contracts.domain.User;
 import contracts.repository.ContractRepository;
+import contracts.service.IAccountService;
 import contracts.service.IContractService;
 
 @Controller
@@ -34,6 +37,9 @@ public class ContractController {
 	
 	@Autowired
 	private IContractService contractService;
+	
+	@Autowired
+	private IAccountService accountService;
 	
 	@Autowired
 	private ContractRepository repo;
@@ -152,6 +158,16 @@ public class ContractController {
 		model.addAttribute("contracts", contractService.getAllContracts());
 		return "search_contracts";
 	}
+	
+	@GetMapping("/my_contracts")
+    public String showMyContracts(Model model) {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		model.addAttribute("contracts", contractService.getContractsByUser(user.getUserid()));
+		model.addAttribute("currentuser", user.getUsername());
+        return "my_contracts";
+    }
 
 }
 	

@@ -36,4 +36,6 @@ public interface IContractService {
 	public void unarchiveContract(Contract unarchiveContract);
 	
 	public List<Contract> getUnarchivedContracts();
+	
+	public List<Contract> getContractsByUser(Integer userid);
 }

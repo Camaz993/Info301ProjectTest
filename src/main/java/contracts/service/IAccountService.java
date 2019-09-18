@@ -9,5 +9,7 @@ public interface IAccountService {
 	public boolean userExists(String username);
 	
 	public boolean validate(String password);
+	
+	public User findUser(String username);
 
 }

@@ -108,5 +108,10 @@ public class ContractService implements IContractService{
 	public List<Contract> getUnarchivedContracts() {
 		return contractRepository.getCurrentContracts();
 	}
+	
+	@Override
+	public List<Contract> getContractsByUser(Integer userid) {
+		return contractRepository.getContractsByUser(userid);
+	}
 
 }
