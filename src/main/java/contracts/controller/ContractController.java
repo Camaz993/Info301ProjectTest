@@ -137,6 +137,20 @@ public class ContractController {
 		model.addAttribute("contracts", contractService.getArchivedContracts());
 		return "archive_contracts";
 	}
+	
+	@PostMapping("/unarchive_contracts/{requestid}")
+	public String unarchiveContract(@PathVariable("requestid") int requestid, Model model) {
+		Contract unarchiveContract = contractService.findContract(requestid).orElse(new Contract());
+		unarchiveContract.setArchived("F");
+		contractService.addContract(unarchiveContract);
+		return "redirect:/search_contracts";
+	}
+	
+	@GetMapping("/unarchive_contracts")
+	public String getUnarchivedContracts(Model model) {
+		model.addAttribute("contracts", contractService.getAllContracts());
+		return "search_contracts";
+	}
 
 }
 	
