@@ -119,9 +119,10 @@ public class ContractController {
 	
 	@PostMapping("/api/updates")
 	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
-	{	
+	{	Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		contract.setDate_updated(timeNow);
 		contractService.update(contract);
-		return "index";
+		return "redirect:/";
 	}
 	
 	@PostMapping("/archive_contracts/{requestid}")
