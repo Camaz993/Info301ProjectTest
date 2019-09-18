@@ -56,5 +56,10 @@ public class AccountService implements IAccountService {
 	    	    
 	  }
 	
+	@Override
+	public User findUser(String username) {
+		return accountRepository.findByUsername(username);
+	}
+	
 	
 }
