@@ -3,81 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Create Account</title>
-<style>
-		h1{
-  color: black;
-  font-family: verdana;
-  font-size: 200%;
-  margin-left: 170px;
-}
-
-#addUser {
-width: 50%;
-}
-
-#addUser input[type=text]  {
-	width: 100%;
-	align: right;
-}
-
-#addUser input[type=password]  {
-	width: 100%;
-	align: right;
-}
-
-#addUser select {
-	width: 100%;
-	align: right;
-}
-
-body {
-  background-color: aliceblue;
-}
-.sidenav {
-  height: 100%; 
-  width: 160px;
-  position: fixed; 
-  z-index: 1; 
-  top: 0px;
-  left: 10px;
-  background-color: darkgray; 
-  overflow-x: hidden;
-  padding-top: 20px;
-  font-family: verdana;
-}
-
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 15px;
-  color: dimgray;
-  display: block;
-  font-family: verdana;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.content {
-    margin-left: 170px;
-    font-family: verdana;
-}
-
-p{
-	margin-left: 15px;
-}
-</style>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
 <body>
-<div class="sidenav">
-		<h2>CMS</h2>
- 		  <a href="/">Home</a></li>
- 		 <a href="/add_contracts">New Contract</a></li>
- 		 <a href="/search_contracts">Search Contracts</a></li>
- 		 <a href="/archive_contracts">Archive Contracts</a></li>
- 		 <li>Create Account</li>
-	</div>
 <div class="content">
 <form action="#" th:action="@{/api/staff}" th:object="${user}" method="post" id="addUser">
 	<h1>Add New User</h1>
