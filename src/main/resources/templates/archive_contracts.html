@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Contract Search</title>
+<title>Archived Contracts</title>
 <link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
 <style>
     #viewcontracts td {
@@ -72,8 +72,8 @@ p{
 		<h2>CMS</h2>
  		  <a href="/">Home</a></li>
  		 <a href="/add_contracts">New Contract</a></li>
- 		 <li>Search Contracts</li>
- 		 <a href="/archive_contracts">Archive Contracts</a></li>
+ 		 <a href="/search_contracts">Search Contracts</a></li>
+ 		 <li>Archive Contracts</li>
  		 <a href="/create_account">Create Account</a></li>
 	</div>
 <body>
@@ -94,9 +94,7 @@ p{
     <td>Agreement Type</td>
     <td>Description</td>
     <td>Agreement Location</td>
-    <td>Date Updated</td>
-    <td>Update Details</td>
-    <td>Archive Contract</td>
+    <td>Unarchive Contract</td>
     </tr>
     </thead>
     </tbody>
@@ -108,14 +106,10 @@ p{
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.agreement_location}"></th>
-        <th th:text="${contract.date_updated}"></th>
         <th>
-        	<a th:href="@{/update_details/{requestid}(requestid=${contract.requestid})}" target="_blank">Update</a>
-        </th>
-		<th>
-       		<form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
+       		<form action="#" th:action="@{/unarchive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
+  				<button onclick="return confirm('Are you sure want to unarchive this?');" type="submit" id="submitButton">Unarchive</button>
 			</form>
      	</th>
     </tr>

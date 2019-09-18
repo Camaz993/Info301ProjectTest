@@ -10,6 +10,8 @@ import contracts.domain.User;
 public interface IContractService {
 	
 	public void addContract(Contract newContract);
+	
+	public Optional<Contract> findContract(Integer id);
 
 	public List<Contract> getAllContracts();
 	
@@ -21,8 +23,17 @@ public interface IContractService {
 	
 	public List<Contract> searchContractType(String search);
 	
-	public void updateDetails(Long requestid, User user, List<Status> statusList, String agreement_title, 
-			String agreement_type, String description, String agreement_location, String language, 
-			String region, String related_agreements);
+	public Contract update(Contract contract);
 
+	public List<User> getAllUsers();
+	
+	public void archiveContract(Contract archivedContract);
+	
+	public List<Contract> getArchivedContracts();
+
+	public List<Contract> findAllByOrderByIdAsc();
+	
+	public void unarchiveContract(Contract unarchiveContract);
+	
+	public List<Contract> getUnarchivedContracts();
 }

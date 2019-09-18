@@ -13,6 +13,7 @@ import contracts.repository.ContractRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 @Service
 public class ContractService implements IContractService{
 	
@@ -21,6 +22,10 @@ public class ContractService implements IContractService{
 	
 	@Autowired
 	AccountRepository accountRepository;
+	
+	public void setContractRepository(ContractRepository contractRepository) {
+		this.contractRepository = contractRepository;
+	}
 	
 	@Override
 	public void addContract(Contract newContract) {
@@ -40,7 +45,17 @@ public class ContractService implements IContractService{
 	
 	@Override
 	public List<Contract> getAllContracts() {
-		return contractRepository.findAll();
+		return contractRepository.getCurrentContracts();
+	}
+	
+	@Override
+    public Optional<Contract> findContract(Integer id) {
+        return contractRepository.findById(id);
+    }
+	
+	@Override
+	public List<User> getAllUsers() {
+		return accountRepository.findAll();
 	}
 	
 	@Override
@@ -51,6 +66,11 @@ public class ContractService implements IContractService{
 	@Override
 	public List<Contract> searchContracts(String search) {
 		return contractRepository.searchContracts(search);
+	}
+	
+	@Override 
+	public List<Contract> findAllByOrderByIdAsc(){
+		return contractRepository.findAllByOrderByIdAsc();
 	}
 	
 	@Override
@@ -64,22 +84,29 @@ public class ContractService implements IContractService{
 	}
 	
 	@Override
-	public void updateDetails(Long requestid, User user, List<Status> statusList, String agreement_title, 
-			String agreement_type, String description, String agreement_location, String language, 
-			String region, String related_agreements) {
+	public Contract update(Contract contract) {	
+		return contractRepository.save(contract);
+	}
+	
+	@Override
+	public void archiveContract(Contract archivedContract) {
+		contractRepository.archiveContract(archivedContract);
 		
-		Optional<Contract> Optionalcontract = contractRepository.findById(requestid);
-		Contract contract = Optionalcontract.get();
-		contract.setUserid(user);
-		contract.setStatusid(statusList);
-		contract.setAgreement_title(agreement_title);
-		contract.setAgreement_type(agreement_type);
-		contract.setDescription(description);
-		contract.setAgreement_location(agreement_location);
-		contract.setLanguage(language);
-		contract.setRegion(region);
-		contract.setRelated_agreements(related_agreements);
-		contractRepository.save(contract);
+	}
+	
+	@Override
+	public List<Contract> getArchivedContracts() {
+		return contractRepository.getArchivedContracts();
+	}
+	
+	@Override
+	public void unarchiveContract(Contract unarchiveContract) {
+		contractRepository.unarchiveContract(unarchiveContract);
+	}
+
+	@Override
+	public List<Contract> getUnarchivedContracts() {
+		return contractRepository.getCurrentContracts();
 	}
 
 }

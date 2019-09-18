@@ -1,14 +1,16 @@
 package contracts.domain;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 
 @Entity
 @Table(name = User.TABLE_NAME)
@@ -29,34 +31,39 @@ public class User {
 	@Column(name="userid")
 	private Integer userid;
 	
-	@NotNull
+	@NotBlank(message="Name cannot be blank")
 	@Column(name="firstname")
 	private String firstname;
 	
-	@NotNull
+	@NotBlank(message="Name cannot be blank")
 	@Column(name="lastname")
 	private String lastname;
 	
-	@NotNull
+	@NotBlank(message="Role cannot be blank")
 	@Column(name="role")
 	private String role;
 	
-	@NotNull
+	@NotBlank(message="Username cannot be blank")
 	@Column(name="username")
 	private String username;
 	
-	@NotNull
+	@NotBlank(message="Password cannot be blank")
 	@Column(name="password")
 	@Size(min = 8, max= 40, message = "Password must be between 8 and 40 characters")
 	//@JSONIgnore
 	private String password;
+	
+	@NotBlank(message="You must enter a matching password")
+	@Column(name="passrepeat")
+	private String passrepeat;
+	
 	
 	 @NotNull
 	 @Column(name = "locked")
 	private boolean locked = false;
 	
 	//Constructor 
-	public User(Integer userid, String firstname, String lastname, String role, String username, String password,
+	public User(Integer userid, String firstname, String lastname, String role, String username, String password, String passrepeat,
 			boolean locked) {
 		super();
 		this.userid = userid;
@@ -65,6 +72,7 @@ public class User {
 		this.role = role;
 		this.username = username;
 		this.password = password;
+		this.passrepeat = passrepeat;
 		this.locked = locked;
 		}
 	 
@@ -75,16 +83,16 @@ public class User {
 	public void setUserid(Integer userid) {
 		this.userid = userid;
 	}
-	public String getFirst_name() {
+	public String getFirstname() {
 		return firstname;
 	}
-	public void setFirst_name(String firstname) {
+	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-	public String getLast_name() {
+	public String getLastname() {
 		return lastname;
 	}
-	public void setLast_name(String lastname) {
+	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
 	public String getRole() {
@@ -99,11 +107,17 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPassowrd() {
+	public String getPassword() {
 		return password;
 	}
-	public void setPassowrd(String passowrd) {
-		this.password = passowrd;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getPassrepeat() {
+		return passrepeat;
+	}
+	public void setPassrepeat(String passrepeat) {
+		this.passrepeat = passrepeat;
 	}
 	public boolean isLocked() {
 		return locked;

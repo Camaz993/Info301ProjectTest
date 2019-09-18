@@ -1,8 +1,11 @@
 package contracts.domain;
 
+import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+
+
 import javax.persistence.JoinColumn;
 
 @Entity
@@ -33,36 +38,42 @@ public class Contract {
 	@JoinColumn(name = "statusid")
 	private List<Status> statusid = new ArrayList<Status>();
 	
-	@NotNull
+	@NotBlank(message="Agreement title cannot be empty")
 	@Column(name = "Agreement_Title")
 	private String agreement_title;
 	
-	@NotNull
+	@NotBlank(message="Agreement type cannot be empty")
 	@Column(name = "Agreement_Type")
 	private String agreement_type;
 	
-	@NotNull
+	@NotBlank(message="Description cannot be empty")
 	@Column(name = "Description")
 	private String description;
 	
-	@NotNull
+	@NotBlank(message="Agreement location cannot be empty")
 	@Column(name = "Agreement_Location")
 	private String agreement_location;
 	
-	@NotNull
+	@NotBlank(message="Language cannot be empty")
 	@Column(name = "Language")
 	private String language;
 	
-	@NotNull
+	@NotBlank(message="Region cannot be empty")
 	@Column(name = "Region")
 	private String region;
 	
-	@NotNull
+	@NotBlank(message="Related agreements cannot be null")
 	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	
+	@Column(name = "archived")
+	private String archived;
+	
+	@Column(name = "date_updated")
+	private Date date_updated;
+	
 	public Contract(Integer requestid, User user, List<Status> statusid, String agreement_title, String agreement_type,
-			String description, String agreement_location, String language, String region, String related_agreements) {
+			String description, String agreement_location, String language, String region, String related_agreements, String archived, Date date_updated) {
 		super();
 		this.requestid = requestid;
 		this.user = user;
@@ -74,10 +85,20 @@ public class Contract {
 		this.language = language;
 		this.region = region;
 		this.related_agreements = related_agreements;
+		this.archived = archived;
+		this.date_updated = date_updated;
 	}
 	
 	public Contract() {
 		
+	} 
+
+	public Date getDate_updated() {
+		return date_updated;
+	}
+
+	public void setDate_updated(Date date_updated) {
+		this.date_updated = date_updated;
 	}
 	
 	public Integer getRequestid() {
@@ -141,13 +162,21 @@ public class Contract {
 	public void setRelated_agreements(String related_agreements) {
 		this.related_agreements = related_agreements;
 	}
+	
+	public String getArchived() {
+		return archived;
+	}
+	
+	public void setArchived(String archived) {
+		this.archived = archived;
+	}
 
 	@Override
 	public String toString() {
 		return "contract [requestid=" + requestid + ", userid=" + user + ", statusid=" + statusid
 				+ ", agreement_title=" + agreement_title + ", agreement_type=" + agreement_type + ", description="
 				+ description + ", agreement_location=" + agreement_location + ", language=" + language + ", region="
-				+ region + ", related_agreements=" + related_agreements + "]";
+				+ region + ", related_agreements=" + related_agreements + ", archived=" + archived +"]";
 	}
 	
 	
