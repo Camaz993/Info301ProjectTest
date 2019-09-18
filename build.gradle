@@ -78,6 +78,10 @@ dependencies {
  
     testCompile('org.springframework.boot:spring-boot-starter-test')
     
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+	testCompile group: 'org.mockito', name: 'mockito-core', version: '2.10.0'
+    
+    
     
     
 }

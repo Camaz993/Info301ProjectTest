@@ -38,6 +38,11 @@ public class ContractController {
 	@Autowired
 	private ContractRepository repo;
 	
+    @RequestMapping("/")
+    String index(){
+        return "index";
+    }
+	
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
 		model.addAttribute("contract", new Contract());
@@ -67,11 +72,11 @@ public class ContractController {
 	}
 	
 	
-	@GetMapping("/")
+	/*@GetMapping("/")
 	public String mostRecent(Model model) {
 		model.addAttribute("contracts", contractService.getAllContracts());
 		return "/index";
-	}
+	}*/
 	
 	@PostMapping("/api/contracts/search")
 	public List<Contract> searchContracts(@RequestParam String search)
