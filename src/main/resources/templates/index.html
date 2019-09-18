@@ -2,65 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<style>
-@charset "ISO-8859-1";
-
-h1{
-  color: black;
-  font-family: verdana;
-  font-size: 200%;
-  margin-left: 170px;
-}
-
-body {
-  background-color: aliceblue;
-}
-
-.sidenav {
-  height: 100%; 
-  width: 160px;
-  position: fixed; 
-  z-index: 1; 
-  top: 0px;
-  left: 10px;
-  background-color: darkgray; 
-  overflow-x: hidden;
-  padding-top: 20px;
-  font-family: verdana;
-}
-
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 15px;
-  color: dimgray;
-  display: block;
-  font-family: verdana;
-}
-
-#CMS{
-	
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.content {
-    margin-left: 170px;
-    font-family: verdana;
-}
-
-p{
-	margin-left: 15px;
-}
-.sub {
-	font-style: italic;
-	font-size: 10pt;
-	margin-top: 0px;
-	padding: 0px;
-}
-</style>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 <title>Home Page</title>
 </head>
 <body>

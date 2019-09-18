@@ -3,72 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Add Contract</title>
-<link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
-<style>
-	h1{
-  color: black;
-  font-family: verdana;
-  font-size: 200%;
-  margin-left: 170px;
-}
-
-#addContract {
-width: 50%;
-}
-
-#addContract input[type=text]  {
-	width: 100%;
-	align: right;
-}
-
-#addContract select {
-	width: 100%;
-	align: right;
-}
-
-body {
-  background-color: aliceblue;
-}
-.sidenav {
-  height: 100%; 
-  width: 160px;
-  position: fixed; 
-  z-index: 1; 
-  top: 0px;
-  left: 10px;
-  background-color: darkgray; 
-  overflow-x: hidden;
-  padding-top: 20px;
-  font-family: verdana;
-}
-
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 15px;
-  color: dimgray;
-  display: block;
-  font-family: verdana;
-}
-
-#CMS{
-	
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.content {
-    margin-left: 170px;
-    font-family: verdana;
-}
-
-p{
-	margin-left: 15px;
-}
-
-</style>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
 <div class="sidenav">
 		<h2 id="CMS">CMS</h2>
