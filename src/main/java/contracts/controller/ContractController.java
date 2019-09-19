@@ -4,10 +4,13 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.info.BuildProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +41,6 @@ public class ContractController {
 	@Autowired
 	private ContractRepository repo;
 	
-    @RequestMapping("/")
-    String index(){
-        return "index";
-    }
-	
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
 		model.addAttribute("contract", new Contract());
@@ -70,7 +68,6 @@ public class ContractController {
 		model.addAttribute("contracts", contractService.getAllContracts());
 		return "search_contracts";
 	}
-	
 	
 	/*@GetMapping("/")
 	public String mostRecent(Model model) {
