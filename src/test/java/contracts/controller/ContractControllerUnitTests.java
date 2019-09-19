@@ -62,6 +62,7 @@ public class ContractControllerUnitTests {
         @Test
         public void testSearchContracts() throws Exception{
         	MvcResult result = mockMvc.perform(get("/index")
+                    .with(anonymous()))
                     .andExpect(status().is2xxSuccessful())
                     .andReturn();
             assertEquals("index", result.getModelAndView().getViewName());  	
