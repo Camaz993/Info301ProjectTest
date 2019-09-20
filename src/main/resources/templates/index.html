@@ -61,6 +61,28 @@
     </tr>
     </tbody>
     </table>
+        <table id="unassigned">
+	<thead>
+	<tr>
+    <td>Agreement Title</td>
+    <td>Agreement Type</td>
+    <td>Description</td>
+    <td>Agreement Location</td>
+    <td>Assign</td>
+    </tr>
+    </thead>
+    </tbody>
+    <tr th:each="contract : ${contracts2}">
+        <th th:text="${contract.agreement_title}"></th>
+        <th th:text="${contract.agreement_type}"></th>
+        <th th:text="${contract.description}"></th>
+        <th th:text="${contract.agreement_location}"></th>
+        <form action="#" th:action="@{/assign/{requestid}(requestid=${contract.requestid})}" method="post">			
+  				<button onclick="return confirm('Are you sure want to assign this to you?');" type="submit" id="submitButton2">Assign to me</button>
+			</form>
+    </tr>
+    </tbody>
+    </table>
     </div>
  
      

@@ -44,6 +44,7 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid = ?1", nativeQuery = true)
     public List<Contract> getContractsByUser(Integer userid);
     
-    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid IS NULL", nativeQuery = true)
+    public List<Contract> getNullUserContracts();
 }
 

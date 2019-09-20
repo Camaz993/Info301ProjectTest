@@ -113,5 +113,10 @@ public class ContractService implements IContractService{
 	public List<Contract> getContractsByUser(Integer userid) {
 		return contractRepository.getContractsByUser(userid);
 	}
+	
+	@Override
+	public List<Contract> getNullUserContracts(){
+		return contractRepository.getNullUserContracts();
+	}
 
 }

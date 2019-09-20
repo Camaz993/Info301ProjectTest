@@ -76,7 +76,19 @@ public class ContractController {
 	@GetMapping("/")
 	public String mostRecent(Model model) {
 		model.addAttribute("contracts", contractService.getAllContracts());
+		model.addAttribute("contracts2", contractService.getNullUserContracts());
 		return "/index";
+	}
+	
+	@PostMapping("/assign/{requestid}")
+	public String assignUser(@PathVariable("requestid") int requestid, Model model) {
+		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		foundContract.setUserid(user);
+		contractService.update(foundContract);
+		return "redirect:/my_contracts";
 	}
 	
 	@PostMapping("/api/contracts/search")
