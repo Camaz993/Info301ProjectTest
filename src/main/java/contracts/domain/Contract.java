@@ -69,11 +69,15 @@ public class Contract {
 	@Column(name = "archived")
 	private String archived;
 	
+	@Column(name = "favourited")
+	private String favourited;
+	
 	@Column(name = "date_updated")
 	private Date date_updated;
 	
 	public Contract(Integer requestid, User user, List<Status> statusid, String agreement_title, String agreement_type,
-			String description, String agreement_location, String language, String region, String related_agreements, String archived, Date date_updated) {
+			String description, String agreement_location, String language, String region, String related_agreements, String archived,
+			String favourited, Date date_updated) {
 		super();
 		this.requestid = requestid;
 		this.user = user;
@@ -86,6 +90,7 @@ public class Contract {
 		this.region = region;
 		this.related_agreements = related_agreements;
 		this.archived = archived;
+		this.favourited = favourited;
 		this.date_updated = date_updated;
 	}
 	
@@ -171,13 +176,19 @@ public class Contract {
 		this.archived = archived;
 	}
 
+	public String getFavourited() {
+		return favourited;
+	}
+	
+	public void setFavourited(String favourited) {
+		this.favourited = favourited;
+	}
+	
 	@Override
 	public String toString() {
 		return "contract [requestid=" + requestid + ", userid=" + user + ", statusid=" + statusid
 				+ ", agreement_title=" + agreement_title + ", agreement_type=" + agreement_type + ", description="
 				+ description + ", agreement_location=" + agreement_location + ", language=" + language + ", region="
-				+ region + ", related_agreements=" + related_agreements + ", archived=" + archived +"]";
+				+ region + ", related_agreements=" + related_agreements + ", archived=" + archived + ", favourited=" + favourited + "]";
 	}
-	
-	
 }

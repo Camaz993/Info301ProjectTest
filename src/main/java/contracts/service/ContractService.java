@@ -118,5 +118,10 @@ public class ContractService implements IContractService{
 	public List<Contract> getNullUserContracts(){
 		return contractRepository.getNullUserContracts();
 	}
+	
+	@Override
+	public List<Contract> getFavouritedContracts() {
+		return contractRepository.getFavouritedContracts();
+	}
 
 }

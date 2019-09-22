@@ -180,6 +180,28 @@ public class ContractController {
 		model.addAttribute("currentuser", user.getUsername());
         return "my_contracts";
     }
+	
+	@PostMapping("/favourite_contracts/{requestid}")
+	public String favouritedContract(@PathVariable("requestid") int requestid, Model model) {
+		Contract favouritedContract = contractService.findContract(requestid).orElse(new Contract());
+		favouritedContract.setFavourited("T");
+		contractService.addContract(favouritedContract);
+		return "redirect:/favourite_contracts";
+	}
+
+	@GetMapping("/favourite_contracts")
+	public String getFavouritedContracts(Model model) {
+		model.addAttribute("contracts", contractService.getFavouritedContracts());
+		return "favourite_contracts";
+	}
+	
+	@PostMapping("/unfavourite_contracts/{requestid}")
+	public String unfavouritContract(@PathVariable("requestid") int requestid, Model model) {
+		Contract unfavouriteContract = contractService.findContract(requestid).orElse(new Contract());
+		unfavouriteContract.setFavourited("F");
+		contractService.addContract(unfavouriteContract);
+		return "redirect:/search_contracts";
+	}
 
 }
 	
