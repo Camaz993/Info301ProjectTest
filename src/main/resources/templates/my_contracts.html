@@ -3,96 +3,57 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>My Contracts</title>
-<link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
-<style>
-    #viewcontracts td {
-    padding:20px;
-    text-align:left;
-    background-color: #888888;
-    font-weight: lighter;
-    font-variant-caps: all-small-caps;
-    }
-    #viewcontracts th {
-    background-color: #eeeeee;
-    text-align:left;
-    padding: 10px;
-    font-weight:lighter;
-    }
-h1{
-  color: black;
-  font-family: verdana;
-  font-size: 200%;
-  margin-left: 170px;
-}
-
-body {
-  background-color: aliceblue;
-}
-.sidenav {
-  height: 100%; 
-  width: 160px;
-  position: fixed; 
-  z-index: 1; 
-  top: 0px;
-  left: 10px;
-  background-color: darkgray; 
-  overflow-x: hidden;
-  padding-top: 20px;
-  font-family: verdana;
-}
-
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 15px;
-  color: dimgray;
-  display: block;
-  font-family: verdana;
-}
-
-#CMS{
-	
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.content {
-    margin-left: 170px;
-    font-family: verdana;
-}
-
-p{
-	margin-left: 15px;
-}
-</style>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
-<div class="sidenav">
-		<h2>CMS</h2>
- 		  <a href="/">Home</a></li>
- 		 <a href="/add_contracts">New Contract</a></li>
- 		 <a href="/search_contracts">Search Contracts</a></li>
- 		 <a href="/archive_contracts">Archive Contracts</a></li>
- 		 <a href="/create_account">Create Account</a></li>
- 		 <li>My Contracts</li>
-	</div>
+
 <body>
-	<h1>My Contracts</h1>
+
+<div class="header">
+<h1>Contract Management</h1>
+</div>
+
+<div class="sidenav">
+		<div>
+	 		<a href="/">Home</a>
+	 		</div>
+	 		<div>
+	 		<a href="/add_contracts">New Contract</a></li>
+	 		<p class="sub">Create a new contract</p>
+	 		</div>
+	 		<div>
+	 		<a href="/search_contracts">Search Contacts</a></li>
+	 		<p class="sub">Search for a contract</p>
+	 		</div>
+	 		<div>
+	 		<a href="/archive_contracts">Archived Contracts</a></li>
+	 		<p class="sub">View archived contracts</p>
+	 		</div>
+	 		<div>
+	 		<a>My Contracts</a></li>
+	 		<p class="sub">View your assigned contracts</p>
+ 			</div>
+ 			<div>
+ 			<a href="/create_account">Create Account</a></li>
+ 			<p class="sub">Create a new account</p>
+ 			</div>
+</div>
+
+
 	<div class="content">
-    <h2 th:text="'Contracts for User: ' + ${currentuser}"></h2>
+	<h2>My Contracts</h2>
+    <h3 th:text="'Contracts for User: ' + ${currentuser}"></h3>
     <p>These are all the contracts assigned to you currently.</p>
 	<table id="viewcontracts">
 	<thead>
 	<tr>
-	<td>Request Id</td>
-    <td>Agreement Title</td>
-    <td>Agreement Type</td>
-    <td>Description</td>
-    <td>Agreement Location</td>
+	<th>Request Id</th>
+    <th>Agreement Title</th>
+    <th>Agreement Type</th>
+    <th>Description</th>
+    <th>Agreement Location</th>
     </tr>
     </thead>
-    </tbody>
+    <tbody class="wrongth">
     <tr th:each="contract : ${contracts}">
         <th>
         	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" target="_blank"></a>
