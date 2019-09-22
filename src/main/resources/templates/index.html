@@ -76,14 +76,14 @@
         <table id="unassigned">
 	<thead>
 	<tr>
-    <td>Agreement Title</td>
-    <td>Agreement Type</td>
-    <td>Description</td>
-    <td>Agreement Location</td>
-    <td>Assign</td>
+    <th>Agreement Title</th>
+    <th>Agreement Type</th>
+    <th>Description</th>
+    <th>Agreement Location</th>
+    <th>Assign</th>
     </tr>
     </thead>
-    </tbody>
+    <tbody class="wrongth">
     <tr th:each="contract : ${contracts2}">
         <th th:text="${contract.agreement_title}"></th>
         <th th:text="${contract.agreement_type}"></th>
