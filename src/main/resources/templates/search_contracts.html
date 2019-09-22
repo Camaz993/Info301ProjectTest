@@ -20,12 +20,20 @@
 	 		<p class="sub">Create a new contract</p>
 	 		</div>
 	 		<div>
-	 		<a href="/search_contracts">Search Contacts</a></li>
+	 		<a>Search Contacts</a></li>
 	 		<p class="sub">Search for a contract</p>
 	 		</div>
 	 		<div>
-	 		<a>My Contracts</a></li>
+	 		<a href="/archive_contracts">Archived Contracts</a></li>
+	 		<p class="sub">View archived contracts</p>
+	 		</div>
+	 		<div>
+	 		<a href="/my_contracts">My Contracts</a></li>
 	 		<p class="sub">View your assigned contracts</p>
+ 			</div>
+ 			<div>
+ 			<a href="/create_account">Create Account</a></li>
+ 			<p class="sub">Create a new account</p>
  			</div>
 	</div>
 	<div class="content">
@@ -40,17 +48,17 @@
 	<table id="viewcontracts">
 	<thead>
 	<tr>
-	<td>Request Id</td>
-    <td>Agreement Title</td>
-    <td>Agreement Type</td>
-    <td>Description</td>
-    <td>Agreement Location</td>
-    <td>Date Updated</td>
-    <td>Update Details</td>
-    <td>Archive Contract</td>
+	<th>Request Id</th>
+    <th>Agreement Title</th>
+    <th>Agreement Type</th>
+    <th>Description</th>
+    <th>Agreement Location</th>
+    <th>Date Updated</th>
+    <th>Update Details</th>
+    <th>Archive Contract</th>
     </tr>
     </thead>
-    </tbody>
+    <tbody class="wrongth">
     <tr th:each="contract : ${contracts}">
         <th>
         	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" target="_blank"></a>

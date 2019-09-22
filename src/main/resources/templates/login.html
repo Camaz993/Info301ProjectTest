@@ -1,70 +1,86 @@
 <html xmlns:th="https://www.thymeleaf.org">
     <title>Please Login</title>
-    <style>
-	h1{
-  color: black;
-  font-family: verdana;
-  font-size: 200%;
-  margin-left: 170px;
-}
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+<style>
+@charset "ISO-8859-1";
 
-#loginForm {
-width: 50%;
-}
+body{
+	margin: 0;
+	color: #122848;
+	font-family: verdana;
+	}
 
-#loginForm input[type=text]  {
-	width: 90%;
-	align: right;
-}
-#loginForm input[type=password]  {
-	width: 90%;
-	align: right;
-}
-#loginForm button[type=submit]{
-	margin-top: 10px;
-}
 
-body {
-  background-color: aliceblue;
-}
+.header {
+	background: #122848;
+	margin: 0px;
+	padding: 30px;
+	color: #1380A1;
+	padding-left: 50px;
+	}
+
 .sidenav {
-  height: 100%; 
-  width: 160px;
-  position: fixed; 
-  z-index: 1; 
-  top: 0px;
-  left: 10px;
-  background-color: darkgray; 
-  overflow-x: hidden;
-  padding-top: 20px;
-  font-family: verdana;
+  overflow: hidden;
+  background-color: #122848;
+  width: 100%;
+  padding-left: 50px;
 }
 
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 15px;
-  color: dimgray;
+.sidenav div {
+  float: left;
   display: block;
-  font-family: verdana;
-}
-.sidenav a:hover {
-  color: #f1f1f1;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: #1380A1;
 }
 
 .content {
-    margin-left: 170px;
-    font-family: verdana;
+	margin: auto;
+    width: 60%;
+    margin-top: 50px;
+  	background-color: #f2f2f2;
+    border-radius: 12px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    overflow: hidden;
+    padding: 20px;
+    position: relative;
+}
+	
+input, select, textarea, tr, th {
+  width: 100%;
+  padding: 12px; 
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
 }
 
-p{
-	margin-left: 15px;
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
 </style>
   </head>
-  <div class="sidenav">
-		<h2>CMS</h2>
-	</div>
+  <body>
+  
+  <div class="header">
+  <h1>Contract Management</h1>
+  </div>
+  
+ 
+	
 	<div class="content">
         <form name="loginForm" id="loginForm" th:action="@{/login}" method="post">               
                 <h1>Please Login</h1>

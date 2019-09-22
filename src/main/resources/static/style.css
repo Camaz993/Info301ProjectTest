@@ -47,6 +47,14 @@ body{
 	padding: 0px;
 }
 
+.logout {
+	margin-left: 200px;
+}
+
+.wrongth th {
+	font-weight: normal;
+	}
+
 .content {
 	margin: auto;
     width: 60%;
@@ -80,7 +88,7 @@ table{
 	width: 100%;
 	}
 	
-input[type=text], select, textarea, tr, th {
+input, select, textarea, tr, th {
   width: 100%;
   padding: 12px; 
   border: 1px solid #ccc;
