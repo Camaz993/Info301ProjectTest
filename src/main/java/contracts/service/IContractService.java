@@ -38,4 +38,6 @@ public interface IContractService {
 	public List<Contract> getUnarchivedContracts();
 	
 	public List<Contract> getContractsByUser(Integer userid);
+	
+	public List<Contract> getNullUserContracts();
 }
