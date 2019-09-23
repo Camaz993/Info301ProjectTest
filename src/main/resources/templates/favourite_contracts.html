@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Favourite Contracts</title>
-<link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 
 </head>
 	<div class="headerContainer">
@@ -18,14 +18,30 @@
     	</div>
     	</div>
 <div class="sidenav">
-		<h2>CMS</h2>
- 		  <a href="/">Home</a></li>
- 		 <a href="/add_contracts">New Contract</a></li>
- 		 <a href="/search_contracts">Search Contracts</a></li>
- 		 <a href="/archive_contracts">Archived Contracts</a></li>
- 		 <li>Favourite Contracts</li>
- 		 <a href="/create_account">Create Account</a></li>
-	</div>
+		<div>
+	 		<a href="/">Home</a>
+	 		</div>
+	 		<div>
+	 		<a href="/add_contracts">New Contract</a></li>
+	 		<p class="sub">Create a new contract</p>
+	 		</div>
+	 		<div>
+	 		<a>Search Contacts</a></li>
+	 		<p class="sub">Search for a contract</p>
+	 		</div>
+	 		<div>
+	 		<a href="/archive_contracts">Archived Contracts</a></li>
+	 		<p class="sub">View archived contracts</p>
+	 		</div>
+	 		<div>
+	 		<a href="/my_contracts">My Contracts</a></li>
+	 		<p class="sub">View your assigned contracts</p>
+ 			</div>
+ 			<div>
+ 			<a href="/create_account">Create Account</a></li>
+ 			<p class="sub">Create a new account</p>
+ 			</div>
+ 			</div>
 <body>
 	<h1>Favourite Contracts</h1>
 	<div class="content">
@@ -34,7 +50,6 @@
     <p><input type="submit" value="Submit" /> </p>
     </form>
     -->
-    <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
     <h2>Contracts</h2>
 	<table id="viewcontracts">
 	<thead>
