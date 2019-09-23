@@ -8,7 +8,12 @@
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
 <body>
-<div class="sidenav">
+
+<div class="header">
+<h1>Contract Management</h1>
+</div>
+
+	<div class="sidenav">
 			<div>
 	 		<a href="/">Home</a>
 	 		</div>
@@ -17,14 +22,23 @@
 	 		<p class="sub">Create a new contract</p>
 	 		</div>
 	 		<div>
-	 		<a href="/search_contracts">Search Contacts</a></li>
+	 		<a href"/search_contracts">Search Contacts</a></li>
 	 		<p class="sub">Search for a contract</p>
 	 		</div>
 	 		<div>
-	 		<a>My Contracts</a></li>
+	 		<a href="/archive_contracts">Archived Contracts</a></li>
+	 		<p class="sub">View archived contracts</p>
+	 		</div>
+	 		<div>
+	 		<a href="/my_contracts">My Contracts</a></li>
 	 		<p class="sub">View your assigned contracts</p>
  			</div>
-</div>
+ 			<div>
+ 			<a href="/create_account">Create Account</a></li>
+ 			<p class="sub">Create a new account</p>
+ 			</div>
+	</div>
+
 <div class = "content">
  <form>
  

@@ -36,13 +36,17 @@
  		<a href="/create_account">Create Account</a></li>
  		<p class="sub">Create a new account</p>
  		</div>
+ 		
  		<div class="logout">
-    	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
-        <form th:action="@{/logout}" method="post"> 
-            <input type="submit" value="Logout"/> 
-        </form>
-    	</div>
+		<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
+	        <form th:action="@{/logout}" method="post"> 
+		    <input type="submit" value="Logout"/> 
+	    </form>
+    </div>
 	</div>
+	
+	
+
 	
 	<div class="content">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
