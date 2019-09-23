@@ -40,4 +40,6 @@ public interface IContractService {
 	public List<Contract> getContractsByUser(Integer userid);
 	
 	public List<Contract> getNullUserContracts();
+	
+	public List<Contract> getFavouritedContracts();
 }

@@ -7,10 +7,17 @@
 </head>
 <body>
 
+	<div class="headerContainer">
 	<div class="header">
 	<h1>Contract Management</h1>
 	</div>
-	
+	<div class="logout">
+    	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
+        <form th:action="@{/logout}" method="post"> 
+            <input type="submit" value="Logout"/> 
+        </form>
+    	</div>
+    	</div>
 	<div class="sidenav">
 			<div>
 	 		<a href="/">Home</a>
@@ -36,8 +43,7 @@
  			<p class="sub">Create a new account</p>
  			</div>
 	</div>
-	
-	<div class="content">
+	<div class="content_search">
 	<h2>Search for Contracts</h2>
     <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
       <label for="search">Search:</label><input name="search" id="search"> 
@@ -45,6 +51,7 @@
     </form>
     -->
     <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
+    <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Title .." title="Type in a Title Name etc....">
     <h2>Contracts</h2>
 	<table id="viewcontracts">
 	<thead>
@@ -57,6 +64,7 @@
     <th>Date Updated</th>
     <th>Update Details</th>
     <th>Archive Contract</th>
+    <th>Favourite Contract</th>
     </tr>
     </thead>
     <tbody class="wrongth">
@@ -76,6 +84,12 @@
        		<form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
   				<button onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
+			</form>
+     	</th>
+     	<th>
+       		<form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
+  				<input type="hidden"/>
+  				<button onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Favourite</button>
 			</form>
      	</th>
     </tr>
@@ -118,6 +132,25 @@ function searchID() {
 	    }
 	  }
 
+	}
+
+function searchByParty() {
+	  var input, filter, table, tr, td, i, txtValue;
+	  input = document.getElementById("secondInput");
+	  filter = input.value.toUpperCase();
+	  table = document.getElementById("viewcontracts");
+	  tr = table.tBodies[0].getElementsByTagName("tr");
+	  for (i = 0; i < tr.length; i++) {
+	    td = tr[i].getElementsByTagName("th")[1];
+	    if (td) {
+	      txtValue = td.textContent || td.innerText;
+	      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+	        tr[i].style.display = "";
+	      } else {
+	        tr[i].style.display = "none";
+	      }
+	    }       
+	  }
 	}
 </script>
 </body>

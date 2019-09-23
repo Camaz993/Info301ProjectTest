@@ -46,5 +46,9 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     
     @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid IS NULL ORDER BY c.date_updated LIMIT 10", nativeQuery = true)
     public List<Contract> getNullUserContracts();
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.favourited = 'T'", 
+    		  nativeQuery = true)
+    public List<Contract> getFavouritedContracts();
 }
 
