@@ -26,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import contracts.domain.Contract;
+import contracts.domain.Expired;
+import contracts.domain.InNegotiation;
+import contracts.domain.Operative;
 import contracts.domain.Status;
 import contracts.domain.User;
 import contracts.repository.ContractRepository;
@@ -47,6 +50,10 @@ public class ContractController {
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
 		model.addAttribute("contract", new Contract());
+		model.addAttribute("innegotiation", new InNegotiation());
+		model.addAttribute("operative", new Operative());
+		model.addAttribute("expired", new Expired());
+		model.addAttribute("status", new Status());
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
         return "add_contracts";

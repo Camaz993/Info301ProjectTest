@@ -46,6 +46,8 @@
 		    <option value="expired">Expired</option>
 		</select>
     <p><br></p>
+    
+    
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
     <table>
     <tr>
@@ -89,8 +91,29 @@
     </tr>
     </table>
     </form>
+    
+    
+    <form action="#" id="in_negotiation" class="display-none" method="post" >
+		<td>Comments: <input type="text"/></td>		
+	</form>
+		
+	<form action="#" id="operative" class="display-none" method="post" >
+		<td>Date Signed <input type="date" /></td>
+		<td>Date Commenced: <input type="date"/></td>
+		<td>Date Expires: <input type="date"/></td>
+		<td>Verification: <input type="text"/></td>		
+	</form>
+		
+	<form action="#" id="expired" class="display-none" method="post" >
+		<td>Ending Reason: <input type="text"/></td>
+		<td>Expiry Date:  <input type="date"/></td>
+		<td>Termination Date: <input type="date"/></td>
+		<td>Termination Notice Date: <input type="text"/></td>
+		<td>Binding Terms Active: <input type="text"/></td>		
+	</form> 
+    
 		 
-		<script type="text/javascript">
+	<script type="text/javascript">
 		 
 		    function changeStatus() {
 		        var allForms = document.getElementsByTagName('form');
@@ -103,7 +126,7 @@
 		            form.setAttribute("class", "");
 		        }
 		        var contractForm = document.getElementById("addContract");
-		        contractForm.setAttribute("class", "");
+		        contractForm.setAttribute("class", "display");
 		    }
 		    
 		    function submit(){
@@ -111,6 +134,5 @@
    				document.getElementById(dropdown.value).submit();
 		    }
 		</script>
-    </div>
 </body>
 </html>
