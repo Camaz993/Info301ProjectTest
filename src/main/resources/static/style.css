@@ -7,12 +7,19 @@ body{
 	}
 
 
+.headerContainer {
+	background: #122848;
+	width:100%;
+}
+
 .header {
 	background: #122848;
 	margin: 0px;
 	padding: 30px;
 	color: #1380A1;
 	padding-left: 50px;
+	position: relative;
+  	display: inline-block;
 	}
 
 .sidenav {
@@ -48,7 +55,13 @@ body{
 }
 
 .logout {
-	margin-left: 200px;
+	width:15%;
+	padding:0px;
+	position:absolute;
+    top:20px;
+    right:10px;
+  	display: inline-block;
+  	color:#D0D3D4;
 }
 
 .wrongth th {

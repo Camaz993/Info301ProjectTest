@@ -6,10 +6,17 @@
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
 <body>
+	<div class="headerContainer">
 	<div class="header">
-		<h1>Contract Management</h1>
+	<h1>Contract Management</h1>
 	</div>
-
+	<div class="logout">
+    	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
+        <form th:action="@{/logout}" method="post"> 
+            <input type="submit" value="Logout"/> 
+        </form>
+    	</div>
+    	</div>
 	<div class="sidenav">
 		<div>
  		<a href="/">Home</a>

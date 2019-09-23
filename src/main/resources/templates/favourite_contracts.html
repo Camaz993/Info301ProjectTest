@@ -4,70 +4,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Favourite Contracts</title>
 <link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
-<style>
-    #viewcontracts td {
-    padding:20px;
-    text-align:left;
-    background-color: #888888;
-    font-weight: lighter;
-    font-variant-caps: all-small-caps;
-    }
-    #viewcontracts th {
-    background-color: #eeeeee;
-    text-align:left;
-    padding: 10px;
-    font-weight:lighter;
-    }
-h1{
-  color: black;
-  font-family: verdana;
-  font-size: 200%;
-  margin-left: 170px;
-}
 
-body {
-  background-color: aliceblue;
-}
-.sidenav {
-  height: 100%; 
-  width: 160px;
-  position: fixed; 
-  z-index: 1; 
-  top: 0px;
-  left: 10px;
-  background-color: darkgray; 
-  overflow-x: hidden;
-  padding-top: 20px;
-  font-family: verdana;
-}
-
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 15px;
-  color: dimgray;
-  display: block;
-  font-family: verdana;
-}
-
-#CMS{
-	
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.content {
-    margin-left: 170px;
-    font-family: verdana;
-}
-
-p{
-	margin-left: 15px;
-}
-</style>
 </head>
+	<div class="headerContainer">
+	<div class="header">
+	<h1>Contract Management</h1>
+	</div>
+	<div class="logout">
+    	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
+        <form th:action="@{/logout}" method="post"> 
+            <input type="submit" value="Logout"/> 
+        </form>
+    	</div>
+    	</div>
 <div class="sidenav">
 		<h2>CMS</h2>
  		  <a href="/">Home</a></li>
