@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Add Contract</title>
+<title>Add Contract Status</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
 <body>
@@ -45,51 +45,36 @@
 	
 	<div class="content">
 	<h2>Add Contracts</h2>
+	<h3>Select Contract Type: </h3>    
+    	<select id="dropdown" onchange="changeStatus()">
+		    <option value="-1">Select Contract Type</option>
+		    <option value="in_negotiation">In Negotiation</option>
+		    <option value="operative">Operative</option>
+		    <option value="expired">Expired</option>
+		</select>
+    <p><br></p>
     
     
-    <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
-    <table>
-    <tr>
-        <td>User: <select id="userid" name="userid">
-    	<option value="">Select a user</option>
-    	<option th:each="user : ${users}"
-    	th:value="${user.userid}"
-    	th:utext="${user.username}"/>
-    	</select></td>
-   	</tr>
-   	<tr>
-    	<td>Agreement Title: <input type="text"  th:field="*{agreement_title}"/></td>
-    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}">Title Error</td>
-    </tr>
-    <tr>
-    	<td>Agreement Type: <input type="text"  th:field="*{agreement_type}" /></td>
-    	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}">Type Error</td>
-    </tr>
-    <tr>
-    	<td>Description: <input type="text"  th:field="*{description}" /></td>
-    	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
-    </tr>
-    <tr>
-        <td>Agreement Location: <input type="text"  th:field="*{agreement_location}" /></td>
-        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
-    </tr>
-    <tr>
-        <td>Language: <input type="text"  th:field="*{language}" /></td>
-        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Language Error</td>
-    </tr>
-    <tr>
-        <td>Region: <input type="text"  th:field="*{region}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
-    </tr>
-    <tr>
-        <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
-        <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error</td>
-    </tr>
-    <tr>
-        <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
-    </tr>
-    </table>
-    </form>
+    <form action="#" th:action="@{api/in_negotiation}" th:object="${in_negotiation}" id="in_negotiation" class="display-none" method="post" >
+		<td>Comments: <input type="text" th:field="*{comments}"/></td>	
+		<td><input type="hidden" th:field="*{requestid}" th:value="${contract.requestid}"/></td>
+		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+	</form>
+		
+	<form action="#" id="operative" class="display-none" method="post" >
+		<td>Date Signed <input type="date" /></td>
+		<td>Date Commenced: <input type="date"/></td>
+		<td>Date Expires: <input type="date"/></td>
+		<td>Verification: <input type="text"/></td>		
+	</form>
+		
+	<form action="#" id="expired" class="display-none" method="post" >
+		<td>Ending Reason: <input type="text"/></td>
+		<td>Expiry Date:  <input type="date"/></td>
+		<td>Termination Date: <input type="date"/></td>
+		<td>Termination Notice Date: <input type="text"/></td>
+		<td>Binding Terms Active: <input type="text"/></td>		
+	</form> 
     
 		 
 	<script type="text/javascript">

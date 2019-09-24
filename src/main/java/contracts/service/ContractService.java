@@ -123,5 +123,10 @@ public class ContractService implements IContractService{
 	public List<Contract> getFavouritedContracts() {
 		return contractRepository.getFavouritedContracts();
 	}
+	
+	@Override
+	public Contract findNewestContract() {
+		return contractRepository.getNewestContract();
+	}
 
 }

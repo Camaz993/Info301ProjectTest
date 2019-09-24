@@ -8,9 +8,6 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -20,8 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,6 +29,7 @@ import contracts.domain.User;
 import contracts.repository.ContractRepository;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
+import contracts.service.IInNegotiationService;
 
 @Controller
 public class ContractController {
@@ -45,19 +41,28 @@ public class ContractController {
 	private IAccountService accountService;
 	
 	@Autowired
+	private IInNegotiationService in_negotiationService;
+	
+	@Autowired
 	private ContractRepository repo;
 	
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
 		model.addAttribute("contract", new Contract());
-		model.addAttribute("innegotiation", new InNegotiation());
-		model.addAttribute("operative", new Operative());
-		model.addAttribute("expired", new Expired());
 		model.addAttribute("status", new Status());
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
         return "add_contracts";
     }
+	
+	@GetMapping("/add_status")
+	public String showStatusForm(Model model) {
+		model.addAttribute("contract", contractService.findNewestContract());
+		model.addAttribute("in_negotiation", new InNegotiation());
+		model.addAttribute("operative", new Operative());
+		model.addAttribute("expired", new Expired());
+		return "add_status";
+	}
 	
 	@PostMapping("/api/contracts")
 	public String addContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
@@ -70,7 +75,13 @@ public class ContractController {
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
 		contract.setDate_updated(timeNow);
 		contractService.addContract(contract);
-		return "redirect:/";
+		return "add_status";
+	}
+	
+	@PostMapping("/api/in_negotiation")
+	public void add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation)
+	{
+		in_negotiationService.addInNegotiation(in_negotiation);
 	}
 	
 	@GetMapping("/search_contracts")

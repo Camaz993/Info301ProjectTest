@@ -50,5 +50,8 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     @Query(value = "SELECT * FROM CONTRACT c WHERE c.favourited = 'T'", 
     		  nativeQuery = true)
     public List<Contract> getFavouritedContracts();
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE MAX(c.requestid)", nativeQuery = true)
+    public Contract getNewestContract();
 }
 

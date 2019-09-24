@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import contracts.domain.Contract;
-import contracts.domain.Status;
 import contracts.domain.User;
 
 public interface IContractService {
@@ -42,4 +41,6 @@ public interface IContractService {
 	public List<Contract> getNullUserContracts();
 	
 	public List<Contract> getFavouritedContracts();
+	
+	public Contract findNewestContract();
 }
