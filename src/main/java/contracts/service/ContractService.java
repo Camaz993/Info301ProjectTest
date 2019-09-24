@@ -120,8 +120,8 @@ public class ContractService implements IContractService{
 	}
 	
 	@Override
-	public List<Contract> getFavouritedContracts() {
-		return contractRepository.getFavouritedContracts();
+	public List<Contract> getFavouritedContracts(Integer userid) {
+		return contractRepository.getFavouritedContracts(userid);
 	}
 
 }

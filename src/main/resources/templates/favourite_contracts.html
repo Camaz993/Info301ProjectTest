@@ -51,6 +51,11 @@
     </form>
     -->
     <h2>Contracts</h2>
+    <div th:if= "${contracts.isEmpty()}">
+    <p>You have not favourited any contracts. To favourite contracts, return to the search page 
+    and press the "favourite" button by the contract you wish to favourite.</p>
+    </div>  
+    <div th:if= "${!contracts.isEmpty()}">
 	<table id="viewcontracts">
 	<thead>
 	<tr>
@@ -80,6 +85,7 @@
     </tr>
     </tbody>
     </table>
+    </div>
     </div>
     
 <script>
@@ -116,8 +122,10 @@ function searchID() {
 	      }
 	    }
 	  }
-
 	}
+function ifEmpty(){
+	
+}
 </script>
 </body>
 </html>
