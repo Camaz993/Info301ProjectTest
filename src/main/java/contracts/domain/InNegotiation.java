@@ -13,7 +13,7 @@ public class InNegotiation {
 	public static final String TABLE_NAME = "IN_NEGOTIATION";
 	
 	@Id
-	@Column(name = "requestid")
+	@Column(name = "fk_requestid_in_negotiation")
 	private Integer requestid;
 	
 	@Column(name = "comments")
