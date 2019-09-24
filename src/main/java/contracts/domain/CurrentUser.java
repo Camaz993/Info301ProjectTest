@@ -40,7 +40,10 @@ public class CurrentUser implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		if (user.isLocked() == false) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override

@@ -75,6 +75,7 @@ public class AccountController {
 		}
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setPassrepeat(passwordEncoder.encode(user.getPassrepeat()));
+		user.setLocked(false);
 		accountService.addAccount(user);
 		return "index";
 	}
