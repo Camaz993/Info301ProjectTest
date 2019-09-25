@@ -57,10 +57,10 @@ public class ContractController {
 	
 	@GetMapping("/add_status")
 	public String showStatusForm(Model model) {
-		model.addAttribute("contract", contractService.findNewestContract());
+		Integer requestid = contractService.findNewestContract();
+		model.addAttribute("requestid", requestid);
 		model.addAttribute("in_negotiation", new InNegotiation());
-		model.addAttribute("operative", new Operative());
-		model.addAttribute("expired", new Expired());
+		System.out.println(requestid);
 		return "add_status";
 	}
 	
@@ -75,13 +75,17 @@ public class ContractController {
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
 		contract.setDate_updated(timeNow);
 		contractService.addContract(contract);
-		return "add_status";
+		System.out.println(contract.getRequestid());
+		return "redirect:/add_status";
 	}
 	
 	@PostMapping("/api/in_negotiation")
-	public void add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation)
+	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation)
 	{
+		Integer requestid = contractService.findNewestContract();
+		in_negotiation.setRequestId(requestid);
 		in_negotiationService.addInNegotiation(in_negotiation);
+		return "redirect:/";
 	}
 	
 	@GetMapping("/search_contracts")

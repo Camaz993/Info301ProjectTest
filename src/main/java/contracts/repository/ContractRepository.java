@@ -1,16 +1,13 @@
 package contracts.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import contracts.domain.Contract;
-import contracts.domain.User;
 
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Integer> {
@@ -51,7 +48,7 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     		  nativeQuery = true)
     public List<Contract> getFavouritedContracts();
     
-    @Query(value = "SELECT * FROM CONTRACT c HAVING MAX(c.requestid)", nativeQuery = true)
-    public Contract getNewestContract();
+    @Query(value = "SELECT MAX(requestid) FROM CONTRACT c", nativeQuery = true)
+    public Integer findNewestContract();
 }
 

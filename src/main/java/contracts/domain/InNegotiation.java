@@ -2,8 +2,13 @@ package contracts.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = InNegotiation.TABLE_NAME)
@@ -15,6 +20,11 @@ public class InNegotiation {
 	@Id
 	@Column(name = "fk_requestid_in_negotiation")
 	private Integer requestid;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requestid", nullable = false)
+    @MapsId
+    private Contract contract;
 	
 	@Column(name = "comments")
 	private String comments;
@@ -43,5 +53,13 @@ public class InNegotiation {
 	
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+	
+	public void setContract(Contract contract) {
+		this.contract = contract;
+	}
+	
+	public Contract getContract() {
+		return contract;
 	}
 }

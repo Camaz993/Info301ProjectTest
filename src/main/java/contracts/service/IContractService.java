@@ -42,5 +42,5 @@ public interface IContractService {
 	
 	public List<Contract> getFavouritedContracts();
 	
-	public Contract findNewestContract();
+	public Integer findNewestContract();
 }

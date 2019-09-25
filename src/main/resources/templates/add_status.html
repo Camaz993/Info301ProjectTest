@@ -55,9 +55,9 @@
     <p><br></p>
     
     
-    <form action="#" th:action="@{api/in_negotiation}" th:object="${in_negotiation}" id="in_negotiation" class="display-none" method="post" >
+    <form action="#" th:action="@{api/in_negotiation}" th:object="${in_negotiation}" id="in_negotiation" method="post" >
 		<td>Comments: <input type="text" th:field="*{comments}"/></td>	
-		<td><input type="text" th:field="*{RequestId}" th:value="${contract.requestid}"/></td>
+		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
 		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
 	</form>
 		
@@ -89,8 +89,6 @@
 		            }
 		            form.setAttribute("class", "");
 		        }
-		        var contractForm = document.getElementById("addContract");
-		        contractForm.setAttribute("class", "display");
 		    }
 		    
 		    function submit(){
