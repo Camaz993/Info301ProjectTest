@@ -2,8 +2,9 @@ package contracts.domain;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -15,13 +16,13 @@ public class Operative {
 	
 	public static final String TABLE_NAME = "OPERATIVE";
 	
-	public Operative() {
-		
-	}
-	
 	@Id
 	@Column(name = "requestid")
 	private Integer requestid;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requestid", nullable = false)
+    private Contract contract;
 	
 	@NotNull
 	@Column(name = "date_signed")
@@ -39,19 +40,16 @@ public class Operative {
 	@Column(name = "verification")
 	private String verification;
 	
-	@OneToOne
-    @MapsId
-	private Contract contract;
+	public Operative() {}
 	
 	//Constructor method
-	public Operative(Integer requestid, Date date_signed, Date date_commenced, Date date_expire, String verification, Contract contract) {
+	public Operative(Integer requestid, Date date_signed, Date date_commenced, Date date_expire, String verification) {
 		super();
 		this.requestid = requestid;
 		this.date_signed = date_signed;
 		this.date_commenced = date_commenced;
 		this.date_expire = date_expire;
 		this.verification = verification;
-		this.contract = contract;
 	}
 
 	//Getters and setters
@@ -67,7 +65,7 @@ public class Operative {
 		return contract;
 	}
 	
-	public void setContract() {
+	public void setContract(Contract contract) {
 		this.contract = contract;
 	}
 	

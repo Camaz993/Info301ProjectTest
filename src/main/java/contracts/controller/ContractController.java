@@ -30,6 +30,7 @@ import contracts.repository.ContractRepository;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
 import contracts.service.IInNegotiationService;
+import contracts.service.IOperativeService;
 
 @Controller
 public class ContractController {
@@ -39,6 +40,9 @@ public class ContractController {
 	
 	@Autowired
 	private IAccountService accountService;
+	
+	@Autowired
+	private IOperativeService operativeService;
 	
 	@Autowired
 	private IInNegotiationService in_negotiationService;
