@@ -32,11 +32,17 @@ import contracts.domain.Operative;
 import contracts.domain.Status;
 import contracts.domain.User;
 import contracts.repository.ContractRepository;
+import contracts.service.AuditService;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
 
 @Controller
 public class ContractController {
+	
+	
+
+	@Autowired
+	private AuditService auditService;
 	
 	@Autowired
 	private IContractService contractService;
@@ -70,6 +76,8 @@ public class ContractController {
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
 		contract.setDate_updated(timeNow);
 		contractService.addContract(contract);
+		auditService.addAuditDetails(contract);
+		
 		return "redirect:/";
 	}
 	
@@ -209,6 +217,7 @@ public class ContractController {
 		contractService.addContract(unfavouriteContract);
 		return "redirect:/search_contracts";
 	}
+	
 
 }
 	
