@@ -212,6 +212,7 @@ public class ContractController {
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
 		model.addAttribute("contracts", contractService.getFavouritedContracts(user.getUserid()));
+		model.addAttribute("currentuser", user.getUsername());
 		return "favourite_contracts";
 	}
 	

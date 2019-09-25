@@ -51,6 +51,7 @@
     </form>
     -->
     <h2>Contracts</h2>
+    <h3 th:text="'Favourited Contracts for User: ' + ${currentuser}"></h3>
     <div th:if= "${contracts.isEmpty()}">
     <p>You have not favourited any contracts. To favourite contracts, return to the search page 
     and press the "favourite" button by the contract you wish to favourite.</p>
