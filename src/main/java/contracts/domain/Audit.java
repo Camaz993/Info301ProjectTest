@@ -48,6 +48,15 @@ public class Audit {
 	@Column(name = "field_after")
 	private String field_after;
 	
+	@Column(name = "add_contract")
+	private String add_contract;
+	
+	public String getAdd_contract() {
+		return add_contract;
+	}
+	public void setAdd_contract(String add_contract) {
+		this.add_contract = add_contract;
+	}
 	public Integer getAuditid() {
 		return auditid;
 	}
@@ -91,7 +100,7 @@ public class Audit {
 		this.field_after = field_after;
 	}
 	public Audit(Integer auditid, User userid, Contract requestid, Date date, String field_updated,
-			String field_before, String field_after) {
+			String field_before, String field_after, String add_contract) {
 		super();
 		this.auditid = auditid;
 		this.userid = userid;
@@ -100,6 +109,7 @@ public class Audit {
 		this.field_updated = field_updated;
 		this.field_before = field_before;
 		this.field_after = field_after;
+		this.add_contract = add_contract;
 	}
 	@Override
 	public String toString() {

@@ -53,6 +53,7 @@ public class AuditService implements IAuditService {
 		newAudit.setUserid(contract.getUser());
 		newAudit.setRequestedid(contract);
 		newAudit.setDate(contract.getDate_updated());
+		newAudit.setAdd_contract("Y");
 		addAudit(newAudit);
 	}
 	
