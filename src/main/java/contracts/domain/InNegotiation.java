@@ -18,12 +18,11 @@ public class InNegotiation {
 	public static final String TABLE_NAME = "IN_NEGOTIATION";
 	
 	@Id
-	@Column(name = "fk_requestid_in_negotiation")
+	@Column(name = "requestid")
 	private Integer requestid;
 	
 	@OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "requestid", nullable = false)
-    @MapsId
     private Contract contract;
 	
 	@Column(name = "comments")
@@ -61,5 +60,9 @@ public class InNegotiation {
 	
 	public Contract getContract() {
 		return contract;
+	}
+	
+	public String toString() {
+		return requestid + " " + comments + ";";
 	}
 }

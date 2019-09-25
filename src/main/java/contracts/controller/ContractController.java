@@ -60,7 +60,8 @@ public class ContractController {
 		Integer requestid = contractService.findNewestContract();
 		model.addAttribute("requestid", requestid);
 		model.addAttribute("in_negotiation", new InNegotiation());
-		System.out.println(requestid);
+		model.addAttribute("operative", new Operative());
+		model.addAttribute("expired", new Expired());
 		return "add_status";
 	}
 	
@@ -75,7 +76,6 @@ public class ContractController {
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
 		contract.setDate_updated(timeNow);
 		contractService.addContract(contract);
-		System.out.println(contract.getRequestid());
 		return "redirect:/add_status";
 	}
 	
@@ -85,6 +85,14 @@ public class ContractController {
 		Integer requestid = contractService.findNewestContract();
 		in_negotiation.setRequestId(requestid);
 		in_negotiationService.addInNegotiation(in_negotiation);
+		return "redirect:/";
+	}
+	
+	@PostMapping("api/operative")
+	public String add_operative(@ModelAttribute(name="operative") Operative operative) {
+		Integer requestid = contractService.findNewestContract();
+		operative.setRequestId(requestid);
+		operativeService.addOperative(operative);
 		return "redirect:/";
 	}
 	

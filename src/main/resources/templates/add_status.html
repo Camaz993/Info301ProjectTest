@@ -55,20 +55,20 @@
     <p><br></p>
     
     
-    <form action="#" th:action="@{api/in_negotiation}" th:object="${in_negotiation}" id="in_negotiation" method="post" >
+    <form action="#" th:action="@{api/in_negotiation}" th:object="${in_negotiation}" id="in_negotiation" class="display-none" method="post" >
 		<td>Comments: <input type="text" th:field="*{comments}"/></td>	
 		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
 		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
 	</form>
 		
-	<form action="#" id="operative" class="display-none" method="post" >
+	<form action="#" th:action="@{api/operative}" th:object="${operative}" id="operative" class="display-none" method="post" >
 		<td>Date Signed <input type="date" /></td>
 		<td>Date Commenced: <input type="date"/></td>
 		<td>Date Expires: <input type="date"/></td>
 		<td>Verification: <input type="text"/></td>		
 	</form>
 		
-	<form action="#" id="expired" class="display-none" method="post" >
+	<form action="#" th:action="@{api/expired}" th:object="${expired}" id="expired" class="display-none" method="post" >
 		<td>Ending Reason: <input type="text"/></td>
 		<td>Expiry Date:  <input type="date"/></td>
 		<td>Termination Date: <input type="date"/></td>
