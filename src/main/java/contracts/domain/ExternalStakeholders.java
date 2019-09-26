@@ -25,6 +25,10 @@ public class ExternalStakeholders {
 	@Column(name = "Business_Name")
 	private String businessname;
 	
+	@NotNull
+	@Column(name = "Client_Name")
+	private String client_name;
+	
 	@Column(name = "Address", length = 128)
 	@Size(min = 5, max = 128, message = "Address must contain between 10 and 128 characters.")
 	private String address;
@@ -41,14 +45,11 @@ public class ExternalStakeholders {
 	// addresses - as good as it gets!)
 	@Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", message = "Email address must be valid.")
 	private String email;
-	
-	@NotNull
+
 	@Column(name = "Fax")
 	private String fax;
 	
-	@NotNull
-	@Column(name = "Client_Name")
-	private String client_name;
+	
 	
 	public String getBusinessname() {
 		return businessname;
