@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import contracts.domain.Audit;
 import contracts.domain.Contract;
 import contracts.domain.Expired;
 import contracts.domain.InNegotiation;
@@ -151,10 +152,34 @@ public class ContractController {
 	}
 	
 	@PostMapping("/api/updates")
-	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
-	{	Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
-		contract.setDate_updated(timeNow);
-		contractService.update(contract);
+	public String updateDetails(@RequestParam Integer requestid,@RequestParam User user,@RequestParam String agreement_title,@RequestParam String agreement_type,
+			@RequestParam String description,@RequestParam String agreement_location,@RequestParam String language,@RequestParam String region,@RequestParam String related_agreements,@RequestParam String archived,
+			@RequestParam String favourited,@RequestParam Date date_updated)
+	{	
+		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
+		Audit blank = new Audit();
+		if (!foundContract.getRequestid().equals(requestid)) {
+			blank.setField_before((String.valueOf((foundContract.getUser().getUserid()))));
+			blank.setField_after((String.valueOf((user.getUserid()))));
+			blank.setField_updated("userid");
+		}
+		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		foundContract.setDate_updated(timeNow);
+		foundContract.setUserid(user);
+		foundContract.setAgreement_title(agreement_title);
+		foundContract.setAgreement_type(agreement_type);
+		foundContract.setDescription(description);
+		foundContract.setAgreement_location(agreement_location);
+		foundContract.setLanguage(language);
+		foundContract.setRegion(region);
+		foundContract.setRelated_agreements(related_agreements);
+		foundContract.setArchived(archived);
+		foundContract.setFavourited(favourited);
+		foundContract.setDate_updated(date_updated);
+		blank.setUserid(foundContract.getUser());
+		blank.setRequestedid(foundContract);
+		blank.setDate(foundContract.getDate_updated());
+		contractService.update(foundContract);
 		return "redirect:/";
 	}
 	
