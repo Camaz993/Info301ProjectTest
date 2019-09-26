@@ -163,42 +163,42 @@ public class ContractController {
 		if (!foundContract.getUser().equals(contract.getUser())) {
 			fieldBeforeList += ((String.valueOf((foundContract.getUser().getUserid()))));
 			fieldAfterList += ((String.valueOf((contract.getUser().getUserid()))));
-			fieldUpdatedList += ("userid") + (", ");
+			fieldUpdatedList += ("userid") + (" ");
 		}
 		if (!foundContract.getAgreement_title().equals(contract.getAgreement_title())) {
 			fieldBeforeList += ((String.valueOf((foundContract.getAgreement_title()))));
 			fieldAfterList += ((String.valueOf((contract.getAgreement_title()))));
-			fieldUpdatedList += ("agreement_title") + (", ");
+			fieldUpdatedList += ("agreement_title") + (" ");
 		}
 		if (!foundContract.getAgreement_type().equals(contract.getAgreement_type())) {
-			blank.setField_before((foundContract.getAgreement_type()));
-			blank.setField_after((String.valueOf((contract.getAgreement_type()))));
-			blank.setField_updated("agreement_type");
+			fieldBeforeList += ((String.valueOf((foundContract.getAgreement_type()))));
+			fieldAfterList += ((String.valueOf((contract.getAgreement_type()))));
+			fieldUpdatedList += ("agreement_type") + (" ");
 		}
 		if (!foundContract.getDescription().equals(contract.getDescription())) {
-			blank.setField_before((foundContract.getAgreement_title()));
-			blank.setField_after((String.valueOf((contract.getDescription()))));
-			blank.setField_updated("description");
+			fieldBeforeList += ((String.valueOf((foundContract.getDescription()))));
+			fieldAfterList += ((String.valueOf((contract.getDescription()))));
+			fieldUpdatedList += ("description") + (" ");
 		}
 		if (!foundContract.getAgreement_location().equals(contract.getAgreement_location())) {
-			blank.setField_before((foundContract.getAgreement_location()));
-			blank.setField_after((String.valueOf((contract.getAgreement_location()))));
-			blank.setField_updated("agreement_location");
+			fieldBeforeList += ((String.valueOf((foundContract.getAgreement_location()))));
+			fieldAfterList += ((String.valueOf((contract.getAgreement_location()))));
+			fieldUpdatedList += ("agreement_location") + (" ");
 		}
 		if (!foundContract.getLanguage().equals(contract.getLanguage())) {
-			blank.setField_before((foundContract.getLanguage()));
-			blank.setField_after((String.valueOf((contract.getLanguage()))));
-			blank.setField_updated("language");
+			fieldBeforeList += ((String.valueOf((foundContract.getLanguage()))));
+			fieldAfterList += ((String.valueOf((contract.getLanguage()))));
+			fieldUpdatedList += ("language") + (" ");
 		}
 		if (!foundContract.getRegion().equals(contract.getRegion())) {
-			blank.setField_before((foundContract.getRegion()));
-			blank.setField_after((String.valueOf((contract.getRegion()))));
-			blank.setField_updated("region");
+			fieldBeforeList += ((String.valueOf((foundContract.getRegion()))));
+			fieldAfterList += ((String.valueOf((contract.getRegion()))));
+			fieldUpdatedList += ("region") + (" ");
 		}
 		if (!foundContract.getRelated_agreements().equals(contract.getRelated_agreements())) {
-			blank.setField_before((foundContract.getRelated_agreements()));
-			blank.setField_after((String.valueOf((contract.getRelated_agreements()))));
-			blank.setField_updated("related_agreements");
+			fieldBeforeList += ((String.valueOf((foundContract.getRelated_agreements()))));
+			fieldAfterList += ((String.valueOf((contract.getRelated_agreements()))));
+			fieldUpdatedList += ("related_agreements") + (" ");
 		}
 		
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
