@@ -22,7 +22,7 @@
 	 		<p class="sub">Create a new contract</p>
 	 		</div>
 	 		<div>
-	 		<a href"/search_contracts">Search Contacts</a></li>
+	 		<a href="/search_contracts">Search Contacts</a></li>
 	 		<p class="sub">Search for a contract</p>
 	 		</div>
 	 		<div>
@@ -68,7 +68,9 @@
   </tr>
  <tr>
  <th>Agreement Location</th> 
- <td th:text ="${selectedContract?.agreement_location}"/>
+ 	<td>
+ 	<a th:href = "${selectedContract?.agreement_location}" th:text ="${selectedContract?.agreement_location}" target="_blank"></a>
+	</td>
   </tr>
  <tr>
  <th>Language </th> 
