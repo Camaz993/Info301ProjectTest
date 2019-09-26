@@ -77,7 +77,12 @@
     </tr>
     </tbody>
     </table>
+    </div>
      <h3>Unassigned Contracts</h3>
+     <div th:if= "${contracts2.isEmpty()}">
+     <p>There are currently no unassigned contracts</p>
+     </div>
+     <div th:if= "${!contracts2.isEmpty()}">
         <table id="unassigned">
 	<thead>
 	<tr>
@@ -103,11 +108,12 @@
     </tbody>
     </table>
     </div>
+    </div>
  
      
 <script>
 function showTen(){
-	$("table > tbody > tr").hide().slice(0, 10).show();
+	$("#viewcontracts > tbody > tr").hide().slice(0, 10).show();
 	$(".show-all").on("click", function() {
 	  $("tbody > tr", $(this).prev()).show();
 	});}
