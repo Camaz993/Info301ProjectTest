@@ -35,7 +35,6 @@ public class Audit {
 	@JoinColumn(name = "fk_requestid_audit")
 	private Contract requestid;
 	
-	@NotNull
 	@Column(name = "date")
 	private Date date;
 	

@@ -1,6 +1,7 @@
 package contracts.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -152,34 +153,64 @@ public class ContractController {
 	}
 	
 	@PostMapping("/api/updates")
-	public String updateDetails(@RequestParam Integer requestid,@RequestParam User user,@RequestParam String agreement_title,@RequestParam String agreement_type,
-			@RequestParam String description,@RequestParam String agreement_location,@RequestParam String language,@RequestParam String region,@RequestParam String related_agreements,@RequestParam String archived,
-			@RequestParam String favourited,@RequestParam Date date_updated)
+	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
 	{	
-		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
+		String fieldUpdatedList = "";
+		String fieldBeforeList = "";
+		String fieldAfterList = "";
+		Contract foundContract = contractService.findContract(contract.getRequestid()).orElse(new Contract());
 		Audit blank = new Audit();
-		if (!foundContract.getRequestid().equals(requestid)) {
-			blank.setField_before((String.valueOf((foundContract.getUser().getUserid()))));
-			blank.setField_after((String.valueOf((user.getUserid()))));
-			blank.setField_updated("userid");
+		if (!foundContract.getUser().equals(contract.getUser())) {
+			fieldBeforeList += ((String.valueOf((foundContract.getUser().getUserid()))));
+			fieldAfterList += ((String.valueOf((contract.getUser().getUserid()))));
+			fieldUpdatedList += ("userid") + (", ");
 		}
+		if (!foundContract.getAgreement_title().equals(contract.getAgreement_title())) {
+			fieldBeforeList += ((String.valueOf((foundContract.getAgreement_title()))));
+			fieldAfterList += ((String.valueOf((contract.getAgreement_title()))));
+			fieldUpdatedList += ("agreement_title") + (", ");
+		}
+		if (!foundContract.getAgreement_type().equals(contract.getAgreement_type())) {
+			blank.setField_before((foundContract.getAgreement_type()));
+			blank.setField_after((String.valueOf((contract.getAgreement_type()))));
+			blank.setField_updated("agreement_type");
+		}
+		if (!foundContract.getDescription().equals(contract.getDescription())) {
+			blank.setField_before((foundContract.getAgreement_title()));
+			blank.setField_after((String.valueOf((contract.getDescription()))));
+			blank.setField_updated("description");
+		}
+		if (!foundContract.getAgreement_location().equals(contract.getAgreement_location())) {
+			blank.setField_before((foundContract.getAgreement_location()));
+			blank.setField_after((String.valueOf((contract.getAgreement_location()))));
+			blank.setField_updated("agreement_location");
+		}
+		if (!foundContract.getLanguage().equals(contract.getLanguage())) {
+			blank.setField_before((foundContract.getLanguage()));
+			blank.setField_after((String.valueOf((contract.getLanguage()))));
+			blank.setField_updated("language");
+		}
+		if (!foundContract.getRegion().equals(contract.getRegion())) {
+			blank.setField_before((foundContract.getRegion()));
+			blank.setField_after((String.valueOf((contract.getRegion()))));
+			blank.setField_updated("region");
+		}
+		if (!foundContract.getRelated_agreements().equals(contract.getRelated_agreements())) {
+			blank.setField_before((foundContract.getRelated_agreements()));
+			blank.setField_after((String.valueOf((contract.getRelated_agreements()))));
+			blank.setField_updated("related_agreements");
+		}
+		
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
-		foundContract.setDate_updated(timeNow);
-		foundContract.setUserid(user);
-		foundContract.setAgreement_title(agreement_title);
-		foundContract.setAgreement_type(agreement_type);
-		foundContract.setDescription(description);
-		foundContract.setAgreement_location(agreement_location);
-		foundContract.setLanguage(language);
-		foundContract.setRegion(region);
-		foundContract.setRelated_agreements(related_agreements);
-		foundContract.setArchived(archived);
-		foundContract.setFavourited(favourited);
-		foundContract.setDate_updated(date_updated);
-		blank.setUserid(foundContract.getUser());
-		blank.setRequestedid(foundContract);
-		blank.setDate(foundContract.getDate_updated());
-		contractService.update(foundContract);
+		contract.setDate_updated(timeNow);
+		blank.setField_after(fieldAfterList);
+		blank.setField_before(fieldBeforeList);
+		blank.setField_updated(fieldUpdatedList);
+		blank.setUserid(contract.getUser());
+		blank.setRequestedid(contract);
+		blank.setDate(contract.getDate_updated());
+		contractService.update(contract);
+		auditService.addAudit(blank);
 		return "redirect:/";
 	}
 	
