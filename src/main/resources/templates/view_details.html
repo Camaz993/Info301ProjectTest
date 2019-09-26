@@ -44,6 +44,8 @@
  
  <h2 th:text ="${selectedContract.agreement_title}"></h2>
  
+ <h3>Contract details:</h3>
+ 
   <table class = "viewdetails">
  
  <tr>
@@ -68,7 +70,7 @@
   </tr>
  <tr>
  <th>Agreement Location</th> 
- 	<td>
+ 	<td style="word-wrap: break-word">
  	<a th:href = "${selectedContract?.agreement_location}" th:text ="${selectedContract?.agreement_location}" target="_blank"></a>
 	</td>
   </tr>
@@ -87,6 +89,35 @@
  
  </table>
  
+ <h3>Party details:</h3>
+ 
+  <table class = "viewdetails">
+ 
+ <tr>
+ <th>Business Name </th> 
+ <td th:text ="${selectedContract?.businessname}"/>
+  </tr>
+   <tr>
+ <th>Client Name </th> 
+ <td th:text ="${selectedContract?.clientname}"/>
+  </tr>
+   <tr>
+ <th>Address </th> 
+ <td th:text ="${selectedContract?.address}"/>
+  </tr>
+   <tr>
+ <th>Phone </th> 
+ <td th:text ="${selectedContract?.phone}"/>
+  </tr>
+   <tr>
+ <th>Email </th> 
+ <td th:text ="${selectedContract?.email}"/>
+  </tr>
+   <tr>
+ <th>Fax </th> 
+ <td th:text ="${selectedContract?.fax}"/>
+  </tr>
+  </table>
  </form>
 </div>
 </body>
