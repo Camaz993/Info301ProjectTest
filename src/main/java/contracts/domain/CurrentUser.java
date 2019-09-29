@@ -20,7 +20,7 @@ public class CurrentUser implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.singleton(new SimpleGrantedAuthority("USER"));
+		return Collections.singleton(new SimpleGrantedAuthority(user.getRole()));
 	}
 
 	@Override
@@ -40,7 +40,10 @@ public class CurrentUser implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		if (user.isLocked() == false) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override

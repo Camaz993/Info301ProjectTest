@@ -223,6 +223,16 @@ public class ContractController {
 		contractService.addContract(unfavouriteContract);
 		return "redirect:/search_contracts";
 	}
+	
+	@GetMapping("/help")
+	public String help() {
+		return "/help";
+	}
+	
+	@GetMapping("/admin_settings")
+	public String adminSettings() {
+		return "/admin_settings";
+	}
 
 }
 	

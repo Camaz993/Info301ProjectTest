@@ -46,6 +46,15 @@
 <div class="content">
 <form action="#" th:action="@{/api/staff}" th:object="${user}" method="post" id="addUser">
 	<h1>Add New User</h1>
+	<div class="subnav">
+	<div class="links">
+	<a href="/admin_settings">Home</a>
+	<a>Create Account</a>
+	<a href="/manage_users">Manage Users</a>
+	<a href="/create_account">Site Settings</a>
+	<a href="/create_account">Track Changes</a>
+	</div>
+	</div>
 	<p> Fill in this form to create an account </p>    
     <table>
     <tr>
@@ -57,8 +66,11 @@
     	<td th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Name Error</td>
     </tr>
     <tr>
-    	<td>Role: <input type="text"  th:field="*{role}" /></td>
-    	<td th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</td>
+    	<td>Role: <select id="role" name="role">
+    	<option disabled="">Select a role</option>
+    	<option value="ADMIN">Admin</option>
+    	<option value="LEGAL">Legal</option>
+    	</select></td>
     </tr>
     <tr>
     	<td>Username: <input type="text"  th:field="*{username}" /></td>
@@ -81,5 +93,11 @@
     </table>
 </form>
 </div>
+
+<footer>
+	<a href="/help">Help Page</a>
+</footer>
+
+
 </body>
 </html>
