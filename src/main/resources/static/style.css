@@ -169,3 +169,25 @@ input[type=submit]:hover {
 h1{
   color: #1380A1;
   font-size: 200%;
+}
+
+.footerContainer {
+	background: #122848;
+	width:100%;
+}
+
+footer {
+	background: #122848;
+	margin: 0px;
+	padding: 30px;
+	color: #1380A1;
+	padding-left: 50px;
+	}
+	
+footer a:hover {
+  color: #F2F2F2;
+}
+
+footer a {
+	color: #1380A1;
+	}
