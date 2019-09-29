@@ -228,6 +228,11 @@ public class ContractController {
 	public String help() {
 		return "/help";
 	}
+	
+	@GetMapping("/admin_settings")
+	public String adminSettings() {
+		return "/admin_settings";
+	}
 
 }
 	

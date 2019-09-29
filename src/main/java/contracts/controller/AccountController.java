@@ -34,6 +34,7 @@ public class AccountController {
 	@GetMapping("/create_account")
     public String showSignUpForm(Model model) {
 		model.addAttribute("user", new User());
+		model.addAttribute("roles", accountService.getUserRoles());
         return "create_account";
     }
 	
@@ -77,7 +78,7 @@ public class AccountController {
 		user.setPassrepeat(passwordEncoder.encode(user.getPassrepeat()));
 		user.setLocked(false);
 		accountService.addAccount(user);
-		return "index";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/login")

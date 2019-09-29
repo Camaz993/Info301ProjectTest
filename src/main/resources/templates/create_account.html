@@ -57,8 +57,11 @@
     	<td th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Name Error</td>
     </tr>
     <tr>
-    	<td>Role: <input type="text"  th:field="*{role}" /></td>
-    	<td th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</td>
+    	<td>Role: <select id="role" name="role">
+    	<option disabled="">Select a role</option>
+    	<option value="ADMIN">Admin</option>
+    	<option value="LEGAL">Legal</option>
+    	</select></td>
     </tr>
     <tr>
     	<td>Username: <input type="text"  th:field="*{username}" /></td>
