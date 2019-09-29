@@ -45,6 +45,31 @@ body{
   color: #F2F2F2;
 }
 
+.subnav {
+	background-color: #122848;
+	width:100%;
+	padding-top:10px;
+	padding-bottom:10px;
+	display:inline-block;
+}
+
+.links {
+	margin-left:auto;
+	margin-right:auto;
+	width:95%;
+}
+
+.links a {
+	font-weight: bold;
+	color: #1380A1;
+	padding:5px;
+	font-size:10pt;
+	}
+	
+.links a:hover {
+  color: #F2F2F2;
+}
+
 .sub {
 	font-style: italic;
 	font-size: 10pt;
