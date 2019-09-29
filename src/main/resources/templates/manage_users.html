@@ -2,15 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Admin Settings</title>
+<title>Manage Users</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
-<style>
-.square {
-  height: 20px;
-  width: 50px;
-  background-color: #555;
-}
-</style>
 </head>
 <body onload="colours();">
 	<div class="headerContainer">
@@ -51,18 +44,53 @@
 	</div>
 	
 	<div class="content">
-		<h1>Admin Home</h1>
+		<h1>Manage Users</h1>
 	<div class="subnav">
 	<div class="links">
-	<a>Home</a>
+	<a href="/admin_settings">Home</a>
 	<a href="/create_account">Create Account</a>
-	<a href="/manage_users">Manage Users</a>
+	<a>Manage Users</a>
 	<a href="/create_account">Site Settings</a>
 	<a href="/create_account">Track Changes</a>
 	</div>
 	</div>
-	<h3><div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div> to the admin portal.</h3>
-    <p>Here you may access all the relevant administrative information.</p>
+	<table>
+	<thead>
+	<tr>
+	<th>First Name</th>
+    <th>Last Name</th>
+    <th>Username</th>
+    <th>Role</th>
+    <th>Locked</th>
+    <th>Lock User</th>
+    <th>Unlock User</th>
+    </tr>
+    </thead>
+	<tbody class="wrongth">
+    <tr th:each="user : ${users}">
+        <th th:text=${user.firstname}></th>	 
+        <th th:text="${user.lastname}"></th>
+        <th th:text="${user.username}"></th>
+        <th th:text="${user.role}"></th>
+        <th th:text="${user.locked}"></th>
+             	<th>
+       		<form action="#" th:action="@{/lock_users/{userid}(userid=${user.userid})}" method="get">
+  				<input type="hidden"/>
+  				<button onclick="return confirm('Are you sure want to lock this user?');" type="submit" id="lock_button">Lock</button>
+			</form>
+     	</th>
+     	<th>
+       		<form action="#" th:action="@{/unlock_users/{userid}(userid=${user.userid})}" method="get">
+  				<input type="hidden"/>
+  				<button onclick="return confirm('Are you sure want to unlock this user?');" type="submit" id="un_button">Unlock</button>
+			</form>
+     	</th>
+    </tr>
+    </tbody>
+    </table>
     </div>
+    <footer>
+	<a href="/help">Help Page</a>
+</footer>
 </body>
 </html>
