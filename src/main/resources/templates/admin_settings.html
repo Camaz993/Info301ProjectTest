@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Admin Settings</title>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+<style>
+.square {
+  height: 20px;
+  width: 50px;
+  background-color: #555;
+}
+</style>
+</head>
+<body onload="colours();">
+	<div class="headerContainer">
+	<div class="header">
+	<h1>Contract Management</h1>
+	</div>
+	<div class="logout">
+    	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
+        <form th:action="@{/logout}" method="post"> 
+            <input type="submit" value="Logout"/> 
+        </form>
+    	</div>
+    	</div>
+	<div class="sidenav">
+		<div>
+ 		<a href="/">Home</a>
+ 		</div>
+ 		<div>
+ 		<a>New Contract</a></li>
+ 		<p class="sub">Create a new contract</p>
+ 		</div>
+ 		<div>
+ 		<a href="/search_contracts">Search Contracts</a></li>
+ 		<p class="sub">Search for a contract</p>
+ 		</div>
+ 		<div>
+ 		<a href="/archive_contracts">Archived Contracts</a></li>
+ 		<p class="sub">View Archived Contracts</p>
+ 		</div>
+ 		<div>
+ 		<a href="/my_contracts">My Contracts</a></li>
+ 		<p class="sub">View your assigned contracts</p>
+ 		</div>
+ 		<div>
+ 			<a href="/create_account">Create Account</a></li>
+ 			<p class="sub">Create a new account</p>
+ 		</div>
+	</div>
+	
+	<div class="content">
+		<h1>Admin Home</h1>
+	<div class="subnav">
+	<div class="links">
+	<a href="/create_account">Home</a>
+	<a href="/create_account">Create Account</a>
+	<a href="/create_account">Manage Users</a>
+	<a href="/create_account">Site Settings</a>
+	<a href="/create_account">Track Changes</a>
+	</div>
+	</div>
+    </div>
+</body>
+</html>
