@@ -48,7 +48,12 @@
 
 	<div class="content">
 	<h2>My Contracts</h2>
-    <h3 th:text="'Contracts for User: ' + ${currentuser}"></h3>
+	<h3 th:text="'Contracts for User: ' + ${currentuser}"></h3>
+	<div th:if= "${contracts.isEmpty()}"> 
+    <p>There are no contracts currently assigned to you.</p>
+    <p>Check the main page for unassigned contracts.</p>
+    </div>
+    <div th:if= "${!contracts.isEmpty()}"> 
     <p>These are all the contracts assigned to you currently.</p>
 	<table id="viewcontracts">
 	<thead>
@@ -57,7 +62,7 @@
     <th>Agreement Title</th>
     <th>Agreement Type</th>
     <th>Description</th>
-    <th>Agreement Location</th>
+    <th>Business Name</th>
     </tr>
     </thead>
     <tbody class="wrongth">
@@ -68,10 +73,11 @@
         <th th:text=${contract.agreement_title}></th>	 
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
-        <th th:text="${contract.agreement_location}"></th>
+        <th th:text="${contract?.businessname}"></th>
     </tr>
     </tbody>
     </table>
+    </div>
     </div>
 </body>
 </html>

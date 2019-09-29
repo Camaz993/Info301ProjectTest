@@ -51,6 +51,12 @@
     </form>
     -->
     <h2>Contracts</h2>
+    <h3 th:text="'Favourited Contracts for User: ' + ${currentuser}"></h3>
+    <div th:if= "${contracts.isEmpty()}">
+    <p>You have not favourited any contracts. To favourite contracts, return to the search page 
+    and press the "favourite" button by the contract you wish to favourite.</p>
+    </div>  
+    <div th:if= "${!contracts.isEmpty()}">
 	<table id="viewcontracts">
 	<thead>
 	<tr>
@@ -58,7 +64,7 @@
     <td>Agreement Title</td>
     <td>Agreement Type</td>
     <td>Description</td>
-    <td>Agreement Location</td>
+    <td>Business Name</td>
     <td>Unfavourite Contract</td>
     </tr>
     </thead>
@@ -70,16 +76,17 @@
         <th th:text=${contract.agreement_title}></th>	 
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
-        <th th:text="${contract.agreement_location}"></th>
+        <th th:text="${contract?.businessname}"></th>
         <th>
        		<form action="#" th:action="@{/unfavourite_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to unfavourite this?');" type="submit" id="submitButton">Unfavoruite</button>
+  				<button onclick="return confirm('Are you sure want to unfavourite this?');" type="submit" id="submitButton">Unfavourite</button>
 			</form>
      	</th>
     </tr>
     </tbody>
     </table>
+    </div>
     </div>
     
 <script>
@@ -116,8 +123,10 @@ function searchID() {
 	      }
 	    }
 	  }
-
 	}
+function ifEmpty(){
+	
+}
 </script>
 </body>
 </html>

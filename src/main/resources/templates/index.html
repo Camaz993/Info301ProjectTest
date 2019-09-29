@@ -59,7 +59,7 @@
     <th>Agreement Title</th>
     <th>Agreement Type</th>
     <th>Description</th>
-    <th>Agreement Location</th>
+    <th>Business Name</th>
     <th>Date Updated</th>
     </tr>
     </thead>
@@ -72,19 +72,24 @@
         <th th:text="${contract.agreement_title}"></th>
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
-        <th th:text="${contract.agreement_location}"></th>
+        <th th:text="${contract.businessname}"></th>
         <th th:text="${contract.date_updated}"></th>
     </tr>
     </tbody>
     </table>
+    </div>
      <h3>Unassigned Contracts</h3>
+     <div th:if= "${contracts2.isEmpty()}">
+     <p>There are currently no unassigned contracts</p>
+     </div>
+     <div th:if= "${!contracts2.isEmpty()}">
         <table id="unassigned">
 	<thead>
 	<tr>
     <th>Agreement Title</th>
     <th>Agreement Type</th>
     <th>Description</th>
-    <th>Agreement Location</th>
+    <th>Business Name</th>
     <th>Assign</th>
     </tr>
     </thead>
@@ -93,7 +98,7 @@
         <th th:text="${contract.agreement_title}"></th>
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
-        <th th:text="${contract.agreement_location}"></th>
+        <th th:text="${contract.businessname}"></th>
         <th>
         <form action="#" th:action="@{/assign/{requestid}(requestid=${contract.requestid})}" method="post">			
   				<button onclick="return confirm('Are you sure want to assign this to you?');" type="submit" id="submitButton2">Assign to Me</button>
@@ -103,11 +108,12 @@
     </tbody>
     </table>
     </div>
+    </div>
  
      
 <script>
 function showTen(){
-	$("table > tbody > tr").hide().slice(0, 10).show();
+	$("#viewcontracts > tbody > tr").hide().slice(0, 10).show();
 	$(".show-all").on("click", function() {
 	  $("tbody > tr", $(this).prev()).show();
 	});}
