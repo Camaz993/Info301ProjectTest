@@ -39,7 +39,7 @@ public class AuditController {
 	
 	@GetMapping("/audit")
 	public String getAllContracts(Model model) {
-		model.addAttribute("contracts", auditService.getAudit());
+		model.addAttribute("audits", auditService.getAudit());
 		return "audit";
 	}
 	

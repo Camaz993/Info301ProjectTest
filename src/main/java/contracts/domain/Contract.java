@@ -186,9 +186,6 @@ public class Contract {
 	
 	@Override
 	public String toString() {
-		return "contract [requestid=" + requestid + ", userid=" + user + ", statusid=" + statusid
-				+ ", agreement_title=" + agreement_title + ", agreement_type=" + agreement_type + ", description="
-				+ description + ", agreement_location=" + agreement_location + ", language=" + language + ", region="
-				+ region + ", related_agreements=" + related_agreements + ", archived=" + archived + ", favourited=" + favourited + "]";
+		return "requestid=" + requestid + ", agreement_title=" + agreement_title + "";
 	}
 }

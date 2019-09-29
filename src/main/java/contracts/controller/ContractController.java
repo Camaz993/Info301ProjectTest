@@ -161,44 +161,44 @@ public class ContractController {
 		Contract foundContract = contractService.findContract(contract.getRequestid()).orElse(new Contract());
 		Audit blank = new Audit();
 		if (!foundContract.getUser().equals(contract.getUser())) {
-			fieldBeforeList += ((String.valueOf((foundContract.getUser().getUserid()))));
-			fieldAfterList += ((String.valueOf((contract.getUser().getUserid()))));
-			fieldUpdatedList += ("userid") + (" ");
+			fieldBeforeList += ((String.valueOf((foundContract.getUser().getUserid()))))+ (", ");
+			fieldAfterList += ((String.valueOf((contract.getUser().getUserid()))))+ (", ");
+			fieldUpdatedList += ("userid") + (", ");
 		}
 		if (!foundContract.getAgreement_title().equals(contract.getAgreement_title())) {
-			fieldBeforeList += ((String.valueOf((foundContract.getAgreement_title()))));
-			fieldAfterList += ((String.valueOf((contract.getAgreement_title()))));
-			fieldUpdatedList += ("agreement_title") + (" ");
+			fieldBeforeList += ((String.valueOf((foundContract.getAgreement_title()))))+ (", ");
+			fieldAfterList += ((String.valueOf((contract.getAgreement_title()))))+ (", ");
+			fieldUpdatedList += ("agreement_title") + (", ");
 		}
 		if (!foundContract.getAgreement_type().equals(contract.getAgreement_type())) {
-			fieldBeforeList += ((String.valueOf((foundContract.getAgreement_type()))));
-			fieldAfterList += ((String.valueOf((contract.getAgreement_type()))));
-			fieldUpdatedList += ("agreement_type") + (" ");
+			fieldBeforeList += ((String.valueOf((foundContract.getAgreement_type()))))+ (", ");
+			fieldAfterList += ((String.valueOf((contract.getAgreement_type()))))+ (", ");
+			fieldUpdatedList += ("agreement_type") + (", ");
 		}
 		if (!foundContract.getDescription().equals(contract.getDescription())) {
-			fieldBeforeList += ((String.valueOf((foundContract.getDescription()))));
-			fieldAfterList += ((String.valueOf((contract.getDescription()))));
-			fieldUpdatedList += ("description") + (" ");
+			fieldBeforeList += ((String.valueOf((foundContract.getDescription()))))+ (", ");
+			fieldAfterList += ((String.valueOf((contract.getDescription()))))+ (", ");
+			fieldUpdatedList += ("description") + (", ");
 		}
 		if (!foundContract.getAgreement_location().equals(contract.getAgreement_location())) {
-			fieldBeforeList += ((String.valueOf((foundContract.getAgreement_location()))));
-			fieldAfterList += ((String.valueOf((contract.getAgreement_location()))));
-			fieldUpdatedList += ("agreement_location") + (" ");
+			fieldBeforeList += ((String.valueOf((foundContract.getAgreement_location()))))+ (", ");
+			fieldAfterList += ((String.valueOf((contract.getAgreement_location()))))+ (", ");
+			fieldUpdatedList += ("agreement_location") + (", ");
 		}
 		if (!foundContract.getLanguage().equals(contract.getLanguage())) {
-			fieldBeforeList += ((String.valueOf((foundContract.getLanguage()))));
-			fieldAfterList += ((String.valueOf((contract.getLanguage()))));
-			fieldUpdatedList += ("language") + (" ");
+			fieldBeforeList += ((String.valueOf((foundContract.getLanguage()))))+ (", ");
+			fieldAfterList += ((String.valueOf((contract.getLanguage()))))+ (", ");
+			fieldUpdatedList += ("language") + (", ");
 		}
 		if (!foundContract.getRegion().equals(contract.getRegion())) {
-			fieldBeforeList += ((String.valueOf((foundContract.getRegion()))));
-			fieldAfterList += ((String.valueOf((contract.getRegion()))));
-			fieldUpdatedList += ("region") + (" ");
+			fieldBeforeList += ((String.valueOf((foundContract.getRegion()))))+ (", ");
+			fieldAfterList += ((String.valueOf((contract.getRegion()))))+ (", ");
+			fieldUpdatedList += ("region") + (", ");
 		}
 		if (!foundContract.getRelated_agreements().equals(contract.getRelated_agreements())) {
-			fieldBeforeList += ((String.valueOf((foundContract.getRelated_agreements()))));
-			fieldAfterList += ((String.valueOf((contract.getRelated_agreements()))));
-			fieldUpdatedList += ("related_agreements") + (" ");
+			fieldBeforeList += ((String.valueOf((foundContract.getRelated_agreements()))))+ (", ");
+			fieldAfterList += ((String.valueOf((contract.getRelated_agreements()))))+ (", ");
+			fieldUpdatedList += ("related_agreements") + (", ");
 		}
 		
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
