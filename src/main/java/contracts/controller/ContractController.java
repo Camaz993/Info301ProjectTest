@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import contracts.domain.Contract;
 import contracts.domain.Expired;
+import contracts.domain.Favourited;
 import contracts.domain.InNegotiation;
 import contracts.domain.Operative;
 import contracts.domain.Status;
@@ -34,6 +35,7 @@ import contracts.domain.User;
 import contracts.repository.ContractRepository;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
+import contracts.service.IFavouritedService;
 
 @Controller
 public class ContractController {
@@ -43,6 +45,9 @@ public class ContractController {
 	
 	@Autowired
 	private IAccountService accountService;
+	
+	@Autowired
+	private IFavouritedService favouritedService;
 	
 	@Autowired
 	private ContractRepository repo;
@@ -191,14 +196,23 @@ public class ContractController {
 	@PostMapping("/favourite_contracts/{requestid}")
 	public String favouritedContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract favouritedContract = contractService.findContract(requestid).orElse(new Contract());
-		favouritedContract.setFavourited("T");
-		contractService.addContract(favouritedContract);
+		Favourited favourite = new Favourited();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		favourite.setUser(user);
+		favourite.setContract(favouritedContract);
+		favouritedService.addFavourite(favourite);
 		return "redirect:/favourite_contracts";
 	}
 
 	@GetMapping("/favourite_contracts")
 	public String getFavouritedContracts(Model model) {
-		model.addAttribute("contracts", contractService.getFavouritedContracts());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		model.addAttribute("contracts", contractService.getFavouritedContracts(user.getUserid()));
+		model.addAttribute("currentuser", user.getUsername());
 		return "favourite_contracts";
 	}
 	
