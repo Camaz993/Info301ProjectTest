@@ -64,7 +64,7 @@
     <td>Agreement Title</td>
     <td>Agreement Type</td>
     <td>Description</td>
-    <td>Agreement Location</td>
+    <td>Business Name</td>
     <td>Unfavourite Contract</td>
     </tr>
     </thead>
@@ -76,7 +76,7 @@
         <th th:text=${contract.agreement_title}></th>	 
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
-        <th th:text="${contract.agreement_location}"></th>
+        <th th:text="${contract?.businessname}"></th>
         <th>
        		<form action="#" th:action="@{/unfavourite_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>

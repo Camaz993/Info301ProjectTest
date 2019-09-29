@@ -60,7 +60,7 @@
     <th>Agreement Title</th>
     <th>Agreement Type</th>
     <th>Description</th>
-    <th>Agreement Location</th>
+    <th>Business Name</th>
     <th>Date Updated</th>
     <th>Update Details</th>
     <th>Archive Contract</th>
@@ -75,7 +75,7 @@
         <th th:text=${contract.agreement_title}></th>	 
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
-        <th th:text="${contract.agreement_location}"></th>
+        <th th:text="${contract?.businessname}"></th>
         <th th:text="${contract.date_updated}"></th>
         <th>
         	<a th:href="@{/update_details/{requestid}(requestid=${contract.requestid})}" target="_blank">Update</a>

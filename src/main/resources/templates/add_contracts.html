@@ -82,6 +82,30 @@
         <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
     </tr>
     <tr>
+        <td>Business Name: <input type="text"  th:field="*{businessname}" /></td>
+        <td th:if="${#fields.hasErrors('businessname')}" th:errors="*{businessname}">Business name Error</td>
+    </tr>
+     <tr>
+        <td>Client Name: <input type="text"  th:field="*{clientname}" /></td>
+        <td th:if="${#fields.hasErrors('clientname')}" th:errors="*{clientname}">Client name Error</td>
+    </tr>
+     <tr>
+        <td>Address: <input type="text"  th:field="*{address}" /></td>
+        <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</td>
+    </tr>
+     <tr>
+        <td>Phone: <input type="text"  th:field="*{phone}" /></td>
+        <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone Error</td>
+    </tr>
+     <tr>
+        <td>Email: <input type="text"  th:field="*{email}" /></td>
+        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
+    </tr>
+     <tr>
+        <td>Fax: <input type="text"  th:field="*{fax}" /></td>
+        <td th:if="${#fields.hasErrors('fax')}" th:errors="*{fax}">Fax Error</td>
+    </tr>
+    <tr>
         <td>Language: <input type="text"  th:field="*{language}" /></td>
         <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Language Error</td>
     </tr>
@@ -101,22 +125,48 @@
     
     
     <form action="#" id="in_negotiation" class="display-none" method="post" >
-		<td>Comments: <input type="text"/></td>		
+    <table>
+    <tr>
+		<td>Comments: <input type="text"/></td>	
+	</tr>	
+	</table>
 	</form>
 		
 	<form action="#" id="operative" class="display-none" method="post" >
+	<table>
+    <tr>
 		<td>Date Signed <input type="date" /></td>
+		</tr>
+    <tr>
 		<td>Date Commenced: <input type="date"/></td>
+		</tr>
+    <tr>
 		<td>Date Expires: <input type="date"/></td>
+		</tr>
+    <tr>
 		<td>Verification: <input type="text"/></td>		
+		</tr>
+    </table>
 	</form>
 		
 	<form action="#" id="expired" class="display-none" method="post" >
+	<table>
+	<tr>
 		<td>Ending Reason: <input type="text"/></td>
+		</tr>
+    <tr>
 		<td>Expiry Date:  <input type="date"/></td>
+		</tr>
+    <tr>
 		<td>Termination Date: <input type="date"/></td>
+		</tr>
+    <tr>
 		<td>Termination Notice Date: <input type="text"/></td>
-		<td>Binding Terms Active: <input type="text"/></td>		
+		</tr>
+    <tr>
+		<td>Binding Terms Active: <input type="text"/></td>	
+		</tr>
+    </table>	
 	</form> 
     
 		 

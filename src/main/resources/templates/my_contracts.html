@@ -62,7 +62,7 @@
     <th>Agreement Title</th>
     <th>Agreement Type</th>
     <th>Description</th>
-    <th>Agreement Location</th>
+    <th>Business Name</th>
     </tr>
     </thead>
     <tbody class="wrongth">
@@ -73,7 +73,7 @@
         <th th:text=${contract.agreement_title}></th>	 
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
-        <th th:text="${contract.agreement_location}"></th>
+        <th th:text="${contract?.businessname}"></th>
     </tr>
     </tbody>
     </table>
