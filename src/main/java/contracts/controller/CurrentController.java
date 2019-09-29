@@ -28,8 +28,8 @@ public class CurrentController {
     }
 	
 	@PostMapping("/api_adminblue")
-	public String changeColourBlue() {
-		currentService.updateBackground(2, "blue");
+	public String changeColour() {
+		currentService.updateColours(2, "beige", "#FF7F50", "pink");
 		return "redirect:/admin_settings";
 	}
 

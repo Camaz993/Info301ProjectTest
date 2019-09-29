@@ -5,12 +5,23 @@
 <title>Admin Settings</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 <script>
-function background(){
-document.body.style.backgroundColor = "[[${currents[0].background}]]";
+var test = document.getElementsByClassName("sidenav");
+function colours(){
+document.getElementsByClassName("header")[0].style.backgroundColor = "[[${currents[0].background}]]";
+document.getElementsByClassName("sidenav")[0].style.backgroundColor = "[[${currents[0].background}]]";
+document.querySelectorAll("input[type=submit]")[0].style.backgroundColor = "[[${currents[0].button}]]";
+test[1].getElementsByTagName("a").style.color = "[[${currents[0].links}]]";
 }
 </script>
+<style>
+.square {
+  height: 20px;
+  width: 50px;
+  background-color: #555;
+}
+</style>
 </head>
-<body onload="background();">
+<body onload="colours();">
 	<div class="headerContainer">
 	<div class="header">
 	<h1>Contract Management</h1>
@@ -59,37 +70,56 @@ document.body.style.backgroundColor = "[[${currents[0].background}]]";
 	<a href="/create_account">Track Changes</a>
 	</div>
 	</div>
-	<table>
 	<h3>Colour Scheme</h3>
 	<p>Select which colour scheme you wish to view the contract management system in</p>
-        <th th:text=${currents[0].background}></th>	 
+	<table>
+	<tr>
+	<td>Header</td>
+	<td>Title</td>
+	<td>Links</td>
+	<td>Select</td>
+	</tr>
+	<tr>
+	<th><div class="square"></div></th>
+	<th><div class="square"></div></th>
+	<th><div class="square"></div></th>
+ 	<th>	<form action="#" th:action="@{/api_adminblue}" method="post">
+  				<input type="hidden"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit" id="colour_change">Blue</button>
+		</form></th>
+	</tr>
+	<tr>
+	<th><div class="square"></div></th>
+	<th><div class="square"></div></th>
+	<th><div class="square"></div></th>
+	<th th:text=${currents[0].background}>	 
  		<form action="#" th:action="@{/api_adminblue}" method="post">
   				<input type="hidden"/>
   				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit" id="colour_change">Blue</button>
-		</form>
+		</form></th>
+	</tr>
+	<tr>
+	<th><div class="square"></div></th>
+	<th><div class="square"></div></th>
+	<th><div class="square"></div></th>
+	<th th:text=${currents[0].background}>	 
+ 		<form action="#" th:action="@{/api_adminblue}" method="post">
+  				<input type="hidden"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit" id="colour_change">Blue</button>
+		</form></th>
+	</tr>
+	<tr>
+	<th><div class="square"></div></th>
+	<th><div class="square"></div></th>
+	<th><div class="square"></div></th>
+	<th th:text=${currents[0].background}>	 
+ 		<form action="#" th:action="@{/api_adminblue}" method="post">
+  				<input type="hidden"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit" id="colour_change">Blue</button>
+		</form></th>
+	</tr>
 	</table>
+	<h3>Logo</h3>
     </div>
-		 
-	<script type="text/javascript">
-		 
-		    function changeStatus() {
-		        var allForms = document.getElementsByTagName('form');
-		        var dropdown = document.getElementById("dropdown");
-		        if (dropdown.value != "-1") {
-		            var form = document.getElementById(dropdown.value);
-		            for (var i = 0; i < allForms.length; i++) {
-		                allForms[i].setAttribute("class", "display-none");
-		            }
-		            form.setAttribute("class", "");
-		        }
-		        var contractForm = document.getElementById("addContract");
-		        contractForm.setAttribute("class", "display");
-		    }
-		    
-		    function submit(){
-		    	document.getElementById("addContract").submit();
-   				document.getElementById(dropdown.value).submit();
-		    }
-		</script>
 </body>
 </html>

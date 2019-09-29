@@ -20,13 +20,13 @@ public class CurrentService implements ICurrentService {
 	
 	@Override
 	public List<Current> getAllCurrent() {
-		return currentRepository.findAll();
+		return currentRepository.getAllCurrent();
 	}
 	
 	@Transactional
 	@Override
-	public void updateBackground(Integer idcurrent_css, String background) {	
-		currentRepository.updateBackground(idcurrent_css, background);
+	public void updateColours(Integer idcurrent_css, String background, String button, String links) {	
+		currentRepository.updateColours(idcurrent_css, background, button, links);
 	}
 
 }

@@ -22,10 +22,18 @@ public class Current {
 	@Column(name = "background")
 	private String background;
 	
-	public Current(Integer idcurrent_css, String background) {
+	@Column(name = "button")
+	private String button;
+	
+	@Column(name = "links")
+	private String links;
+	
+	public Current(Integer idcurrent_css, String background, String button, String links) {
 		super();
 		this.idcurrent_css = idcurrent_css;
 		this.background = background;
+		this.button = button;
+		this.links = links;
 	}
 	
 	public Current() {
@@ -46,6 +54,22 @@ public class Current {
 	
 	public void setBackground(String background) {
 		this.background = background;
+	}
+	
+	public String getButton() {
+		return button;
+	}
+	
+	public void setButton(String button) {
+		this.button = button;
+	}
+	
+	public String getLinks() {
+		return links;
+	}
+	
+	public void setLinks(String links) {
+		this.links = links;
 	}
 	
 	@Override

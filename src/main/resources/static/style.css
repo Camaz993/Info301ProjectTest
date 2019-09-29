@@ -65,6 +65,10 @@ body{
 	padding:5px;
 	font-size:10pt;
 	}
+	
+.links a:hover {
+  color: #F2F2F2;
+}
 
 .sub {
 	font-style: italic;
