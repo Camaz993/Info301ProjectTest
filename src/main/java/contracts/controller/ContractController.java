@@ -29,6 +29,7 @@ import contracts.domain.User;
 import contracts.repository.ContractRepository;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
+import contracts.service.IExpiredService;
 import contracts.service.IInNegotiationService;
 import contracts.service.IOperativeService;
 
@@ -46,6 +47,9 @@ public class ContractController {
 	
 	@Autowired
 	private IInNegotiationService in_negotiationService;
+	
+	@Autowired
+	private IExpiredService expiredService;
 	
 	@Autowired
 	private ContractRepository repo;
@@ -95,8 +99,16 @@ public class ContractController {
 	@PostMapping("api/operative")
 	public String add_operative(@ModelAttribute(name="operative") Operative operative) {
 		Integer requestid = contractService.findNewestContract();
-		operative.setRequestId(requestid);
+		operative.setRequestId(requestid);		
 		operativeService.addOperative(operative);
+		return "redirect:/";
+	}
+	
+	@PostMapping("api/expired")
+	public String add_expired(@ModelAttribute(name="expired") Expired expired) {
+		Integer requestid = contractService.findNewestContract();
+		expired.setRequestId(requestid);
+		expiredService.addExpired(expired);
 		return "redirect:/";
 	}
 	

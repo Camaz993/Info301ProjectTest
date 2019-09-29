@@ -1,5 +1,5 @@
 package contracts.domain;
-import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,15 +26,15 @@ public class Operative {
 	
 	@NotNull
 	@Column(name = "date_signed")
-	private Date date_signed;
+	private String date_signed;
 	
 	@NotNull
 	@Column(name = "date_commenced")
-	private Date date_commenced;
+	private String date_commenced;
 	
 	@NotNull
 	@Column(name = "date_expire")
-	private Date date_expire;
+	private String date_expire;
 	
 	@NotNull
 	@Column(name = "verification")
@@ -43,7 +43,7 @@ public class Operative {
 	public Operative() {}
 	
 	//Constructor method
-	public Operative(Integer requestid, Date date_signed, Date date_commenced, Date date_expire, String verification) {
+	public Operative(Integer requestid, String date_signed, String date_commenced, String date_expire, String verification) {
 		super();
 		this.requestid = requestid;
 		this.date_signed = date_signed;
@@ -69,27 +69,27 @@ public class Operative {
 		this.contract = contract;
 	}
 	
-	public Date getDate_signed() {
+	public String getDate_signed() {
 		return date_signed;
 	}
 
-	public void setDate_signed(Date date_signed) {
+	public void setDate_signed(String date_signed) {
 		this.date_signed = date_signed;
 	}
 
-	public Date getDate_commenced() {
+	public String getDate_commenced() {
 		return date_commenced;
 	}
 
-	public void setDate_commenced(Date date_commenced) {
+	public void setDate_commenced(String date_commenced) {
 		this.date_commenced = date_commenced;
 	}
 
-	public Date getDate_expire() {
+	public String getDate_expire() {
 		return date_expire;
 	}
 
-	public void setDate_expire(Date date_expire) {
+	public void setDate_expire(String date_expire) {
 		this.date_expire = date_expire;
 	}
 

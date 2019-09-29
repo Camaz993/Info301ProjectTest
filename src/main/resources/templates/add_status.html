@@ -62,18 +62,22 @@
 	</form>
 		
 	<form action="#" th:action="@{api/operative}" th:object="${operative}" id="operative" class="display-none" method="post" >
-		<td>Date Signed <input type="date" /></td>
-		<td>Date Commenced: <input type="date"/></td>
-		<td>Date Expires: <input type="date"/></td>
-		<td>Verification: <input type="text"/></td>		
+		<td>Date Signed <input type="date" th:field="*{date_signed}" /></td>
+		<td>Date Commenced: <input type="date" th:field="*{date_commenced}"/></td>
+		<td>Date Expires: <input type="date" th:field="*{date_expire}"/></td>
+		<td>Verification: <input type="text" th:field="*{verification}"/></td>
+		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
+		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>		
 	</form>
 		
 	<form action="#" th:action="@{api/expired}" th:object="${expired}" id="expired" class="display-none" method="post" >
-		<td>Ending Reason: <input type="text"/></td>
-		<td>Expiry Date:  <input type="date"/></td>
-		<td>Termination Date: <input type="date"/></td>
-		<td>Termination Notice Date: <input type="text"/></td>
-		<td>Binding Terms Active: <input type="text"/></td>		
+		<td>Ending Reason: <input type="text" th:field="*{ending_reason}"/></td>
+		<td>Expiry Date:  <input type="date" th:field="*{expiry_date}"/></td>
+		<td>Termination Date: <input type="date" th:field="*{termination_date}"/></td>
+		<td>Termination Notice Date: <input type="text" th:field="*{termination_notice_date}"/></td>
+		<td>Binding Terms Active: <input type="text" th:field="*{binding_terms_active}"/></td>
+		<input type="hidden" th:field="*{requestid}" th:value="${requestid}"/>		
+		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
 	</form> 
     
 		 

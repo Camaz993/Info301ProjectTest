@@ -1,12 +1,13 @@
 package contracts.domain;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -15,37 +16,39 @@ import javax.validation.constraints.NotNull;
 public class Expired {
 	
 	public static final String TABLE_NAME = "EXPIRED";
-	
-	public Expired() {
-		
-	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "RequestID")
+	@Column(name = "requestid")
 	private Integer requestid;
 	
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requestid", nullable = false)
+    private Contract contract;
+	
 	@NotNull
-	@Column(name = "Ending_Reason")
+	@Column(name = "ending_reason")
 	private String ending_reason;
 	
 	@NotNull
-	@Column(name = "Expiry_Date")
-	private Date expiry_date;
+	@Column(name = "expiry_date")
+	private String expiry_date;
 	
 	@NotNull
-	@Column(name = "Termination_Date")
-	private Date termination_date;
+	@Column(name = "termination_date")
+	private String termination_date;
 	
 	@NotNull
-	@Column(name = "Termination_Notice_Date")
+	@Column(name = "termination_notice_date")
 	private String termination_notice_date;
 	
 	@NotNull
-	@Column(name = "Binding_Terms_Active")
+	@Column(name = "binding_terms_active")
 	private String binding_terms_active;
 	
-	public Expired(Integer requestid, String ending_reason, Date expiry_date, Date termination_date,
+	
+	public Expired() {}
+	
+	public Expired(Integer requestid, String ending_reason, String expiry_date, String termination_date,
 			String termination_notice_date, String binding_terms_active) {
 		super();
 		this.requestid = requestid;
@@ -60,7 +63,7 @@ public class Expired {
 		return requestid;
 	}
 
-	public void setRequestid(Integer requestid) {
+	public void setRequestId(Integer requestid) {
 		this.requestid = requestid;
 	}
 
@@ -72,19 +75,19 @@ public class Expired {
 		this.ending_reason = ending_reason;
 	}
 
-	public Date getExpiry_date() {
+	public String getExpiry_date() {
 		return expiry_date;
 	}
 
-	public void setExpiry_date(Date expiry_date) {
+	public void setExpiry_date(String expiry_date) {
 		this.expiry_date = expiry_date;
 	}
 
-	public Date getTermination_date() {
+	public String getTermination_date() {
 		return termination_date;
 	}
 
-	public void setTermination_date(Date termination_date) {
+	public void setTermination_date(String termination_date) {
 		this.termination_date = termination_date;
 	}
 
@@ -102,6 +105,14 @@ public class Expired {
 
 	public void setBinding_terms_active(String binding_terms_active) {
 		this.binding_terms_active = binding_terms_active;
+	}
+	
+	public Contract getContract() {
+		return contract;
+	}
+	
+	public void setContract(Contract contract) {
+		this.contract=contract;
 	}
 
 	@Override
