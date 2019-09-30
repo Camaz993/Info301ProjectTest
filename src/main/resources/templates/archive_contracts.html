@@ -45,13 +45,12 @@
 	</div>
 
 	<div class="content">
-	<h2>Search for Contracts</h2>
+	<h2>Archived Contracts</h2>
     <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
       <label for="search">Search:</label><input name="search" id="search"> 
     <p><input type="submit" value="Submit" /> </p>
     </form>
     -->
-    <h2>Contracts</h2>
 	<table id="viewcontracts">
 	<thead>
 	<tr>
@@ -59,7 +58,7 @@
     <th>Agreement Title</th>
     <th>Agreement Type</th>
     <th>Description</th>
-    <th>Agreement Location</th>
+    <th>Business Name</th>
     <th>Unarchive Contract</th>
     </tr>
     </thead>
@@ -71,7 +70,7 @@
         <th th:text=${contract.agreement_title}></th>	 
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
-        <th th:text="${contract.agreement_location}"></th>
+        <th th:text="${contract.businessname}"></th>
         <th>
        		<form action="#" th:action="@{/unarchive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
