@@ -4,7 +4,6 @@ package contracts.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import contracts.domain.InNegotiation;
 import contracts.repository.AccountRepository;
 import contracts.repository.InNegotiationRepository;
@@ -37,6 +36,11 @@ public class InNegotiationService implements IInNegotiationService{
 			e2.printStackTrace();
 		}
 		
+	}
+	
+	@Override
+	public InNegotiation update(InNegotiation in_negotiation) {	
+		return inNegotiationRepository.save(in_negotiation);
 	}
 	
 	

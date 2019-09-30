@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,6 +29,9 @@ import contracts.domain.Status;
 import contracts.domain.StatusLink;
 import contracts.domain.User;
 import contracts.repository.ContractRepository;
+import contracts.repository.ExpiredRepository;
+import contracts.repository.InNegotiationRepository;
+import contracts.repository.OperativeRepository;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
 import contracts.service.IExpiredService;
@@ -58,6 +62,15 @@ public class ContractController {
 	
 	@Autowired
 	private ContractRepository repo;
+	
+	@Autowired
+	private InNegotiationRepository negRepo;
+	
+	@Autowired
+	private OperativeRepository opRepo;
+	
+	@Autowired
+	private ExpiredRepository exRepo;
 	
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
@@ -205,6 +218,7 @@ public class ContractController {
 	@GetMapping("/update_details/{requestid}")
 	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
+		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
 		return "update_details";
@@ -215,7 +229,42 @@ public class ContractController {
 	{	Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
 		contract.setDate_updated(timeNow);
 		contractService.update(contract);
+		return "redirect:/update_status/" + contract.getRequestid();
+	}
+	
+	@GetMapping("/update_status/{requestid}")
+	public String updateStatus(@PathVariable("requestid") int requestid, Model model) {
+		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
+		opRepo.findById(requestid).ifPresent(operative->model.addAttribute("operative", operative));
+		exRepo.findById(requestid).ifPresent(expired->model.addAttribute("expired", expired));
+		return "update_status";	
+	}
+	
+	@PostMapping("/api/update/in_negotiation")
+	public String updateInNegotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation) {
+		in_negotiationService.update(in_negotiation);
+		Integer requestid = in_negotiation.getRequestId();
+		StatusLink stat = new StatusLink(requestid, "in_negotiation");
+		statuslinkService.update(stat);
 		return "redirect:/";
+	}
+	
+	@PostMapping("/api/update/operative")
+	public String updateOperative(@ModelAttribute(name="operative") Operative operative) {
+		operativeService.update(operative);
+		Integer requestid = operative.getRequestId();
+		StatusLink stat = new StatusLink(requestid, "operative");
+		statuslinkService.update(stat);
+		return "redirect:/search_contracts";
+	}
+	
+	@PostMapping("/api/update/expired")
+	public String updateExpired(@ModelAttribute(name="expired") Expired expired) {
+		expiredService.update(expired);
+		Integer requestid = expired.getRequestid();
+		StatusLink stat = new StatusLink(requestid, "expired");
+		statuslinkService.update(stat);
+		return "redirect:/search_contracts";
 	}
 	
 	@PostMapping("/archive_contracts/{requestid}")

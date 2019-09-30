@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import contracts.domain.Expired;
+import contracts.domain.Operative;
 import contracts.repository.AccountRepository;
 import contracts.repository.ExpiredRepository;
 
@@ -36,6 +37,11 @@ public class ExpiredService implements IExpiredService{
 			e2.printStackTrace();
 		}
 		
+	}
+	
+	@Override
+	public Expired update(Expired newExpired) {	
+		return expiredRepository.save(newExpired);
 	}
 	
 	
