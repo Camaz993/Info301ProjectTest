@@ -228,3 +228,25 @@ footer a {
   border-top: none;
 }
 
+.vdbutton button {
+  background-color: #bfbfbf; 
+  border: 1px solid grey; 
+  color: black;
+  padding: 10px 24px; 
+  cursor: pointer; 
+  float: left; 
+}
+
+.vdbutton button:not(:last-child) {
+  border-right: none; 
+}
+
+.vdbutton:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.vdbutton button:hover {
+  background-color:  #808080;
+}
