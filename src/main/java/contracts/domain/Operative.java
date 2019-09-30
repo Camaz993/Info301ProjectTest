@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = Operative.TABLE_NAME)
@@ -24,19 +23,15 @@ public class Operative {
     @JoinColumn(name = "requestid", nullable = false)
     private Contract contract;
 	
-	@NotNull
 	@Column(name = "date_signed")
 	private String date_signed;
 	
-	@NotNull
 	@Column(name = "date_commenced")
 	private String date_commenced;
 	
-	@NotNull
 	@Column(name = "date_expire")
 	private String date_expire;
 	
-	@NotNull
 	@Column(name = "verification")
 	private String verification;
 	

@@ -25,6 +25,7 @@ import contracts.domain.Expired;
 import contracts.domain.InNegotiation;
 import contracts.domain.Operative;
 import contracts.domain.Status;
+import contracts.domain.StatusLink;
 import contracts.domain.User;
 import contracts.repository.ContractRepository;
 import contracts.service.IAccountService;
@@ -32,6 +33,7 @@ import contracts.service.IContractService;
 import contracts.service.IExpiredService;
 import contracts.service.IInNegotiationService;
 import contracts.service.IOperativeService;
+import contracts.service.IStatusLinkService;
 
 @Controller
 public class ContractController {
@@ -50,6 +52,9 @@ public class ContractController {
 	
 	@Autowired
 	private IExpiredService expiredService;
+	
+	@Autowired
+	private IStatusLinkService statuslinkService;
 	
 	@Autowired
 	private ContractRepository repo;
@@ -93,6 +98,14 @@ public class ContractController {
 		Integer requestid = contractService.findNewestContract();
 		in_negotiation.setRequestId(requestid);
 		in_negotiationService.addInNegotiation(in_negotiation);
+		Operative op = new Operative();
+		op.setRequestId(requestid);
+		operativeService.addOperative(op);
+		Expired ex = new Expired();
+		ex.setRequestId(requestid);
+		expiredService.addExpired(ex);
+		StatusLink statuslink = new StatusLink(requestid, "in_negotiation");
+		statuslinkService.addStatusLink(statuslink);
 		return "redirect:/";
 	}
 	
@@ -101,6 +114,14 @@ public class ContractController {
 		Integer requestid = contractService.findNewestContract();
 		operative.setRequestId(requestid);		
 		operativeService.addOperative(operative);
+		Expired ex = new Expired();
+		ex.setRequestId(requestid);
+		expiredService.addExpired(ex);
+		InNegotiation neg = new InNegotiation();
+		neg.setRequestId(requestid);
+		in_negotiationService.addInNegotiation(neg);
+		StatusLink statuslink = new StatusLink(requestid, "operative");
+		statuslinkService.addStatusLink(statuslink);
 		return "redirect:/";
 	}
 	
@@ -109,6 +130,14 @@ public class ContractController {
 		Integer requestid = contractService.findNewestContract();
 		expired.setRequestId(requestid);
 		expiredService.addExpired(expired);
+		InNegotiation neg = new InNegotiation();
+		neg.setRequestId(requestid);
+		in_negotiationService.addInNegotiation(neg);
+		Operative op = new Operative();
+		op.setRequestId(requestid);
+		operativeService.addOperative(op);
+		StatusLink statuslink = new StatusLink(requestid, "expired");
+		statuslinkService.addStatusLink(statuslink);
 		return "redirect:/";
 	}
 	

@@ -3,13 +3,10 @@ package contracts.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = Expired.TABLE_NAME)
@@ -25,23 +22,18 @@ public class Expired {
     @JoinColumn(name = "requestid", nullable = false)
     private Contract contract;
 	
-	@NotNull
 	@Column(name = "ending_reason")
 	private String ending_reason;
 	
-	@NotNull
 	@Column(name = "expiry_date")
 	private String expiry_date;
 	
-	@NotNull
 	@Column(name = "termination_date")
 	private String termination_date;
 	
-	@NotNull
 	@Column(name = "termination_notice_date")
 	private String termination_notice_date;
 	
-	@NotNull
 	@Column(name = "binding_terms_active")
 	private String binding_terms_active;
 	
