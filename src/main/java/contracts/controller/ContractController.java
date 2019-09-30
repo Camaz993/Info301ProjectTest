@@ -233,6 +233,11 @@ public class ContractController {
 	public String adminSettings() {
 		return "/admin_settings";
 	}
+	
+	@GetMapping("/view_details_tabs")
+	public String viewDetailsTabs() {
+		return "/view_details_tabs";
+	}
 
 }
 	
