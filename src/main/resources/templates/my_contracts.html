@@ -48,7 +48,12 @@
 
 	<div class="content">
 	<h2>My Contracts</h2>
-    <h3 th:text="'Contracts for User: ' + ${currentuser}"></h3>
+	<h3 th:text="'Contracts for User: ' + ${currentuser}"></h3>
+	<div th:if= "${contracts.isEmpty()}"> 
+    <p>There are no contracts currently assigned to you.</p>
+    <p>Check the main page for unassigned contracts.</p>
+    </div>
+    <div th:if= "${!contracts.isEmpty()}"> 
     <p>These are all the contracts assigned to you currently.</p>
 	<table id="viewcontracts">
 	<thead>
@@ -72,6 +77,7 @@
     </tr>
     </tbody>
     </table>
+    </div>
     </div>
             
 <footer>

@@ -41,14 +41,14 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     @Query(value = "INSERT INTO ARCHIVED FROM CONTRACT WHERE ARCHIVED = 'false'", nativeQuery = true)
     public void unarchiveContract(Contract unarchivedContract);
     
-    @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid = ?1 AND archived = 'F'", nativeQuery = true)
     public List<Contract> getContractsByUser(Integer userid);
     
     @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid IS NULL", nativeQuery = true)
     public List<Contract> getNullUserContracts();
     
-    @Query(value = "SELECT * FROM CONTRACT c WHERE c.favourited = 'T'", 
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.requestid IN (select requestid FROM favourited WHERE userid = ?1);", 
     		  nativeQuery = true)
-    public List<Contract> getFavouritedContracts();
+    public List<Contract> getFavouritedContracts(Integer userid);
 }
 

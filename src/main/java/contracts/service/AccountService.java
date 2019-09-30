@@ -1,5 +1,6 @@
 package contracts.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,19 +46,22 @@ public class AccountService implements IAccountService {
 	}
 	
 	@Override
-	public boolean validate(String password){
-		  
+	public boolean validate(String password){	  
 		Pattern pattern;
 		Matcher matcher;
 		pattern = Pattern.compile(passwordRegex);
 		matcher = pattern.matcher(password);
-		return matcher.matches();
-	    	    
+		return matcher.matches();    	    
 	  }
 	
 	@Override
 	public User findUser(String username) {
 		return accountRepository.findByUsername(username);
+	}
+	
+	@Override
+	public List<String> getUserRoles() {
+		return accountRepository.getUserRoles();
 	}
 	
 	
