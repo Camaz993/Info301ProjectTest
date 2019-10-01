@@ -39,88 +39,133 @@
  			</div>
 	</div>
 
-<div class = "content">
- <form>
- 
- <h2 th:text ="${selectedContract.agreement_title}"></h2>
- 
- <h3>Contract details:</h3>
- 
-  <table class = "viewdetails">
- 
- <tr>
- <th>Request Id </th>
- <td th:text ="${selectedContract.requestid}"/>
- </tr>
- <tr>
- <th>User </th> 
-  <td th:text ="${selectedContract?.user?.username}"/>
-  </tr>
- <tr>
- <th>Agreement Title </th> 
- <td th:text ="${selectedContract.agreement_title}"/>
-  </tr>
- <tr>
- <th>Agreement Type </th> 
- <td th:text ="${selectedContract?.agreement_type}"/>
-  </tr>
- <tr>
- <th>Description </th> 
- <td th:text ="${selectedContract?.description}"/>
-  </tr>
- <tr>
- <th>Agreement Location</th> 
- 	<td style="word-wrap: break-word">
- 	<a th:href = "${selectedContract?.agreement_location}" th:text ="${selectedContract?.agreement_location}" target="_blank"></a>
-	</td>
-  </tr>
- <tr>
- <th>Language </th> 
- <td th:text ="${selectedContract?.language}"/>
-  </tr>
- <tr>
- <th>Region </th> 
- <td th:text ="${selectedContract?.region}"/>
-  </tr>
-  <tr>
- <th>Related Agreements </th>
- <td th:text ="${selectedContract?.related_agreements}"/>
-  </tr>
- 
- </table>
- 
- <h3>Party details:</h3>
- 
-  <table class = "viewdetails">
- 
- <tr>
- <th>Business Name </th> 
- <td th:text ="${selectedContract?.businessname}"/>
-  </tr>
-   <tr>
- <th>Client Name </th> 
- <td th:text ="${selectedContract?.clientname}"/>
-  </tr>
-   <tr>
- <th>Address </th> 
- <td th:text ="${selectedContract?.address}"/>
-  </tr>
-   <tr>
- <th>Phone </th> 
- <td th:text ="${selectedContract?.phone}"/>
-  </tr>
-   <tr>
- <th>Email </th> 
- <td th:text ="${selectedContract?.email}"/>
-  </tr>
-   <tr>
- <th>Fax </th> 
- <td th:text ="${selectedContract?.fax}"/>
-  </tr>
-  </table>
- </form>
+<h2 th:text ="${selectedContract.agreement_title}"></h2>
+     	
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'ContractDetails')">Contract Details</button>
+  <button class="tablinks" onclick="openTab(event, 'PartyDetails')">Party Details</button>
+  <button class="tablinks" onclick="openTab(event, 'Attachments')">Attachments</button>
+  <button class="tablinks" onclick="openTab(event, 'History')">History</button>
 </div>
 
+<div id="ContractDetails" class="tabcontent">
+	  <h3>Contract Details:</h3>
+	  <table class = "viewdetails">
+	 
+	 <tr>
+	 <th>Request Id </th>
+	 <td th:text ="${selectedContract.requestid}"/>
+	 </tr>
+	 <tr>
+	 <th>User </th> 
+	  <td th:text ="${selectedContract?.user?.username}"/>
+	  </tr>
+	 <tr>
+	 <th>Agreement Title </th> 
+	 <td th:text ="${selectedContract.agreement_title}"/>
+	  </tr>
+	 <tr>
+	 <th>Agreement Type </th> 
+	 <td th:text ="${selectedContract?.agreement_type}"/>
+	  </tr>
+	 <tr>
+	 <th>Description </th> 
+	 <td th:text ="${selectedContract?.description}"/>
+	  </tr>
+	 <tr>
+	 <th>Language </th> 
+	 <td th:text ="${selectedContract?.language}"/>
+	  </tr>
+	 <tr>
+	 <th>Region </th> 
+	 <td th:text ="${selectedContract?.region}"/>
+	  </tr>
+	  </table>
+</div>
+
+<div id="PartyDetails" class="tabcontent">
+  <h3>Party Details:</h3>
+	  <table class = "viewdetails">
+	 
+	 <tr>
+	 <th>Business Name </th> 
+	 <td th:text ="${selectedContract?.businessname}"/>
+	  </tr>
+	   <tr>
+	 <th>Client Name </th> 
+	 <td th:text ="${selectedContract?.clientname}"/>
+	  </tr>
+	   <tr>
+	 <th>Address </th> 
+	 <td th:text ="${selectedContract?.address}"/>
+	  </tr>
+	   <tr>
+	 <th>Phone </th> 
+	 <td th:text ="${selectedContract?.phone}"/>
+	  </tr>
+	   <tr>
+	 <th>Email </th> 
+	 <td th:text ="${selectedContract?.email}"/>
+	  </tr>
+	   <tr>
+	 <th>Fax </th> 
+	 <td th:text ="${selectedContract?.fax}"/>
+	  </tr>
+	  </table> 
+</div>
+
+<div id="Attachments" class="tabcontent">
+	  <h3>Attachments:</h3>
+	<table class="viewdetails">
+	 <tr>
+	 <th>Agreement Location</th> 
+	 	<td style="word-wrap: break-word">
+	 	<a th:href = "${selectedContract?.agreement_location}" th:text ="${selectedContract?.agreement_location}" target="_blank"></a>
+		</td>
+	  </tr>
+	<tr>
+	 <th>Related Agreements </th>
+	 <td th:text ="${selectedContract?.related_agreements}"/>
+	  </tr>
+	 </table>
+</div>
+
+<div id = "History" class="tabcontent">
+	<h3>History:</h3>
+</div>
+
+<div class = "vdbutton">
+<form action="#" th:action="@{/update_details/{requestid}(requestid=${selectedContract.requestid})}" target="blank">
+  			<input type="hidden"/>
+  			<button class="vdbutton" type="submit" id="submitButton">Update</button>
+		</form>
+
+       	<form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
+  			<input type="hidden"/>
+  			<button class="vdbutton" onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
+		</form>
+
+       		<form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
+  				<input type="hidden"/>
+  				<button class="vdbutton" onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Favourite</button>
+			</form>
+</div>
+<script>
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+   
 <footer>
 	<a href="/admin_settings">Admin</a>
 	<a href="/help">Help Page</a>
