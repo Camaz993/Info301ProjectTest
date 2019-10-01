@@ -4,7 +4,6 @@ package contracts.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import contracts.domain.InNegotiation;
 import contracts.domain.Operative;
 import contracts.repository.AccountRepository;
 import contracts.repository.OperativeRepository;

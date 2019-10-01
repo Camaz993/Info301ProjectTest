@@ -3,7 +3,6 @@ package contracts.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import contracts.domain.Contract;
 import contracts.domain.Favourited;
 import contracts.repository.FavouritedRepository;
 

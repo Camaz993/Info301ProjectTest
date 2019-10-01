@@ -4,7 +4,6 @@ package contracts.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import contracts.domain.Expired;
 import contracts.domain.StatusLink;
 import contracts.repository.StatusLinkRepository;
 

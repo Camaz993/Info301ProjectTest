@@ -4,8 +4,6 @@ import java.sql.Date;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.persistence.Column;
