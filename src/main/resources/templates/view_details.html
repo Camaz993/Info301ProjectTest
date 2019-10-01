@@ -38,7 +38,7 @@
 	 		<p class="sub">View your favourited contracts</p>
 	 		</div>
 	</div>
-
+<div class="content">
 <h2 th:text ="${selectedContract.agreement_title}"></h2>
      	
 <div class="tab">
@@ -163,8 +163,10 @@ function openTab(evt, tabName) {
   }
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
+  
 }
 </script>
+</div>
    
 <footer>
 	<a href="/admin_settings">Admin</a>
