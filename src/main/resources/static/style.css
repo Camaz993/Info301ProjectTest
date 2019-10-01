@@ -97,6 +97,7 @@ body{
 	margin: auto;
     width: 60%;
     margin-top: 50px;
+    margin-bottom: 50px;
   	background-color: #f2f2f2;
     border-radius: 12px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -190,4 +191,5 @@ footer a:hover {
 
 footer a {
 	color: #1380A1;
+	display: block;
 	}
