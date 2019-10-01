@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import contracts.domain.Contract;
-import contracts.domain.Status;
 import contracts.domain.User;
 import contracts.repository.AccountRepository;
 import contracts.repository.ContractRepository;
@@ -122,6 +121,11 @@ public class ContractService implements IContractService{
 	@Override
 	public List<Contract> getFavouritedContracts(Integer userid) {
 		return contractRepository.getFavouritedContracts(userid);
+	}
+	
+	@Override
+	public Integer findNewestContract() {
+		return contractRepository.findNewestContract();
 	}
 
 }

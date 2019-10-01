@@ -1,11 +1,10 @@
 package contracts.domain;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.Id;
@@ -13,7 +12,7 @@ import javax.persistence.Id;
 @Entity
 @Table(name = StatusLink.TABLE_NAME)
 
-public class StatusLink implements Serializable {
+public class StatusLink{
 	
 	public static final String TABLE_NAME = "STATUS_LINK";
 	
@@ -21,43 +20,46 @@ public class StatusLink implements Serializable {
 		
 	}
 	
-	@JoinColumn(name = "statusid")
-	@OneToOne
-	@NotNull
 	@Id
-	private Status statusid;
+	@Column(name = "requestid")
+	private Integer requestid;
 	
-	@JoinColumn (name = "statusid")
-	@OneToOne
-	@Null
-	private Status previousstatus;
+	@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requestid", nullable = false)
+    private Contract contract;
+	
+	@NotNull
+	@Column(name="currentstatus")
+	private String currentstatus;
 
-	public StatusLink(Status statusid, Status previousstatus) {
-		this.statusid = statusid;
-		this.previousstatus = previousstatus;
+	public StatusLink(Integer requestid, String currentstatus) {
+		this.requestid = requestid;
+		this.currentstatus = currentstatus;
 	}
 	
 	//Getters and Setters
 	
-	public Status getStatusid() {
-		return statusid;
-	}
 
-	public void setStatusid(Status statusid) {
-		this.statusid = statusid;
-	}
-
-	public Status getPreviousStatus() {
-		return previousstatus;
-	}
-
-	public void setPreviousStatus(Status previousstatus) {
-		this.previousstatus = previousstatus;
-	}
 	
 	@Override
 	public String toString() {
-		return "status_link [statusid=" + statusid + ", previousstatus=" + previousstatus + "]";
+		return "status_link [requestid=" + requestid + ", currentstatus=" + currentstatus + "]";
+	}
+
+	public Integer getRequestid() {
+		return requestid;
+	}
+
+	public void setRequestid(Integer requestid) {
+		this.requestid = requestid;
+	}
+
+	public String getCurrentstatus() {
+		return currentstatus;
+	}
+
+	public void setCurrentstatus(String currentstatus) {
+		this.currentstatus = currentstatus;
 	}
 
 }

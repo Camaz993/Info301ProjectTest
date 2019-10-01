@@ -42,4 +42,6 @@ public interface IContractService {
 	public List<Contract> getNullUserContracts();
 	
 	public List<Contract> getFavouritedContracts(Integer userid);
+	
+	public Integer findNewestContract();
 }

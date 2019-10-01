@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Add Contract Status</title>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+</head>
+<body>
+	<div class="headerContainer">
+	<div class="header">
+	<h1>Contract Management</h1>
+	</div>
+	<div class="logout">
+    	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
+        <form th:action="@{/logout}" method="post"> 
+            <input type="submit" value="Logout"/> 
+        </form>
+    	</div>
+    	</div>
+	<div class="sidenav">
+		<div>
+ 		<a href="/">Home</a>
+ 		</div>
+ 		<div>
+ 		<a>New Contract</a></li>
+ 		<p class="sub">Create a new contract</p>
+ 		</div>
+ 		<div>
+ 		<a href="/search_contracts">Search Contracts</a></li>
+ 		<p class="sub">Search for a contract</p>
+ 		</div>
+ 		<div>
+ 		<a href="/archive_contracts">Archived Contracts</a></li>
+ 		<p class="sub">View Archived Contracts</p>
+ 		</div>
+ 		<div>
+ 		<a href="/my_contracts">My Contracts</a></li>
+ 		<p class="sub">View your assigned contracts</p>
+ 		</div>
+ 		<div>
+ 			<a href="/create_account">Create Account</a></li>
+ 			<p class="sub">Create a new account</p>
+ 		</div>
+	</div>
+	
+	<div class="content">
+	<h2>Add Contracts</h2>
+	<h3>Select Contract Type: </h3>    
+    	<select id="dropdown" onchange="changeStatus()">
+		    <option value="-1">Select Contract Type</option>
+		    <option value="in_negotiation">In Negotiation</option>
+		    <option value="operative">Operative</option>
+		    <option value="expired">Expired</option>
+		</select>
+    <p><br></p>
+    
+    
+    <form action="#" th:action="@{api/in_negotiation}" th:object="${in_negotiation}" id="in_negotiation" class="display-none" method="post" >
+		<td>Comments: <input type="text" th:field="*{comments}"/></td>	
+		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
+		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+	</form>
+		
+	<form action="#" th:action="@{api/operative}" th:object="${operative}" id="operative" class="display-none" method="post" >
+		<td>Date Signed <input type="date" th:field="*{date_signed}" /></td>
+		<td>Date Commenced: <input type="date" th:field="*{date_commenced}"/></td>
+		<td>Date Expires: <input type="date" th:field="*{date_expire}"/></td>
+		<td>Verification: <input type="text" th:field="*{verification}"/></td>
+		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
+		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>		
+	</form>
+		
+	<form action="#" th:action="@{api/expired}" th:object="${expired}" id="expired" class="display-none" method="post" >
+		<td>Ending Reason: <input type="text" th:field="*{ending_reason}"/></td>
+		<td>Expiry Date:  <input type="date" th:field="*{expiry_date}"/></td>
+		<td>Termination Date: <input type="date" th:field="*{termination_date}"/></td>
+		<td>Termination Notice Date: <input type="text" th:field="*{termination_notice_date}"/></td>
+		<td>Binding Terms Active: <input type="text" th:field="*{binding_terms_active}"/></td>
+		<input type="hidden" th:field="*{requestid}" th:value="${requestid}"/>		
+		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+	</form> 
+    
+		 
+	<script type="text/javascript">
+		 
+		    function changeStatus() {
+		        var allForms = document.getElementsByTagName('form');
+		        var dropdown = document.getElementById("dropdown");
+		        if (dropdown.value != "-1") {
+		            var form = document.getElementById(dropdown.value);
+		            for (var i = 0; i < allForms.length; i++) {
+		                allForms[i].setAttribute("class", "display-none");
+		            }
+		            form.setAttribute("class", "");
+		        }
+		    }
+		</script>
+</body>
+</html>

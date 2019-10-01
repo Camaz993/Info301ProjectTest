@@ -45,14 +45,6 @@
 	
 	<div class="content">
 	<h2>Add Contracts</h2>
-	<h3>Select Contract Type: </h3>    
-    	<select id="dropdown" onchange="changeStatus()">
-		    <option value="-1">Select Contract Type</option>
-		    <option value="in_negotiation">In Negotiation</option>
-		    <option value="operative">Operative</option>
-		    <option value="expired">Expired</option>
-		</select>
-    <p><br></p>
     
     
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
@@ -122,52 +114,6 @@
     </tr>
     </table>
     </form>
-    
-    
-    <form action="#" id="in_negotiation" class="display-none" method="post" >
-    <table>
-    <tr>
-		<td>Comments: <input type="text"/></td>	
-	</tr>	
-	</table>
-	</form>
-		
-	<form action="#" id="operative" class="display-none" method="post" >
-	<table>
-    <tr>
-		<td>Date Signed <input type="date" /></td>
-		</tr>
-    <tr>
-		<td>Date Commenced: <input type="date"/></td>
-		</tr>
-    <tr>
-		<td>Date Expires: <input type="date"/></td>
-		</tr>
-    <tr>
-		<td>Verification: <input type="text"/></td>		
-		</tr>
-    </table>
-	</form>
-		
-	<form action="#" id="expired" class="display-none" method="post" >
-	<table>
-	<tr>
-		<td>Ending Reason: <input type="text"/></td>
-		</tr>
-    <tr>
-		<td>Expiry Date:  <input type="date"/></td>
-		</tr>
-    <tr>
-		<td>Termination Date: <input type="date"/></td>
-		</tr>
-    <tr>
-		<td>Termination Notice Date: <input type="text"/></td>
-		</tr>
-    <tr>
-		<td>Binding Terms Active: <input type="text"/></td>	
-		</tr>
-    </table>	
-	</form> 
     
 		 
 	<script type="text/javascript">

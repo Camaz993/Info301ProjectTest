@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,14 +29,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import contracts.domain.Contract;
 import contracts.domain.Expired;
 import contracts.domain.Favourited;
+import contracts.domain.StatusLink;
 import contracts.domain.InNegotiation;
 import contracts.domain.Operative;
 import contracts.domain.Status;
 import contracts.domain.User;
 import contracts.repository.ContractRepository;
+import contracts.repository.ExpiredRepository;
+import contracts.repository.InNegotiationRepository;
+import contracts.repository.OperativeRepository;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
 import contracts.service.IFavouritedService;
+import contracts.service.IExpiredService;
+import contracts.service.IInNegotiationService;
+import contracts.service.IOperativeService;
+import contracts.service.IStatusLinkService;
 
 @Controller
 public class ContractController {
@@ -47,22 +56,50 @@ public class ContractController {
 	private IAccountService accountService;
 	
 	@Autowired
+	private IOperativeService operativeService;
+	
+	@Autowired
+	private IInNegotiationService in_negotiationService;
+	
+	@Autowired
+	private IExpiredService expiredService;
+	
+	@Autowired
+	private IStatusLinkService statuslinkService;
+	
+	@Autowired
 	private IFavouritedService favouritedService;
 	
 	@Autowired
 	private ContractRepository repo;
 	
+	@Autowired
+	private InNegotiationRepository negRepo;
+	
+	@Autowired
+	private OperativeRepository opRepo;
+	
+	@Autowired
+	private ExpiredRepository exRepo;
+	
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
 		model.addAttribute("contract", new Contract());
-		model.addAttribute("innegotiation", new InNegotiation());
-		model.addAttribute("operative", new Operative());
-		model.addAttribute("expired", new Expired());
 		model.addAttribute("status", new Status());
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
         return "add_contracts";
     }
+	
+	@GetMapping("/add_status")
+	public String showStatusForm(Model model) {
+		Integer requestid = contractService.findNewestContract();
+		model.addAttribute("requestid", requestid);
+		model.addAttribute("in_negotiation", new InNegotiation());
+		model.addAttribute("operative", new Operative());
+		model.addAttribute("expired", new Expired());
+		return "add_status";
+	}
 	
 	@PostMapping("/api/contracts")
 	public String addContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
@@ -75,6 +112,55 @@ public class ContractController {
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
 		contract.setDate_updated(timeNow);
 		contractService.addContract(contract);
+		return "redirect:/add_status";
+	}
+	
+	@PostMapping("/api/in_negotiation")
+	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation)
+	{
+		Integer requestid = contractService.findNewestContract();
+		in_negotiation.setRequestId(requestid);
+		in_negotiationService.addInNegotiation(in_negotiation);
+		Operative op = new Operative();
+		op.setRequestId(requestid);
+		operativeService.addOperative(op);
+		Expired ex = new Expired();
+		ex.setRequestId(requestid);
+		expiredService.addExpired(ex);
+		StatusLink statuslink = new StatusLink(requestid, "in_negotiation");
+		statuslinkService.addStatusLink(statuslink);
+		return "redirect:/";
+	}
+	
+	@PostMapping("api/operative")
+	public String add_operative(@ModelAttribute(name="operative") Operative operative) {
+		Integer requestid = contractService.findNewestContract();
+		operative.setRequestId(requestid);		
+		operativeService.addOperative(operative);
+		Expired ex = new Expired();
+		ex.setRequestId(requestid);
+		expiredService.addExpired(ex);
+		InNegotiation neg = new InNegotiation();
+		neg.setRequestId(requestid);
+		in_negotiationService.addInNegotiation(neg);
+		StatusLink statuslink = new StatusLink(requestid, "operative");
+		statuslinkService.addStatusLink(statuslink);
+		return "redirect:/";
+	}
+	
+	@PostMapping("api/expired")
+	public String add_expired(@ModelAttribute(name="expired") Expired expired) {
+		Integer requestid = contractService.findNewestContract();
+		expired.setRequestId(requestid);
+		expiredService.addExpired(expired);
+		InNegotiation neg = new InNegotiation();
+		neg.setRequestId(requestid);
+		in_negotiationService.addInNegotiation(neg);
+		Operative op = new Operative();
+		op.setRequestId(requestid);
+		operativeService.addOperative(op);
+		StatusLink statuslink = new StatusLink(requestid, "expired");
+		statuslinkService.addStatusLink(statuslink);
 		return "redirect:/";
 	}
 	
@@ -142,6 +228,7 @@ public class ContractController {
 	@GetMapping("/update_details/{requestid}")
 	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
+		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
 		return "update_details";
@@ -152,7 +239,42 @@ public class ContractController {
 	{	Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
 		contract.setDate_updated(timeNow);
 		contractService.update(contract);
+		return "redirect:/update_status/" + contract.getRequestid();
+	}
+	
+	@GetMapping("/update_status/{requestid}")
+	public String updateStatus(@PathVariable("requestid") int requestid, Model model) {
+		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
+		opRepo.findById(requestid).ifPresent(operative->model.addAttribute("operative", operative));
+		exRepo.findById(requestid).ifPresent(expired->model.addAttribute("expired", expired));
+		return "update_status";	
+	}
+	
+	@PostMapping("/api/update/in_negotiation")
+	public String updateInNegotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation) {
+		in_negotiationService.update(in_negotiation);
+		Integer requestid = in_negotiation.getRequestId();
+		StatusLink stat = new StatusLink(requestid, "in_negotiation");
+		statuslinkService.update(stat);
 		return "redirect:/";
+	}
+	
+	@PostMapping("/api/update/operative")
+	public String updateOperative(@ModelAttribute(name="operative") Operative operative) {
+		operativeService.update(operative);
+		Integer requestid = operative.getRequestId();
+		StatusLink stat = new StatusLink(requestid, "operative");
+		statuslinkService.update(stat);
+		return "redirect:/search_contracts";
+	}
+	
+	@PostMapping("/api/update/expired")
+	public String updateExpired(@ModelAttribute(name="expired") Expired expired) {
+		expiredService.update(expired);
+		Integer requestid = expired.getRequestid();
+		StatusLink stat = new StatusLink(requestid, "expired");
+		statuslinkService.update(stat);
+		return "redirect:/search_contracts";
 	}
 	
 	@PostMapping("/archive_contracts/{requestid}")
