@@ -349,6 +349,7 @@ public class ContractController {
 	public String adminSettings() {
 		return "/admin_settings";
 	}
+	
 
 }
 	
