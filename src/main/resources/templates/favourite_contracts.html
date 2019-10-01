@@ -26,7 +26,7 @@
 	 		<p class="sub">Create a new contract</p>
 	 		</div>
 	 		<div>
-	 		<a>Search Contacts</a></li>
+	 		<a href="/search_contracts">Search Contacts</a></li>
 	 		<p class="sub">Search for a contract</p>
 	 		</div>
 	 		<div>
@@ -38,19 +38,18 @@
 	 		<p class="sub">View your assigned contracts</p>
  			</div>
  			<div>
- 			<a href="/create_account">Create Account</a></li>
- 			<p class="sub">Create a new account</p>
- 			</div>
+	 		<a>Favourited Contracts</a></li>
+	 		<p class="sub">View your favourited contracts</p>
+	 		</div>
  			</div>
 <body>
-	<h1>Favourite Contracts</h1>
 	<div class="content">
     <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
       <label for="search">Search:</label><input name="search" id="search"> 
     <p><input type="submit" value="Submit" /> </p>
     </form>
     -->
-    <h2>Contracts</h2>
+    <h2>Favourited Contracts</h2>
     <h3 th:text="'Favourited Contracts for User: ' + ${currentuser}"></h3>
     <div th:if= "${contracts.isEmpty()}">
     <p>You have not favourited any contracts. To favourite contracts, return to the search page 
@@ -60,15 +59,15 @@
 	<table id="viewcontracts">
 	<thead>
 	<tr>
-	<td>Request Id</td>
-    <td>Agreement Title</td>
-    <td>Agreement Type</td>
-    <td>Description</td>
-    <td>Business Name</td>
-    <td>Unfavourite Contract</td>
+	<th>Request Id</th>
+    <th>Agreement Title</th>
+    <th>Agreement Type</th>
+    <th>Description</th>
+    <th>Business Name</th>
+    <th>Unfavourite Contract</th>
     </tr>
     </thead>
-    </tbody>
+    <tbody class="wrongth">
     <tr th:each="contract : ${contracts}">
         <th>
         	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" target="_blank"></a>
@@ -130,6 +129,7 @@ function ifEmpty(){
 </script>
 
 <footer>
+	<a href="/admin_settings">Admin</a>
 	<a href="/help">Help Page</a>
 </footer>
 

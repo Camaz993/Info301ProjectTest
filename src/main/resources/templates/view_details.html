@@ -34,11 +34,11 @@
 	 		<p class="sub">View your assigned contracts</p>
  			</div>
  			<div>
- 			<a href="/create_account">Create Account</a></li>
- 			<p class="sub">Create a new account</p>
- 			</div>
+	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
+	 		<p class="sub">View your favourited contracts</p>
+	 		</div>
 	</div>
-
+<div class="content">
 <h2 th:text ="${selectedContract.agreement_title}"></h2>
      	
 <div class="tab">
@@ -163,10 +163,13 @@ function openTab(evt, tabName) {
   }
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
+  
 }
 </script>
+</div>
    
 <footer>
+	<a href="/admin_settings">Admin</a>
 	<a href="/help">Help Page</a>
 </footer>
 

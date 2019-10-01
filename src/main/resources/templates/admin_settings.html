@@ -45,8 +45,8 @@
  		<p class="sub">View your assigned contracts</p>
  		</div>
  		<div>
- 			<a href="/create_account">Create Account</a></li>
- 			<p class="sub">Create a new account</p>
+ 		<a href="/favourite_contracts">Favourited Contracts</a></li>
+ 		<p class="sub">View your favourited contracts</p>
  		</div>
 	</div>
 	
@@ -64,5 +64,11 @@
 	<h3><div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div> to the admin portal.</h3>
     <p>Here you may access all the relevant administrative information.</p>
     </div>
+    
+<footer>
+	<a href="/admin_settings">Admin</a>
+	<a href="/help">Help Page</a>
+</footer>
+
 </body>
 </html>

@@ -6,6 +6,7 @@
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
 <body>
+
 	<div class="headerContainer">
 	<div class="header">
 	<h1>Contract Management</h1>
@@ -38,8 +39,8 @@
  		<p class="sub">View your assigned contracts</p>
  		</div>
  		<div>
- 			<a href="/create_account">Create Account</a></li>
- 			<p class="sub">Create a new account</p>
+ 		<a href="/favourite_contracts">Favourited Contracts</a></li>
+ 		<p class="sub">View your favourited contracts</p>
  		</div>
 	</div>
 	
@@ -137,8 +138,10 @@
    				document.getElementById(dropdown.value).submit();
 		    }
 		</script>
+</div>
 
 <footer>
+	<a href="/admin_settings">Admin</a>
 	<a href="/help">Help Page</a>
 </footer>
 
