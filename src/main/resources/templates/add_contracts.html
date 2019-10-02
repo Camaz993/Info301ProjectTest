@@ -3,84 +3,51 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Add Contract</title>
-<link href="src/main/resources/static/style.css" rel="stylesheet" type="text/css">
-<style>
-	h1{
-  color: black;
-  font-family: verdana;
-  font-size: 200%;
-  margin-left: 170px;
-}
-
-#addContract {
-width: 50%;
-}
-
-#addContract input[type=text]  {
-	width: 100%;
-	align: right;
-}
-
-#addContract select {
-	width: 100%;
-	align: right;
-}
-
-body {
-  background-color: aliceblue;
-}
-.sidenav {
-  height: 100%; 
-  width: 160px;
-  position: fixed; 
-  z-index: 1; 
-  top: 0px;
-  left: 10px;
-  background-color: darkgray; 
-  overflow-x: hidden;
-  padding-top: 20px;
-  font-family: verdana;
-}
-
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 15px;
-  color: dimgray;
-  display: block;
-  font-family: verdana;
-}
-
-#CMS{
-	
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.content {
-    margin-left: 170px;
-    font-family: verdana;
-}
-
-p{
-	margin-left: 15px;
-}
-
-</style>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
-<div class="sidenav">
-		<h2 id="CMS">CMS</h2>
- 		 <a href="/">Home</a></li>
- 		 <li>New Contract</li>
- 		 <a href="/search_contracts">Search Contracts</a></li>
- 		 <a href="/archive_contracts">Archive Contracts</a></li>
- 		 <a href="/create_account">Create Account</a></li>
-	</div>
 <body>
-	<h1><b>Add Contracts</b></h1>
+
+	<div class="headerContainer">
+	<div class="header">
+	<h1>Contract Management</h1>
+	</div>
+	<div class="logout">
+    	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
+        <form th:action="@{/logout}" method="post"> 
+            <input type="submit" value="Logout"/> 
+        </form>
+    	</div>
+    	</div>
+	<div class="sidenav">
+		<div>
+ 		<a href="/">Home</a>
+ 		</div>
+ 		<div>
+ 		<a>New Contract</a></li>
+ 		<p class="sub">Create a new contract</p>
+ 		</div>
+ 		<div>
+ 		<a href="/search_contracts">Search Contracts</a></li>
+ 		<p class="sub">Search for a contract</p>
+ 		</div>
+ 		<div>
+ 		<a href="/archive_contracts">Archived Contracts</a></li>
+ 		<p class="sub">View Archived Contracts</p>
+ 		</div>
+ 		<div>
+ 		<a href="/my_contracts">My Contracts</a></li>
+ 		<p class="sub">View your assigned contracts</p>
+ 		</div>
+ 		<div>
+ 		<a href="/favourite_contracts">Favourited Contracts</a></li>
+ 		<p class="sub">View your favourited contracts</p>
+ 		</div>
+	</div>
+	
 	<div class="content">
+	<h2>Add Contracts</h2>
+    
+    
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
     <table>
     <tr>
@@ -88,7 +55,8 @@ p{
     	<option value="">Select a user</option>
     	<option th:each="user : ${users}"
     	th:value="${user.userid}"
-    	th:utext="${user.username}"/>
+    	th:utext="${user.username}"
+    	th:selected="${user.userid==contract?.user?.userid}"/>
     	</select></td>
    	</tr>
    	<tr>
@@ -108,6 +76,30 @@ p{
         <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
     </tr>
     <tr>
+        <td>Business Name: <input type="text"  th:field="*{businessname}" /></td>
+        <td th:if="${#fields.hasErrors('businessname')}" th:errors="*{businessname}">Business name Error</td>
+    </tr>
+     <tr>
+        <td>Client Name: <input type="text"  th:field="*{clientname}" /></td>
+        <td th:if="${#fields.hasErrors('clientname')}" th:errors="*{clientname}">Client name Error</td>
+    </tr>
+     <tr>
+        <td>Address: <input type="text"  th:field="*{address}" /></td>
+        <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</td>
+    </tr>
+     <tr>
+        <td>Phone: <input type="text"  th:field="*{phone}" /></td>
+        <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone Error</td>
+    </tr>
+     <tr>
+        <td>Email: <input type="text"  th:field="*{email}" /></td>
+        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
+    </tr>
+     <tr>
+        <td>Fax: <input type="text"  th:field="*{fax}" /></td>
+        <td th:if="${#fields.hasErrors('fax')}" th:errors="*{fax}">Fax Error</td>
+    </tr>
+    <tr>
         <td>Language: <input type="text"  th:field="*{language}" /></td>
         <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Language Error</td>
     </tr>
@@ -119,14 +111,41 @@ p{
         <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
         <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error</td>
     </tr>
-     <tr>
-        <!-- <td>Date Updated: <input type="date"  th:field="*{date_updated}" /></td> -->
-        <!--  <td th:if="${#fields.hasErrors('date_updated')}" th:errors="*{date_updated}">Date Updated Error</td>-->
-    </tr>
     <tr>
         <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
     </tr>
-        </table>
-    </div>
+    </table>
+    </form>
+    
+		 
+	<script type="text/javascript">
+		 
+		    function changeStatus() {
+		        var allForms = document.getElementsByTagName('form');
+		        var dropdown = document.getElementById("dropdown");
+		        if (dropdown.value != "-1") {
+		            var form = document.getElementById(dropdown.value);
+		            for (var i = 0; i < allForms.length; i++) {
+		                allForms[i].setAttribute("class", "display-none");
+		            }
+		            form.setAttribute("class", "");
+		        }
+		        var contractForm = document.getElementById("addContract");
+		        contractForm.setAttribute("class", "display");
+		    }
+		    
+		    function submit(){
+		    	document.getElementById("addContract").submit();
+   				document.getElementById(dropdown.value).submit();
+		    }
+		</script>
+</div>
+
+<footer>
+	<a href="/admin_settings">Admin</a>
+	<a href="/help">Help Page</a>
+</footer>
+
+
 </body>
 </html>

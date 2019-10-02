@@ -1,16 +1,15 @@
 package contracts.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import contracts.domain.Contract;
-import contracts.domain.User;
 
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Integer> {
@@ -38,8 +37,22 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
   		  nativeQuery = true)
     public List<Contract> getCurrentContracts();
     
-    @Query(value = "INSERT INTO ARCHIVED FROM CONTRACT WHERE ARCHIVED = 'false'", nativeQuery = true)
-    public void unarchiveContract(Contract unarchivedContract);
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid = ?1 AND archived = 'F'", nativeQuery = true)
+    public List<Contract> getContractsByUser(Integer userid);
     
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid IS NULL", nativeQuery = true)
+    public List<Contract> getNullUserContracts();
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.requestid IN (select requestid FROM favourited WHERE userid = ?1);", 
+    		  nativeQuery = true)
+    public List<Contract> getFavouritedContracts(Integer userid);
+    
+    @Query(value = "SELECT MAX(requestid) FROM CONTRACT c", nativeQuery = true)
+    public Integer findNewestContract();
+    
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM FAVOURITED WHERE requestid = ?1 AND userid = ?2", nativeQuery = true)
+    public void unfavouriteContract(Integer requestid, Integer userid);
 }
 

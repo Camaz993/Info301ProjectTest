@@ -1,6 +1,9 @@
-<html xmlns:th="https://www.thymeleaf.org">
-    <title>Please Login</title>
-<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Contract Search</title>
+<meta charset="ISO-8859-1">
 <style>
 @charset "ISO-8859-1";
 
@@ -92,33 +95,30 @@ footer a {
 	}
 
 </style>
-  </head>
-  <body>
-  
-  <div class="header">
-  <h1>Contract Management</h1>
-  </div>
-  
- 
+<title>Home Page</title>
+</head>
+<body>
+	<div class="headerContainer">
+	<div class="header">
+	<h1>Contract Management</h1>
+	</div>
+    	</div>
+	<div class="sidenav">
+	</div>
 	
 	<div class="content">
-        <form name="loginForm" id="loginForm" th:action="@{/login}" method="post">               
-                <h1>Please Login</h1>
-                <div th:if="${param.error}" class="alert alert-error">    
-                    Invalid username and password.
-                </div>
-                <div th:if="${param.logout}" class="alert alert-success"> 
-                    You have been logged out of the system.
-                </div>
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username"/>        
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password"/>    
-                <div class="form-actions">
-                    <button type="submit" class="btn">Log in</button>
-                </div>
-        </form>
-        </div>
+	<h2>Error: Page Forbidden</h2>
+	<p>You do not have the appropriate privileges to access this page.</p>
+	<p>Please contact your admin team.</p>
+	<p>Click <a href="/">here</a> to return to the rest of the site.</p>	
+    </div>
+ 
+ 
+    
+<footer>
 
-  </body>
+</footer>
+
+
+</body>
 </html>

@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import contracts.domain.Contract;
-import contracts.domain.Status;
 import contracts.domain.User;
 import contracts.repository.AccountRepository;
 import contracts.repository.ContractRepository;
@@ -98,15 +97,35 @@ public class ContractService implements IContractService{
 	public List<Contract> getArchivedContracts() {
 		return contractRepository.getArchivedContracts();
 	}
-	
-	@Override
-	public void unarchiveContract(Contract unarchiveContract) {
-		contractRepository.unarchiveContract(unarchiveContract);
-	}
 
 	@Override
 	public List<Contract> getUnarchivedContracts() {
 		return contractRepository.getCurrentContracts();
+	}
+	
+	@Override
+	public List<Contract> getContractsByUser(Integer userid) {
+		return contractRepository.getContractsByUser(userid);
+	}
+	
+	@Override
+	public List<Contract> getNullUserContracts(){
+		return contractRepository.getNullUserContracts();
+	}
+	
+	@Override
+	public List<Contract> getFavouritedContracts(Integer userid) {
+		return contractRepository.getFavouritedContracts(userid);
+	}
+	
+	@Override
+	public Integer findNewestContract() {
+		return contractRepository.findNewestContract();
+	}
+	
+	@Override
+	public void unfavouriteContract(Integer requestid, Integer userid) {
+		contractRepository.unfavouriteContract(requestid, userid);
 	}
 
 }

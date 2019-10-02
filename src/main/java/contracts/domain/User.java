@@ -7,10 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = User.TABLE_NAME)
@@ -49,7 +47,7 @@ public class User {
 	
 	@NotBlank(message="Password cannot be blank")
 	@Column(name="password")
-	@Size(min = 8, max= 40, message = "Password must be between 8 and 40 characters")
+	//@Size(min = 8, max= 40, message = "Password must be between 8 and 40 characters")
 	//@JSONIgnore
 	private String password;
 	
@@ -60,7 +58,7 @@ public class User {
 	
 	 @NotNull
 	 @Column(name = "locked")
-	private boolean locked = false;
+	private boolean locked;
 	
 	//Constructor 
 	public User(Integer userid, String firstname, String lastname, String role, String username, String password, String passrepeat,
@@ -129,8 +127,7 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "user [userid=" + userid + ", firstname=" + firstname + ", lastname=" + lastname + ", role=" + role
-				+ ", username=" + username + ", passowrd=" + password + ", locked=" + locked + "]";
+		return "username=" + username + "";
 	}
 	
 	

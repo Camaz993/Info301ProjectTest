@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import contracts.domain.Contract;
-import contracts.domain.Status;
 import contracts.domain.User;
 
 public interface IContractService {
@@ -33,7 +32,15 @@ public interface IContractService {
 
 	public List<Contract> findAllByOrderByIdAsc();
 	
-	public void unarchiveContract(Contract unarchiveContract);
-	
 	public List<Contract> getUnarchivedContracts();
+	
+	public List<Contract> getContractsByUser(Integer userid);
+	
+	public List<Contract> getNullUserContracts();
+	
+	public List<Contract> getFavouritedContracts(Integer userid);
+	
+	public Integer findNewestContract();
+	
+	public void unfavouriteContract(Integer requestid, Integer userid);
 }

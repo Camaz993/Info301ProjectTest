@@ -2,11 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Archived Contracts</title>
+<title>Favourite Contracts</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
-</head>
-<body>
 
+</head>
 	<div class="headerContainer">
 	<div class="header">
 	<h1>Contract Management</h1>
@@ -31,7 +30,7 @@
 	 		<p class="sub">Search for a contract</p>
 	 		</div>
 	 		<div>
-	 		<a>Archived Contracts</a></li>
+	 		<a href="/archive_contracts">Archived Contracts</a></li>
 	 		<p class="sub">View archived contracts</p>
 	 		</div>
 	 		<div>
@@ -39,20 +38,24 @@
 	 		<p class="sub">View your assigned contracts</p>
  			</div>
  			<div>
- 		<a href="/favourite_contracts">Favourited Contracts</a></li>
- 		<p class="sub">View your favourited contracts</p>
- 		</div>
-	</div>
-
+	 		<a>Favourited Contracts</a></li>
+	 		<p class="sub">View your favourited contracts</p>
+	 		</div>
+ 			</div>
+<body>
 	<div class="content">
-	<h2>Archived Contracts</h2>
+    <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
+      <label for="search">Search:</label><input name="search" id="search"> 
+    <p><input type="submit" value="Submit" /> </p>
+    </form>
+    -->
+    <h2>Favourited Contracts</h2>
+    <h3 th:text="'Favourited Contracts for User: ' + ${currentuser}"></h3>
     <div th:if= "${contracts.isEmpty()}">
-     <p>There are currently no archived contracts</p>
-    </div>
-     <div th:if= "${!contracts.isEmpty()}">
-    <table id="unassigned">
-	<thead>
-	<tr>
+    <p>You have not favourited any contracts. To favourite contracts, return to the search page 
+    and press the "favourite" button by the contract you wish to favourite.</p>
+    </div>  
+    <div th:if= "${!contracts.isEmpty()}">
 	<table id="viewcontracts">
 	<thead>
 	<tr>
@@ -61,7 +64,7 @@
     <th>Agreement Type</th>
     <th>Description</th>
     <th>Business Name</th>
-    <th>Unarchive Contract</th>
+    <th>Unfavourite Contract</th>
     </tr>
     </thead>
     <tbody class="wrongth">
@@ -72,11 +75,11 @@
         <th th:text=${contract.agreement_title}></th>	 
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
-        <th th:text="${contract.businessname}"></th>
+        <th th:text="${contract?.businessname}"></th>
         <th>
-       		<form action="#" th:action="@{/unarchive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
+       		<form action="#" th:action="@{/unfavourite_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to unarchive this?');" type="submit" id="submitButton">Unarchive</button>
+  				<button onclick="return confirm('Are you sure want to unfavourite this?');" type="submit" id="submitButton">Unfavourite</button>
 			</form>
      	</th>
     </tr>
@@ -119,8 +122,10 @@ function searchID() {
 	      }
 	    }
 	  }
-
 	}
+function ifEmpty(){
+	
+}
 </script>
 
 <footer>

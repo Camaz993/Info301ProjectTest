@@ -2,9 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Archived Contracts</title>
+<title>My Contracts</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
+
 <body>
 
 	<div class="headerContainer">
@@ -31,28 +32,29 @@
 	 		<p class="sub">Search for a contract</p>
 	 		</div>
 	 		<div>
-	 		<a>Archived Contracts</a></li>
+	 		<a href="/archive_contracts">Archived Contracts</a></li>
 	 		<p class="sub">View archived contracts</p>
 	 		</div>
 	 		<div>
-	 		<a href="/my_contracts">My Contracts</a></li>
+	 		<a>My Contracts</a></li>
 	 		<p class="sub">View your assigned contracts</p>
  			</div>
  			<div>
- 		<a href="/favourite_contracts">Favourited Contracts</a></li>
- 		<p class="sub">View your favourited contracts</p>
- 		</div>
-	</div>
+	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
+	 		<p class="sub">View your favourited contracts</p>
+	 		</div>
+</div>
+
 
 	<div class="content">
-	<h2>Archived Contracts</h2>
-    <div th:if= "${contracts.isEmpty()}">
-     <p>There are currently no archived contracts</p>
+	<h2>My Contracts</h2>
+	<h3 th:text="'Contracts for User: ' + ${currentuser}"></h3>
+	<div th:if= "${contracts.isEmpty()}"> 
+    <p>There are no contracts currently assigned to you.</p>
+    <p>Check the main page for unassigned contracts.</p>
     </div>
-     <div th:if= "${!contracts.isEmpty()}">
-    <table id="unassigned">
-	<thead>
-	<tr>
+    <div th:if= "${!contracts.isEmpty()}"> 
+    <p>These are all the contracts assigned to you currently.</p>
 	<table id="viewcontracts">
 	<thead>
 	<tr>
@@ -61,7 +63,6 @@
     <th>Agreement Type</th>
     <th>Description</th>
     <th>Business Name</th>
-    <th>Unarchive Contract</th>
     </tr>
     </thead>
     <tbody class="wrongth">
@@ -72,62 +73,18 @@
         <th th:text=${contract.agreement_title}></th>	 
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
-        <th th:text="${contract.businessname}"></th>
-        <th>
-       		<form action="#" th:action="@{/unarchive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
-  				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to unarchive this?');" type="submit" id="submitButton">Unarchive</button>
-			</form>
-     	</th>
+        <th th:text="${contract?.businessname}"></th>
     </tr>
     </tbody>
     </table>
     </div>
     </div>
-    
-<script>
-// Accordion 
-function searchID() {
-
-	  // Declare variables 
-	  var input = document.getElementById("myInput");
-	  var filter = input.value.toUpperCase();
-	  var table = document.getElementById("viewcontracts");
-	  var trs = table.tBodies[0].getElementsByTagName("tr");
-
-	  // Loop through first tbody's rows
-	  for (var i = 0; i < trs.length; i++) {
-
-	    // define the row's cells
-	    var tds = trs[i].getElementsByTagName("th");
-
-	    // hide the row
-	    trs[i].style.display = "none";
-
-	    // loop through row cells
-	    for (var i2 = 0; i2 < tds.length; i2++) {
-
-	      // if there's a match
-	      if (tds[i2].innerHTML.toUpperCase().indexOf(filter) > -1) {
-
-	        // show the row
-	        trs[i].style.display = "";
-
-	        // skip to the next row
-	     	continue;
-
-	      }
-	    }
-	  }
-
-	}
-</script>
-
+            
 <footer>
 	<a href="/admin_settings">Admin</a>
 	<a href="/help">Help Page</a>
 </footer>
 
-
+    
 </body>
 </html>
