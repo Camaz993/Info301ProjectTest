@@ -45,6 +45,7 @@
   <button class="tablinks" onclick="openTab(event, 'ContractDetails')">Contract Details</button>
   <button class="tablinks" onclick="openTab(event, 'PartyDetails')">Party Details</button>
   <button class="tablinks" onclick="openTab(event, 'Attachments')">Attachments</button>
+  <button class="tablinks" onclick="openTab(event, 'RelatedAgreements')">Related Agreements</button>
   <button class="tablinks" onclick="openTab(event, 'History')">History</button>
 </div>
 
@@ -123,12 +124,18 @@
 	 	<a th:href = "${selectedContract?.agreement_location}" th:text ="${selectedContract?.agreement_location}" target="_blank"></a>
 		</td>
 	  </tr>
-	<tr>
-	 <th>Related Agreements </th>
-	 <td th:text ="${selectedContract?.related_agreements}"/>
-	 <td><a href="/add_related">Add Related Agreement</a></td>
-	</tr>
 	 </table>
+</div>
+
+<div id="RelatedAgreements" class="tabcontent">
+	<h3>Related Agreements:</h3>
+	<table class="viewdetails">
+		<tr>
+			<th>Related Agreements </th>
+			<td th:text ="${selectedContract?.related_agreements}"/>
+			<td><a th:href="@{/add_related}">Add Related Agreement</a></td>
+		</tr>
+	</table>
 </div>
 
 <div id = "History" class="tabcontent">

@@ -106,10 +106,10 @@
         <td>Region: <input type="text"  th:field="*{region}" /></td>
         <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
     </tr>
-    <tr>
+    <!--<tr>
         <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" />
         <td>Related Agreements</td> <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error<td/>  
-    </tr>
+    </tr>-->
     <tr>
         <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
     </tr>

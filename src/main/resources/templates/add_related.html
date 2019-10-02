@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Contract Search</title>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+</head>
+<body>
+
+	<div class="headerContainer">
+	<div class="header">
+	<h1>Contract Management</h1>
+	</div>
+	<div class="logout">
+    	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
+        <form th:action="@{/logout}" method="post"> 
+            <input type="submit" value="Logout"/> 
+        </form>
+    	</div>
+    	</div>
+	<!--<div class="sidenav">
+			<div>
+	 		<a href="/">Home</a>
+	 		</div>
+	 		<div>
+	 		<a href="/add_contracts">New Contract</a></li>
+	 		<p class="sub">Create a new contract</p>
+	 		</div>
+	 		<div>
+	 		<a>Search Contacts</a></li>
+	 		<p class="sub">Search for a contract</p>
+	 		</div>
+	 		<div>
+	 		<a href="/archive_contracts">Archived Contracts</a></li>
+	 		<p class="sub">View archived contracts</p>
+	 		</div>
+	 		<div>
+	 		<a href="/my_contracts">My Contracts</a></li>
+	 		<p class="sub">View your assigned contracts</p>
+ 			</div>
+ 			<div>
+	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
+	 		<p class="sub">View your favourited contracts</p>
+	 		</div>
+	</div>-->
+	<div class="content_search">
+	<h2>Add Related Contracts</h2>
+    <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
+      <label for="search">Search:</label><input name="search" id="search"> 
+    <p><input type="submit" value="Submit" /> </p>
+    </form>
+    -->
+    <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
+    <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Title .." title="Type in a Title Name etc....">
+    <h2>Contracts</h2>
+	<table id="viewcontracts">
+	<thead>
+	<tr>
+	<th>Request Id</th>
+    <th>Agreement Title</th>
+    <th>Agreement Type</th>
+    <th>Description</th>
+    <th>Business Name</th>
+    <th>Date Updated</th>
+    <th>Add Related</th>
+    <!--<th>Archive Contract</th>
+    <th>Favourite Contract</th>-->
+    </tr>
+    </thead>
+    <tbody class="wrongth">
+    <tr th:each="contract : ${contracts}">
+        <th>
+        	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" target="_blank"></a>
+        </th>
+        <th th:text=${contract.agreement_title}></th>	 
+        <th th:text="${contract.agreement_type}"></th>
+        <th th:text="${contract.description}"></th>
+        <th th:text="${contract?.businessname}"></th>
+        <th th:text="${contract.date_updated}"></th>
+        <!--<th>
+        	<a th:href="@{/update_details/{requestid}(requestid=${contract.requestid})}" target="_blank">Update</a>
+        </th>
+		<th>
+       		<form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
+  				<input type="hidden"/>
+  				<button onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
+			</form>
+     	</th>
+     	<th>
+       		<form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
+  				<input type="hidden"/>
+  				<button onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Favourite</button>
+			</form>
+     	</th>-->
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    
+<script>
+// Accordion 
+function searchID() {
+
+	  // Declare variables 
+	  var input = document.getElementById("myInput");
+	  var filter = input.value.toUpperCase();
+	  var table = document.getElementById("viewcontracts");
+	  var trs = table.tBodies[0].getElementsByTagName("tr");
+
+	  // Loop through first tbody's rows
+	  for (var i = 0; i < trs.length; i++) {
+
+	    // define the row's cells
+	    var tds = trs[i].getElementsByTagName("th");
+
+	    // hide the row
+	    trs[i].style.display = "none";
+
+	    // loop through row cells
+	    for (var i2 = 0; i2 < tds.length; i2++) {
+
+	      // if there's a match
+	      if (tds[i2].innerHTML.toUpperCase().indexOf(filter) > -1) {
+
+	        // show the row
+	        trs[i].style.display = "";
+
+	        // skip to the next row
+	     	continue;
+
+	      }
+	    }
+	  }
+
+	}
+
+function searchByParty() {
+	  var input, filter, table, tr, td, i, txtValue;
+	  input = document.getElementById("secondInput");
+	  filter = input.value.toUpperCase();
+	  table = document.getElementById("viewcontracts");
+	  tr = table.tBodies[0].getElementsByTagName("tr");
+	  for (i = 0; i < tr.length; i++) {
+	    td = tr[i].getElementsByTagName("th")[1];
+	    if (td) {
+	      txtValue = td.textContent || td.innerText;
+	      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+	        tr[i].style.display = "";
+	      } else {
+	        tr[i].style.display = "none";
+	      }
+	    }       
+	  }
+	}
+</script>
+
+<footer>
+	<a href="/admin_settings">Admin</a>
+	<a href="/help">Help Page</a>
+</footer>
+
+
+</body>
+</html>

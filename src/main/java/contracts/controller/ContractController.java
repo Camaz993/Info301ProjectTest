@@ -337,16 +337,17 @@ public class ContractController {
 		return "favourite_contracts";
 	}
 	
-	@PostMapping("/related_contracts/{requestid}")
-	public String relatedContracts(@PathVariable("requestid") int requestid, Model model) {
-		Contract relatedContract = contractService.findContract(requestid).orElse(new Contract());
-		RelatedAgreements relatedAgreement = new RelatedAgreements();
-		relatedAgreement.setRequestid_related(relatedContract.getRequestid());
-		relatedAgreementsService.addRelatedAgreements(relatedAgreement);
-		return "redirect:/view_details" + relatedContract.getRequestid();
+	@GetMapping("/add_related")
+	public String relatedContracts(Model model) {
+		//Contract relatedContract = contractService.findContract(requestid).orElse(new Contract());
+		//RelatedAgreements relatedAgreement = new RelatedAgreements();
+		//relatedAgreement.setRequestid_related(relatedContract.getRequestid());
+		//relatedAgreementsService.addRelatedAgreements(relatedAgreement);
+		model.addAttribute("contracts", contractService.getAllContracts());
+		return "add_related";
 	}
 	
-	@GetMapping("/related_contracts")
+	/*@GetMapping("/related_contracts")
 	public String getRelatedContracts(Model model) {
 		RelatedAgreements relatedAgreement = new RelatedAgreements();
 		Contract relatedContract = new Contract();
@@ -354,7 +355,7 @@ public class ContractController {
 			return "view_details"+ relatedContract.getRequestid();
 		}
 		return "view_details";
-	}
+	}*/
 	
 	@PostMapping("/unfavourite_contracts/{requestid}")
 	public String unfavouritContract(@PathVariable("requestid") int requestid, Model model) {

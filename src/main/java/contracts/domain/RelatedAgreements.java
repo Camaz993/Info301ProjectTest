@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,13 +21,13 @@ public class RelatedAgreements {
 		@JoinColumn(name = "requestid")
 		private Integer idrelated_agreements;
 		
-		@Column(name = "requestid_related")
-		private Integer requestid_related;
+		@ManyToOne
+		private Contract requestid_related;
 		
 		@Column(name = "requestid_relatedto")
 		private Integer requestid_relatedto; 
 		
-		public RelatedAgreements(Integer idrelated_agreements, Integer requestid_related, Integer requestid_relatedto) {
+		public RelatedAgreements(Integer idrelated_agreements, Contract requestid_related, Integer requestid_relatedto) {
 			super();
 			this.idrelated_agreements = idrelated_agreements;
 			this.requestid_related = requestid_related;
@@ -45,11 +46,11 @@ public class RelatedAgreements {
 			this.idrelated_agreements = idrelated_agreements;
 		}
 
-		public Integer getRequestid_related() {
+		public Contract getRequestid_related() {
 			return requestid_related;
 		}
 
-		public void setRequestid_related(Integer requestid_related) {
+		public void setRequestid_related(Contract requestid_related) {
 			this.requestid_related = requestid_related;
 		}
 
