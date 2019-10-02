@@ -24,33 +24,38 @@ public class Audit {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "AuditID")
+	@Column(name = "auditid")
 	private Integer auditid;
 	
 	@ManyToOne
-	@JoinColumn(name = "userid")
+	@JoinColumn(name = "fk_userid_audit")
 	private User userid;
 	
 	@ManyToOne
-	@JoinColumn(name = "requestid")
+	@JoinColumn(name = "fk_requestid_audit")
 	private Contract requestid;
 	
-	@NotNull
-	@Column(name = "Date")
+	@Column(name = "date")
 	private Date date;
 	
-	@NotNull
-	@Column(name = "Field_Updated")
+	@Column(name = "field_updated")
 	private String field_updated;
 	
-	@NotNull
-	@Column(name = "Field_Before")
+	@Column(name = "field_before")
 	private String field_before;
 	
-	@NotNull
-	@Column(name = "Field_After")
+	@Column(name = "field_after")
 	private String field_after;
 	
+	@Column(name = "add_contract")
+	private String add_contract;
+	
+	public String getAdd_contract() {
+		return add_contract;
+	}
+	public void setAdd_contract(String add_contract) {
+		this.add_contract = add_contract;
+	}
 	public Integer getAuditid() {
 		return auditid;
 	}
@@ -94,7 +99,7 @@ public class Audit {
 		this.field_after = field_after;
 	}
 	public Audit(Integer auditid, User userid, Contract requestid, Date date, String field_updated,
-			String field_before, String field_after) {
+			String field_before, String field_after, String add_contract) {
 		super();
 		this.auditid = auditid;
 		this.userid = userid;
@@ -103,6 +108,7 @@ public class Audit {
 		this.field_updated = field_updated;
 		this.field_before = field_before;
 		this.field_after = field_after;
+		this.add_contract = add_contract;
 	}
 	@Override
 	public String toString() {

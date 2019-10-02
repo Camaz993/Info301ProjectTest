@@ -16,6 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.persistence.JoinColumn;
+
 
 @Entity
 @Table(name = Contract.TABLE_NAME)
@@ -251,15 +255,8 @@ public class Contract {
 		this.favourited = favourited;
 	}
 	
-	
-
-	
 	@Override
 	public String toString() {
-		return "contract [requestid=" + requestid + ", userid=" + user + ", statusid=" + statusid
-				+ ", agreement_title=" + agreement_title + ", agreement_type=" + agreement_type + ", description="
-				+ description + ", agreement_location=" + agreement_location + ", businessname=" + businessname +", clientname=" + clientname
-				+", address=" + address +", phone=" + phone +", email=" + email +", fax=" + fax +", language=" + language + ", region="
-				+ region + ", related_agreements=" + related_agreements + ", archived=" + archived + ", favourited=" + favourited + "]";
+		return "requestid=" + requestid + ", agreement_title=" + agreement_title + "";
 	}
 }

@@ -60,7 +60,10 @@
     <th>Agreement Title</th>
     <th>Agreement Type</th>
     <th>Description</th>
+<<<<<<< HEAD
     <th>Business Name</th>
+=======
+>>>>>>> refs/heads/Feature-MetaData
     <th>Date Updated</th>
     <th>Update Details</th>
     <th>Archive Contract</th>
@@ -75,7 +78,10 @@
         <th th:text=${contract.agreement_title}></th>	 
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
+<<<<<<< HEAD
         <th th:text="${contract?.businessname}"></th>
+=======
+>>>>>>> refs/heads/Feature-MetaData
         <th th:text="${contract.date_updated}"></th>
         <th>
         	<a th:href="@{/update_details/{requestid}(requestid=${contract.requestid})}" target="_blank">Update</a>
