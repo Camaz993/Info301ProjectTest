@@ -107,9 +107,10 @@ public class ContractController {
 	}
 	
 	@PostMapping("/api/contracts")
-	public String addContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
+	public String addContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
 	{
-
+		List <User> users = contractService.getAllUsers();
+		model.addAttribute("users", users);
 		if(br.hasErrors()) {
 		return "add_contracts";
 		}
@@ -242,7 +243,8 @@ public class ContractController {
 	
 	@PostMapping("/api/updates")
 	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
-	{	String fieldUpdatedList = "";
+	{	
+	String fieldUpdatedList = "";
 	String fieldBeforeList = "";
 	String fieldAfterList = "";
 	Contract foundContract = contractService.findContract(contract.getRequestid()).orElse(new Contract());
@@ -399,7 +401,10 @@ public class ContractController {
 	@PostMapping("/unfavourite_contracts/{requestid}")
 	public String unfavouritContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract unfavouriteContract = contractService.findContract(requestid).orElse(new Contract());
-		unfavouriteContract.setFavourited("F");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		contractService.unfavouriteContract(unfavouriteContract.getRequestid(), user.getUserid());
 		contractService.addContract(unfavouriteContract);
 		return "redirect:/search_contracts";
 	}

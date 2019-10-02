@@ -55,7 +55,8 @@
     	<option value="">Select a user</option>
     	<option th:each="user : ${users}"
     	th:value="${user.userid}"
-    	th:utext="${user.username}"/>
+    	th:utext="${user.username}"
+    	th:selected="${user.userid==contract?.user?.userid}"/>
     	</select></td>
    	</tr>
    	<tr>

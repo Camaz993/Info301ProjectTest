@@ -35,9 +35,6 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
   		  nativeQuery = true)
     public List<Contract> getCurrentContracts();
     
-    @Query(value = "INSERT INTO ARCHIVED FROM CONTRACT WHERE ARCHIVED = 'false'", nativeQuery = true)
-    public void unarchiveContract(Contract unarchivedContract);
-    
     @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid = ?1 AND archived = 'F'", nativeQuery = true)
     public List<Contract> getContractsByUser(Integer userid);
     
@@ -50,5 +47,8 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     
     @Query(value = "SELECT MAX(requestid) FROM CONTRACT c", nativeQuery = true)
     public Integer findNewestContract();
+    
+    @Query(value = "DELETE FROM FAVOURITED C WHERE requestid = ?1 AND userid = ?2", nativeQuery = true)
+    public void unfavouriteContract(Integer requestid, Integer userid);
 }
 

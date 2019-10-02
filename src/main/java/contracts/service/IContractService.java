@@ -32,8 +32,6 @@ public interface IContractService {
 
 	public List<Contract> findAllByOrderByIdAsc();
 	
-	public void unarchiveContract(Contract unarchiveContract);
-	
 	public List<Contract> getUnarchivedContracts();
 	
 	public List<Contract> getContractsByUser(Integer userid);
@@ -43,4 +41,6 @@ public interface IContractService {
 	public List<Contract> getFavouritedContracts(Integer userid);
 	
 	public Integer findNewestContract();
+	
+	public void unfavouriteContract(Integer requestid, Integer userid);
 }
