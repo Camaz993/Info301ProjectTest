@@ -119,6 +119,7 @@ public class ContractController {
 		contract.setDate_updated(timeNow);
 		contractService.addContract(contract);
 		auditService.addAuditDetails(contract);
+
 		return "redirect:/add_status";
 	}
 	
@@ -342,6 +343,7 @@ public class ContractController {
 	public String archiveContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
 		foundContract.setArchived("T");
+		auditService.addAuditArchived(foundContract);
 		contractService.addContract(foundContract);
 		return "redirect:/archive_contracts";
 	}
