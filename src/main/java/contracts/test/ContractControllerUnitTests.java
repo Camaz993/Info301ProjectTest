@@ -62,7 +62,7 @@ public class ContractControllerUnitTests {
 		contract1.setAgreement_location("new zealand");
 		contract1.setLanguage("english");
 		contract1.setRegion("otago");
-		contract1.setRelated_agreements("different contract");
+		//contract1.setRelated_agreements("different contract");
 
 		contract2 = new Contract();
 		//contract2.setUserid("def456");
@@ -73,7 +73,7 @@ public class ContractControllerUnitTests {
 		contract2.setAgreement_location("australia");
 		contract2.setLanguage("spanish");
 		contract2.setRegion("queensland");
-		contract2.setRelated_agreements("different lawsuit");
+		//contract2.setRelated_agreements("different lawsuit");
 		
 		contract3 = new Contract();
 		//contract3.setUserid("ghi789");
@@ -84,7 +84,7 @@ public class ContractControllerUnitTests {
 		contract3.setAgreement_location("nz");
 		contract3.setLanguage("english/maori");
 		contract3.setRegion("auckland");
-		contract3.setRelated_agreements("1");
+		//contract3.setRelated_agreements("1");
 		
 		
 	}

@@ -25,6 +25,7 @@ import contracts.domain.Expired;
 import contracts.domain.Favourited;
 import contracts.domain.InNegotiation;
 import contracts.domain.Operative;
+import contracts.domain.RelatedAgreements;
 import contracts.domain.Status;
 import contracts.domain.StatusLink;
 import contracts.domain.User;
@@ -38,6 +39,7 @@ import contracts.service.IExpiredService;
 import contracts.service.IFavouritedService;
 import contracts.service.IInNegotiationService;
 import contracts.service.IOperativeService;
+import contracts.service.IRelatedAgreementsService;
 import contracts.service.IStatusLinkService;
 
 @Controller
@@ -63,6 +65,9 @@ public class ContractController {
 	
 	@Autowired
 	private IFavouritedService favouritedService;
+	
+	@Autowired
+	private IRelatedAgreementsService relatedAgreementsService;
 	
 	@Autowired
 	private ContractRepository repo;
@@ -330,6 +335,25 @@ public class ContractController {
 		model.addAttribute("contracts", contractService.getFavouritedContracts(user.getUserid()));
 		model.addAttribute("currentuser", user.getUsername());
 		return "favourite_contracts";
+	}
+	
+	@PostMapping("/related_contracts/{requestid}")
+	public String relatedContracts(@PathVariable("requestid") int requestid, Model model) {
+		Contract relatedContract = contractService.findContract(requestid).orElse(new Contract());
+		RelatedAgreements relatedAgreement = new RelatedAgreements();
+		relatedAgreement.setRequestid_related(relatedContract.getRequestid());
+		relatedAgreementsService.addRelatedAgreements(relatedAgreement);
+		return "redirect:/view_details" + relatedContract.getRequestid();
+	}
+	
+	@GetMapping("/related_contracts")
+	public String getRelatedContracts(Model model) {
+		RelatedAgreements relatedAgreement = new RelatedAgreements();
+		Contract relatedContract = new Contract();
+		if(relatedAgreement.getRequestid_related() == relatedContract.getRequestid()) {
+			return "view_details"+ relatedContract.getRequestid();
+		}
+		return "view_details";
 	}
 	
 	@PostMapping("/unfavourite_contracts/{requestid}")

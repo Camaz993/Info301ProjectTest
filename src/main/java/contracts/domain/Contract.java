@@ -87,7 +87,7 @@ public class Contract {
 	
 	@NotBlank(message="Related agreements cannot be null")
 	@Column(name = "Related_Agreements")
-	private String related_agreements;
+	private List<Contract> related_agreements;
 	
 	@Column(name = "archived")
 	private String archived;
@@ -100,7 +100,7 @@ public class Contract {
 	
 	public Contract(Integer requestid, User user, List<Status> statusid, String agreement_title, String agreement_type,
 			String description, String agreement_location, String businessname, String clientname, String address, String phone, String email, String fax,
-		 String language, String region, String related_agreements, String archived,
+		 String language, String region, List<Contract> related_agreements, String archived,
 			String favourited, Date date_updated) {
 		super();
 		this.requestid = requestid;
@@ -228,10 +228,10 @@ public class Contract {
 	public void setRegion(String region) {
 		this.region = region;
 	}
-	public String getRelated_agreements() {
+	public List<Contract> getRelated_agreements() {
 		return related_agreements;
 	}
-	public void setRelated_agreements(String related_agreements) {
+	public void setRelated_agreements(List<Contract> related_agreements) {
 		this.related_agreements = related_agreements;
 	}
 	
