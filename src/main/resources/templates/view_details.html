@@ -132,6 +132,28 @@
 
 <div id = "History" class="tabcontent">
 	<h3>History:</h3>
+	<table id="viewcontracts">
+	<thead>
+	<tr>
+	<th>User Id</th>
+	<th>Request Id</th>
+    <th>Date Changed</th>
+    <th>Field Updated</th>
+     <th>Field Before</th>
+     <th>Field After</th>
+    </tr>
+    </thead>
+    <tbody class="wrongth">
+    <tr th:each="audit : ${audits}">
+        <th th:text=${audit.userid}></th>	
+        <th th:text=${audit.Requestedid}></th>	 
+        <th th:text="${audit.date}"></th>
+        <th th:text="${audit.field_updated}"></th>
+        <th th:text="${audit.field_before}"></th>
+        <th th:text="${audit.field_after}"></th>
+    </tr>
+    </tbody>
+    </table>
 </div>
 
 <div class = "vdbutton">

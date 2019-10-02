@@ -229,6 +229,7 @@ public class ContractController {
 	@GetMapping("/view_details/{requestid}")
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
+		model.addAttribute("audits", auditService.getContractsByAuditsRequestID(requestid));
 		return "view_details";
 	}
 	

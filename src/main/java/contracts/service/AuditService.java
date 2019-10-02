@@ -71,4 +71,8 @@ public class AuditService implements IAuditService {
 		return newAudit;
 	}
 	
+	 public List<Audit> getContractsByAuditsRequestID(Integer requestid){
+		return auditRepository.getContractsByAuditsRequestID(requestid);
+	 }
+	
 }

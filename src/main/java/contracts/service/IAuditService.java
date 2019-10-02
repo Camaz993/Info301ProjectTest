@@ -12,5 +12,7 @@ public interface IAuditService {
 	public void addAudit(Audit newAudit);
 	
 	public void addAuditDetails(Contract contract);
+	
+	public List<Audit> getContractsByAuditsRequestID(Integer requestid);
 
 }

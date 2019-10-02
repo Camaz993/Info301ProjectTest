@@ -42,7 +42,6 @@ public class AuditController {
 		model.addAttribute("audits", auditService.getAudit());
 		return "audit";
 	}
-	
 
 	
 
