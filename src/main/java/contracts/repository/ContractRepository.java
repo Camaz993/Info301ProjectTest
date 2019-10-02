@@ -3,9 +3,11 @@ package contracts.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import contracts.domain.Contract;
 
@@ -35,9 +37,6 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
   		  nativeQuery = true)
     public List<Contract> getCurrentContracts();
     
-    @Query(value = "INSERT INTO ARCHIVED FROM CONTRACT WHERE ARCHIVED = 'false'", nativeQuery = true)
-    public void unarchiveContract(Contract unarchivedContract);
-    
     @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid = ?1 AND archived = 'F'", nativeQuery = true)
     public List<Contract> getContractsByUser(Integer userid);
     
@@ -50,5 +49,10 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     
     @Query(value = "SELECT MAX(requestid) FROM CONTRACT c", nativeQuery = true)
     public Integer findNewestContract();
+    
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM FAVOURITED WHERE requestid = ?1 AND userid = ?2", nativeQuery = true)
+    public void unfavouriteContract(Integer requestid, Integer userid);
 }
 

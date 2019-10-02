@@ -97,11 +97,6 @@ public class ContractService implements IContractService{
 	public List<Contract> getArchivedContracts() {
 		return contractRepository.getArchivedContracts();
 	}
-	
-	@Override
-	public void unarchiveContract(Contract unarchiveContract) {
-		contractRepository.unarchiveContract(unarchiveContract);
-	}
 
 	@Override
 	public List<Contract> getUnarchivedContracts() {
@@ -126,6 +121,11 @@ public class ContractService implements IContractService{
 	@Override
 	public Integer findNewestContract() {
 		return contractRepository.findNewestContract();
+	}
+	
+	@Override
+	public void unfavouriteContract(Integer requestid, Integer userid) {
+		contractRepository.unfavouriteContract(requestid, userid);
 	}
 
 }
