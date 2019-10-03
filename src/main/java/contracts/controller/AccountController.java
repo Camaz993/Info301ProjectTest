@@ -68,7 +68,7 @@ public class AccountController {
 		}
 		try {	
 			if (accountService.validate(user.getPassword())==false) {
-				throw new IllegalArgumentException("Password must be between 6 and 20 characters, contain 1 digit, 1 lowercase letter, 1 uppercase letter and 1 special symbol @#$%");
+				throw new IllegalArgumentException("Password must be between 6 and 20 characters, contain at least 1 digit, 1 lowercase letter and 1 uppercase letter");
 			}
 		}
 		catch (IllegalArgumentException e){
