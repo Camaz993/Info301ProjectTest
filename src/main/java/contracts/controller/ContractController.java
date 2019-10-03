@@ -221,6 +221,7 @@ public class ContractController {
 	@GetMapping("/view_details/{requestid}")
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
+		//model.addAttribute("contracts", contractService.getRelatedContracts(requestid));
 		return "view_details";
 	}
 	
@@ -339,24 +340,20 @@ public class ContractController {
 	
 	@GetMapping("/add_related/{requestid}")
 	public String relatedContracts(@PathVariable("requestid") int requestid, Model model) {
-		//Contract relatedContract = contractService.findContract(requestid).orElse(new Contract());
-		//RelatedAgreements relatedAgreement = new RelatedAgreements();
-		//relatedAgreement.setRequestid_related(relatedContract.getRequestid());
-		//relatedAgreementsService.addRelatedAgreements(relatedAgreement);
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		model.addAttribute("contracts", contractService.getAllExceptCurrent(requestid));
 		return "add_related";
 	}
 	
-	/*@GetMapping("/related_contracts")
-	public String getRelatedContracts(Model model) {
+	@PostMapping("/related_contracts/{requestid}")
+	public String getRelatedContracts(@PathVariable("requestid") int requestid, Model model) {
+		Contract relatedContract = contractService.findContract(requestid).orElse(new Contract());
 		RelatedAgreements relatedAgreement = new RelatedAgreements();
-		Contract relatedContract = new Contract();
-		if(relatedAgreement.getRequestid_related() == relatedContract.getRequestid()) {
-			return "view_details"+ relatedContract.getRequestid();
+		if(relatedContract.getRequestid() == relatedAgreement.getIdrelated_agreements()) {
+			relatedAgreementsService.addRelatedAgreements(relatedAgreement);
 		}
 		return "view_details";
-	}*/
+	}
 	
 	@PostMapping("/unfavourite_contracts/{requestid}")
 	public String unfavouritContract(@PathVariable("requestid") int requestid, Model model) {

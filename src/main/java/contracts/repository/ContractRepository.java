@@ -3,6 +3,7 @@ package contracts.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -53,5 +54,9 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     
     @Query(value = "SELECT * FROM CONTRACT c WHERE c.requestid != ?1", nativeQuery = true)
     public List<Contract> getAllExceptCurrent(Integer requestid);
+    
+    @Modifying
+    @Query(value = "INSERT INTO RELATED_AGREEMENTS r FROM CONTRACT c WHERE r.requestid_relatedto = c.requestid", nativeQuery = true)
+    public List<Contract> getRelatedContracts(Integer requestid);
 }
 

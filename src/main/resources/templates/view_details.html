@@ -133,7 +133,7 @@
 	<tr>
 	<th>Related Agreements </th>
 	<td th:text ="${selectedContract?.related_agreements}"/>
-		<form action="#" th:action="@{/add_related/{requestid} (requestid=${selectedContract.requestid})}" method="get">
+		<form action="#" th:action="@{/add_related/{requestid} (requestid=${selectedContract.requestid})}" method="post">
 			<input type="hidden"/>
 	  		<a th:href="@{/add_related/{requestid} (requestid=${selectedContract.requestid})}" type="submit" id="submitButton">Add Related Agreements</a>
 		</form>
@@ -146,20 +146,20 @@
 </div>
 
 <div class = "vdbutton">
-<form action="#" th:action="@{/update_details/{requestid}(requestid=${selectedContract.requestid})}" target="blank">
-  			<input type="hidden"/>
-  			<button class="vdbutton" type="submit" id="submitButton">Update</button>
-		</form>
+	<form action="#" th:action="@{/update_details/{requestid}(requestid=${selectedContract.requestid})}" target="blank">
+  		<input type="hidden"/>
+  		<button class="vdbutton" type="submit" id="submitButton">Update</button>
+	</form>
 
-       	<form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
-  			<input type="hidden"/>
-  			<button class="vdbutton" onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
-		</form>
+    <form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
+  		<input type="hidden"/>
+ 		<button class="vdbutton" onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
+	</form>
 
-       		<form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
-  				<input type="hidden"/>
-  				<button class="vdbutton" onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Favourite</button>
-			</form>
+    <form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
+  		<input type="hidden"/>
+  		<button class="vdbutton" onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Favourite</button>
+	</form>
 </div>
 <script>
 function openTab(evt, tabName) {
