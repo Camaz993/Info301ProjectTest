@@ -136,14 +136,6 @@ public class ContractControllerUnitTests {
         		.andExpect(status().isFound());
         }
         
-        @Test
-        public void viewDetailsPage() throws Exception {
-        	Contract contract1 = new Contract();
-        	contract1.setRequestid(1);
-        	mockMvc.perform(get("/view_details/" + 1))
-        	.andExpect(status().isOk())
-    		.andExpect(view().name("view_details"));  	
-        }
         
         
         
