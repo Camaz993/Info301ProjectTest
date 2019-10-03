@@ -2,7 +2,6 @@ package contracts.controller;
 
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,9 +10,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,8 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import contracts.domain.Audit;
 import contracts.domain.Contract;
@@ -36,10 +30,10 @@ import contracts.domain.Status;
 import contracts.domain.StatusLink;
 import contracts.domain.User;
 import contracts.repository.ContractRepository;
-import contracts.service.AuditService;
 import contracts.repository.ExpiredRepository;
 import contracts.repository.InNegotiationRepository;
 import contracts.repository.OperativeRepository;
+import contracts.service.AuditService;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
 import contracts.service.IExpiredService;
@@ -139,7 +133,7 @@ public class ContractController {
 		return "redirect:/";
 	}
 	
-	@PostMapping("api/operative")
+	@PostMapping("/api/operative")
 	public String add_operative(@ModelAttribute(name="operative") Operative operative) {
 		Integer requestid = contractService.findNewestContract();
 		operative.setRequestId(requestid);		
@@ -155,7 +149,7 @@ public class ContractController {
 		return "redirect:/";
 	}
 	
-	@PostMapping("api/expired")
+	@PostMapping("/api/expired")
 	public String add_expired(@ModelAttribute(name="expired") Expired expired) {
 		Integer requestid = contractService.findNewestContract();
 		expired.setRequestId(requestid);
