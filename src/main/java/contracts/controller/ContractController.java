@@ -106,6 +106,7 @@ public class ContractController {
 		return "add_status";
 	}
 	
+	//add a new contract to the database
 	@PostMapping("/api/contracts")
 	public String addContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
 	{
@@ -122,6 +123,7 @@ public class ContractController {
 		return "redirect:/add_status";
 	}
 	
+	//add an in negotiation status to the database, along with null operative and expired status'
 	@PostMapping("/api/in_negotiation")
 	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation)
 	{
@@ -139,6 +141,7 @@ public class ContractController {
 		return "redirect:/";
 	}
 	
+	//add an operative status to the db, along with null in negotiation and expired status'
 	@PostMapping("api/operative")
 	public String add_operative(@ModelAttribute(name="operative") Operative operative) {
 		Integer requestid = contractService.findNewestContract();
@@ -155,6 +158,7 @@ public class ContractController {
 		return "redirect:/";
 	}
 	
+	//add an expired status in the db, along with in negotiation and operative status'
 	@PostMapping("api/expired")
 	public String add_expired(@ModelAttribute(name="expired") Expired expired) {
 		Integer requestid = contractService.findNewestContract();
@@ -185,6 +189,7 @@ public class ContractController {
 		return "/index";
 	}
 	
+	//assign a specific user to a contract
 	@PostMapping("/assign/{requestid}")
 	public String assignUser(@PathVariable("requestid") int requestid, Model model) {
 		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
@@ -232,6 +237,7 @@ public class ContractController {
 		return "view_details";
 	}
 	
+	//get the contract object from the db to update
 	@GetMapping("/update_details/{requestid}")
 	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
@@ -241,6 +247,7 @@ public class ContractController {
 		return "update_details";
 	}
 	
+	//update a contract and store the results of the changes in the audit table
 	@PostMapping("/api/updates")
 	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
 	{	
@@ -310,6 +317,7 @@ public class ContractController {
 		return "update_status";	
 	}
 	
+	//updates an in negotiation status 
 	@PostMapping("/api/update/in_negotiation")
 	public String updateInNegotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation) {
 		in_negotiationService.update(in_negotiation);
@@ -319,6 +327,7 @@ public class ContractController {
 		return "redirect:/";
 	}
 	
+	//updates an operative status
 	@PostMapping("/api/update/operative")
 	public String updateOperative(@ModelAttribute(name="operative") Operative operative) {
 		operativeService.update(operative);
@@ -328,6 +337,7 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
+	//updates an expired status
 	@PostMapping("/api/update/expired")
 	public String updateExpired(@ModelAttribute(name="expired") Expired expired) {
 		expiredService.update(expired);
@@ -375,6 +385,7 @@ public class ContractController {
         return "my_contracts";
     }
 	
+	//adds a contract to a users favourited contracts
 	@PostMapping("/favourite_contracts/{requestid}")
 	public String favouritedContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract favouritedContract = contractService.findContract(requestid).orElse(new Contract());
@@ -398,6 +409,7 @@ public class ContractController {
 		return "favourite_contracts";
 	}
 	
+	//removes a contract from a users favourite contracts
 	@PostMapping("/unfavourite_contracts/{requestid}")
 	public String unfavouritContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract unfavouriteContract = contractService.findContract(requestid).orElse(new Contract());
