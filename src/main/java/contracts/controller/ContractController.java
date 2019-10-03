@@ -88,7 +88,7 @@ public class ContractController {
 	private ExpiredRepository exRepo;
 	
 	@GetMapping("/add_contracts")
-    public String showSignUpForm(Model model) {
+    public String showAddContractForm(Model model) {
 		model.addAttribute("contract", new Contract());
 		model.addAttribute("status", new Status());
 		List <User> users = contractService.getAllUsers();
