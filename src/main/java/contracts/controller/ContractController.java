@@ -182,7 +182,7 @@ public class ContractController {
 	public String mostRecent(Model model) {
 		model.addAttribute("contracts", contractService.getAllContracts());
 		model.addAttribute("contracts2", contractService.getNullUserContracts());
-		return "/index";
+		return "index";
 	}
 	
 	@PostMapping("/assign/{requestid}")
@@ -194,24 +194,6 @@ public class ContractController {
 		foundContract.setUserid(user);
 		contractService.update(foundContract);
 		return "redirect:/my_contracts";
-	}
-	
-	@PostMapping("/api/contracts/search")
-	public List<Contract> searchContracts(@RequestParam String search)
-	{
-		return contractService.searchContracts(search);
-	}
-	
-	@PostMapping("/api/contracts/search/location")
-	public List<Contract> searchLocation(@RequestParam String search)
-	{
-		return contractService.searchLocation(search);
-	}
-	
-	@PostMapping("/api/contracts/search/type")
-	public List<Contract> searchContractType(@RequestParam String search)
-	{
-		return contractService.searchContractType(search);
 	}
 
 	@GetMapping("/api/contracts")
