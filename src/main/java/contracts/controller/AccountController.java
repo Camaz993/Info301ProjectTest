@@ -39,6 +39,7 @@ public class AccountController {
         return "create_account";
     }
 	
+	//adds a new user account and sets their permissions 
 	@PostMapping("/api/staff")
 	public String addUser(@Valid @ModelAttribute(name="user") User user, BindingResult br, Model model) {
 		if(br.hasErrors()) {
@@ -94,6 +95,7 @@ public class AccountController {
 	    return "manage_users";
 	}
 	
+	//locks a user account so the user can no longer log in
 	@GetMapping("/lock_users/{userid}")
 	public String selectedUserLock(@PathVariable("userid") int userid, Model model) {
 		User foundUser = contractService.findById(userid).orElse(new User());
@@ -102,6 +104,7 @@ public class AccountController {
 		return "redirect:/manage_users";
 	}
 	
+	//unlocks a user account so they can log in 
 	@GetMapping("/unlock_users/{userid}")
 	public String selectedUserUnlock(@PathVariable("userid") int userid, Model model) {
 		User foundUser = contractService.findById(userid).orElse(new User());
