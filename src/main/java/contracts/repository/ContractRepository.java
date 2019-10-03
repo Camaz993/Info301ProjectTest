@@ -50,5 +50,8 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     
     @Query(value = "SELECT MAX(requestid) FROM CONTRACT c", nativeQuery = true)
     public Integer findNewestContract();
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.requestid != ?1", nativeQuery = true)
+    public List<Contract> getAllExceptCurrent(Integer requestid);
 }
 

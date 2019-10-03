@@ -127,5 +127,10 @@ public class ContractService implements IContractService{
 	public Integer findNewestContract() {
 		return contractRepository.findNewestContract();
 	}
+	
+	@Override
+	public List<Contract> getAllExceptCurrent(Integer requestid) {
+		return contractRepository.getAllExceptCurrent(requestid);
+	}
 
 }

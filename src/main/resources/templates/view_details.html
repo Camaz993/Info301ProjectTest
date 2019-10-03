@@ -130,10 +130,13 @@
 <div id="RelatedAgreements" class="tabcontent">
 	<h3>Related Agreements:</h3>
 	<table class="viewdetails">
-		<tr>
-			<th>Related Agreements </th>
-			<td th:text ="${selectedContract?.related_agreements}"/>
-			<td><a th:href="@{/add_related}">Add Related Agreement</a></td>
+	<tr>
+	<th>Related Agreements </th>
+	<td th:text ="${selectedContract?.related_agreements}"/>
+		<form action="#" th:action="@{/add_related/{requestid} (requestid=${selectedContract.requestid})}" method="get">
+			<input type="hidden"/>
+	  		<a th:href="@{/add_related/{requestid} (requestid=${selectedContract.requestid})}" type="submit" id="submitButton">Add Related Agreements</a>
+		</form>
 		</tr>
 	</table>
 </div>

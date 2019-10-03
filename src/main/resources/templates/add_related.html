@@ -44,7 +44,7 @@
 	 		</div>
 	</div>-->
 	<div class="content_search">
-	<h2>Add Related Contracts</h2>
+	<h2>Add Related Agreements</h2>
     <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
       <label for="search">Search:</label><input name="search" id="search"> 
     <p><input type="submit" value="Submit" /> </p>
@@ -77,6 +77,12 @@
         <th th:text="${contract.description}"></th>
         <th th:text="${contract?.businessname}"></th>
         <th th:text="${contract.date_updated}"></th>
+        <th>
+       		<form id="relatedContracts" action="#" th:action="@{/archive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
+  				<input type="hidden"/>
+  				<button onclick="return confirm('Are you sure want to relate this contract to the current one?');" type="submit" id="submitRelated">Relate</button>
+			</form>
+     	</th>
         <!--<th>
         	<a th:href="@{/update_details/{requestid}(requestid=${contract.requestid})}" target="_blank">Update</a>
         </th>
@@ -152,6 +158,19 @@ function searchByParty() {
 	    }       
 	  }
 	}
+
+
+/* var chk = $('input[type="checkbox"]');
+chk.each(function(){
+    var v = $(this).attr('checked') == 'checked'?1:0;
+    $(this).after('<input type="hidden" name="'+$(this).attr('rel')+'" value="'+v+'" />');
+});
+
+chk.change(function(){ 
+    var v = $(this).is(':checked')?1:0;
+    $(this).next('input[type="hidden"]').val(v);
+}); */
+
 </script>
 
 <footer>

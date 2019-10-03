@@ -43,4 +43,6 @@ public interface IContractService {
 	public List<Contract> getFavouritedContracts(Integer userid);
 	
 	public Integer findNewestContract();
+
+	List<Contract> getAllExceptCurrent(Integer requestid);
 }

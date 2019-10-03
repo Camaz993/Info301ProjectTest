@@ -337,13 +337,14 @@ public class ContractController {
 		return "favourite_contracts";
 	}
 	
-	@GetMapping("/add_related")
-	public String relatedContracts(Model model) {
+	@GetMapping("/add_related/{requestid}")
+	public String relatedContracts(@PathVariable("requestid") int requestid, Model model) {
 		//Contract relatedContract = contractService.findContract(requestid).orElse(new Contract());
 		//RelatedAgreements relatedAgreement = new RelatedAgreements();
 		//relatedAgreement.setRequestid_related(relatedContract.getRequestid());
 		//relatedAgreementsService.addRelatedAgreements(relatedAgreement);
-		model.addAttribute("contracts", contractService.getAllContracts());
+		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
+		model.addAttribute("contracts", contractService.getAllExceptCurrent(requestid));
 		return "add_related";
 	}
 	
