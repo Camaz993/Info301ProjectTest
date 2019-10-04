@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -125,7 +126,7 @@ public class ContractController {
 	
 	//add an in negotiation status to the database, along with null operative and expired status'
 	@PostMapping("/api/in_negotiation")
-	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation)
+	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation, RedirectAttributes redirectAttributes)
 	{
 		Integer requestid = contractService.findNewestContract();
 		in_negotiation.setRequestId(requestid);
@@ -138,12 +139,13 @@ public class ContractController {
 		expiredService.addExpired(ex);
 		StatusLink statuslink = new StatusLink(requestid, "in_negotiation");
 		statuslinkService.addStatusLink(statuslink);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message", "Contract successfully added");
+		return "redirect:/add_contracts";
 	}
 	
 	//add an operative status to the db, along with null in negotiation and expired status'
 	@PostMapping("api/operative")
-	public String add_operative(@ModelAttribute(name="operative") Operative operative) {
+	public String add_operative(@ModelAttribute(name="operative") Operative operative, RedirectAttributes redirectAttributes) {
 		Integer requestid = contractService.findNewestContract();
 		operative.setRequestId(requestid);		
 		operativeService.addOperative(operative);
@@ -155,12 +157,13 @@ public class ContractController {
 		in_negotiationService.addInNegotiation(neg);
 		StatusLink statuslink = new StatusLink(requestid, "operative");
 		statuslinkService.addStatusLink(statuslink);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message", "Contract successfully added");
+		return "redirect:/add_contracts";
 	}
 	
 	//add an expired status in the db, along with in negotiation and operative status'
 	@PostMapping("api/expired")
-	public String add_expired(@ModelAttribute(name="expired") Expired expired) {
+	public String add_expired(@ModelAttribute(name="expired") Expired expired, RedirectAttributes redirectAttributes) {
 		Integer requestid = contractService.findNewestContract();
 		expired.setRequestId(requestid);
 		expiredService.addExpired(expired);
@@ -172,7 +175,8 @@ public class ContractController {
 		operativeService.addOperative(op);
 		StatusLink statuslink = new StatusLink(requestid, "expired");
 		statuslinkService.addStatusLink(statuslink);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message", "Contract successfully added");
+		return "redirect:/add_contracts";
 	}
 	
 	//Method to bring up search results and checks if user has item favourited or not.

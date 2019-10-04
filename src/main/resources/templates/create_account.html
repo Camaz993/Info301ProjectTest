@@ -45,14 +45,15 @@
 
 <div class="content">
 <form action="#" th:action="@{/api/staff}" th:object="${user}" method="post" id="addUser">
-	<h1>Add New User</h1>
+<div th:if="${message}" th:text="${message}" class="alertMessage"/>
+	<h2>Add New User</h2>
 	<div class="subnav">
 	<div class="links">
 	<a href="/admin_settings">Home</a>
 	<a>Create Account</a>
 	<a href="/manage_users">Manage Users</a>
 	<a href="/create_account">Site Settings</a>
-	<a href="/create_account">Track Changes</a>
+	<a href="/audit">Track Changes</a>
 	</div>
 	</div>
 	<p> Fill in this form to create an account </p>    
@@ -95,6 +96,7 @@
 </div>
 
 <footer>
+	<a href="/admin_settings">Admin</a>
 	<a href="/help">Help Page</a>
 </footer>
 

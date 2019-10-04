@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import contracts.domain.User;
 import contracts.service.IAccountService;
@@ -41,7 +42,7 @@ public class AccountController {
 	
 	//adds a new user account and sets their permissions 
 	@PostMapping("/api/staff")
-	public String addUser(@Valid @ModelAttribute(name="user") User user, BindingResult br, Model model) {
+	public String addUser(@Valid @ModelAttribute(name="user") User user, BindingResult br, Model model, RedirectAttributes redirectAttributes) {
 		if(br.hasErrors()) {
 			return "create_account";
 		}
@@ -80,7 +81,8 @@ public class AccountController {
 		user.setPassrepeat(passwordEncoder.encode(user.getPassrepeat()));
 		user.setLocked(false);
 		accountService.addAccount(user);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message", "User successfully added");
+		return "redirect:/create_account";
 	}
 	
 	@RequestMapping(value = "/login")
