@@ -175,9 +175,25 @@ public class ContractController {
 		return "redirect:/";
 	}
 	
+	//Method to bring up search results and checks if user has item favourited or not.
+	//If they have the item favourited, the button dynamically updates to unfavourited.
 	@GetMapping("/search_contracts")
 	public String getAllContracts(Model model) {
+		List<Contract> allContracts = contractService.getAllContracts();
+		List favStatus = new ArrayList<>();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		for (int i = 0; i < allContracts.size(); i++) {
+			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
+				favStatus.add("favourited");
+			}
+			else {
+				favStatus.add("unfavourited");
+			}
+		}
 		model.addAttribute("contracts", contractService.getAllContracts());
+		model.addAttribute("favstatus", favStatus);
 		return "search_contracts";
 	}
 	

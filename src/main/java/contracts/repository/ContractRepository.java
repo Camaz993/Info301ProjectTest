@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import contracts.domain.Contract;
+import contracts.domain.Favourited;
 
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Integer> {
@@ -54,5 +55,8 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     @Modifying
     @Query(value = "DELETE FROM FAVOURITED WHERE requestid = ?1 AND userid = ?2", nativeQuery = true)
     public void unfavouriteContract(Integer requestid, Integer userid);
+    
+    @Query(value = "SELECT COUNT(*) FROM FAVOURITED WHERE requestid = ?1 AND userid = ?2 limit 1", nativeQuery = true)
+    public Integer checkFavourited(Integer requestid, Integer userid);
 }
 
