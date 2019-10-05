@@ -45,7 +45,6 @@
 	</div>
 	
 	<div class="content">
-	<div th:if="${message}" th:text="${message}" class="alertMessage"/>
 	<h2>Add Contracts</h2>
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
     <table>

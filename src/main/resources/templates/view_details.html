@@ -39,8 +39,8 @@
 	 		</div>
 	</div>
 <div class="content">
+<div th:if="${message}" th:text="${message}" class="alertMessage"/>	
 <h2 th:text ="${selectedContract.agreement_title}"></h2>
-     	
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'ContractDetails')">Contract Details</button>
   <button class="tablinks" onclick="openTab(event, 'PartyDetails')">Party Details</button>

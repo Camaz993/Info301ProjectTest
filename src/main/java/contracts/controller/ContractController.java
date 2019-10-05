@@ -140,7 +140,7 @@ public class ContractController {
 		StatusLink statuslink = new StatusLink(requestid, "in_negotiation");
 		statuslinkService.addStatusLink(statuslink);
 		redirectAttributes.addFlashAttribute("message", "Contract successfully added");
-		return "redirect:/add_contracts";
+		return "redirect:/view_details/" + requestid;
 	}
 	
 	//add an operative status to the db, along with null in negotiation and expired status'
@@ -158,7 +158,7 @@ public class ContractController {
 		StatusLink statuslink = new StatusLink(requestid, "operative");
 		statuslinkService.addStatusLink(statuslink);
 		redirectAttributes.addFlashAttribute("message", "Contract successfully added");
-		return "redirect:/add_contracts";
+		return "redirect:/view_details/" + requestid;
 	}
 	
 	//add an expired status in the db, along with in negotiation and operative status'
@@ -176,7 +176,7 @@ public class ContractController {
 		StatusLink statuslink = new StatusLink(requestid, "expired");
 		statuslinkService.addStatusLink(statuslink);
 		redirectAttributes.addFlashAttribute("message", "Contract successfully added");
-		return "redirect:/add_contracts";
+		return "redirect:/view_details/" + requestid;
 	}
 	
 	//Method to bring up search results and checks if user has item favourited or not.
