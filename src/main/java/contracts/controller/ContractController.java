@@ -316,6 +316,7 @@ public class ContractController {
 		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
 		opRepo.findById(requestid).ifPresent(operative->model.addAttribute("operative", operative));
 		exRepo.findById(requestid).ifPresent(expired->model.addAttribute("expired", expired));
+		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		return "update_status";	
 	}
 	
