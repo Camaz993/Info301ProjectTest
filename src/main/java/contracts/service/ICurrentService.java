@@ -10,6 +10,8 @@ public interface ICurrentService {
 	
 	public List<Current> getAllCurrent();
 	
-	public void updateColours(Integer currentid_css, String background, String button, String links);
+	public void updateColours(Integer currentid_css, String colour);
+
+	public List<Current> getCurrent();
 
 }

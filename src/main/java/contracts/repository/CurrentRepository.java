@@ -15,8 +15,8 @@ public interface CurrentRepository extends JpaRepository<Current, Integer> {
 	public List<Current> getAllCurrent();
 	
 	@Modifying
-	 @Query(value = "UPDATE current_css c SET c.background = ?2, c.button = ?3, c.links = ?4 WHERE idcurrent_css = ?1", 
+	 @Query(value = "UPDATE current_css c SET c.colour = ?2 WHERE idcurrent_css = ?1", 
    		  nativeQuery = true)
-	public void updateColours(Integer idcurrent_css, String background, String button, String links);
+	public void updateColours(Integer idcurrent_css, String colour);
 
 }

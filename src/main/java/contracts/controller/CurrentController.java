@@ -24,12 +24,13 @@ public class CurrentController {
 	@GetMapping("/admin_settings")
     public String showAdmin(Model model) {
 		model.addAttribute("currents", currentService.getAllCurrent());
+		model.addAttribute("currentCss", currentService.getCurrent());
         return "admin_settings";
     }
 	
 	@PostMapping("/api_adminblue")
 	public String changeColour() {
-		currentService.updateColours(2, "beige", "#FF7F50", "pink");
+		currentService.updateColours(2, "beige");
 		return "redirect:/admin_settings";
 	}
 

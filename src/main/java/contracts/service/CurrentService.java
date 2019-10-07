@@ -25,8 +25,13 @@ public class CurrentService implements ICurrentService {
 	
 	@Transactional
 	@Override
-	public void updateColours(Integer idcurrent_css, String background, String button, String links) {	
-		currentRepository.updateColours(idcurrent_css, background, button, links);
+	public void updateColours(Integer idcurrent_css, String colour) {	
+		currentRepository.updateColours(idcurrent_css, colour);
+	}
+	
+	@Override
+	public List<Current> getCurrent(){
+		return currentRepository.getCurrent();
 	}
 
 }
