@@ -104,6 +104,7 @@ public class ContractController {
 		model.addAttribute("in_negotiation", new InNegotiation());
 		model.addAttribute("operative", new Operative());
 		model.addAttribute("expired", new Expired());
+		repo.findById(requestid).ifPresent(contract->model.addAttribute("selectedContract", contract));
 		return "add_status";
 	}
 	
