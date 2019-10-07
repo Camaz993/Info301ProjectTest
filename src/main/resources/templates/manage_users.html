@@ -57,6 +57,7 @@
 	<table>
 	<thead>
 	<tr>
+	<th>User ID</th>
 	<th>First Name</th>
     <th>Last Name</th>
     <th>Username</th>
@@ -68,6 +69,7 @@
     </thead>
 	<tbody class="wrongth">
     <tr th:each="user : ${users}">
+    	<th th:text=${user.userid}></th>	
         <th th:text=${user.firstname}></th>	 
         <th th:text="${user.lastname}"></th>
         <th th:text="${user.username}"></th>

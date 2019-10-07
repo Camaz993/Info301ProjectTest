@@ -283,7 +283,7 @@ public class ContractController {
 		fieldAfterList += ((String.valueOf((contract.getAgreement_location()))))+ (", ");
 		fieldUpdatedList += ("agreement_location") + (", ");
 	}
-	if (!foundContract.getLanguage().equals(contract.getLanguage())) {
+	if(!foundContract.getLanguage().equals(contract.getLanguage())) {
 		fieldBeforeList += ((String.valueOf((foundContract.getLanguage()))))+ (", ");
 		fieldAfterList += ((String.valueOf((contract.getLanguage()))))+ (", ");
 		fieldUpdatedList += ("language") + (", ");
@@ -354,7 +354,7 @@ public class ContractController {
 		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
 		foundContract.setArchived("T");
 		contractService.addContract(foundContract);
-		return "redirect:/archive_contracts";
+		return "redirect:/search_contracts";
 	}
 	
 	@GetMapping("/archive_contracts")
@@ -398,7 +398,7 @@ public class ContractController {
 		favourite.setUser(user);
 		favourite.setContract(favouritedContract);
 		favouritedService.addFavourite(favourite);
-		return "redirect:/favourite_contracts";
+		return "redirect:/search_contracts";
 	}
 
 	@GetMapping("/favourite_contracts")
@@ -433,6 +433,39 @@ public class ContractController {
 		return "/admin_settings";
 	}
 	
-
+	@GetMapping("/reassign/{requestid}")
+	public String reassignContractForm(@PathVariable("requestid") int requestid, Model model) {
+		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
+		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
+		List <User> users = contractService.getAllUsers();
+		model.addAttribute("users", users);
+		return "reassign";
+	}
+	
+	@PostMapping("/api/reassignment")
+	public String reassignContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
+	{	
+	String fieldUpdatedList = "";
+	String fieldBeforeList = "";
+	String fieldAfterList = "";
+	Contract foundContract = contractService.findContract(contract.getRequestid()).orElse(new Contract());
+	Audit blank = new Audit();
+	if (!foundContract.getUser().equals(contract.getUser())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getUser().getUserid()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getUser().getUserid()))))+ (", ");
+		fieldUpdatedList += ("userid") + (", ");
+	}
+		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		contract.setDate_updated(timeNow);
+		blank.setField_after(fieldAfterList);
+		blank.setField_before(fieldBeforeList);
+		blank.setField_updated(fieldUpdatedList);
+		blank.setUserid(contract.getUser());
+		blank.setRequestedid(contract);
+		blank.setDate(contract.getDate_updated());
+		contractService.update(contract);
+		auditService.addAudit(blank);
+		return "redirect:/view_details/" + contract.getRequestid();
+	}
 }
 	

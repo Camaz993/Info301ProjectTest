@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Reassign</title>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="headerContainer">
+	<div class="header">
+	<h1>Contract Management</h1>
+	</div>
+	<div class="logout">
+    	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
+        <form th:action="@{/logout}" method="post"> 
+            <input type="submit" value="Logout"/> 
+        </form>
+    	</div>
+    	</div>
+	<div class="sidenav">
+			<div>
+	 		<a href="/">Home</a>
+	 		</div>
+	 		<div>
+	 		<a href="/add_contracts">New Contract</a></li>
+	 		<p class="sub">Create a new contract</p>
+	 		</div>
+	 		<div>
+	 		<a href="/search_contracts">Search Contracts</a></li>
+	 		<p class="sub">Search for a contract</p>
+	 		</div>
+	 		<div>
+	 		<a href="/archive_contracts">Archived Contracts</a></li>
+	 		<p class="sub">View archived contracts</p>
+	 		</div>
+	 		<div>
+	 		<a href="/my_contracts">My Contracts</a></li>
+	 		<p class="sub">View your assigned contracts</p>
+ 			</div>
+ 			<div>
+	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
+	 		<p class="sub">View your favourited contracts</p>
+	 		</div>
+	</div>
+	
+	<div class="content">
+	<h2>Reassign Contract</h2>
+    <form action="#" th:action="@{/api/reassignment}" th:object="${contract}" method="post" id="reassignContract">
+    <input type="hidden" th:field="*{requestid}"/>
+		 <table>
+		    <tr>
+		        <td>User: <select id="userid" name="userid">
+		    	<option value="">Select a user</option>
+		    	<option th:each="user : ${users}"
+		    	th:value="${user.userid}"
+		    	th:utext="${user.username}"
+		    	th:selected="${user.userid==contract?.user?.userid}"/>
+		    	</select></td>
+		   	</tr>
+		   		<tr>
+    	<td><input type="hidden"  th:field="*{agreement_title}"/></td>
+    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}">Title Error</td>
+    </tr>
+    <tr>
+    	<td><input type="hidden"  th:field="*{agreement_type}" /></td>
+    	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}">Type Error</td>
+    </tr>
+    <tr>
+    	<td><input type="hidden"  th:field="*{description}" /></td>
+    	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
+    </tr>
+    <tr>
+        <td><input type="hidden"  th:field="*{agreement_location}" /></td>
+        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
+    </tr>
+    <tr>
+        <td><input type="hidden"  th:field="*{language}" /></td>
+        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Language Error</td>
+    </tr>
+    <tr>
+        <td><input type="hidden"  th:field="*{region}" /></td>
+        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
+    </tr>
+    <tr>
+        <td><input type="hidden"  th:field="*{related_agreements}" /></td>
+        <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error</td>
+    </tr>
+		   	<tr>
+       			 <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+   			</tr>
+   		</table>
+		
+	</div>
+</body>
+</html>
