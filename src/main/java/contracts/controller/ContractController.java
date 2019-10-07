@@ -32,6 +32,8 @@ import contracts.domain.Operative;
 import contracts.domain.Status;
 import contracts.domain.User;
 import contracts.repository.ContractRepository;
+import contracts.repository.CurrentRepository;
+import contracts.service.CurrentService;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
 
@@ -47,8 +49,16 @@ public class ContractController {
 	@Autowired
 	private ContractRepository repo;
 	
+	@Autowired
+	private CurrentService currentService;
+	
+	@Autowired
+	private CurrentRepository currentRepository;
+	
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contract", new Contract());
 		model.addAttribute("innegotiation", new InNegotiation());
 		model.addAttribute("operative", new Operative());
@@ -75,6 +85,8 @@ public class ContractController {
 	
 	@GetMapping("/search_contracts")
 	public String getAllContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getAllContracts());
 		return "search_contracts";
 	}
@@ -82,6 +94,8 @@ public class ContractController {
 	
 	@GetMapping("/")
 	public String mostRecent(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getAllContracts());
 		model.addAttribute("contracts2", contractService.getNullUserContracts());
 		return "/index";
@@ -130,12 +144,16 @@ public class ContractController {
 	
 	@GetMapping("/view_details/{requestid}")
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		return "view_details";
 	}
 	
 	@GetMapping("/update_details/{requestid}")
 	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
@@ -160,6 +178,8 @@ public class ContractController {
 	
 	@GetMapping("/archive_contracts")
 	public String getArchivedContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getArchivedContracts());
 		return "archive_contracts";
 	}
@@ -174,12 +194,16 @@ public class ContractController {
 	
 	@GetMapping("/unarchive_contracts")
 	public String getUnarchivedContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getAllContracts());
 		return "search_contracts";
 	}
 	
 	@GetMapping("/my_contracts")
     public String showMyContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
@@ -198,6 +222,8 @@ public class ContractController {
 
 	@GetMapping("/favourite_contracts")
 	public String getFavouritedContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getFavouritedContracts());
 		return "favourite_contracts";
 	}

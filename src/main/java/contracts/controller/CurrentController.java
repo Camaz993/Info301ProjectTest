@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import contracts.domain.Contract;
 import contracts.domain.Current;
+import contracts.repository.CurrentRepository;
 import contracts.service.ICurrentService;
 
 @Controller
@@ -21,16 +22,40 @@ public class CurrentController {
 	@Autowired
 	private ICurrentService currentService;
 	
+	@Autowired
+	private CurrentRepository currentRepository;
+	
 	@GetMapping("/admin_settings")
     public String showAdmin(Model model) {
-		model.addAttribute("currents", currentService.getAllCurrent());
-		model.addAttribute("currentCss", currentService.getCurrent());
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+		model.addAttribute("current", new Current());
         return "admin_settings";
     }
 	
 	@PostMapping("/api_adminblue")
-	public String changeColour() {
-		currentService.updateColours(2, "beige");
+	public String changeColourBlue(@ModelAttribute(name="current") Current current) {
+		current.setColour("style");
+		currentService.addCurrent(current);
+		return "redirect:/admin_settings";
+	}
+	
+	@PostMapping("/api_admingreen")
+	public String changeColourGreen(@ModelAttribute(name="current") Current current) {
+		current.setColour("greenstyle");
+		currentService.addCurrent(current);
+		return "redirect:/admin_settings";
+	}
+	@PostMapping("/api_admingrey")
+	public String changeColourGrey(@ModelAttribute(name="current") Current current) {
+		current.setColour("greystyle");
+		currentService.addCurrent(current);
+		return "redirect:/admin_settings";
+	}
+	@PostMapping("/api_adminred")
+	public String changeColourRed(@ModelAttribute(name="current") Current current) {
+		current.setColour("redstyle");
+		currentService.addCurrent(current);
 		return "redirect:/admin_settings";
 	}
 

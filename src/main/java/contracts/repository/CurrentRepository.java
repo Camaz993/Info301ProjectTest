@@ -18,5 +18,8 @@ public interface CurrentRepository extends JpaRepository<Current, Integer> {
 	 @Query(value = "UPDATE current_css c SET c.colour = ?2 WHERE idcurrent_css = ?1", 
    		  nativeQuery = true)
 	public void updateColours(Integer idcurrent_css, String colour);
+	
+    @Query(value = "SELECT MAX(idcurrent_css) FROM current_css c", nativeQuery = true)
+    public Integer getCurrent();
 
 }

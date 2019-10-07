@@ -2,27 +2,27 @@
 
 body{
 	margin: 0;
-	color: #122848;
+	color: #232222;
 	font-family: verdana;
 	}
 
 
 .headerContainer {
-	background: #122848;
+	background: #AB0E0E;
 	width:100%;
 }
 
 .header {
-	background: #122848;
+	background: #AB0E0E;
 	margin: 0px;
 	padding: 30px;
-	color: #1380A1;
+	color: #4C0E0E;
 	padding-left: 50px;
 	}
 
 .sidenav {
   overflow: hidden;
-  background-color: #122848;
+  background-color: #AB0E0E;
   width: 100%;
   padding-left: 50px;
 }
@@ -33,20 +33,20 @@ body{
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  color: #1380A1;
+  color: #FEFEFE;
 }
 
 .sidenav a {
 	font-weight: bold;
-	color: #1380A1;
+	color: #FEFEFE;
 	}
 
 .sidenav a:hover {
-  color: #F2F2F2;
+  color: #FEC9C9;
 }
 
 .subnav {
-	background-color: #122848;
+	background-color: #F0EFEF;
 	width:100%;
 	padding-top:10px;
 	padding-bottom:10px;
@@ -61,7 +61,7 @@ body{
 
 .links a {
 	font-weight: bold;
-	color: #1380A1;
+	color: #797979;
 	padding:5px;
 	font-size:10pt;
 	}
@@ -85,7 +85,7 @@ body{
     top:20px;
     right:10px;
   	display: inline-block;
-  	color:#D0D3D4;
+  	color:#FEFEFE;
 }
 
 
@@ -97,7 +97,7 @@ body{
 	margin: auto;
     width: 60%;
     margin-top: 50px;
-  	background-color: #f2f2f2;
+  	background-color: #F0EFEF;
     border-radius: 12px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     overflow: hidden;
@@ -167,5 +167,5 @@ input[type=submit]:hover {
 }
 
 h1{
-  color: #1380A1;
+  color: #FEFEFE;
   font-size: 200%;

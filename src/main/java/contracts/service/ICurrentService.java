@@ -12,6 +12,8 @@ public interface ICurrentService {
 	
 	public void updateColours(Integer currentid_css, String colour);
 
-	public List<Current> getCurrent();
+	public Integer getCurrent();
+
+	public void addCurrent(Current newCurrent);
 
 }

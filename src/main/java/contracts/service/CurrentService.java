@@ -23,6 +23,22 @@ public class CurrentService implements ICurrentService {
 		return currentRepository.getAllCurrent();
 	}
 	
+	@Override
+	public void addCurrent(Current newCurrent) {
+		
+		try
+		{
+			currentRepository.save(newCurrent);
+		} catch(javax.validation.ConstraintViolationException e)
+		{ 
+			throw new IllegalArgumentException(e.getConstraintViolations().iterator().next().getMessage());
+		}catch (Exception e2)
+		{
+			e2.printStackTrace();
+		}
+		
+	}
+	
 	@Transactional
 	@Override
 	public void updateColours(Integer idcurrent_css, String colour) {	
@@ -30,7 +46,7 @@ public class CurrentService implements ICurrentService {
 	}
 	
 	@Override
-	public List<Current> getCurrent(){
+	public Integer getCurrent(){
 		return currentRepository.getCurrent();
 	}
 

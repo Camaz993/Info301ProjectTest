@@ -3,23 +3,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Admin Settings</title>
-<link href="../static/style.css" th:href="@{/greenstyle.css}" rel="stylesheet" />
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" title="style" id="style"/>
+<link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
+<link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
+<link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
 
 <script>
 function setColours(){
   var i, link_tag ;
-  var css = document.getElementsById("css");
-  for (i = 0, link_tag = document.getElementsByTagName("link") ;
-    i < link_tag.length ; i++ ) {
-    if ((link_tag[i].rel.indexOf( "stylesheet" ) != -1) &&
-      link_tag[i].title) {
+  var currcss = document.getElementById("css");
+  console.log(currcss);
+  for (i = 0, link_tag = document.getElementsByTagName("link") ; i < link_tag.length ; i++ ) {
+    if ((link_tag[i].rel.indexOf( "stylesheet" ) != -1) && link_tag[i].title) {
       link_tag[i].disabled = true ;
-      if (link_tag[i].title == css) {
-        link_tag[i].disabled = false ;
+      if (currcss.innerHTML.indexOf(link_tag[i].title) != -1) {
+        document.getElementById(link_tag[i].title).disabled = false;
       }
     }
   }
-}
 }
 </script>
 
@@ -31,7 +32,7 @@ function setColours(){
 }
 </style>
 </head>
-<body onload="colours();">
+<body onload="setColours();">
 	<div class="headerContainer">
 	<div class="header">
 	<h1>Contract Management</h1>
@@ -70,7 +71,7 @@ function setColours(){
 	</div>
 	
 	<div class="content">
-		<h1>Admin Home</h1>
+		<h2>Admin Home</h2>
 	<div class="subnav">
 	<div class="links">
 	<a href="/create_account">Home</a>
@@ -84,48 +85,24 @@ function setColours(){
 	<p>Select which colour scheme you wish to view the contract management system in</p>
 	<table>
 	<tr>
-	<td>Header</td>
-	<td>Title</td>
-	<td>Links</td>
-	<td>Select</td>
-	</tr>
-	<tr>
-	<th><div class="square"></div></th>
-	<th><div class="square"></div></th>
-	<th><div class="square"></div></th>
- 	<th>	<form action="#" th:action="@{/api_adminblue}" method="post">
-  				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit" id="colour_change">Blue</button>
+ 	<th>	<form action="#" th:action="@{/api_adminblue}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Blue</button>
 		</form></th>
-	</tr>
-	<tr>
-	<th><div class="square"></div></th>
-	<th><div class="square"></div></th>
-	<th><div class="square"></div></th>
-	<th th:text=${currents[0].background}>	 
- 		<form action="#" th:action="@{/api_adminblue}" method="post">
-  				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit" id="colour_change">Blue</button>
+	<th>	 
+ 		<form action="#" th:action="@{/api_admingreen}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"class="display-none"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Green</button>
 		</form></th>
-	</tr>
-	<tr>
-	<th><div class="square"></div></th>
-	<th><div class="square"></div></th>
-	<th><div class="square"></div></th>
-	<th th:text=${currents[0].background}>	 
- 		<form action="#" th:action="@{/api_adminblue}" method="post">
-  				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit" id="colour_change">Blue</button>
+	<th>	 
+ 		<form action="#" th:action="@{/api_admingrey}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Grey</button>
 		</form></th>
-	</tr>
-	<tr>
-	<th><div class="square"></div></th>
-	<th><div class="square"></div></th>
-	<th><div class="square"></div></th>
-	<th th:text=${currents[0].background}>	 
- 		<form action="#" th:action="@{/api_adminblue}" method="post">
-  				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit" id="colour_change">Blue</button>
+	<th>	 
+ 		<form action="#" th:action="@{/api_adminred}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Red</button>
 		</form></th>
 	</tr>
 	</table>
@@ -133,8 +110,8 @@ function setColours(){
     </div>
     
     <table class="display-none">
-    <td th:text="${current.idcurrent_css}"></td>
-    <td th:text="${current.colour}" id="css"></td>
+    <td th:text="${currentCss.idcurrent_css}"></td>
+    <td th:text="${currentCss.colour}" id="css"></td>
     </table>
 </body>
 </html>
