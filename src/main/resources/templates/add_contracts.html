@@ -61,55 +61,55 @@
    	</tr>
    	<tr>
     	<td>Agreement Title: <input type="text"  th:field="*{agreement_title}"/></td>
-    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}">Title Error</td>
+    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}" class="error">Title Error</td>
     </tr>
     <tr>
     	<td>Agreement Type: <input type="text"  th:field="*{agreement_type}" /></td>
-    	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}">Type Error</td>
+    	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}" class="error">Type Error</td>
     </tr>
     <tr>
     	<td>Description: <input type="text"  th:field="*{description}" /></td>
-    	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
+    	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error">Description Error</td>
     </tr>
     <tr>
         <td>Agreement Location: <input type="text"  th:field="*{agreement_location}" /></td>
-        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
+        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}" class="error">Location Error</td>
     </tr>
     <tr>
         <td>Business Name: <input type="text"  th:field="*{businessname}" /></td>
-        <td th:if="${#fields.hasErrors('businessname')}" th:errors="*{businessname}">Business name Error</td>
+        <td th:if="${#fields.hasErrors('businessname')}" th:errors="*{businessname}" class="error">Business name Error</td>
     </tr>
      <tr>
         <td>Client Name: <input type="text"  th:field="*{clientname}" /></td>
-        <td th:if="${#fields.hasErrors('clientname')}" th:errors="*{clientname}">Client name Error</td>
+        <td th:if="${#fields.hasErrors('clientname')}" th:errors="*{clientname}" class="error">Client name Error</td>
     </tr>
      <tr>
         <td>Address: <input type="text"  th:field="*{address}" /></td>
-        <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</td>
+        <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="error">Address Error</td>
     </tr>
      <tr>
         <td>Phone: <input type="text"  th:field="*{phone}" /></td>
-        <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone Error</td>
+        <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="error">Phone Error</td>
     </tr>
      <tr>
         <td>Email: <input type="text"  th:field="*{email}" /></td>
-        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
+        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error">Email Error</td>
     </tr>
      <tr>
         <td>Fax: <input type="text"  th:field="*{fax}" /></td>
-        <td th:if="${#fields.hasErrors('fax')}" th:errors="*{fax}">Fax Error</td>
+        <td th:if="${#fields.hasErrors('fax')}" th:errors="*{fax}" class="error">Fax Error</td>
     </tr>
     <tr>
         <td>Language: <input type="text"  th:field="*{language}" /></td>
-        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Language Error</td>
+        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}" class="error">Language Error</td>
     </tr>
     <tr>
         <td>Region: <input type="text"  th:field="*{region}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
+        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="error">Region Error</td>
     </tr>
     <tr>
         <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
-        <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error</td>
+        <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}" class="error">Related Agreements Error</td>
     </tr>
     <tr>
         <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
