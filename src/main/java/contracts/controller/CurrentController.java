@@ -24,12 +24,7 @@ public class CurrentController {
 	
 	@Autowired
 	private CurrentRepository currentRepository;
-	
-	@Autowired
-	private ICurrentService currentService;
-	
-	@Autowired
-	private CurrentRepository currentRepository;
+
 	
 	@GetMapping("/admin_settings")
     public String showAdmin(Model model) {
