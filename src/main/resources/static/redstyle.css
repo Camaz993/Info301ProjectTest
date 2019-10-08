@@ -121,6 +121,7 @@ body{
     padding: 20px;
     position: relative;
 }
+	
 
 .display-none {
 	display: none;
@@ -145,6 +146,7 @@ body{
 
 table{
 	width: 100%;
+	table-layout: fixed;
 	}
 	
 input, select, textarea, tr, th {

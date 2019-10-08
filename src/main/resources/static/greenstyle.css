@@ -145,6 +145,7 @@ body{
 
 table{
 	width: 100%;
+	table-layout: fixed;
 	}
 	
 input, select, textarea, tr, th {
