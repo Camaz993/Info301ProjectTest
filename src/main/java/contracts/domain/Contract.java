@@ -56,11 +56,10 @@ public class Contract {
 	@Column(name = "Agreement_Location")
 	private String agreement_location;
 	
-	@NotBlank(message="Enter business name")
 	@Column(name = "businessname")
 	private String businessname;
 
-	@NotBlank(message="Enter client name")
+
 	@Column(name = "clientname")
 	private String clientname;
 	
@@ -81,7 +80,6 @@ public class Contract {
 	private String email;
 
 	@Column(name = "Fax")
-	@NotBlank(message="Enter fax number")
 	@Pattern(regexp = "([0-9]){9,11}", message = "Fax number must be numerical")
 	private String fax;
 	
