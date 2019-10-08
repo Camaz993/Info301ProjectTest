@@ -272,6 +272,9 @@ public class ContractController {
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
+		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
+		opRepo.findById(requestid).ifPresent(operative->model.addAttribute("operative", operative));
+		exRepo.findById(requestid).ifPresent(expired->model.addAttribute("expired", expired));
 		return "view_details";
 	}
 	

@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import contracts.domain.User;
+import contracts.repository.CurrentRepository;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
+import contracts.service.ICurrentService;
 
 @Controller
 public class AccountController {
@@ -33,8 +35,16 @@ public class AccountController {
 	@Autowired
 	private IContractService contractService;
 	
+	@Autowired
+	private ICurrentService currentService;
+	
+	@Autowired
+	private CurrentRepository currentRepository;
+	
 	@GetMapping("/create_account")
     public String showSignUpForm(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("user", new User());
 		model.addAttribute("roles", accountService.getUserRoles());
         return "create_account";
@@ -92,6 +102,8 @@ public class AccountController {
 	
 	@GetMapping("/manage_users")
 	public String manageUsers(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
 	    return "manage_users";
@@ -100,6 +112,8 @@ public class AccountController {
 	//locks a user account so the user can no longer log in
 	@GetMapping("/lock_users/{userid}")
 	public String selectedUserLock(@PathVariable("userid") int userid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		User foundUser = contractService.findById(userid).orElse(new User());
 		foundUser.setLocked(true);
 		accountService.addAccount(foundUser);
@@ -109,6 +123,8 @@ public class AccountController {
 	//unlocks a user account so they can log in 
 	@GetMapping("/unlock_users/{userid}")
 	public String selectedUserUnlock(@PathVariable("userid") int userid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		User foundUser = contractService.findById(userid).orElse(new User());
 		foundUser.setLocked(false);
 		accountService.addAccount(foundUser);
