@@ -443,11 +443,6 @@ public class ContractController {
 		return "/help";
 	}
 	
-	@GetMapping("/admin_settings")
-	public String adminSettings() {
-		return "/admin_settings";
-	}
-	
 	@GetMapping("/reassign/{requestid}")
 	public String reassignContractForm(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
