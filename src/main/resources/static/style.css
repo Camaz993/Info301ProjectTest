@@ -175,10 +175,6 @@ input[type=submit]:hover {
   background-color: #45a049;
 }
 
-input[type=color] {
-	width: 100px;
-}
-
 h1{
   color: #1380A1;
   font-size: 200%;

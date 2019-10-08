@@ -3,16 +3,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Admin Settings</title>
-<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
-<style>
-.square {
-  height: 20px;
-  width: 50px;
-  background-color: #555;
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" title="style" id="style"/>
+<link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
+<link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
+<link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
+
+<script>
+function setColours(){
+  var i, link_tag ;
+  var currcss = document.getElementById("css");
+  console.log(currcss);
+  for (i = 0, link_tag = document.getElementsByTagName("link") ; i < link_tag.length ; i++ ) {
+    if ((link_tag[i].rel.indexOf( "stylesheet" ) != -1) && link_tag[i].title) {
+      link_tag[i].disabled = true ;
+      if (currcss.innerHTML.indexOf(link_tag[i].title) != -1) {
+        document.getElementById(link_tag[i].title).disabled = false;
+      }
+    }
+  }
 }
-</style>
+</script>
 </head>
-<body onload="colours();">
+<body onload="setColours();">
 	<div class="headerContainer">
 	<div class="header">
 	<h1>Contract Management</h1>
@@ -29,7 +41,7 @@
  		<a href="/">Home</a>
  		</div>
  		<div>
- 		<a href="/add_contracts">New Contract</a></li>
+ 		<a>New Contract</a></li>
  		<p class="sub">Create a new contract</p>
  		</div>
  		<div>
@@ -45,8 +57,8 @@
  		<p class="sub">View your assigned contracts</p>
  		</div>
  		<div>
- 		<a href="/favourite_contracts">Favourited Contracts</a></li>
- 		<p class="sub">View your favourited contracts</p>
+ 			<a href="/create_account">Create Account</a></li>
+ 			<p class="sub">Create a new account</p>
  		</div>
 	</div>
 	
@@ -54,21 +66,44 @@
 		<h2>Admin Home</h2>
 	<div class="subnav">
 	<div class="links">
-	<a>Home</a>
+	<a href="/create_account">Home</a>
 	<a href="/create_account">Create Account</a>
-	<a href="/manage_users">Manage Users</a>
-	<a href="/site_settings">Site Settings</a>
-	<a href="/audit">Track Changes</a>
+	<a href="/create_account">Manage Users</a>
+	<a href="/create_account">Site Settings</a>
+	<a href="/create_account">Track Changes</a>
 	</div>
 	</div>
-	<h3><div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div> to the admin portal.</h3>
-    <p>Here you may access all the relevant administrative information.</p>
+	<h3>Colour Scheme</h3>
+	<p>Select which colour scheme you wish to view the contract management system in</p>
+	<table>
+	<tr>
+ 	<th>	<form action="#" th:action="@{/api_adminblue}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Blue</button>
+		</form></th>
+	<th>	 
+ 		<form action="#" th:action="@{/api_admingreen}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"class="display-none"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Green</button>
+		</form></th>
+	<th>	 
+ 		<form action="#" th:action="@{/api_admingrey}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Grey</button>
+		</form></th>
+	<th>	 
+ 		<form action="#" th:action="@{/api_adminred}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Red</button>
+		</form></th>
+	</tr>
+	</table>
+	<h3>Logo</h3>
     </div>
     
-<footer>
-	<a href="/admin_settings">Admin</a>
-	<a href="/help">Help Page</a>
-</footer>
-
+    <table class="display-none">
+    <td th:text="${currentCss.idcurrent_css}"></td>
+    <td th:text="${currentCss.colour}" id="css"></td>
+    </table>
 </body>
 </html>
