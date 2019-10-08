@@ -47,6 +47,9 @@
   <button class="tablinks" onclick="openTab(event, 'PartyDetails')">Party Details</button>
   <button class="tablinks" onclick="openTab(event, 'Attachments')">Attachments</button>
   <button class="tablinks" onclick="openTab(event, 'History')">History</button>
+  <button class="tablinks" onclick="openTab(event, 'In Negotiation')">Negotiation Details</button>
+  <button class="tablinks" onclick="openTab(event, 'Operative')">Operative Details</button>
+  <button class="tablinks" onclick="openTab(event, 'Expired')">Expired Details</button>
 </div>
 
 <div id="ContractDetails" class="tabcontent">
@@ -87,6 +90,61 @@
 	  </table>
 </div>
 
+<div id="In Negotiation" class="tabcontent">
+	  <h3>Negotiation Details</h3>
+	   <table class = "viewdetails">
+	   <tr>
+	 <th>Comments</th> 
+	 <td th:text ="${in_negotiation?.comments}"/>
+	  </tr>
+	  </table>
+</div>
+
+<div id="Operative" class="tabcontent">
+	  <h3>Operative Details</h3>
+	   <table class = "viewdetails">
+	   <tr>
+	 <th>Date Signed </th> 
+	 <td th:text ="${operative?.date_signed}"/>
+	  </tr>
+	   <tr>
+	 <th>Date of Commencement </th> 
+	 <td th:text ="${operative?.date_commenced}"/>
+	  </tr>
+	   <tr>
+	 <th>Date of Expire </th> 
+	 <td th:text ="${operative?.date_expire}"/>
+	  </tr>
+	  </table>
+</div>
+
+<div id="Expired" class="tabcontent">
+	   <h3>Expired Details</h3>
+	   <table class = "viewdetails">
+	   <tr>
+	 <th>Ending Reason </th> 
+	 <td th:text ="${expired?.ending_reason}"/>
+	  </tr>
+	  <tr>
+	 <th>Expiry Date </th> 
+	 <td th:text ="${expired?.expiry_date}"/>
+	  </tr>
+	  <tr>
+	 <th>Termination Date </th> 
+	 <td th:text ="${expired?.termination_date}"/>
+	  </tr>
+	  <tr>
+	 <th>Termination Notice Date</th> 
+	 <td th:text ="${expired?.termination_notice_date}"/>
+	  </tr>
+	   <tr>
+	 <th>Binding Terms Active</th> 
+	 <td th:text ="${expired?.binding_terms_active}"/>
+	  </tr>
+	  </table>
+	 
+</div>
+
 <div id="PartyDetails" class="tabcontent">
   <h3>Party Details:</h3>
 	  <table class = "viewdetails">
@@ -122,7 +180,7 @@
 	  <h3>Attachments:</h3>
 	<table class="viewdetails">
 	 <tr>
-	 <th>Agreement Location</th> 
+	 <th>URL or Description of Agreement File Location</th> 
 	 	<td style="word-wrap: break-word">
 	 	<a th:href = "${selectedContract?.agreement_location}" th:text ="${selectedContract?.agreement_location}" target="_blank"></a>
 		</td>

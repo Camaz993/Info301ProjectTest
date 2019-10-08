@@ -200,9 +200,10 @@ public class ContractController {
 				favStatus.add("unfavourited");
 			}
 		}
+		
+
 		model.addAttribute("contracts", contractService.getAllContracts());
 		model.addAttribute("favstatus", favStatus);
-		model.addAttribute("status", statuslinkService.getAllStatus());
 		return "search_contracts";
 	}
 	
@@ -260,6 +261,9 @@ public class ContractController {
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		slRepo.findById(requestid).ifPresent(o->model.addAttribute("status", o));
+		opRepo.findById(requestid).ifPresent(o->model.addAttribute("operative", o));
+		exRepo.findById(requestid).ifPresent(o->model.addAttribute("expired", o));
+		negRepo.findById(requestid).ifPresent(o->model.addAttribute("in_negotiation", o));
 		return "view_details";
 	}
 	
