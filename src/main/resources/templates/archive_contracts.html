@@ -33,10 +33,10 @@
 	 		<a href="/search_contracts">Search Contacts</a></li>
 	 		<p class="sub">Search for a contract</p>
 	 		</div>
-	 		<div>
+	 		<!--  <div>
 	 		<a>Archived Contracts</a></li>
 	 		<p class="sub">View archived contracts</p>
-	 		</div>
+	 		</div>-->
 	 		<div>
 	 		<a href="/my_contracts">My Contracts</a></li>
 	 		<p class="sub">View your assigned contracts</p>
@@ -49,6 +49,7 @@
 
 	<div class="content">
 	<h2>Archived Contracts</h2>
+	<input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
     <div th:if= "${contracts.isEmpty()}">
      <p>There are currently no archived contracts</p>
     </div>
@@ -89,6 +90,42 @@
     </div>
     
 <script>
+
+//Accordion 
+function searchID() {
+
+	  // Declare variables 
+	  var input = document.getElementById("myInput");
+	  var filter = input.value.toUpperCase();
+	  var table = document.getElementById("viewcontracts");
+	  var trs = table.tBodies[0].getElementsByTagName("tr");
+
+	  // Loop through first tbody's rows
+	  for (var i = 0; i < trs.length; i++) {
+
+	    // define the row's cells
+	    var tds = trs[i].getElementsByTagName("th");
+
+	    // hide the row
+	    trs[i].style.display = "none";
+
+	    // loop through row cells
+	    for (var i2 = 0; i2 < tds.length; i2++) {
+
+	      // if there's a match
+	      if (tds[i2].innerHTML.toUpperCase().indexOf(filter) > -1) {
+
+	        // show the row
+	        trs[i].style.display = "";
+
+	        // skip to the next row
+	     	continue;
+
+	      }
+	    }
+	  }
+
+	}
 
 function setColours(){
   var i, link_tag ;

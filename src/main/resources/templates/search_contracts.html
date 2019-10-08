@@ -7,6 +7,13 @@
 <link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
 <link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
 <link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
+
+<style>
+#ArchBut{
+float:right;
+margin-top:-45px;
+}
+</style>
 </head>
 <body onload="setColours();">
 
@@ -33,10 +40,10 @@
 	 		<a>Search Contacts</a></li>
 	 		<p class="sub">Search for a contract</p>
 	 		</div>
-	 		<div>
-	 		<a href="/archive_contracts">Archived Contracts</a></li>
+	 		<!-- <div>
+	 		 <a href="/archive_contracts">Archived Contracts</a></li>
 	 		<p class="sub">View archived contracts</p>
-	 		</div>
+	 		</div>-->
 	 		<div>
 	 		<a href="/my_contracts">My Contracts</a></li>
 	 		<p class="sub">View your assigned contracts</p>
@@ -48,6 +55,7 @@
 	</div>
 	<div class="content_search">
 	<h2>Search for Contracts</h2>
+	<a href="/archive_contracts"><button id="ArchBut">View Archived Contracts</button></a>
     <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
     <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Title .." title="Type in a Title Name etc....">
     <h2>Contracts</h2>
