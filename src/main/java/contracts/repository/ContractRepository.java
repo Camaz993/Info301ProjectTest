@@ -55,8 +55,8 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     @Query(value = "SELECT * FROM CONTRACT c WHERE c.requestid != ?1", nativeQuery = true)
     public List<Contract> getAllExceptCurrent(Integer requestid);
     
-    @Modifying
-    @Query(value = "INSERT INTO RELATED_AGREEMENTS r FROM CONTRACT c WHERE r.requestid_relatedto = c.requestid", nativeQuery = true)
-    public List<Contract> getRelatedContracts(Integer requestid);
+    @Query(value = "SELECT * FROM CONTRACT WHERE requestid IN (select requestid_relatedto FROM related_agreements WHERE requestid_related= ?1)", nativeQuery=true)
+    public List<Contract> getRelatedContracts(Integer requestid); 
+    
 }
 

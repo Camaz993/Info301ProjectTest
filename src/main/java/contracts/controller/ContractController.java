@@ -221,7 +221,7 @@ public class ContractController {
 	@GetMapping("/view_details/{requestid}")
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
-		//model.addAttribute("contracts", contractService.getRelatedContracts(requestid));
+		model.addAttribute("contracts", contractService.getRelatedContracts(requestid));
 		return "view_details";
 	}
 	
@@ -342,17 +342,23 @@ public class ContractController {
 	public String relatedContracts(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		model.addAttribute("contracts", contractService.getAllExceptCurrent(requestid));
+		model.addAttribute("currentContract", contractService.findContract(requestid));
+		RelatedAgreements relatedAgreement = new RelatedAgreements();
+		Contract related = contractService.findContract(requestid).orElse(new Contract());
+		relatedAgreement.setRequestid_related(related);
+		relatedAgreementsService.addRelatedAgreements(relatedAgreement);
 		return "add_related";
 	}
 	
 	@PostMapping("/related_contracts/{requestid}")
 	public String getRelatedContracts(@PathVariable("requestid") int requestid, Model model) {
 		Contract relatedContract = contractService.findContract(requestid).orElse(new Contract());
-		RelatedAgreements relatedAgreement = new RelatedAgreements();
-		if(relatedContract.getRequestid() == relatedAgreement.getIdrelated_agreements()) {
-			relatedAgreementsService.addRelatedAgreements(relatedAgreement);
-		}
-		return "view_details";
+		Integer relatedid = relatedAgreementsService.findNewestRelated();
+		RelatedAgreements relatedAgreement = relatedAgreementsService.findbyId(relatedid).orElse(new RelatedAgreements());
+		relatedAgreement.setRequestid_relatedto(requestid);
+		relatedAgreementsService.addRelatedAgreements(relatedAgreement);
+		Contract newRelated = relatedAgreement.getRequestid_related();
+		return "redirect:/view_details/" + newRelated.getRequestid();
 	}
 	
 	@PostMapping("/unfavourite_contracts/{requestid}")

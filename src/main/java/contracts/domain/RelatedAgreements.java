@@ -18,10 +18,11 @@ public class RelatedAgreements {
 		public static final String TABLE_NAME = "RELATED_AGREEMENTS";
 		
 		@Id
-		@JoinColumn(name = "requestid")
+		@GeneratedValue(strategy=GenerationType.IDENTITY)
 		private Integer idrelated_agreements;
 		
 		@ManyToOne
+		@JoinColumn(name = "requestid_related")
 		private Contract requestid_related;
 		
 		@Column(name = "requestid_relatedto")

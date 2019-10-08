@@ -139,6 +139,26 @@
 		</form>
 		</tr>
 	</table>
+	<table id="viewcontracts">
+	<thead>
+	<tr>
+	<th>Request Id</th>
+    <!--<th>Agreement Title</th>
+    <th>Agreement Type</th>
+    <th>Description</th>
+    <th>Business Name</th>
+    <th>Date Updated</th>-->
+    </tr>
+    </thead>
+    <tr th:each="contract : ${contracts}">
+    	<td th:text=${contract.requestid}></td>
+        <!--<td th:text=${contract.agreement_title}></td>	 
+        <td th:text="${contract.agreement_type}"></td>
+        <td th:text="${contract.description}"></td>
+        <td th:text="${contract?.businessname}"></td>
+        <td th:text="${contract.date_updated}"></td>-->
+     	</tr>
+     	</table>
 </div>
 
 <div id = "History" class="tabcontent">

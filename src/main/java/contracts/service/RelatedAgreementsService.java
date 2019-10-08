@@ -1,5 +1,7 @@
 package contracts.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,16 @@ public class RelatedAgreementsService implements IRelatedAgreementsService {
 			e2.printStackTrace();
 		}
 		
+	}
+	
+	@Override
+	public Integer findNewestRelated() {
+		return relatedAgreementsRepository.findNewestRelated();
+	}
+	
+	@Override
+	public Optional<RelatedAgreements> findbyId(Integer id_relatedagreement) {
+		return relatedAgreementsRepository.findById(id_relatedagreement);
 	}
 
 }
