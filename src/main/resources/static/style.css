@@ -266,7 +266,13 @@ footer a {
   background-color:  #808080;
 }
 
+/* Style the alert messages */
 .alertMessage {
-	color: green;
+	color: black;
+	text-align:center;
 	font-style:italic;
+	background-color:#4CAF50;
+	width:100%;
+	padding:1px;
+	margin-bottom:10px;
 }

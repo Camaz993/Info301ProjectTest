@@ -71,7 +71,7 @@
     	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error">Description Error</td>
     </tr>
     <tr>
-        <td>Agreement Location: <input type="text"  th:field="*{agreement_location}" /></td>
+        <td>URL or Description of Agreement File Location: <input type="text"  th:field="*{agreement_location}" placeholder="https://www....."/></td>
         <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}" class="error">Location Error</td>
     </tr>
     <tr>
