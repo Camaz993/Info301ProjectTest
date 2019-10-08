@@ -5,7 +5,7 @@
 <title>Create Account</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
-<body>
+<body onload="setColours();">
 	<div class="headerContainer">
 	<div class="header">
 	<h1>Contract Management</h1>
@@ -100,6 +100,26 @@
 	<a href="/help">Help Page</a>
 </footer>
 
+    <table class="display-none">
+    <td th:text="${currentCss.idcurrent_css}"></td>
+    <td th:text="${currentCss.colour}" id="css"></td>
+    </table>
+         
+<script>
 
+function setColours(){
+  var i, link_tag ;
+  var currcss = document.getElementById("css");
+  console.log(currcss);
+  for (i = 0, link_tag = document.getElementsByTagName("link") ; i < link_tag.length ; i++ ) {
+    if ((link_tag[i].rel.indexOf( "stylesheet" ) != -1) && link_tag[i].title) {
+      link_tag[i].disabled = true ;
+      if (currcss.innerHTML.indexOf(link_tag[i].title) != -1) {
+        document.getElementById(link_tag[i].title).disabled = false;
+      }
+    }
+  }
+}
+</script>
 </body>
 </html>
