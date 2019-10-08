@@ -39,6 +39,7 @@ import contracts.repository.ContractRepository;
 import contracts.repository.ExpiredRepository;
 import contracts.repository.InNegotiationRepository;
 import contracts.repository.OperativeRepository;
+import contracts.repository.StatusLinkRepository;
 import contracts.service.AuditService;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
@@ -86,6 +87,9 @@ public class ContractController {
 	
 	@Autowired
 	private ExpiredRepository exRepo;
+	
+	@Autowired
+	private StatusLinkRepository slRepo;
 	
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
@@ -198,6 +202,7 @@ public class ContractController {
 		}
 		model.addAttribute("contracts", contractService.getAllContracts());
 		model.addAttribute("favstatus", favStatus);
+		model.addAttribute("status", statuslinkService.getAllStatus());
 		return "search_contracts";
 	}
 	
@@ -254,6 +259,7 @@ public class ContractController {
 	@GetMapping("/view_details/{requestid}")
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
+		slRepo.findById(requestid).ifPresent(o->model.addAttribute("status", o));
 		return "view_details";
 	}
 	

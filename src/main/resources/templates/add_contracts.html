@@ -2,13 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Add Contract</title>
+<title>Create Contract</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
 <body>
 
 	<div class="headerContainer">
 	<div class="header">
+	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
 	</div>
 	<div class="logout">
@@ -46,7 +47,8 @@
 	
 	<div class="content">
 	<div th:if="${message}" th:text="${message}" class="alertMessage"/>
-	<h2>Add Contracts</h2>
+	<h2>Create Contract</h2>
+	<h4>Page 1 of 2: Add Contract and Party Details</h4>
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
     <table>
     <tr>

@@ -9,6 +9,7 @@
 <body onload="setColours()">
 		<div class="headerContainer">
 	<div class="header" id="header">
+	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
 	</div>
 	<div class="logout">
@@ -45,7 +46,16 @@
 	</div>
 
 	<div class="content">
-	<h2>Update Details</h2>
+	<h2>Site Settings</h2>
+	<div class="subnav">
+	<div class="links">
+	<a href="/admin_settings">Home</a>
+	<a href="/create_account">Create User Account</a>
+	<a href="/manage_users">Manage User Accounts</a>
+	<a>Site Settings</a>
+	<a href="/audit">Track Changes</a>
+	</div>
+	</div>
     <form action="#" th:action="@{/api/css}" th:object="${currentCss}" method="post" id="currentCss">    
 	    Select background colour: <input type="color" th:field="*{background}" th:value="${background}" id="cbackground"/>
 	    <br>

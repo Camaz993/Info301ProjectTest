@@ -10,6 +10,7 @@
 <body>
 
 <div class="header">
+<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 <h1>Contract Management</h1>
 </div>
 
@@ -51,7 +52,10 @@
 <div id="ContractDetails" class="tabcontent">
 	  <h3>Contract Details:</h3>
 	  <table class = "viewdetails">
-	 
+	  <tr>
+	 <th>Status </th>
+	 <td th:text ="${status?.currentstatus}"/>
+	 </tr>
 	 <tr>
 	 <th>Request Id </th>
 	 <td th:text ="${selectedContract.requestid}"/>
