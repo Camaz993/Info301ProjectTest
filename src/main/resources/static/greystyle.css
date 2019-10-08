@@ -56,7 +56,7 @@ body{
 .links {
 	margin-left:auto;
 	margin-right:auto;
-	width:80%;
+	width:95%;
 }
 
 .links a {
@@ -97,7 +97,6 @@ body{
 	margin: auto;
     width: 60%;
     margin-top: 50px;
-    margin-bottom: 50px;
   	background-color: #f2f2f2;
     border-radius: 12px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -142,10 +141,6 @@ body{
 table{
 	width: 100%;
 	}
-
-.error {
-	color: red;
-}
 	
 input, select, textarea, tr, th {
   width: 100%;
@@ -157,10 +152,6 @@ input, select, textarea, tr, th {
   margin-bottom: 16px;
   resize: vertical;
 }
-
-td, input{
-	width: 250px;
-	}
 
 input[type=submit] {
   background-color: #4CAF50;
@@ -178,107 +169,3 @@ input[type=submit]:hover {
 h1{
   color: #1380A1;
   font-size: 200%;
-}
-
-.footerContainer {
-	background: #122848;
-	width:100%;
-}
-
-footer {
-	background: #122848;
-	margin: 0px;
-	padding: 30px;
-	color: #1380A1;
-	padding-left: 50px;
-	}
-	
-footer a:hover {
-  color: #F2F2F2;
-}
-
-footer a {
-	color: #1380A1;
-	display: block;
-	}
-
-/* Style the tab */
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-}
-
-/* Style the buttons that are used to open the tab content */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-	display:none;
-	padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-  margin-top: 10px;
-}
-
-.vdbutton button {
-  background-color: #bfbfbf; 
-  border: 1px solid grey; 
-  color: black;
-  padding: 10px 24px; 
-  cursor: pointer; 
-  float: left; 
-}
-
-.vdbutton button:not(:last-child) {
-  border-right: none; 
-}
-
-.vdbutton:after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-.vdbutton button:hover {
-  background-color:  #808080;
-}
-
-/* Style the alert messages */
-.alertMessage {
-	color: black;
-	text-align:center;
-	font-style:italic;
-	background-color:#4CAF50;
-	width:100%;
-	padding:1px;
-	margin-bottom:10px;
-}
-
-img.logo{
-	border-radius: 50%;
-	float: left;
-    margin-right: 20px;
-}
-
-h1.header{
-	display: inline-block;
-}
