@@ -108,6 +108,8 @@ public class ContractController {
 	
 	@GetMapping("/add_status")
 	public String showStatusForm(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Integer requestid = contractService.findNewestContract();
 		model.addAttribute("requestid", requestid);
 		model.addAttribute("in_negotiation", new InNegotiation());
