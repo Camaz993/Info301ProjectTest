@@ -51,7 +51,7 @@ public class Expired {
 		this.binding_terms_active = binding_terms_active;
 	}
 
-	public Integer getRequestid() {
+	public Integer getRequestId() {
 		return requestid;
 	}
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import contracts.domain.User;
 import contracts.service.IAccountService;
@@ -39,8 +40,9 @@ public class AccountController {
         return "create_account";
     }
 	
+	//adds a new user account and sets their permissions 
 	@PostMapping("/api/staff")
-	public String addUser(@Valid @ModelAttribute(name="user") User user, BindingResult br, Model model) {
+	public String addUser(@Valid @ModelAttribute(name="user") User user, BindingResult br, Model model, RedirectAttributes redirectAttributes) {
 		if(br.hasErrors()) {
 			return "create_account";
 		}
@@ -68,7 +70,7 @@ public class AccountController {
 		}
 		try {	
 			if (accountService.validate(user.getPassword())==false) {
-				throw new IllegalArgumentException("Password must be between 6 and 20 characters, contain 1 digit, 1 lowercase letter, 1 uppercase letter and 1 special symbol @#$%");
+				throw new IllegalArgumentException("Password must be between 6 and 20 characters, contain at least 1 digit, 1 lowercase letter and 1 uppercase letter");
 			}
 		}
 		catch (IllegalArgumentException e){
@@ -79,7 +81,8 @@ public class AccountController {
 		user.setPassrepeat(passwordEncoder.encode(user.getPassrepeat()));
 		user.setLocked(false);
 		accountService.addAccount(user);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message", "User successfully added");
+		return "redirect:/create_account";
 	}
 	
 	@RequestMapping(value = "/login")
@@ -94,6 +97,7 @@ public class AccountController {
 	    return "manage_users";
 	}
 	
+	//locks a user account so the user can no longer log in
 	@GetMapping("/lock_users/{userid}")
 	public String selectedUserLock(@PathVariable("userid") int userid, Model model) {
 		User foundUser = contractService.findById(userid).orElse(new User());
@@ -102,6 +106,7 @@ public class AccountController {
 		return "redirect:/manage_users";
 	}
 	
+	//unlocks a user account so they can log in 
 	@GetMapping("/unlock_users/{userid}")
 	public String selectedUserUnlock(@PathVariable("userid") int userid, Model model) {
 		User foundUser = contractService.findById(userid).orElse(new User());

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import contracts.domain.Contract;
+import contracts.domain.Favourited;
 import contracts.domain.User;
 import contracts.repository.AccountRepository;
 import contracts.repository.ContractRepository;
@@ -126,6 +127,14 @@ public class ContractService implements IContractService{
 	@Override
 	public void unfavouriteContract(Integer requestid, Integer userid) {
 		contractRepository.unfavouriteContract(requestid, userid);
+	}
+	
+	@Override
+	public Boolean checkFavourited(Integer requestid, Integer userid) {
+		if (contractRepository.checkFavourited(requestid, userid) == 0) {
+			return false;
+		}
+		return true;
 	}
 
 }

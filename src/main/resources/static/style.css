@@ -265,3 +265,8 @@ footer a {
 .vdbutton button:hover {
   background-color:  #808080;
 }
+
+.alertMessage {
+	color: green;
+	font-style:italic;
+}

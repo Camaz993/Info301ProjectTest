@@ -45,11 +45,6 @@
 	</div>
 	<div class="content_search">
 	<h2>Search for Contracts</h2>
-    <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
-      <label for="search">Search:</label><input name="search" id="search"> 
-    <p><input type="submit" value="Submit" /> </p>
-    </form>
-    -->
     <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
     <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Title .." title="Type in a Title Name etc....">
     <h2>Contracts</h2>
@@ -68,7 +63,7 @@
     </tr>
     </thead>
     <tbody class="wrongth">
-    <tr th:each="contract : ${contracts}">
+    <tr th:each="contract, iStat: ${contracts}">
         <th>
         	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" target="_blank"></a>
         </th>
@@ -86,12 +81,18 @@
   				<button onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
 			</form>
      	</th>
-     	<th>
+     	<th th:if="${favstatus[iStat.index] == 'unfavourited'}">
        		<form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
   				<button onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Favourite</button>
 			</form>
      	</th>
+     	<th th:if="${favstatus[iStat.index] == 'favourited'}">
+     	<form action="#" th:action="@{/unfavourite_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
+  				<input type="hidden"/>
+  				<button onclick="return confirm('Are you sure want to unfavourite this?');" type="submit" id="fav_button">Unfavourite</button>
+			</form>
+		</th>
     </tr>
     </tbody>
     </table>

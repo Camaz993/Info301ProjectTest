@@ -1,6 +1,7 @@
 package contracts.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import contracts.domain.Audit;
 import contracts.domain.Contract;
@@ -97,9 +99,11 @@ public class ContractController {
 		model.addAttribute("in_negotiation", new InNegotiation());
 		model.addAttribute("operative", new Operative());
 		model.addAttribute("expired", new Expired());
+		repo.findById(requestid).ifPresent(contract->model.addAttribute("selectedContract", contract));
 		return "add_status";
 	}
 	
+	//add a new contract to the database
 	@PostMapping("/api/contracts")
 	public String addContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
 	{
@@ -116,8 +120,9 @@ public class ContractController {
 		return "redirect:/add_status";
 	}
 	
+	//add an in negotiation status to the database, along with null operative and expired status'
 	@PostMapping("/api/in_negotiation")
-	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation)
+	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation, RedirectAttributes redirectAttributes)
 	{
 		Integer requestid = contractService.findNewestContract();
 		in_negotiation.setRequestId(requestid);
@@ -130,11 +135,13 @@ public class ContractController {
 		expiredService.addExpired(ex);
 		StatusLink statuslink = new StatusLink(requestid, "in_negotiation");
 		statuslinkService.addStatusLink(statuslink);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message", "Contract successfully added");
+		return "redirect:/add_contracts";
 	}
 	
+	//add an operative status to the db, along with null in negotiation and expired status'
 	@PostMapping("/api/operative")
-	public String add_operative(@ModelAttribute(name="operative") Operative operative) {
+	public String add_operative(@ModelAttribute(name="operative") Operative operative, RedirectAttributes redirectAttributes) {
 		Integer requestid = contractService.findNewestContract();
 		operative.setRequestId(requestid);		
 		operativeService.addOperative(operative);
@@ -146,11 +153,13 @@ public class ContractController {
 		in_negotiationService.addInNegotiation(neg);
 		StatusLink statuslink = new StatusLink(requestid, "operative");
 		statuslinkService.addStatusLink(statuslink);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message", "Contract successfully added");
+		return "redirect:/add_contracts";
 	}
 	
+	//add an expired status in the db, along with in negotiation and operative status'
 	@PostMapping("/api/expired")
-	public String add_expired(@ModelAttribute(name="expired") Expired expired) {
+	public String add_expired(@ModelAttribute(name="expired") Expired expired, RedirectAttributes redirectAttributes) {
 		Integer requestid = contractService.findNewestContract();
 		expired.setRequestId(requestid);
 		expiredService.addExpired(expired);
@@ -162,12 +171,29 @@ public class ContractController {
 		operativeService.addOperative(op);
 		StatusLink statuslink = new StatusLink(requestid, "expired");
 		statuslinkService.addStatusLink(statuslink);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message", "Contract successfully added");
+		return "redirect:/add_contracts";
 	}
 	
+	//Method to bring up search results and checks if user has item favourited or not.
+	//If they have the item favourited, the button dynamically updates to unfavourited.
 	@GetMapping("/search_contracts")
 	public String getAllContracts(Model model) {
+		List<Contract> allContracts = contractService.getAllContracts();
+		List favStatus = new ArrayList<>();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		for (int i = 0; i < allContracts.size(); i++) {
+			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
+				favStatus.add("favourited");
+			}
+			else {
+				favStatus.add("unfavourited");
+			}
+		}
 		model.addAttribute("contracts", contractService.getAllContracts());
+		model.addAttribute("favstatus", favStatus);
 		return "search_contracts";
 	}
 	
@@ -176,9 +202,10 @@ public class ContractController {
 	public String mostRecent(Model model) {
 		model.addAttribute("contracts", contractService.getAllContracts());
 		model.addAttribute("contracts2", contractService.getNullUserContracts());
-		return "/index";
+		return "index";
 	}
 	
+	//assign a specific user to a contract
 	@PostMapping("/assign/{requestid}")
 	public String assignUser(@PathVariable("requestid") int requestid, Model model) {
 		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
@@ -226,6 +253,7 @@ public class ContractController {
 		return "view_details";
 	}
 	
+	//get the contract object from the db to update
 	@GetMapping("/update_details/{requestid}")
 	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
@@ -235,6 +263,7 @@ public class ContractController {
 		return "update_details";
 	}
 	
+	//update a contract and store the results of the changes in the audit table
 	@PostMapping("/api/updates")
 	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
 	{	
@@ -301,9 +330,11 @@ public class ContractController {
 		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
 		opRepo.findById(requestid).ifPresent(operative->model.addAttribute("operative", operative));
 		exRepo.findById(requestid).ifPresent(expired->model.addAttribute("expired", expired));
+		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		return "update_status";	
 	}
 	
+	//updates an in negotiation status 
 	@PostMapping("/api/update/in_negotiation")
 	public String updateInNegotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation) {
 		in_negotiationService.update(in_negotiation);
@@ -313,6 +344,7 @@ public class ContractController {
 		return "redirect:/";
 	}
 	
+	//updates an operative status
 	@PostMapping("/api/update/operative")
 	public String updateOperative(@ModelAttribute(name="operative") Operative operative) {
 		operativeService.update(operative);
@@ -322,10 +354,11 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
+	//updates an expired status
 	@PostMapping("/api/update/expired")
 	public String updateExpired(@ModelAttribute(name="expired") Expired expired) {
 		expiredService.update(expired);
-		Integer requestid = expired.getRequestid();
+		Integer requestid = expired.getRequestId();
 		StatusLink stat = new StatusLink(requestid, "expired");
 		statuslinkService.update(stat);
 		return "redirect:/search_contracts";
@@ -369,6 +402,7 @@ public class ContractController {
         return "my_contracts";
     }
 	
+	//adds a contract to a users favourited contracts
 	@PostMapping("/favourite_contracts/{requestid}")
 	public String favouritedContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract favouritedContract = contractService.findContract(requestid).orElse(new Contract());
@@ -392,6 +426,7 @@ public class ContractController {
 		return "favourite_contracts";
 	}
 	
+	//removes a contract from a users favourite contracts
 	@PostMapping("/unfavourite_contracts/{requestid}")
 	public String unfavouritContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract unfavouriteContract = contractService.findContract(requestid).orElse(new Contract());
