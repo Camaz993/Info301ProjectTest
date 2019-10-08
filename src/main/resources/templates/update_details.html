@@ -4,6 +4,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Add Contract</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+
+<style>
+input[type='checkbox'] {
+    -webkit-appearance:none;
+    background:white;
+    border-radius:5px;
+    border:2px solid #555;
+}
+input[type='checkbox']:checked {
+    background: #abd;
+}
+
+</style>
 </head>
 
 <body>
@@ -86,8 +99,11 @@
         <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
         <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error</td>
     </tr>
+      <tr>
+   		<td>Please Check To Validate Information: <input type="checkbox" name="option1" value="1" style="/* height: 10px; *//* display: inline; */position: absolute;/* top: 0; *//* left: 0; */bottom: 130px;height: 25px;width: 25px;"></td>
+    </tr>
     <tr>
-        <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+        <td><input type="submit" onclick="return Validate()" value="Submit"/> <input type="reset" value="Reset"/></td>
     </tr>
         </table>
         </form>        
@@ -99,6 +115,26 @@
 	<a href="/help">Help Page</a>
 </footer>
 
+ <script>
+    function Validate(){
+    	   if(!validateForm()){
+    	       alert("You must confirm that the data is valid");
+    	       return false;
+    	   }
+    	return true
+    	}
+    	function validateForm()
+    	{
+    	    var c=document.getElementsByTagName('input');
+    	    for (var i = 0; i<c.length; i++){
+    	        if (c[i].type=='checkbox')
+    	        {
+    	            if (c[i].checked){return true}
+    	        }
+    	    }
+    	    return false;
+    	}
+    </script>
     
 </body>
 </html>
