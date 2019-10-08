@@ -345,7 +345,7 @@ public class ContractController {
 	@PostMapping("/api/update/expired")
 	public String updateExpired(@ModelAttribute(name="expired") Expired expired) {
 		expiredService.update(expired);
-		Integer requestid = expired.getRequestid();
+		Integer requestid = expired.getRequestId();
 		StatusLink stat = new StatusLink(requestid, "expired");
 		statuslinkService.update(stat);
 		return "redirect:/search_contracts";
