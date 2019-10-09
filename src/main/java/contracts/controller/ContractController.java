@@ -40,6 +40,7 @@ import contracts.repository.CurrentRepository;
 import contracts.repository.ExpiredRepository;
 import contracts.repository.InNegotiationRepository;
 import contracts.repository.OperativeRepository;
+import contracts.repository.StatusLinkRepository;
 import contracts.service.AuditService;
 import contracts.service.CurrentService;
 import contracts.service.IAccountService;
@@ -90,10 +91,14 @@ public class ContractController {
 	private ExpiredRepository exRepo;
 	
 	@Autowired
+	private StatusLinkRepository slRepo;
+
+    @Autowired
 	private CurrentService currentService;
 	
 	@Autowired
 	private CurrentRepository currentRepository;
+
 	
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
@@ -210,6 +215,8 @@ public class ContractController {
 				favStatus.add("unfavourited");
 			}
 		}
+		
+
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getAllContracts());
@@ -274,9 +281,10 @@ public class ContractController {
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
-		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
-		opRepo.findById(requestid).ifPresent(operative->model.addAttribute("operative", operative));
-		exRepo.findById(requestid).ifPresent(expired->model.addAttribute("expired", expired));
+		slRepo.findById(requestid).ifPresent(o->model.addAttribute("status", o));
+		opRepo.findById(requestid).ifPresent(o->model.addAttribute("operative", o));
+		exRepo.findById(requestid).ifPresent(o->model.addAttribute("expired", o));
+		negRepo.findById(requestid).ifPresent(o->model.addAttribute("in_negotiation", o));
 		return "view_details";
 	}
 	
@@ -516,4 +524,3 @@ public class ContractController {
 	}
 
 }
-	

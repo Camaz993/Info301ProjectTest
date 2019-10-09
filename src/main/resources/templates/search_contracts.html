@@ -12,6 +12,7 @@
 
 	<div class="headerContainer">
 	<div class="header">
+	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
 	</div>
 	<div class="logout">
@@ -61,6 +62,7 @@
     <th>Description</th>
     <th>Business Name</th>
     <th>Date Updated</th>
+    <th>Status</th>
     <th>Assigned to User</th>
     <th>Reassign</th>
     <th>Update Details</th>
@@ -78,6 +80,7 @@
         <th th:text="${contract.description}"></th>
         <th th:text="${contract?.businessname}"></th>
         <th th:text="${contract.date_updated}"></th>
+        <th th:text="${status?.currentstatus}"></th>
         <th th:text="${contract?.user?.username}"></th>
         <th>
         	<a th:href="@{/reassign/{requestid}(requestid=${contract.requestid})}" target="_blank">Reassign</a>

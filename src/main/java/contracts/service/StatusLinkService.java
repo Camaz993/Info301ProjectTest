@@ -1,6 +1,8 @@
 package contracts.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,11 @@ public class StatusLinkService implements IStatusLinkService{
 	@Override
 	public StatusLink update(StatusLink status) {	
 		return statuslinkRepository.save(status);
+	}
+
+	@Override
+	public List<StatusLink> getAllStatus() {
+		return statuslinkRepository.findAll();
 	}
 	
 	
