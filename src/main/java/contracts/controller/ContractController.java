@@ -128,6 +128,8 @@ public class ContractController {
 	@PostMapping("/api/contracts")
 	public String addContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
 	{
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
 		if(br.hasErrors()) {
@@ -143,8 +145,10 @@ public class ContractController {
 	
 	//add an in negotiation status to the database, along with null operative and expired status'
 	@PostMapping("/api/in_negotiation")
-	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation, RedirectAttributes redirectAttributes)
+	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation, RedirectAttributes redirectAttributes, Model model)
 	{
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Integer requestid = contractService.findNewestContract();
 		in_negotiation.setRequestId(requestid);
 		in_negotiationService.addInNegotiation(in_negotiation);
@@ -162,7 +166,9 @@ public class ContractController {
 	
 	//add an operative status to the db, along with null in negotiation and expired status'
 	@PostMapping("/api/operative")
-	public String add_operative(@ModelAttribute(name="operative") Operative operative, RedirectAttributes redirectAttributes) {
+	public String add_operative(@ModelAttribute(name="operative") Operative operative, RedirectAttributes redirectAttributes, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Integer requestid = contractService.findNewestContract();
 		operative.setRequestId(requestid);		
 		operativeService.addOperative(operative);
@@ -180,7 +186,9 @@ public class ContractController {
 	
 	//add an expired status in the db, along with in negotiation and operative status'
 	@PostMapping("/api/expired")
-	public String add_expired(@ModelAttribute(name="expired") Expired expired, RedirectAttributes redirectAttributes) {
+	public String add_expired(@ModelAttribute(name="expired") Expired expired, RedirectAttributes redirectAttributes, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Integer requestid = contractService.findNewestContract();
 		expired.setRequestId(requestid);
 		expiredService.addExpired(expired);
