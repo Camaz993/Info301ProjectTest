@@ -132,8 +132,6 @@ public class ContractController {
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
-		Integer i = currentService.getCurrent();
-		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		if(br.hasErrors()) {
 		return "add_contracts";
 		}
@@ -538,6 +536,8 @@ public class ContractController {
 	
 	@GetMapping("/reassign/{requestid}")
 	public String reassignContractForm(@PathVariable("requestid") int requestid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
 		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
 		List <User> users = contractService.getAllUsers();
@@ -546,8 +546,10 @@ public class ContractController {
 	}
 	
 	@PostMapping("/api/reassignment")
-	public String reassignContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
+	public String reassignContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
 	{	
+	Integer i = currentService.getCurrent();
+	currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 	String fieldUpdatedList = "";
 	String fieldBeforeList = "";
 	String fieldAfterList = "";

@@ -55,7 +55,6 @@ public class Contract {
 	@Column(name = "Agreement_Location")
 	private String agreement_location;
 	
-	@NotBlank(message="Enter Business Name")
 	@Column(name = "businessname")
 	private String businessname;
 
