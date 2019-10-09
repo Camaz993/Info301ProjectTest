@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -252,10 +253,26 @@ public class ContractController {
 		return "redirect:/my_contracts";
 	}
 	
+	/*
 	@PostMapping("/api/contracts/search")
 	public List<Contract> searchContracts(@RequestParam String search)
 	{
 		return contractService.searchContracts(search);
+	}
+	@GetMapping("/contracts/search")
+	public String searchContracts(@RequestParam String search, Model model)
+	{
+		model.addAttribute("contracts/search", contractService.searchContracts(search));
+		return "search_contracts";
+	}*/
+	
+	@GetMapping("/contracts/search")
+	public List<Contract> searchContracts(@PathVariable("search") String search, Model model, ModelMap map)
+	{
+		model.addAttribute("search", search);
+		//map.put("search", search);
+		return contractService.searchContracts(search);
+		//return "search";
 	}
 	
 	@PostMapping("/api/contracts/search/location")
