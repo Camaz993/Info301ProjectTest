@@ -36,11 +36,13 @@ import contracts.domain.Status;
 import contracts.domain.StatusLink;
 import contracts.domain.User;
 import contracts.repository.ContractRepository;
+import contracts.repository.CurrentRepository;
 import contracts.repository.ExpiredRepository;
 import contracts.repository.InNegotiationRepository;
 import contracts.repository.OperativeRepository;
 import contracts.repository.StatusLinkRepository;
 import contracts.service.AuditService;
+import contracts.service.CurrentService;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
 import contracts.service.IExpiredService;
@@ -89,10 +91,19 @@ public class ContractController {
 	private ExpiredRepository exRepo;
 	
 	@Autowired
+<<<<<<< HEAD
 	private StatusLinkRepository slRepo;
+=======
+	private CurrentService currentService;
+	
+	@Autowired
+	private CurrentRepository currentRepository;
+>>>>>>> branch 'development_release3' of https://isgb.otago.ac.nz/info301/git/grana036/contract-mgmt-system.git
 	
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contract", new Contract());
 		model.addAttribute("status", new Status());
 		List <User> users = contractService.getAllUsers();
@@ -102,6 +113,8 @@ public class ContractController {
 	
 	@GetMapping("/add_status")
 	public String showStatusForm(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Integer requestid = contractService.findNewestContract();
 		model.addAttribute("requestid", requestid);
 		model.addAttribute("in_negotiation", new InNegotiation());
@@ -200,8 +213,13 @@ public class ContractController {
 				favStatus.add("unfavourited");
 			}
 		}
+<<<<<<< HEAD
 		
 
+=======
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+>>>>>>> branch 'development_release3' of https://isgb.otago.ac.nz/info301/git/grana036/contract-mgmt-system.git
 		model.addAttribute("contracts", contractService.getAllContracts());
 		model.addAttribute("favstatus", favStatus);
 		return "search_contracts";
@@ -210,6 +228,8 @@ public class ContractController {
 	
 	@GetMapping("/")
 	public String mostRecent(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getAllContracts());
 		model.addAttribute("contracts2", contractService.getNullUserContracts());
 		return "index";
@@ -259,17 +279,27 @@ public class ContractController {
 	
 	@GetMapping("/view_details/{requestid}")
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
+<<<<<<< HEAD
 		slRepo.findById(requestid).ifPresent(o->model.addAttribute("status", o));
 		opRepo.findById(requestid).ifPresent(o->model.addAttribute("operative", o));
 		exRepo.findById(requestid).ifPresent(o->model.addAttribute("expired", o));
 		negRepo.findById(requestid).ifPresent(o->model.addAttribute("in_negotiation", o));
+=======
+		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
+		opRepo.findById(requestid).ifPresent(operative->model.addAttribute("operative", operative));
+		exRepo.findById(requestid).ifPresent(expired->model.addAttribute("expired", expired));
+>>>>>>> branch 'development_release3' of https://isgb.otago.ac.nz/info301/git/grana036/contract-mgmt-system.git
 		return "view_details";
 	}
 	
 	//get the contract object from the db to update
 	@GetMapping("/update_details/{requestid}")
 	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
 		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
 		List <User> users = contractService.getAllUsers();
@@ -388,6 +418,8 @@ public class ContractController {
 	
 	@GetMapping("/archive_contracts")
 	public String getArchivedContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getArchivedContracts());
 		return "archive_contracts";
 	}
@@ -402,12 +434,16 @@ public class ContractController {
 	
 	@GetMapping("/unarchive_contracts")
 	public String getUnarchivedContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getAllContracts());
 		return "search_contracts";
 	}
 	
 	@GetMapping("/my_contracts")
     public String showMyContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
@@ -432,6 +468,8 @@ public class ContractController {
 
 	@GetMapping("/favourite_contracts")
 	public String getFavouritedContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
@@ -455,11 +493,6 @@ public class ContractController {
 	@GetMapping("/help")
 	public String help() {
 		return "/help";
-	}
-	
-	@GetMapping("/admin_settings")
-	public String adminSettings() {
-		return "/admin_settings";
 	}
 	
 	@GetMapping("/reassign/{requestid}")

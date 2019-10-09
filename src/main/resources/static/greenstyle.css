@@ -2,27 +2,30 @@
 
 body{
 	margin: 0;
-	color: #122848;
+	color: #1E6A26;
 	font-family: verdana;
 	}
 
+.error {
+	color: red;
+}
 
 .headerContainer {
-	background: #122848;
+	background: #1E6A26;
 	width:100%;
 }
 
 .header {
-	background: #122848;
+	background: #1E6A26;
 	margin: 0px;
 	padding: 30px;
-	color: #1380A1;
+	color: #CCE3CE;
 	padding-left: 50px;
 	}
 
 .sidenav {
   overflow: hidden;
-  background-color: #122848;
+  background-color: #1E6A26;
   width: 100%;
   padding-left: 50px;
 }
@@ -33,20 +36,20 @@ body{
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  color: #1380A1;
+  color: #CCE3CE;
 }
 
 .sidenav a {
 	font-weight: bold;
-	color: #1380A1;
+	color: #CCE3CE;
 	}
 
 .sidenav a:hover {
-  color: #F2F2F2;
+  color: #E7E8E7;
 }
 
 .subnav {
-	background-color: #122848;
+	background-color: #1E6A26;
 	width:100%;
 	padding-top:10px;
 	padding-bottom:10px;
@@ -56,18 +59,18 @@ body{
 .links {
 	margin-left:auto;
 	margin-right:auto;
-	width:80%;
+	width:95%;
 }
 
 .links a {
 	font-weight: bold;
-	color: #1380A1;
+	color: #CCE3CE;
 	padding:5px;
 	font-size:10pt;
 	}
 	
 .links a:hover {
-  color: #F2F2F2;
+  color: #9FE9A6;
 }
 
 .sub {
@@ -98,7 +101,7 @@ body{
     width: 60%;
     margin-top: 50px;
     margin-bottom: 50px;
-  	background-color: #f2f2f2;
+  	background-color: #E7E8E7;
     border-radius: 12px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     overflow: hidden;
@@ -111,7 +114,7 @@ body{
 	width: 90%;
 	margin-top: 50px;
 	margin-bottom: 50px;
-  	background-color: #f2f2f2;
+  	background-color: #E7E8E7;
     border-radius: 12px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     overflow: hidden;
@@ -144,10 +147,6 @@ table{
 	width: 100%;
 	table-layout: fixed;
 	}
-
-.error {
-	color: red;
-}
 	
 input, select, textarea, tr, th {
   width: 100%;
@@ -159,10 +158,6 @@ input, select, textarea, tr, th {
   margin-bottom: 16px;
   resize: vertical;
 }
-
-td, input{
-	width: 250px;
-	}
 
 input[type=submit] {
   background-color: #4CAF50;
@@ -178,17 +173,18 @@ input[type=submit]:hover {
 }
 
 h1{
-  color: #1380A1;
+  color: #41D04F;
   font-size: 200%;
 }
 
+
 .footerContainer {
-	background: #122848;
+	background: #1E6A26;
 	width:100%;
 }
 
 footer {
-	background: #122848;
+	background: #1E6A26;
 	margin: 0px;
 	padding: 30px;
 	color: #1380A1;
@@ -200,7 +196,7 @@ footer a:hover {
 }
 
 footer a {
-	color: #1380A1;
+	color: #CCE3CE;
 	display: block;
 	}
 

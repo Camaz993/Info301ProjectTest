@@ -5,10 +5,13 @@
 <title>Home</title>
 <link rel="icon" href="../resources/static/logoimage/logo.png" sizes="32x32">
 <meta charset="ISO-8859-1">
-<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" title="style" id="style"/>
+<link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
+<link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
+<link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
 <title>Home Page</title>
 </head>
-<body>
+<body  onload="setColours(); sortByDate(); showTen();">
 	<div class="headerContainer">
 	<div class="header">
 	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
@@ -23,7 +26,7 @@
     	</div>
 	<div class="sidenav">
 		<div>
- 		<a>Home</a>
+ 		<p>Home</p>
  		</div>
  		<div>
  		<a href="/add_contracts">New Contract</a></li>
@@ -49,7 +52,6 @@
 	
 	<div class="content">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<body onload="sortByDate(); showTen();">
 	<h2>Welcome to the Contract Management System</h2>
 
     <div>
@@ -112,19 +114,22 @@
     </div>
     </div>
  
-     
+    <table class="display-none">
+    <td th:text="${currentCss.idcurrent_css}"></td>
+    <td th:text="${currentCss.colour}" id="css"></td>
+    </table>
+         
 <script>
 
-
-function setStyle(){
+function setColours(){
   var i, link_tag ;
-  for (i = 0, link_tag = document.getElementsByTagName("link") ;
-    i < link_tag.length ; i++ ) {
-    if ((link_tag[i].rel.indexOf( "stylesheet" ) != -1) &&
-      link_tag[i].title) {
+  var currcss = document.getElementById("css");
+  console.log(currcss);
+  for (i = 0, link_tag = document.getElementsByTagName("link") ; i < link_tag.length ; i++ ) {
+    if ((link_tag[i].rel.indexOf( "stylesheet" ) != -1) && link_tag[i].title) {
       link_tag[i].disabled = true ;
-      if (link_tag[i].title == css_title) {
-        link_tag[i].disabled = false ;
+      if (currcss.innerHTML.indexOf(link_tag[i].title) != -1) {
+        document.getElementById(link_tag[i].title).disabled = false;
       }
     }
   }
@@ -163,7 +168,6 @@ function convertDate(d) {
 	<a href="/admin_settings">Admin</a>
 	<a href="/help">Help Page</a>
 </footer>
-
 
 </body>
 </html>

@@ -4,10 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Help Page</title>
 </head>
-
-<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
-</head>
-<body>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" title="style" id="style"/>
+<link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
+<link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
+<link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/></head>
+<body onload="setColours();">
 
 <div class="header">
 <img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
@@ -53,6 +54,26 @@
 <footer>
 	<a href="/help">Help Page</a>
 </footer>
+    <table class="display-none">
+    <td th:text="${currentCss.idcurrent_css}"></td>
+    <td th:text="${currentCss.colour}" id="css"></td>
+    </table>
+         
+<script>
 
+function setColours(){
+  var i, link_tag ;
+  var currcss = document.getElementById("css");
+  console.log(currcss);
+  for (i = 0, link_tag = document.getElementsByTagName("link") ; i < link_tag.length ; i++ ) {
+    if ((link_tag[i].rel.indexOf( "stylesheet" ) != -1) && link_tag[i].title) {
+      link_tag[i].disabled = true ;
+      if (currcss.innerHTML.indexOf(link_tag[i].title) != -1) {
+        document.getElementById(link_tag[i].title).disabled = false;
+      }
+    }
+  }
+}
+</script>
 </body>
 </html>

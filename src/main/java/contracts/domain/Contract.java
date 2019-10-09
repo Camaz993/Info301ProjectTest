@@ -59,7 +59,6 @@ public class Contract {
 	@Column(name = "businessname")
 	private String businessname;
 
-
 	@Column(name = "clientname")
 	private String clientname;
 	

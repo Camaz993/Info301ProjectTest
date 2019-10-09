@@ -27,9 +27,11 @@ import contracts.domain.InNegotiation;
 import contracts.domain.Operative;
 import contracts.domain.Status;
 import contracts.domain.User;
+import contracts.repository.CurrentRepository;
 import contracts.service.IAccountService;
 import contracts.service.IAuditService;
 import contracts.service.IContractService;
+import contracts.service.ICurrentService;
 
 @Controller
 public class AuditController {
@@ -37,8 +39,16 @@ public class AuditController {
 	@Autowired
 	private IAuditService auditService;
 	
+	@Autowired
+	private ICurrentService currentService;
+	
+	@Autowired
+	private CurrentRepository currentRepository;
+	
 	@GetMapping("/audit")
 	public String getAllContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("audits", auditService.getAudit());
 		return "audit";
 	}
