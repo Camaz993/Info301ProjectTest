@@ -91,14 +91,14 @@ public class ContractController {
 	private ExpiredRepository exRepo;
 	
 	@Autowired
-<<<<<<< HEAD
 	private StatusLinkRepository slRepo;
-=======
+
+    @Autowired
 	private CurrentService currentService;
 	
 	@Autowired
 	private CurrentRepository currentRepository;
->>>>>>> branch 'development_release3' of https://isgb.otago.ac.nz/info301/git/grana036/contract-mgmt-system.git
+
 	
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
@@ -213,13 +213,10 @@ public class ContractController {
 				favStatus.add("unfavourited");
 			}
 		}
-<<<<<<< HEAD
 		
 
-=======
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
->>>>>>> branch 'development_release3' of https://isgb.otago.ac.nz/info301/git/grana036/contract-mgmt-system.git
 		model.addAttribute("contracts", contractService.getAllContracts());
 		model.addAttribute("favstatus", favStatus);
 		return "search_contracts";
@@ -282,16 +279,13 @@ public class ContractController {
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
-<<<<<<< HEAD
 		slRepo.findById(requestid).ifPresent(o->model.addAttribute("status", o));
 		opRepo.findById(requestid).ifPresent(o->model.addAttribute("operative", o));
 		exRepo.findById(requestid).ifPresent(o->model.addAttribute("expired", o));
 		negRepo.findById(requestid).ifPresent(o->model.addAttribute("in_negotiation", o));
-=======
 		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
 		opRepo.findById(requestid).ifPresent(operative->model.addAttribute("operative", operative));
 		exRepo.findById(requestid).ifPresent(expired->model.addAttribute("expired", expired));
->>>>>>> branch 'development_release3' of https://isgb.otago.ac.nz/info301/git/grana036/contract-mgmt-system.git
 		return "view_details";
 	}
 	
@@ -531,4 +525,3 @@ public class ContractController {
 	}
 
 }
-	
