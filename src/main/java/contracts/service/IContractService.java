@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import contracts.domain.Contract;
 import contracts.domain.Favourited;
+import contracts.domain.StatusLink;
 import contracts.domain.User;
 
 public interface IContractService {
