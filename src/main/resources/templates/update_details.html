@@ -10,17 +10,16 @@
 </head>
 
 <body onload="setColours();">
-		<div class="headerContainer">
 	<div class="header">
 	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
 	</div>
+	
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
         <form th:action="@{/logout}" method="post"> 
             <input type="submit" value="Logout"/> 
         </form>
-    	</div>
     	</div>
 	<div class="sidenav">
 			<div>
@@ -46,9 +45,11 @@
 	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
 	 		<p class="sub">View your favourited contracts</p>
 	</div>
+	</div>
 
-	<div class="content">
+	<div class="content">	
 	<h2>Update Details</h2>
+	<h4>Page 1 of 2: Update Contract and Party Details</h4>
 		<div class="tab">
 		  <button class="tablinks" onclick="openTab(event, 'ContractDetails')">Contract Details</button>
 		  <button class="tablinks" onclick="openTab(event, 'PartyDetails')">Party Details</button>
@@ -142,10 +143,6 @@
         </table>
         </form>        
     </div>
-            
-<footer>
-	<a href="/help">Help Page</a>
-</footer>
 
        <table class="display-none">
     <td th:text="${currentCss.idcurrent_css}"></td>
@@ -181,6 +178,10 @@ function setColours(){
     }
   }
 }
-</script> 
+</script>
+</div>
+<footer>
+	<a href="/help">Help Page</a>
+</footer> 
 </body>
 </html>

@@ -300,8 +300,10 @@ public class ContractController {
 	
 	//update a contract and store the results of the changes in the audit table
 	@PostMapping("/api/updates")
-	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
+	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
 	{	
+	Integer i = currentService.getCurrent();
+	currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 	String fieldUpdatedList = "";
 	String fieldBeforeList = "";
 	String fieldAfterList = "";
@@ -331,21 +333,6 @@ public class ContractController {
 		fieldBeforeList += ((String.valueOf((foundContract.getAgreement_location()))))+ (", ");
 		fieldAfterList += ((String.valueOf((contract.getAgreement_location()))))+ (", ");
 		fieldUpdatedList += ("agreement_location") + (", ");
-	}
-	if(!foundContract.getLanguage().equals(contract.getLanguage())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getLanguage()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getLanguage()))))+ (", ");
-		fieldUpdatedList += ("language") + (", ");
-	}
-	if (!foundContract.getRegion().equals(contract.getRegion())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getRegion()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getRegion()))))+ (", ");
-		fieldUpdatedList += ("region") + (", ");
-	}
-	if (!foundContract.getRelated_agreements().equals(contract.getRelated_agreements())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getRelated_agreements()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getRelated_agreements()))))+ (", ");
-		fieldUpdatedList += ("related_agreements") + (", ");
 	}
 	if (!foundContract.getBusinessname().equals(contract.getBusinessname())) {
 		fieldBeforeList += ((String.valueOf((foundContract.getBusinessname()))))+ (", ");
@@ -377,6 +364,21 @@ public class ContractController {
 		fieldAfterList += ((String.valueOf((contract.getFax()))))+ (", ");
 		fieldUpdatedList += ("fax") + (", ");
 	}
+	if(!foundContract.getLanguage().equals(contract.getLanguage())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getLanguage()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getLanguage()))))+ (", ");
+		fieldUpdatedList += ("language") + (", ");
+	}
+	if (!foundContract.getRegion().equals(contract.getRegion())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getRegion()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getRegion()))))+ (", ");
+		fieldUpdatedList += ("region") + (", ");
+	}
+	if (!foundContract.getRelated_agreements().equals(contract.getRelated_agreements())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getRelated_agreements()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getRelated_agreements()))))+ (", ");
+		fieldUpdatedList += ("related_agreements") + (", ");
+	}
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
 		contract.setDate_updated(timeNow);
 		blank.setField_after(fieldAfterList);
@@ -392,6 +394,8 @@ public class ContractController {
 	
 	@GetMapping("/update_status/{requestid}")
 	public String updateStatus(@PathVariable("requestid") int requestid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
 		opRepo.findById(requestid).ifPresent(operative->model.addAttribute("operative", operative));
 		exRepo.findById(requestid).ifPresent(expired->model.addAttribute("expired", expired));
@@ -401,7 +405,9 @@ public class ContractController {
 	
 	//updates an in negotiation status 
 	@PostMapping("/api/update/in_negotiation")
-	public String updateInNegotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation) {
+	public String updateInNegotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		in_negotiationService.update(in_negotiation);
 		Integer requestid = in_negotiation.getRequestId();
 		StatusLink stat = new StatusLink(requestid, "in_negotiation");
@@ -411,7 +417,9 @@ public class ContractController {
 	
 	//updates an operative status
 	@PostMapping("/api/update/operative")
-	public String updateOperative(@ModelAttribute(name="operative") Operative operative) {
+	public String updateOperative(@ModelAttribute(name="operative") Operative operative, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		operativeService.update(operative);
 		Integer requestid = operative.getRequestId();
 		StatusLink stat = new StatusLink(requestid, "operative");
@@ -421,7 +429,9 @@ public class ContractController {
 	
 	//updates an expired status
 	@PostMapping("/api/update/expired")
-	public String updateExpired(@ModelAttribute(name="expired") Expired expired) {
+	public String updateExpired(@ModelAttribute(name="expired") Expired expired, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		expiredService.update(expired);
 		Integer requestid = expired.getRequestId();
 		StatusLink stat = new StatusLink(requestid, "expired");

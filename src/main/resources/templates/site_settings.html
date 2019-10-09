@@ -56,16 +56,32 @@
 	<a href="/audit">Track Changes</a>
 	</div>
 	</div>
-    <form action="#" th:action="@{/api/css}" th:object="${currentCss}" method="post" id="currentCss">    
-	    Select background colour: <input type="color" th:field="*{background}" th:value="${background}" id="cbackground"/>
-	    <br>
-	    Select logo color: <input type="color" th:field="*{logo}" th:value="${logo}" id="clogo"/>
-	    <br>
-	    Select button color: <input type="color" th:field="*{button}" th:value="${button}" id="cbutton"/>
-	    <br>
-	    Select link color: <input type="color" th:field="*{links}" value="${links}" id="clinks"/>
-	    <br>
-	    <input type="submit" value="Submit"/>
+      
+	   <h3>Colour Scheme</h3>
+	<p>Select which colour scheme you wish to view the contract management system in</p>
+	<table>
+	<tr>
+ 	<th>	<form action="#" th:action="@{/api_adminblue}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Blue</button>
+		</form></th>
+	<th>	 
+ 		<form action="#" th:action="@{/api_admingreen}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"class="display-none"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Green</button>
+		</form></th>
+	<th>	 
+ 		<form action="#" th:action="@{/api_admingrey}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Grey</button>
+		</form></th>
+	<th>	 
+ 		<form action="#" th:action="@{/api_adminred}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Red</button>
+		</form></th>
+	</tr>
+	</table>
     </form>        
         
         
