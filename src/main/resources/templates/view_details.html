@@ -17,6 +17,13 @@
 <h1>Contract Management</h1>
 </div>
 
+	<div class="logout">
+    	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
+        <form th:action="@{/logout}" method="post"> 
+            <input type="submit" value="Logout"/> 
+        </form>
+    	</div>
+
 	<div class="sidenav">
 			<div>
 	 		<a href="/">Home</a>
@@ -91,10 +98,6 @@
 	 <td th:text ="${selectedContract?.region}"/>
 	  </tr>
 	  </table>
-        
-        
-        
-</div>
 </div>
 
 <div id="In Negotiation" class="tabcontent">
@@ -240,6 +243,7 @@ function setColours(){
     }
   }
 }
+
 function openTab(evt, tabName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");

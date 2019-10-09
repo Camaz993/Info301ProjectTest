@@ -64,7 +64,6 @@
     <th>Date Updated</th>
     <th>Status</th>
     <th>Assigned to User</th>
-    <th>Reassign</th>
     <th>Update Details</th>
     <th>Archive Contract</th>
     <th>Favourite Contract</th>
@@ -81,9 +80,8 @@
         <th th:text="${contract?.businessname}"></th>
         <th th:text="${contract.date_updated}"></th>
         <th th:text="${status?.currentstatus}"></th>
-        <th th:text="${contract?.user?.username}"></th>
-        <th>
-        	<a th:href="@{/reassign/{requestid}(requestid=${contract.requestid})}" target="_blank">Reassign</a>
+        <th> 
+      	  <a th:href="@{/reassign/{requestid}(requestid=${contract.requestid})}" th:text="${contract?.user?.username}" target="_blank"></a>
         </th>
         <th>
         	<a th:href="@{/update_details/{requestid}(requestid=${contract.requestid})}" target="_blank">Update</a>

@@ -93,7 +93,7 @@
 	<form action="#" th:action="@{/api/in_negotiation}" th:object="${in_negotiation}" id="in_negotiation" method="post" >
 		<td>Comments: <input type="text" th:field="*{comments}"/></td>	
 		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
-		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+		<td><input type="submit" value="Submit"/><a href="/"><input type="button" value="Cancel"/></a> 
 	</form>
 </div>
 
@@ -137,7 +137,7 @@
 		<td>Date Expires: <input type="date" th:field="*{date_expire}"/></td>
 		<td>Verification: <input type="text" th:field="*{verification}"/></td>
 		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
-		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>		
+		<td><input type="submit" value="Submit"/><a href="/"><input type="button" value="Cancel"/></a> 		
 	</form>
 </div>
 
@@ -183,7 +183,7 @@
 		<td>Termination Notice Date: <input type="text" th:field="*{termination_notice_date}"/></td>
 		<td>Binding Terms Active: <input type="text" th:field="*{binding_terms_active}"/></td>
 		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>		
-		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+		<td><input type="submit" value="Submit"/><a href="/"><input type="button" value="Cancel"/></a> 
 	</form>
 </div>             
         

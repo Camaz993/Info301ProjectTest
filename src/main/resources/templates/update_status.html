@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Add Contract Status</title>
+<title>Update Status</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" title="style" id="style"/>
 <link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
 <link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
@@ -49,7 +49,18 @@
 	</div>            
         
 </div>
+    <div class="content">
+    <h2>Update Status</h2>
+    <h4>Page 2 of 2: Update Status Details</h4>
+    </div>
     
+    <div class="vdbutton">
+   <table>
+    <tr>
+        <td><input type="submit" value="Submit"/>  <input type="button" value="Cancel" onclick="self.close()">
+    </tr>
+        </table>       
+    </div>
 		 
     <table class="display-none">
     <td th:text="${currentCss.idcurrent_css}"></td>

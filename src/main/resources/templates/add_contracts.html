@@ -54,7 +54,14 @@
 	<div th:if="${message}" th:text="${message}" class="alertMessage"/>
 	<h2>Create Contract</h2>
 	<h4>Page 1 of 2: Add Contract and Party Details</h4>
+		<div class="tab">
+		  <button class="tablinks" onclick="openTab(event, 'ContractDetails')">Contract Details</button>
+		  <button class="tablinks" onclick="openTab(event, 'PartyDetails')">Party Details</button>
+		  <button class="tablinks" onclick="openTab(event, 'Attachments')">Attachments</button>
+		</div>
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
+     <div id="ContractDetails" class="tabcontent">
+    <h3>Contract Details:</h3>
     <table>
     <tr>
         <td>User: <select id="userid" name="userid">
@@ -77,10 +84,19 @@
     	<td>Description: <input type="text"  th:field="*{description}" /></td>
     	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error">Description Error</td>
     </tr>
-    <tr>
-        <td>URL or Description of Agreement File Location: <input type="text"  th:field="*{agreement_location}" placeholder="https://www....."/></td>
-        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}" class="error">Location Error</td>
+     <tr>
+        <td>Language: <input type="text"  th:field="*{language}" /></td>
+        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}" class="error">Language Error</td>
     </tr>
+    <tr>
+        <td>Region: <input type="text"  th:field="*{region}" /></td>
+        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="error">Region Error</td>
+    </tr>
+    </table>
+    </div>
+     <div id="PartyDetails" class="tabcontent">
+     <table>
+    <h3>Party Details:</h3>
     <tr>
         <td>Business Name: <input type="text"  th:field="*{businessname}" /></td>
         <td th:if="${#fields.hasErrors('businessname')}" th:errors="*{businessname}" class="error">Business name Error</td>
@@ -105,22 +121,29 @@
         <td>Fax: <input type="text"  th:field="*{fax}" /></td>
         <td th:if="${#fields.hasErrors('fax')}" th:errors="*{fax}" class="error">Fax Error</td>
     </tr>
+    </table>
+    </div>
+     <div id="Attachments" class="tabcontent">
+    <h3>Attachments</h3>
+    <table>
     <tr>
-        <td>Language: <input type="text"  th:field="*{language}" /></td>
-        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}" class="error">Language Error</td>
-    </tr>
-    <tr>
-        <td>Region: <input type="text"  th:field="*{region}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="error">Region Error</td>
-    </tr>
+        <td>URL or Description of Agreement File Location: <input type="text"  th:field="*{agreement_location}" placeholder="https://www....."/></td>
+        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}" class="error">Location Error</td>
+    </tr>   
     <tr>
         <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
         <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}" class="error">Related Agreements Error</td>
     </tr>
+    </table>
+     </div>
+     <div>
+     <table>
     <tr>
-        <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+        <td><input type="submit" value="Submit"/> <a href="/"><input type="button" value="Cancel"/></a>  
     </tr>
     </table>
+    </div>
+   
     </form>
     
     <table class="display-none">
@@ -160,6 +183,19 @@ function setColours(){
 		    	document.getElementById("addContract").submit();
    				document.getElementById(dropdown.value).submit();
 		    }
+		    function openTab(evt, tabName) {
+		  	  var i, tabcontent, tablinks;
+		  	  tabcontent = document.getElementsByClassName("tabcontent");
+		  	  for (i = 0; i < tabcontent.length; i++) {
+		  	    tabcontent[i].style.display = "none";
+		  	  }
+		  	  tablinks = document.getElementsByClassName("tablinks");
+		  	  for (i = 0; i < tablinks.length; i++) {
+		  	    tablinks[i].className = tablinks[i].className.replace(" active", "");
+		  	  }
+		  	  document.getElementById(tabName).style.display = "block";
+		  	  evt.currentTarget.className += " active";
+		  	}
 		</script>
 </div>
 

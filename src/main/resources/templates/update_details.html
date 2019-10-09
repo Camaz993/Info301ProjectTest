@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Add Contract</title>
+<title>Update Details</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" title="style" id="style"/>
 <link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
 <link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
@@ -10,17 +10,16 @@
 </head>
 
 <body onload="setColours();">
-		<div class="headerContainer">
 	<div class="header">
 	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
 	</div>
+	
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
         <form th:action="@{/logout}" method="post"> 
             <input type="submit" value="Logout"/> 
         </form>
-    	</div>
     	</div>
 	<div class="sidenav">
 			<div>
@@ -45,13 +44,22 @@
  			<div>
 	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
 	 		<p class="sub">View your favourited contracts</p>
-	 		</div>
+	</div>
 	</div>
 
-	<div class="content">
+	<div class="content">	
 	<h2>Update Details</h2>
+	<h4>Page 1 of 2: Update Contract and Party Details</h4>
+		<div class="tab">
+		  <button class="tablinks" onclick="openTab(event, 'ContractDetails')">Contract Details</button>
+		  <button class="tablinks" onclick="openTab(event, 'PartyDetails')">Party Details</button>
+		  <button class="tablinks" onclick="openTab(event, 'Attachments')">Attachments</button>
+		</div>
     <form action="#" th:action="@{/api/updates}" th:object="${contract}" method="post" id="updateContract">
     <input type="hidden" th:field="*{requestid}"/>
+    
+    <div id="ContractDetails" class="tabcontent">
+    <h3>Contract Details:</h3>
     <table>
     <tr>
         <td>User: <select id="userid" name="userid">
@@ -75,10 +83,6 @@
     	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
     </tr>
     <tr>
-        <td>URL or Description of Agreement File Location: <input type="text"  th:field="*{agreement_location}" placeholder="https://www....."/></td>
-        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
-    </tr>
-    <tr>
         <td>Language: <input type="text"  th:field="*{language}" /></td>
         <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Language Error</td>
     </tr>
@@ -86,23 +90,59 @@
         <td>Region: <input type="text"  th:field="*{region}" /></td>
         <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
     </tr>
+    </table>
+    </div>
+    
+    <div id="PartyDetails" class="tabcontent">
+    <table>
+     <tr>
+        <td>Business Name: <input type="text"  th:field="*{businessname}" /></td>
+        <td th:if="${#fields.hasErrors('businessname')}" th:errors="*{businessname}">Business Name Error</td>
+    </tr>
+    <tr>
+        <td>Client Name: <input type="text"  th:field="*{clientname}" /></td>
+        <td th:if="${#fields.hasErrors('clientname')}" th:errors="*{clientname}">Client Name Error</td>
+    </tr>
+    <tr>
+        <td>Address: <input type="text"  th:field="*{address}" /></td>
+        <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</td>
+    </tr>
+    <tr>
+        <td>Phone: <input type="text"  th:field="*{phone}" /></td>
+        <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone Error</td>
+    </tr>
+    <tr>
+        <td>Email: <input type="text"  th:field="*{email}" /></td>
+        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
+    </tr>
+    <tr>
+        <td>Fax: <input type="text"  th:field="*{fax}" /></td>
+        <td th:if="${#fields.hasErrors('fax')}" th:errors="*{fax}">Fax Error</td>
+    </tr>
+    </table>
+    </div>
+    
+    <div id="Attachments" class="tabcontent">
+    <table>
+       <tr>
+        <td>URL or Description of Agreement File Location: <input type="text"  th:field="*{agreement_location}" placeholder="https://www....."/></td>
+        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
+    </tr>
     <tr>
         <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
         <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error</td>
     </tr>
+    </table>
+    </div>
    
+   <div class="vdbutton">
+   <table>
     <tr>
-        <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+        <td><input type="submit" value="Submit"/>  <input type="button" value="Cancel" onclick="self.close()">
     </tr>
         </table>
         </form>        
-        
-        
     </div>
-            
-<footer>
-	<a href="/help">Help Page</a>
-</footer>
 
        <table class="display-none">
     <td th:text="${currentCss.idcurrent_css}"></td>
@@ -110,7 +150,19 @@
     </table>
          
 <script>
-
+function openTab(evt, tabName) {
+	  var i, tabcontent, tablinks;
+	  tabcontent = document.getElementsByClassName("tabcontent");
+	  for (i = 0; i < tabcontent.length; i++) {
+	    tabcontent[i].style.display = "none";
+	  }
+	  tablinks = document.getElementsByClassName("tablinks");
+	  for (i = 0; i < tablinks.length; i++) {
+	    tablinks[i].className = tablinks[i].className.replace(" active", "");
+	  }
+	  document.getElementById(tabName).style.display = "block";
+	  evt.currentTarget.className += " active";
+	}
 function setColours(){
   var i, link_tag ;
   var currcss = document.getElementById("css");
@@ -124,6 +176,10 @@ function setColours(){
     }
   }
 }
-</script> 
+</script>
+</div>
+<footer>
+	<a href="/help">Help Page</a>
+</footer> 
 </body>
 </html>
