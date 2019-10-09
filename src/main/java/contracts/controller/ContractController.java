@@ -347,6 +347,36 @@ public class ContractController {
 		fieldAfterList += ((String.valueOf((contract.getRelated_agreements()))))+ (", ");
 		fieldUpdatedList += ("related_agreements") + (", ");
 	}
+	if (!foundContract.getBusinessname().equals(contract.getBusinessname())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getBusinessname()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getBusinessname()))))+ (", ");
+		fieldUpdatedList += ("businessname") + (", ");
+	}
+	if (!foundContract.getClientname().equals(contract.getClientname())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getClientname()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getClientname()))))+ (", ");
+		fieldUpdatedList += ("clientname") + (", ");
+	}
+	if (!foundContract.getAddress().equals(contract.getAddress())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getAddress()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getAddress()))))+ (", ");
+		fieldUpdatedList += ("address") + (", ");
+	}
+	if (!foundContract.getPhone().equals(contract.getPhone())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getPhone()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getPhone()))))+ (", ");
+		fieldUpdatedList += ("phone") + (", ");
+	}
+	if (!foundContract.getEmail().equals(contract.getEmail())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getEmail()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getEmail()))))+ (", ");
+		fieldUpdatedList += ("email") + (", ");
+	}
+	if (!foundContract.getFax().equals(contract.getFax())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getFax()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getFax()))))+ (", ");
+		fieldUpdatedList += ("fax") + (", ");
+	}
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
 		contract.setDate_updated(timeNow);
 		blank.setField_after(fieldAfterList);
