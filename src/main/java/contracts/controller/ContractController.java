@@ -342,7 +342,8 @@ public class ContractController {
 	public String relatedContracts(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		model.addAttribute("contracts", contractService.getAllExceptCurrent(requestid));
-		model.addAttribute("currentContract", contractService.findContract(requestid));
+		Contract newContract = contractService.findContract(requestid).orElse(new Contract()); 
+		model.addAttribute("currentContract", newContract.getAgreement_title());
 		RelatedAgreements relatedAgreement = new RelatedAgreements();
 		Contract related = contractService.findContract(requestid).orElse(new Contract());
 		relatedAgreement.setRequestid_related(related);

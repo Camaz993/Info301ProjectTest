@@ -253,3 +253,8 @@ footer a {
 .vdbutton button:hover {
   background-color:  #808080;
 }
+
+#relatedRequestid {
+	display: block;
+	margin-top: 5px;
+}

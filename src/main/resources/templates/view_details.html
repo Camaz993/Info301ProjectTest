@@ -142,8 +142,8 @@
 	<table id="viewcontracts">
 	<thead>
 	<tr>
-	<th>Request Id</th>
-    <!--<th>Agreement Title</th>
+	<!--<th>Request Id</th>
+    <th>Agreement Title</th>
     <th>Agreement Type</th>
     <th>Description</th>
     <th>Business Name</th>
@@ -151,7 +151,7 @@
     </tr>
     </thead>
     <tr th:each="contract : ${contracts}">
-    	<td th:text=${contract.requestid}></td>
+    	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" id="relatedRequestid"></a>
         <!--<td th:text=${contract.agreement_title}></td>	 
         <td th:text="${contract.agreement_type}"></td>
         <td th:text="${contract.description}"></td>
