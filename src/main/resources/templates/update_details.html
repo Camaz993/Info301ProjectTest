@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Add Contract</title>
+<title>Update Details</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" title="style" id="style"/>
 <link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
 <link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
@@ -97,27 +97,27 @@
     <table>
      <tr>
         <td>Business Name: <input type="text"  th:field="*{businessname}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{businessname}">Business Name Error</td>
+        <td th:if="${#fields.hasErrors('businessname')}" th:errors="*{businessname}">Business Name Error</td>
     </tr>
     <tr>
         <td>Client Name: <input type="text"  th:field="*{clientname}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{clientname}">Business Name Error</td>
+        <td th:if="${#fields.hasErrors('clientname')}" th:errors="*{clientname}">Client Name Error</td>
     </tr>
     <tr>
         <td>Address: <input type="text"  th:field="*{address}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{address}">Business Name Error</td>
+        <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</td>
     </tr>
     <tr>
         <td>Phone: <input type="text"  th:field="*{phone}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{phone}">Business Name Error</td>
+        <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone Error</td>
     </tr>
     <tr>
         <td>Email: <input type="text"  th:field="*{email}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{email}">Business Name Error</td>
+        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
     </tr>
     <tr>
         <td>Fax: <input type="text"  th:field="*{fax}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{fax}">Business Name Error</td>
+        <td th:if="${#fields.hasErrors('fax')}" th:errors="*{fax}">Fax Error</td>
     </tr>
     </table>
     </div>
@@ -138,7 +138,7 @@
    <div class="vdbutton">
    <table>
     <tr>
-        <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+        <td><input type="submit" value="Submit"/>  <input type="button" value="Cancel" onclick="self.close()">
     </tr>
         </table>
         </form>        
