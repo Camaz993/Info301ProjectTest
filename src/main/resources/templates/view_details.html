@@ -142,23 +142,17 @@
 	<table id="viewcontracts">
 	<thead>
 	<tr>
-	<!--<th>Request Id</th>
-    <th>Agreement Title</th>
-    <th>Agreement Type</th>
-    <th>Description</th>
-    <th>Business Name</th>
-    <th>Date Updated</th>-->
+	<th id="relatedAgreementTableId">Request Id</th>
+    <th id="relatedAgreementTable">Agreement Title</th>
+    <th id="relatedAgreementTable">Business Name</th>
     </tr>
     </thead>
     <tr th:each="contract : ${contracts}">
-    	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" id="relatedRequestid"></a>
-        <!--<td th:text=${contract.agreement_title}></td>	 
-        <td th:text="${contract.agreement_type}"></td>
-        <td th:text="${contract.description}"></td>
-        <td th:text="${contract?.businessname}"></td>
-        <td th:text="${contract.date_updated}"></td>-->
-     	</tr>
-     	</table>
+    	<td><a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" id="relatedRequestid"></a></td>
+        <td th:text="${contract.agreement_title}"></td>	 
+        <td th:text="${contract?.businessname}" id="relatedAgreementTable"></td>
+     </tr>
+     </table>
 </div>
 
 <div id = "History" class="tabcontent">
