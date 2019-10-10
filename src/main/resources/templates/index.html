@@ -12,17 +12,14 @@
 <title>Home Page</title>
 </head>
 <body  onload="setColours(); sortByDate(); showTen();">
-	<div class="headerContainer">
 	<div class="header">
 	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
-	</div>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
         <form th:action="@{/logout}" method="post"> 
             <input type="submit" value="Logout"/> 
         </form>
-    	</div>
     	</div>
 	<div class="sidenav">
 		<div>
@@ -45,13 +42,18 @@
  		<p class="sub">View your assigned contracts</p>
  		</div>
  		<div>
-	 	<a href="/my_contracts">My Contracts</a></li>
-	 	<p class="sub">View your assigned contracts</p>
- 		</div>
- 		<div>
  		<a href="/favourite_contracts">Favourited Contracts</a></li>
  		<p class="sub">View your favourited contracts</p>
  		</div>
+ 		<div>
+ 		<a href="/help">Help</a></li>
+ 		<p class="sub">Find help for system</p>
+ 		</div>
+ 		<div>
+ 		<a href="/favourite_contracts">Admin</a></li>
+ 		<p class="sub">View the admin settings</p>
+ 		</div>
+	</div>
 	</div>
 	
 	<div class="content">
@@ -109,7 +111,7 @@
         <th th:text="${contract.businessname}"></th>
         <th>
         <form action="#" th:action="@{/assign/{requestid}(requestid=${contract.requestid})}" method="post">			
-  				<button onclick="return confirm('Are you sure want to assign this to you?');" type="submit" id="submitButton2">Assign to Me</button>
+  				<button onclick="return confirm('Are you sure want to assign this to you?');" type="submit" id="submitButton2" class="btn">Assign to Me</button>
 			</form>
 		</th>
     </tr>
@@ -169,8 +171,6 @@ function convertDate(d) {
 </script>
 
 <footer>
-	<a href="/admin_settings">Admin</a>
-	<a href="/help">Help Page</a>
 </footer>
 
 </body>

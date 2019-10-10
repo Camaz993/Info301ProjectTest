@@ -9,7 +9,7 @@ body{
 
 .headerContainer {
 	background: #122848;
-	width:100%;
+	width:auto;
 }
 
 .header {
@@ -18,20 +18,22 @@ body{
 	padding: 30px;
 	color: #1380A1;
 	padding-left: 50px;
+	width:auto;
 	}
 
 .sidenav {
   overflow: hidden;
   background-color: #122848;
-  width: 100%;
-  padding-left: 50px;
+  width: auto;
+  padding-left: 10px;
 }
 
 .sidenav div {
-  float: left;
   display: block;
+  float:left;
   text-align: center;
-  padding: 14px 16px;
+  margin-top:10px;
+  padding-left:10px;
   text-decoration: none;
   color: #1380A1;
 }
@@ -81,7 +83,7 @@ body{
 .logout {
 	padding:0px;
 	position:absolute;
-    top:20px;
+    top:30px;
     right:10px;
   	display: inline-block;
   	color:#D0D3D4;
@@ -103,8 +105,16 @@ body{
     overflow: hidden;
     padding: 20px;
     position: relative;
-    margin-bottom:10px;
-    
+    margin-bottom:10px;  
+}
+
+.content a {
+	color:teal;
+	text-decoration:none;
+}
+
+.content a:hover {
+	color:navy;
 }
 
 .content_search {
@@ -144,6 +154,7 @@ body{
 table{
 	width: 100%;
 	table-layout: fixed;
+	font-size:14px;
 	}
 
 .error {
@@ -172,9 +183,23 @@ input[type=submit] {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  width:120px;
 }
 
 input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.btn {
+background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  }
+  
+.btn:hover {
   background-color: #45a049;
 }
 
@@ -183,9 +208,14 @@ h1{
   font-size: 200%;
 }
 
+h3 {
+font-weight:normal;
+color:grey;
+}
+
 .footerContainer {
 	background: #122848;
-	width:100%;
+	width:auto;
 }
 
 footer {
@@ -298,6 +328,10 @@ h1.header{
 
 #relatedAgreementTableId {
 	width: 20%;
+}
+
+thead {
+ background-color: white;
 }
 
 tr:nth-child(even) {
