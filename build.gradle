@@ -81,6 +81,9 @@ dependencies {
     testCompile 'org.mockito:mockito-core:2.7.22'
 	
 	testCompile 'junit:junit:4.12'
+	
+	    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.2.0.RELEASE'
     
     
     

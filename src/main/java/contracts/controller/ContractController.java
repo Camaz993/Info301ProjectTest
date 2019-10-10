@@ -10,6 +10,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -99,7 +100,7 @@ public class ContractController {
 	@Autowired
 	private CurrentRepository currentRepository;
 
-	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
 		Integer i = currentService.getCurrent();
@@ -111,6 +112,7 @@ public class ContractController {
         return "add_contracts";
     }
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/add_status")
 	public String showStatusForm(Model model) {
 		Integer i = currentService.getCurrent();
@@ -125,6 +127,7 @@ public class ContractController {
 	}
 	
 	//add a new contract to the database
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/contracts")
 	public String addContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
 	{
@@ -144,6 +147,7 @@ public class ContractController {
 	}
 	
 	//add an in negotiation status to the database, along with null operative and expired status'
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/in_negotiation")
 	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation, RedirectAttributes redirectAttributes, Model model)
 	{
@@ -165,6 +169,7 @@ public class ContractController {
 	}
 	
 	//add an operative status to the db, along with null in negotiation and expired status'
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/operative")
 	public String add_operative(@ModelAttribute(name="operative") Operative operative, RedirectAttributes redirectAttributes, Model model) {
 		Integer i = currentService.getCurrent();
@@ -185,6 +190,7 @@ public class ContractController {
 	}
 	
 	//add an expired status in the db, along with in negotiation and operative status'
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/expired")
 	public String add_expired(@ModelAttribute(name="expired") Expired expired, RedirectAttributes redirectAttributes, Model model) {
 		Integer i = currentService.getCurrent();
@@ -241,6 +247,7 @@ public class ContractController {
 	}
 	
 	//assign a specific user to a contract
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/assign/{requestid}")
 	public String assignUser(@PathVariable("requestid") int requestid, Model model) {
 		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
@@ -295,6 +302,7 @@ public class ContractController {
 	}
 	
 	//get the contract object from the db to update
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/update_details/{requestid}")
 	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
 		Integer i = currentService.getCurrent();
@@ -307,6 +315,7 @@ public class ContractController {
 	}
 	
 	//update a contract and store the results of the changes in the audit table
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/updates")
 	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
 	{	
@@ -400,6 +409,7 @@ public class ContractController {
 		return "redirect:/update_status/" + contract.getRequestid();
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/update_status/{requestid}")
 	public String updateStatus(@PathVariable("requestid") int requestid, Model model) {
 		Integer i = currentService.getCurrent();
@@ -412,6 +422,7 @@ public class ContractController {
 	}
 	
 	//updates an in negotiation status 
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/update/in_negotiation")
 	public String updateInNegotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation, Model model) {
 		Integer i = currentService.getCurrent();
@@ -424,6 +435,7 @@ public class ContractController {
 	}
 	
 	//updates an operative status
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/update/operative")
 	public String updateOperative(@ModelAttribute(name="operative") Operative operative, Model model) {
 		Integer i = currentService.getCurrent();
@@ -436,6 +448,7 @@ public class ContractController {
 	}
 	
 	//updates an expired status
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/update/expired")
 	public String updateExpired(@ModelAttribute(name="expired") Expired expired, Model model) {
 		Integer i = currentService.getCurrent();
@@ -447,6 +460,7 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/archive_contracts/{requestid}")
 	public String archiveContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
@@ -455,6 +469,7 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/archive_contracts")
 	public String getArchivedContracts(Model model) {
 		Integer i = currentService.getCurrent();
@@ -463,6 +478,7 @@ public class ContractController {
 		return "archive_contracts";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/unarchive_contracts/{requestid}")
 	public String unarchiveContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract unarchiveContract = contractService.findContract(requestid).orElse(new Contract());
@@ -471,6 +487,7 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/unarchive_contracts")
 	public String getUnarchivedContracts(Model model) {
 		Integer i = currentService.getCurrent();
@@ -534,6 +551,7 @@ public class ContractController {
 		return "/help";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/reassign/{requestid}")
 	public String reassignContractForm(@PathVariable("requestid") int requestid, Model model) {
 		Integer i = currentService.getCurrent();
@@ -545,6 +563,7 @@ public class ContractController {
 		return "reassign";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/reassignment")
 	public String reassignContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
 	{	
