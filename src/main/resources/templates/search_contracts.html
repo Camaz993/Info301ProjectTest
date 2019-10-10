@@ -49,11 +49,14 @@
 	</div>
 	<div class="content_search">
 	<h2>Search for Contracts</h2>
+	<form th:object="${search}" th:action="@{/search_contracts}" method="get">
+        <input type="submit" value="Reset Table"/>
+    </form>
     <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
     <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Title .." title="Type in a Title Name etc....">
     <form th:object="${search}" th:action="@{/contracts/search}" method="get">
-        <input type="text" placeholder="Search by Agreement Title .." id="search" name="search" th:value="${search}"/>
-        <input type="submit" value="search"/>Search
+        <input type="text" placeholder="Search database by Agreement Title .." id="search" name="search" th:value="${search}"/>
+        <input type="submit" value="Search"/>
     </form>
     <th th:text="${search}"></th>
     <h2>Contracts</h2>
