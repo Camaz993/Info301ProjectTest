@@ -16,8 +16,8 @@ import contracts.domain.StatusLink;
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Integer> {
 
-	@Query(value = "SELECT * FROM CONTRACT c WHERE c.Agreement_Title = ?1", nativeQuery = true)
-    public List<Contract> searchContracts(String search);
+	@Query(value = "SELECT * FROM CONTRACT c WHERE c.Agreement_Title LIKE %:search%", nativeQuery = true)
+    public List<Contract> searchContracts(@Param("search") String search);
   
 	/*@Query(value = "SELECT * FROM CONTRACT c WHERE c.Agreement_Title LIKE :word or c.Description LIKE word")
 	public List<Contract> searchContracts(String search);*/
