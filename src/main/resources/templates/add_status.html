@@ -9,17 +9,17 @@
 <link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
 </head>
 <body onload="setColours();">
-	<div class="headerContainer">
 	<div class="header">
 	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
-	</div>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
-        <form th:action="@{/logout}" method="post"> 
-            <input type="submit" value="Logout"/> 
+    	<form th:action="@{/change_password}" method="get"> 
+            <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
         </form>
-    	</div>
+        <form th:action="@{/logout}" method="post"> 
+            <button type="submit" value="Logout" class="logoutButtonCancel"/>Logout</button>
+        </form>
     	</div>
 	<div class="sidenav">
 		<div>
@@ -33,18 +33,23 @@
  		<a href="/search_contracts">Search Contracts</a></li>
  		<p class="sub">Search for a contract</p>
  		</div>
- 		<!-- <div>
- 		<a href="/archive_contracts">Archived Contracts</a></li>
- 		<p class="sub">View Archived Contracts</p>
- 		</div>-->
  		<div>
  		<a href="/my_contracts">My Contracts</a></li>
  		<p class="sub">View your assigned contracts</p>
  		</div>
  		<div>
- 			<a href="/create_account">Create Account</a></li>
- 			<p class="sub">Create a new account</p>
+ 			<a href="/favourite_contracts">Favourite Contracts</a></li>
+ 			<p class="sub">View your favourited contracts</p>
  		</div>
+ 		 		<div>
+ 		<a href="/help">Help</a></li>
+ 		<p class="sub">Find help for system</p>
+ 		</div>
+ 		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+ 		<a href="/favourite_contracts">Admin</a></li>
+ 		<p class="sub">View the admin settings</p>
+ 		</div>
+	</div>
 	</div>
 	
 	<div class="content">
@@ -227,4 +232,6 @@
 			}
 		</script>
 </body>
+<footer>
+</footer>
 </html>

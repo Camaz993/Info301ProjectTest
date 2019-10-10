@@ -7,16 +7,17 @@
 </head>
 <body>
 
-	<div class="headerContainer">
 	<div class="header">
+	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
-	</div>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
-        <form th:action="@{/logout}" method="post"> 
-            <input type="submit" value="Logout"/> 
+    	<form th:action="@{/change_password}" method="get"> 
+            <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
         </form>
-    	</div>
+        <form th:action="@{/logout}" method="post"> 
+            <button type="submit" value="Logout" class="logoutButtonCancel"/>Logout</button>
+        </form>
     	</div>
 	<!--<div class="sidenav">
 			<div>
@@ -43,6 +44,7 @@
 	 		<p class="sub">View your favourited contracts</p>
 	 		</div>
 	</div>-->
+	</div>
 	<div class="content_search">
 	<h2 th:text="'Add related agreements for' + ${currentContract}"></h2>
     <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
@@ -173,11 +175,9 @@ chk.change(function(){
 
 </script>
 
-<footer>
-	<a href="/admin_settings">Admin</a>
-	<a href="/help">Help Page</a>
-</footer>
 
 
 </body>
+<footer>
+</footer>
 </html>

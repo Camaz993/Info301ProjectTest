@@ -58,18 +58,19 @@ body{
 .links {
 	margin-left:auto;
 	margin-right:auto;
-	width:80%;
+	width:90%;
 }
 
 .links a {
 	font-weight: bold;
-	color: #1380A1;
+	color: #F2F2F2;
 	padding:5px;
 	font-size:10pt;
 	}
+
+.logout a {
+	color:#1380A1;
 	
-.links a:hover {
-  color: #F2F2F2;
 }
 
 .sub {
@@ -82,13 +83,47 @@ body{
 
 .logout {
 	padding:0px;
+	width:170px;
 	position:absolute;
     top:30px;
-    right:10px;
+    right:20px;
   	display: inline-block;
   	color:#D0D3D4;
 }
 
+.logoutButton {
+	margin-top:5px;
+	background-color: #4CAF50;
+  color: white;
+  padding: 8px 8px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width:80px;
+  float:left;
+  margin-right:5px;
+}
+
+.logoutButtonCancel {
+	margin-top:5px;
+	background-color:#bfbfbf;
+  color: white;
+  padding: 8px 8px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width:80px;
+  float:left;
+  margin-right:5px;
+}
+
+.logoutButton:hover {
+	background-color: #45a049;
+}
+
+.logoutButtonCancel:hover {
+	background-color: grey;
+}
 
 .wrongth th {
 	font-weight: normal;
@@ -109,12 +144,16 @@ body{
 }
 
 .content a {
-	color:teal;
+	color:#1380A1;
 	text-decoration:none;
 }
 
 .content a:hover {
 	color:navy;
+}
+
+.links a:hover {
+  color: white;
 }
 
 .content_search {
@@ -128,6 +167,15 @@ body{
     overflow: hidden;
     padding: 20px;
     position: relative;
+}
+
+.content_search a {
+	color:teal;
+	text-decoration:none;
+}
+
+.content_search a:hover {
+	color:navy;
 }
 
 .display-none {
@@ -175,6 +223,29 @@ input, select, textarea, tr, th {
 td, input{
 	width: 250px;
 	}
+	
+input {
+    margin-bottom:5px;
+    width: 300px;
+    padding:10px;
+    display:inline-block;
+    text-align:left;
+ }
+ 
+ label {
+	font-variant-caps: all-small-caps;
+	font-size:17px;
+	margin-right:30%;
+	display: inline-block;
+    margin-bottom:5px;
+    width:100px;
+    text-align: left;
+
+}
+
+#addContract td {
+	float:left;
+}
 
 input[type=submit] {
   background-color: #4CAF50;
@@ -201,6 +272,47 @@ background-color: #4CAF50;
   
 .btn:hover {
   background-color: #45a049;
+}
+
+.btnCancel {
+background-color: #bfbfbf;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  }
+  
+.btnCancel:hover {
+  background-color: grey;
+}
+
+.btnSmall {
+	background-color: #4CAF50;
+  color: white;
+  padding: 6px 5px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;	
+}
+
+.btnSmall:hover {
+  background-color: #45a049;
+}
+
+#searchbar {
+	margin-bottom:150px;
+}
+
+#searchForm {
+	float:left;
+	clear:both;
+}
+
+#searchReset {
+	float:left;
+	margin-left:5px;
+	margin-top:1px;
 }
 
 h1{
@@ -332,6 +444,14 @@ h1.header{
 
 thead {
  background-color: white;
+}
+
+.content_search thead {
+	font-size:12px;
+}
+
+.content_search table {
+	font-size:12px;
 }
 
 tr:nth-child(even) {

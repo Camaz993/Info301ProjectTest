@@ -265,19 +265,6 @@ public class ContractController {
 		return "redirect:/my_contracts";
 	}
 	
-	/*
-	@PostMapping("/api/contracts/search")
-	public List<Contract> searchContracts(@RequestParam String search)
-	{
-		return contractService.searchContracts(search);
-	}
-	@GetMapping("/contracts/search")
-	public String searchContracts(@RequestParam String search, Model model)
-	{
-		model.addAttribute("contracts/search", contractService.searchContracts(search));
-		return "search_contracts";
-	}*/
-	
 	@GetMapping("/contracts/search")
 	public String searchContracts(ModelMap map, @RequestParam String search, Model model)
 	{
@@ -439,11 +426,14 @@ public class ContractController {
 		fieldUpdatedList += ("related_agreements") + (", ");
 	}
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
 		contract.setDate_updated(timeNow);
 		blank.setField_after(fieldAfterList);
 		blank.setField_before(fieldBeforeList);
 		blank.setField_updated(fieldUpdatedList);
-		blank.setUserid(contract.getUser());
+		blank.setUserid(user);
 		blank.setRequestedid(contract);
 		blank.setDate(contract.getDate_updated());
 		contractService.update(contract);
@@ -613,7 +603,9 @@ public class ContractController {
 	}
 	
 	@GetMapping("/help")
-	public String help() {
+	public String help(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		return "/help";
 	}
 	

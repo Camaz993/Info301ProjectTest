@@ -132,6 +132,18 @@ color:teal;
 	font-variant-caps: all-small-caps;
 	font-size:17px;
 }
+
+.successMessage {
+	color: white;
+	text-align:center;
+	font-style:italic;
+	background-color:#4CAF50;
+	width:100%;
+	padding:1px;
+	margin-bottom:10px;
+	font-variant-caps: all-small-caps;
+	font-size:17px;
+}
 	
 footer a:hover {
   color: #F2F2F2;
@@ -156,7 +168,7 @@ footer a {
                 <div th:if="${param.error}" class="alertMessage">    
                     Invalid username and password
                 </div>
-                <div th:if="${param.logout}" class="alertMessage"> 
+                <div th:if="${param.logout}" class="successMessage"> 
                     You have been logged out of the system.
                 </div>
                 <label for="username">Username</label>

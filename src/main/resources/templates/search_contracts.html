@@ -17,17 +17,17 @@ margin-top:-45px;
 </head>
 <body onload="setColours();">
 
-	<div class="headerContainer">
 	<div class="header">
 	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
-	</div>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
-        <form th:action="@{/logout}" method="post"> 
-            <input type="submit" value="Logout"/> 
+    	<form th:action="@{/change_password}" method="get"> 
+            <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
         </form>
-    	</div>
+        <form th:action="@{/logout}" method="post"> 
+            <button type="submit" value="Logout" class="logoutButton"/>Logout</button>
+        </form>
     	</div>
 	<div class="sidenav">
 			<div>
@@ -49,22 +49,33 @@ margin-top:-45px;
 	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
 	 		<p class="sub">View your favourited contracts</p>
 	 		</div>
+	 		 <div>
+ 			<a href="/help">Help</a></li>
+ 			<p class="sub">Find help for system</p>
+ 			</div>
+ 			<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+ 			<a href="/favourite_contracts">Admin</a></li>
+ 			<p class="sub">View the admin settings</p>
+ 			</div>
+	</div>
 	</div>
 	<div class="content_search">
 	<h2>Search for Contracts</h2>
-	<a href="/archive_contracts"><button id="ArchBut">View Archived Contracts</button></a>
-	<form th:object="${search}" th:action="@{/search_contracts}" method="get">
-        <input type="submit" value="Reset Table"/>
-    </form>
-    <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
-    <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Title .." title="Type in a Title Name etc....">
-    <form th:object="${search}" th:action="@{/contracts/search}" method="get">
+	<div id="searchbar">
+	<a href="/archive_contracts"><button id="ArchBut" class='btn'>View Archived Contracts</button></a>
+	<form th:object="${search}" th:action="@{/contracts/search}" method="get" id="searchForm">
         <input type="text" placeholder="Search database by Agreement Title .." id="search" name="search" th:value="${search}"/>
         <input type="submit" value="Search"/>
     </form>
     <th th:text="${search}"></th>
-    <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Bussiness Name .." title="Type in a Bussiness Name etc....">
-    <h2>Contracts</h2>
+	<form th:object="${search}" th:action="@{/search_contracts}" method="get" id="searchReset">
+        <input type="submit" value="Reset Table"/>
+    </form>
+    </div>
+    <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
+    <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Title .." title="Type in a Title Name etc....">
+    <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Business Name .." title="Type in a Bussiness Name etc....">
+    <h3>Contracts</h3>
     <div style="overflow-x:auto;">
 	<table id="viewcontracts">
 	<thead>
@@ -75,7 +86,6 @@ margin-top:-45px;
     <th>Description</th>
     <th>Business Name</th>
     <th>Date Updated</th>
-    <th>Status</th>
     <th>Assigned to User</th>
     <th>Reassign</th>
     <th>Update Details</th>
@@ -103,19 +113,19 @@ margin-top:-45px;
 		<th>
        		<form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
+  				<button onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton" class="btnSmall">Archive</button>
 			</form>
      	</th>
      	<th th:if="${favstatus[iStat.index] == 'unfavourited'}">
        		<form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Favourite</button>
+  				<button onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button" class="btnSmall">Favourite</button>
 			</form>
      	</th>
      	<th th:if="${favstatus[iStat.index] == 'favourited'}">
      	<form action="#" th:action="@{/unfavourite_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to unfavourite this?');" type="submit" id="fav_button">Unfavourite</button>
+  				<button onclick="return confirm('Are you sure want to unfavourite this?');" type="submit" id="fav_button" class="btnSmall">Unfavourite</button>
 			</form>
 		</th>
     </tr>
