@@ -104,6 +104,8 @@ body{
     overflow: hidden;
     padding: 20px;
     position: relative;
+    margin-bottom:10px;
+    
 }
 
 .content_search {

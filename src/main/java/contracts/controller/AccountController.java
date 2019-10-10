@@ -168,7 +168,8 @@ public class AccountController {
 		String token = UUID.randomUUID().toString();
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date expiryDate = new Date(System.currentTimeMillis()+3*60*1000);
-		emailService.send(newUser.getEmail(), "Testing", token);
+		emailService.send(newUser.getEmail(), "Password Recovery: Contract Management System", 
+				token);
 		String pass = newUser.getPassword();
 		newUser.setExpiryDate(expiryDate);
 		newUser.setPassword(passwordEncoder.encode(token));
