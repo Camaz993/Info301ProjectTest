@@ -50,6 +50,9 @@ public class Audit {
 	@Column(name = "add_contract")
 	private String add_contract;
 	
+	@Column(name = "archived_contract")
+	private String archived_contract;
+	
 	public String getAdd_contract() {
 		return add_contract;
 	}
@@ -99,7 +102,7 @@ public class Audit {
 		this.field_after = field_after;
 	}
 	public Audit(Integer auditid, User userid, Contract requestid, Date date, String field_updated,
-			String field_before, String field_after, String add_contract) {
+			String field_before, String field_after, String add_contract, String archived_contract) {
 		super();
 		this.auditid = auditid;
 		this.userid = userid;
@@ -109,12 +112,19 @@ public class Audit {
 		this.field_before = field_before;
 		this.field_after = field_after;
 		this.add_contract = add_contract;
+		this.archived_contract = archived_contract;
 	}
 	@Override
 	public String toString() {
 		return "audit [auditid=" + auditid + ", userid=" + userid + ", requestedid=" + requestid + ", date=" + date
 				+ ", field_updated=" + field_updated + ", field_before=" + field_before + ", field_after=" + field_after
 				+ "]";
+	}
+	public String getArchived_contract() {
+		return archived_contract;
+	}
+	public void setArchived_contract(String archive_contract) {
+		this.archived_contract = archive_contract;
 	}
 	
 }

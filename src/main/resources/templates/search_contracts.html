@@ -61,12 +61,16 @@ margin-top:-45px;
         <input type="submit" value="Reset Table"/>
     </form>
     <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
+<<<<<<< HEAD
     <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Title .." title="Type in a Title Name etc....">
     <form th:object="${search}" th:action="@{/contracts/search}" method="get">
         <input type="text" placeholder="Search database by Agreement Title .." id="search" name="search" th:value="${search}"/>
         <input type="submit" value="Search"/>
     </form>
     <th th:text="${search}"></th>
+=======
+    <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Bussiness Name .." title="Type in a Bussiness Name etc....">
+>>>>>>> refs/heads/Feature-MetaData3
     <h2>Contracts</h2>
     <div style="overflow-x:auto;">
 	<table id="viewcontracts">
@@ -190,7 +194,7 @@ function searchByParty() {
 	  table = document.getElementById("viewcontracts");
 	  tr = table.tBodies[0].getElementsByTagName("tr");
 	  for (i = 0; i < tr.length; i++) {
-	    td = tr[i].getElementsByTagName("th")[1];
+	    td = tr[i].getElementsByTagName("th")[4];
 	    if (td) {
 	      txtValue = td.textContent || td.innerText;
 	      if (txtValue.toUpperCase().indexOf(filter) > -1) {

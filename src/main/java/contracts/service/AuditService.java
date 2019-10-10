@@ -57,6 +57,16 @@ public class AuditService implements IAuditService {
 		addAudit(newAudit);
 	}
 	
+	public void addAuditArchived(Contract contract){
+		Audit newAudit = new Audit();
+		newAudit.setUserid(contract.getUser());
+		newAudit.setRequestedid(contract);
+		newAudit.setDate(contract.getDate_updated());
+		newAudit.setArchived_contract("Y");
+		addAudit(newAudit);
+	}
+	
+	
 	
 	public void updateAudit() {	
 		Audit newAudit = new Audit();
@@ -70,5 +80,9 @@ public class AuditService implements IAuditService {
 		newAudit.setDate(contract.getDate_updated());
 		return newAudit;
 	}
+	
+	 public List<Audit> getContractsByAuditsRequestID(Integer requestid){
+		return auditRepository.getContractsByAuditsRequestID(requestid);
+	 }
 	
 }

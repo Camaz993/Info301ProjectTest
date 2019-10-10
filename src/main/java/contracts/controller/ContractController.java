@@ -339,6 +339,7 @@ public class ContractController {
 		exRepo.findById(requestid).ifPresent(o->model.addAttribute("expired", o));
 		negRepo.findById(requestid).ifPresent(o->model.addAttribute("in_negotiation", o));
 		model.addAttribute("contracts", contractService.getRelatedContracts(requestid));
+		model.addAttribute("audits", auditService.getContractsByAuditsRequestID(requestid));
 		return "view_details";
 	}
 	

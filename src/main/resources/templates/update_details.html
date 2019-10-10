@@ -7,6 +7,20 @@
 <link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
 <link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
 <link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
+
+<style>
+input[type='checkbox'] {
+    -webkit-appearance:none;
+    background:white;
+    border-radius:5px;
+    border:2px solid #555;
+}
+input[type='checkbox']:checked {
+    background: #abd;
+}
+
+</style>
+
 </head>
 
 <body onload="setColours();">
@@ -89,6 +103,9 @@
     <tr>
         <td>Region: <input type="text"  th:field="*{region}" /></td>
         <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
+    </tr>
+    <tr>
+   		<td>Please Check To Validate Information: <input type="checkbox" name="option1" value="1" style="/* height: 10px; *//* display: inline; */position: absolute;/* top: 0; *//* left: 0; */bottom: 130px;height: 25px;width: 25px;"></td>
     </tr>
     </table>
     </div>
@@ -181,5 +198,25 @@ function setColours(){
 <footer>
 	<a href="/help">Help Page</a>
 </footer> 
+ <script>
+    function Validate(){
+    	   if(!validateForm()){
+    	       alert("You must confirm that the data is valid");
+    	       return false;
+    	   }
+    	return true
+    	}
+    	function validateForm()
+    	{
+    	    var c=document.getElementsByTagName('input');
+    	    for (var i = 0; i<c.length; i++){
+    	        if (c[i].type=='checkbox')
+    	        {
+    	            if (c[i].checked){return true}
+    	        }
+    	    }
+    	    return false;
+    	}
+    </script>
 </body>
 </html>
