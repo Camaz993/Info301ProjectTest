@@ -120,7 +120,17 @@ float:right;
 color:teal;
  }
   
-
+.alertMessage {
+	color: white;
+	text-align:center;
+	font-style:italic;
+	background-color:#E95959;
+	width:100%;
+	padding:1px;
+	margin-bottom:10px;
+	font-variant-caps: all-small-caps;
+	font-size:17px;
+}
 	
 footer a:hover {
   color: #F2F2F2;
@@ -142,10 +152,10 @@ footer a {
 	<div class="content">
         <form name="loginForm" id="loginForm" th:action="@{/login}" method="post">               
                 <h1>Please Login</h1>
-                <div th:if="${param.error}" class="alert alert-error">    
-                    Invalid username and password.
+                <div th:if="${param.error}" class="alertMessage">    
+                    Invalid username and password
                 </div>
-                <div th:if="${param.logout}" class="alert alert-success"> 
+                <div th:if="${param.logout}" class="alertMessage"> 
                     You have been logged out of the system.
                 </div>
                 <label for="username">Username</label>
