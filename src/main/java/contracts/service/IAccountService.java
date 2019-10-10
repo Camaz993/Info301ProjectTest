@@ -15,5 +15,7 @@ public interface IAccountService {
 	public User findUser(String username);
 	
 	public List<String> getUserRoles();
+	
+	public void update(User user);
 
 }

@@ -60,5 +60,10 @@ public class AccountService implements IAccountService {
 		return accountRepository.getUserRoles();
 	}
 	
+	@Override
+	public void update(User user) {	
+		accountRepository.save(user);
+	}
+	
 	
 }
