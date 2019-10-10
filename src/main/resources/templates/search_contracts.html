@@ -7,6 +7,13 @@
 <link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
 <link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
 <link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
+
+<style>
+#ArchBut{
+float:right;
+margin-top:-45px;
+}
+</style>
 </head>
 <body onload="setColours();">
 
@@ -34,10 +41,10 @@
 	 		<a>Search Contacts</a></li>
 	 		<p class="sub">Search for a contract</p>
 	 		</div>
-	 		<div>
-	 		<a href="/archive_contracts">Archived Contracts</a></li>
+	 		<!-- <div>
+	 		 <a href="/archive_contracts">Archived Contracts</a></li>
 	 		<p class="sub">View archived contracts</p>
-	 		</div>
+	 		</div>-->
 	 		<div>
 	 		<a href="/my_contracts">My Contracts</a></li>
 	 		<p class="sub">View your assigned contracts</p>
@@ -49,6 +56,7 @@
 	</div>
 	<div class="content_search">
 	<h2>Search for Contracts</h2>
+	<a href="/archive_contracts"><button id="ArchBut">View Archived Contracts</button></a>
 	<form th:object="${search}" th:action="@{/search_contracts}" method="get">
         <input type="submit" value="Reset Table"/>
     </form>
@@ -72,6 +80,7 @@
     <th>Date Updated</th>
     <th>Status</th>
     <th>Assigned to User</th>
+    <th>Reassign</th>
     <th>Update Details</th>
     <th>Archive Contract</th>
     <th>Favourite Contract</th>
@@ -87,7 +96,7 @@
         <th th:text="${contract.description}"></th>
         <th th:text="${contract?.businessname}"></th>
         <th th:text="${contract.date_updated}"></th>
-        <th th:text="${status?.currentstatus}"></th>
+        <th th:text="${contract?.user?.username}"></th>
         <th> 
       	  <a th:href="@{/reassign/{requestid}(requestid=${contract.requestid})}" th:text="${contract?.user?.username}" target="_blank"></a>
         </th>

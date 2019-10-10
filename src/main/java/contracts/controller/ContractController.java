@@ -170,7 +170,7 @@ public class ContractController {
 	}
 	
 	//add an operative status to the db, along with null in negotiation and expired status'
-	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL" })
 	@PostMapping("/api/operative")
 	public String add_operative(@ModelAttribute(name="operative") Operative operative, RedirectAttributes redirectAttributes, Model model) {
 		Integer i = currentService.getCurrent();
@@ -457,7 +457,7 @@ public class ContractController {
 	}
 	
 	//updates an in negotiation status 
-	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL" })
 	@PostMapping("/api/update/in_negotiation")
 	public String updateInNegotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation, Model model) {
 		Integer i = currentService.getCurrent();
@@ -470,7 +470,7 @@ public class ContractController {
 	}
 	
 	//updates an operative status
-	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL" })
 	@PostMapping("/api/update/operative")
 	public String updateOperative(@ModelAttribute(name="operative") Operative operative, Model model) {
 		Integer i = currentService.getCurrent();
