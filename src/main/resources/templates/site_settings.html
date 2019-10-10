@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Add Contract</title>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+</head>
+
+<body onload="setColours()">
+		<div class="header">
+	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
+	<h1>Contract Management</h1>
+	<div class="logout">
+    	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
+    	<form th:action="@{/change_password}" method="get"> 
+            <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
+        </form>
+        <form th:action="@{/logout}" method="post"> 
+            <button type="submit" value="Logout" class="logoutButton"/>Logout</button>
+        </form>
+    	</div>
+	<div class="sidenav">
+			<div>
+	 		<a href="/">Home</a>
+	 		</div>
+	 		<div>
+	 		<a href="/add_contracts">New Contract</a></li>
+	 		<p class="sub">Create a new contract</p>
+	 		</div>
+	 		<div>
+	 		<a href="/search_contracts">Search Contracts</a></li>
+	 		<p class="sub">Search for a contract</p>
+	 		</div>
+	 		<!--  <div>
+	 		<a href="/archive_contracts">Archived Contracts</a></li>
+	 		<p class="sub">View archived contracts</p>
+	 		</div>-->
+	 		<div>
+	 		<a href="/my_contracts">My Contracts</a></li>
+	 		<p class="sub">View your assigned contracts</p>
+ 			</div>
+ 			<div>
+	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
+	 		<p class="sub">View your favourited contracts</p>
+	 		</div>
+	 			<div>
+ 		<a href="/help">Help</a></li>
+ 		<p class="sub">Find help for system</p>
+ 		</div>
+ 		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+ 		<a href="/favourite_contracts">Admin</a></li>
+ 		<p class="sub">View the admin settings</p>
+ 		</div>
+	</div>
+	</div>
+
+	<div class="content">
+	<h2>Site Settings</h2>
+	<div class="subnav">
+	<div class="links">
+	<a href="/admin_settings">Home</a>
+	<a href="/create_account">Create User Account</a>
+	<a href="/manage_users">Manage User Accounts</a>
+	<a>Site Settings</a>
+	<a href="/audit">Track Changes</a>
+	</div>
+	</div>
+      
+	   <h3>Colour Scheme</h3>
+	<p>Select which colour scheme you wish to view the contract management system in</p>
+	<table>
+	<tr>
+ 	<th>	<form action="#" th:action="@{/api_adminblue}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Blue</button>
+		</form></th>
+	<th>	 
+ 		<form action="#" th:action="@{/api_admingreen}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"class="display-none"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Green</button>
+		</form></th>
+	<th>	 
+ 		<form action="#" th:action="@{/api_admingrey}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Grey</button>
+		</form></th>
+	<th>	 
+ 		<form action="#" th:action="@{/api_adminred}" th:object="${current}" method="post">
+ 		    	<input type="hidden"  th:field="*{colour}"/>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Red</button>
+		</form></th>
+	</tr>
+	</table>
+    </form>        
+        
+        
+    </div>
+	<script>
+	 
+		function setColours(){
+		var x = document.getElementsByTagName("H1");
+		var i;
+		var col = document.getElementById('clogo');
+		for (i = 0; i < x.length; i++) {
+		  x[i].style.color = col;
+		}
+		
+		
+		  document.body.style.backgroundColor = document.getElementById('cbackground');
+		  var style = document.createElement('style');
+			  style.innerHTML = `
+			  h1 {
+			  color: ` + document.getElementById('clogo'); + `
+			  }
+			  `;
+  		document.head.appendChild(style);
+		}
+	
+	</script>
+
+           
+<footer>
+	<a href="/help">Help Page</a>
+</footer>
+
+    
+</body>
+</html>

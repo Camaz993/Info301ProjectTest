@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import contracts.domain.Contract;
+import contracts.domain.Favourited;
+import contracts.domain.StatusLink;
 import contracts.domain.User;
 
 public interface IContractService {
@@ -43,4 +45,10 @@ public interface IContractService {
 	public Integer findNewestContract();
 	
 	public void unfavouriteContract(Integer requestid, Integer userid);
+	
+	public Boolean checkFavourited(Integer requestid, Integer userid);
+	
+	List<Contract> getAllExceptCurrent(Integer requestid);
+
+	public Object getRelatedContracts(Integer requestid);
 }

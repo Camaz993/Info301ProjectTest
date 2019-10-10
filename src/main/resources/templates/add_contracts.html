@@ -2,21 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Add Contract</title>
+<title>Create Contract</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+<title>Add Contract</title>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" title="style" id="style"/>
+<link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
+<link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
+<link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
 </head>
-<body>
+<body onload="setColours();">
 
-	<div class="headerContainer">
 	<div class="header">
+	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
-	</div>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
-        <form th:action="@{/logout}" method="post"> 
-            <input type="submit" value="Logout"/> 
+    	<form th:action="@{/change_password}" method="get"> 
+            <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
         </form>
-    	</div>
+        <form th:action="@{/logout}" method="post"> 
+            <button type="submit" value="Logout" class="logoutButtonCancel"/>Logout</button>
+        </form>
     	</div>
 	<div class="sidenav">
 		<div>
@@ -31,10 +37,6 @@
  		<p class="sub">Search for a contract</p>
  		</div>
  		<div>
- 		<a href="/archive_contracts">Archived Contracts</a></li>
- 		<p class="sub">View Archived Contracts</p>
- 		</div>
- 		<div>
  		<a href="/my_contracts">My Contracts</a></li>
  		<p class="sub">View your assigned contracts</p>
  		</div>
@@ -42,13 +44,29 @@
  		<a href="/favourite_contracts">Favourited Contracts</a></li>
  		<p class="sub">View your favourited contracts</p>
  		</div>
+ 		<div>
+ 		<a href="/help">Help</a></li>
+ 		<p class="sub">Find help for system</p>
+ 		</div>
+ 		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+ 		<a href="/admin_settings">Admin</a></li>
+ 		<p class="sub">View the admin settings</p>
+ 		</div>
+	</div>
 	</div>
 	
 	<div class="content">
-	<h2>Add Contracts</h2>
-    
-    
+	<div th:if="${message}" th:text="${message}" class="alertMessage"/>
+	<h2>Create Contract</h2>
+	<h4>Page 1 of 2: Add Contract and Party Details</h4>
+		<div class="tab">
+		  <button class="tablinks" onclick="openTab(event, 'ContractDetails')">Contract Details</button>
+		  <button class="tablinks" onclick="openTab(event, 'PartyDetails')">Party Details</button>
+		  <button class="tablinks" onclick="openTab(event, 'Attachments')">Attachments</button>
+		</div>
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
+     <div id="ContractDetails" class="tabcontent">
+    <h3>Contract Details:</h3>
     <table>
     <tr>
         <td>User: <select id="userid" name="userid">
@@ -61,65 +79,97 @@
    	</tr>
    	<tr>
     	<td>Agreement Title: <input type="text"  th:field="*{agreement_title}"/></td>
-    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}">Title Error</td>
+    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}" class="error">Title Error</td>
     </tr>
     <tr>
     	<td>Agreement Type: <input type="text"  th:field="*{agreement_type}" /></td>
-    	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}">Type Error</td>
+    	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}" class="error">Type Error</td>
     </tr>
     <tr>
     	<td>Description: <input type="text"  th:field="*{description}" /></td>
-    	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
-    </tr>
-    <tr>
-        <td>Agreement Location: <input type="text"  th:field="*{agreement_location}" /></td>
-        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
-    </tr>
-    <tr>
-        <td>Business Name: <input type="text"  th:field="*{businessname}" /></td>
-        <td th:if="${#fields.hasErrors('businessname')}" th:errors="*{businessname}">Business name Error</td>
+    	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error">Description Error</td>
     </tr>
      <tr>
-        <td>Client Name: <input type="text"  th:field="*{clientname}" /></td>
-        <td th:if="${#fields.hasErrors('clientname')}" th:errors="*{clientname}">Client name Error</td>
-    </tr>
-     <tr>
-        <td>Address: <input type="text"  th:field="*{address}" /></td>
-        <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</td>
-    </tr>
-     <tr>
-        <td>Phone: <input type="text"  th:field="*{phone}" /></td>
-        <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone Error</td>
-    </tr>
-     <tr>
-        <td>Email: <input type="text"  th:field="*{email}" /></td>
-        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
-    </tr>
-     <tr>
-        <td>Fax: <input type="text"  th:field="*{fax}" /></td>
-        <td th:if="${#fields.hasErrors('fax')}" th:errors="*{fax}">Fax Error</td>
-    </tr>
-    <tr>
         <td>Language: <input type="text"  th:field="*{language}" /></td>
-        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Language Error</td>
+        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}" class="error">Language Error</td>
     </tr>
     <tr>
         <td>Region: <input type="text"  th:field="*{region}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
-    </tr>
-    <tr>
-        <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
-        <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error</td>
-    </tr>
-    <tr>
-        <td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="error">Region Error</td>
     </tr>
     </table>
+    </div>
+     <div id="PartyDetails" class="tabcontent">
+     <table>
+    <h3>Party Details:</h3>
+    <tr>
+        <td>Business Name: <input type="text"  th:field="*{businessname}" /></td>
+        <td th:if="${#fields.hasErrors('businessname')}" th:errors="*{businessname}" class="error">Business name Error</td>
+    </tr>
+     <tr>
+        <td>Client Name: <input type="text"  th:field="*{clientname}" /></td>
+        <td th:if="${#fields.hasErrors('clientname')}" th:errors="*{clientname}" class="error">Client name Error</td>
+    </tr>
+     <tr>
+        <td>Address: <input type="text"  th:field="*{address}" /></td>
+        <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="error">Address Error</td>
+    </tr>
+     <tr>
+        <td>Phone: <input type="text"  th:field="*{phone}" /></td>
+        <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="error">Phone Error</td>
+    </tr>
+     <tr>
+        <td>Email: <input type="text"  th:field="*{email}" /></td>
+        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error">Email Error</td>
+    </tr>
+     <tr>
+        <td>Fax: <input type="text"  th:field="*{fax}" /></td>
+        <td th:if="${#fields.hasErrors('fax')}" th:errors="*{fax}" class="error">Fax Error</td>
+    </tr>
+    </table>
+    </div>
+     <div id="Attachments" class="tabcontent">
+    <h3>Attachments</h3>
+    <table>
+    <tr>
+        <td>URL or Description of Agreement File Location: <input type="text"  th:field="*{agreement_location}" placeholder="https://www....."/></td>
+        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}" class="error">Location Error</td>
+    </tr>   
+    <!--<tr>
+        <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" />
+        <td>Related Agreements</td> <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error<td/>  
+    </tr>-->
+    </table>
+     </div>
+     <div>
+     <table>
+    <tr>
+        <td><button type="submit" value="Submit" class='btn'/>Submit</button> <a href="/"><button type="button" value="Cancel" class='btnCancel'/>Cancel</button></td>  
+    </tr>
+    </table>
+    </div>
+   
     </form>
     
-		 
-	<script type="text/javascript">
-		 
+    <table class="display-none">
+	    <td th:text="${currentCss.idcurrent_css}"></td>
+	    <td th:text="${currentCss.colour}" id="css"></td>
+    </table>  
+<script>
+
+function setColours(){
+  var i, link_tag ;
+  var currcss = document.getElementById("css");
+  console.log(currcss);
+  for (i = 0, link_tag = document.getElementsByTagName("link") ; i < link_tag.length ; i++ ) {
+    if ((link_tag[i].rel.indexOf( "stylesheet" ) != -1) && link_tag[i].title) {
+      link_tag[i].disabled = true ;
+      if (currcss.innerHTML.indexOf(link_tag[i].title) != -1) {
+        document.getElementById(link_tag[i].title).disabled = false;
+      }
+    }
+  }
+} 
 		    function changeStatus() {
 		        var allForms = document.getElementsByTagName('form');
 		        var dropdown = document.getElementById("dropdown");
@@ -138,14 +188,26 @@
 		    	document.getElementById("addContract").submit();
    				document.getElementById(dropdown.value).submit();
 		    }
+		    function openTab(evt, tabName) {
+		  	  var i, tabcontent, tablinks;
+		  	  tabcontent = document.getElementsByClassName("tabcontent");
+		  	  for (i = 0; i < tabcontent.length; i++) {
+		  	    tabcontent[i].style.display = "none";
+		  	  }
+		  	  tablinks = document.getElementsByClassName("tablinks");
+		  	  for (i = 0; i < tablinks.length; i++) {
+		  	    tablinks[i].className = tablinks[i].className.replace(" active", "");
+		  	  }
+		  	  document.getElementById(tabName).style.display = "block";
+		  	  evt.currentTarget.className += " active";
+		  	}
 		</script>
 </div>
 
-<footer>
-	<a href="/admin_settings">Admin</a>
-	<a href="/help">Help Page</a>
-</footer>
+
 
 
 </body>
+<footer>
+</footer>
 </html>

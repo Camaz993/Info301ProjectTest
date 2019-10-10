@@ -3,19 +3,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Manage Users</title>
-<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" title="style" id="style"/>
+<link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
+<link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
+<link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
 </head>
-<body onload="colours();">
-	<div class="headerContainer">
+<body onload="setColours();">
 	<div class="header">
+	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
-	</div>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
-        <form th:action="@{/logout}" method="post"> 
-            <input type="submit" value="Logout"/> 
+    	<form th:action="@{/change_password}" method="get"> 
+            <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
         </form>
-    	</div>
+        <form th:action="@{/logout}" method="post"> 
+            <button type="submit" value="Logout" class="logoutButtonCancel"/>Logout</button>
+        </form>
     	</div>
 	<div class="sidenav">
 		<div>
@@ -30,10 +34,6 @@
 	 		<p class="sub">Search for a contract</p>
  		</div>
  		<div>
-	 		<a href="/archive_contracts">Archived Contracts</a>
-	 		<p class="sub">View Archived Contracts</p>
- 		</div>
- 		<div>
 	 		<a href="/my_contracts">My Contracts</a>
 	 		<p class="sub">View your assigned contracts</p>
  		</div>
@@ -41,22 +41,32 @@
  		<a href="/favourite_contracts">Favourited Contracts</a></li>
  		<p class="sub">View your favourited contracts</p>
  		</div>
+ 			<div>
+ 		<a href="/help">Help</a></li>
+ 		<p class="sub">Find help for system</p>
+ 		</div>
+ 		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+ 		<a href="/favourite_contracts">Admin</a></li>
+ 		<p class="sub">View the admin settings</p>
+ 		</div>
+	</div>
 	</div>
 	
 	<div class="content">
-		<h1>Manage Users</h1>
+		<h2>Manage Users</h2>
 	<div class="subnav">
 	<div class="links">
 	<a href="/admin_settings">Home</a>
-	<a href="/create_account">Create Account</a>
-	<a>Manage Users</a>
-	<a href="/create_account">Site Settings</a>
-	<a href="/create_account">Track Changes</a>
+	<a href="/create_account">Create User Account</a>
+	<a>Manage User Accounts</a>
+	<a href="/site_settings">Site Settings</a>
+	<a href="/audit">Track Changes</a>
 	</div>
 	</div>
 	<table>
 	<thead>
 	<tr>
+	<th>User ID</th>
 	<th>First Name</th>
     <th>Last Name</th>
     <th>Username</th>
@@ -68,6 +78,7 @@
     </thead>
 	<tbody class="wrongth">
     <tr th:each="user : ${users}">
+    	<th th:text=${user.userid}></th>	
         <th th:text=${user.firstname}></th>	 
         <th th:text="${user.lastname}"></th>
         <th th:text="${user.username}"></th>
@@ -90,7 +101,30 @@
     </table>
     </div>
     <footer>
+	<a href="/admin_settings">Admin</a>
 	<a href="/help">Help Page</a>
 </footer>
+
+    <table class="display-none">
+    <td th:text="${currentCss.idcurrent_css}"></td>
+    <td th:text="${currentCss.colour}" id="css"></td>
+    </table>
+         
+<script>
+
+function setColours(){
+  var i, link_tag ;
+  var currcss = document.getElementById("css");
+  console.log(currcss);
+  for (i = 0, link_tag = document.getElementsByTagName("link") ; i < link_tag.length ; i++ ) {
+    if ((link_tag[i].rel.indexOf( "stylesheet" ) != -1) && link_tag[i].title) {
+      link_tag[i].disabled = true ;
+      if (currcss.innerHTML.indexOf(link_tag[i].title) != -1) {
+        document.getElementById(link_tag[i].title).disabled = false;
+      }
+    }
+  }
+}
+</script>
 </body>
 </html>

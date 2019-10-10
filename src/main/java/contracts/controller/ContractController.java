@@ -1,30 +1,32 @@
 package contracts.controller;
 
+import java.io.File;
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.google.common.io.Files;
 
 import contracts.domain.Audit;
 import contracts.domain.Contract;
@@ -32,20 +34,25 @@ import contracts.domain.Expired;
 import contracts.domain.Favourited;
 import contracts.domain.InNegotiation;
 import contracts.domain.Operative;
+import contracts.domain.RelatedAgreements;
 import contracts.domain.Status;
 import contracts.domain.StatusLink;
 import contracts.domain.User;
 import contracts.repository.ContractRepository;
-import contracts.service.AuditService;
+import contracts.repository.CurrentRepository;
 import contracts.repository.ExpiredRepository;
 import contracts.repository.InNegotiationRepository;
 import contracts.repository.OperativeRepository;
+import contracts.repository.StatusLinkRepository;
+import contracts.service.AuditService;
+import contracts.service.CurrentService;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
 import contracts.service.IExpiredService;
 import contracts.service.IFavouritedService;
 import contracts.service.IInNegotiationService;
 import contracts.service.IOperativeService;
+import contracts.service.IRelatedAgreementsService;
 import contracts.service.IStatusLinkService;
 
 @Controller
@@ -79,6 +86,9 @@ public class ContractController {
 	private ContractRepository repo;
 	
 	@Autowired
+	private IRelatedAgreementsService relatedAgreementsService;
+	
+	@Autowired
 	private InNegotiationRepository negRepo;
 	
 	@Autowired
@@ -87,8 +97,20 @@ public class ContractController {
 	@Autowired
 	private ExpiredRepository exRepo;
 	
+	@Autowired
+	private StatusLinkRepository slRepo;
+
+    @Autowired
+	private CurrentService currentService;
+	
+	@Autowired
+	private CurrentRepository currentRepository;
+
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contract", new Contract());
 		model.addAttribute("status", new Status());
 		List <User> users = contractService.getAllUsers();
@@ -96,19 +118,27 @@ public class ContractController {
         return "add_contracts";
     }
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/add_status")
 	public String showStatusForm(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Integer requestid = contractService.findNewestContract();
 		model.addAttribute("requestid", requestid);
 		model.addAttribute("in_negotiation", new InNegotiation());
 		model.addAttribute("operative", new Operative());
 		model.addAttribute("expired", new Expired());
+		repo.findById(requestid).ifPresent(contract->model.addAttribute("selectedContract", contract));
 		return "add_status";
 	}
 	
+	//add a new contract to the database
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/contracts")
 	public String addContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
 	{
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
 		if(br.hasErrors()) {
@@ -122,9 +152,13 @@ public class ContractController {
 		return "redirect:/add_status";
 	}
 	
+	//add an in negotiation status to the database, along with null operative and expired status'
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/in_negotiation")
-	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation)
+	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation, RedirectAttributes redirectAttributes, Model model)
 	{
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Integer requestid = contractService.findNewestContract();
 		in_negotiation.setRequestId(requestid);
 		in_negotiationService.addInNegotiation(in_negotiation);
@@ -136,11 +170,16 @@ public class ContractController {
 		expiredService.addExpired(ex);
 		StatusLink statuslink = new StatusLink(requestid, "in_negotiation");
 		statuslinkService.addStatusLink(statuslink);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message", "Contract successfully added");
+		return "redirect:/view_details/" + requestid;
 	}
 	
-	@PostMapping("api/operative")
-	public String add_operative(@ModelAttribute(name="operative") Operative operative) {
+	//add an operative status to the db, along with null in negotiation and expired status'
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL" })
+	@PostMapping("/api/operative")
+	public String add_operative(@ModelAttribute(name="operative") Operative operative, RedirectAttributes redirectAttributes, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Integer requestid = contractService.findNewestContract();
 		operative.setRequestId(requestid);		
 		operativeService.addOperative(operative);
@@ -152,11 +191,16 @@ public class ContractController {
 		in_negotiationService.addInNegotiation(neg);
 		StatusLink statuslink = new StatusLink(requestid, "operative");
 		statuslinkService.addStatusLink(statuslink);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message", "Contract successfully added");
+		return "redirect:/view_details/" + requestid;
 	}
 	
-	@PostMapping("api/expired")
-	public String add_expired(@ModelAttribute(name="expired") Expired expired) {
+	//add an expired status in the db, along with in negotiation and operative status'
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
+	@PostMapping("/api/expired")
+	public String add_expired(@ModelAttribute(name="expired") Expired expired, RedirectAttributes redirectAttributes, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Integer requestid = contractService.findNewestContract();
 		expired.setRequestId(requestid);
 		expiredService.addExpired(expired);
@@ -168,23 +212,48 @@ public class ContractController {
 		operativeService.addOperative(op);
 		StatusLink statuslink = new StatusLink(requestid, "expired");
 		statuslinkService.addStatusLink(statuslink);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message", "Contract successfully added");
+		return "redirect:/view_details/" + requestid;
 	}
 	
+	//Method to bring up search results and checks if user has item favourited or not.
+	//If they have the item favourited, the button dynamically updates to unfavourited.
 	@GetMapping("/search_contracts")
 	public String getAllContracts(Model model) {
+		List<Contract> allContracts = contractService.getAllContracts();
+		List favStatus = new ArrayList<>();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		for (int i = 0; i < allContracts.size(); i++) {
+			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
+				favStatus.add("favourited");
+			}
+			else {
+				favStatus.add("unfavourited");
+			}
+		}
+		
+
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getAllContracts());
+		model.addAttribute("favstatus", favStatus);
 		return "search_contracts";
 	}
 	
 	
 	@GetMapping("/")
 	public String mostRecent(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getAllContracts());
 		model.addAttribute("contracts2", contractService.getNullUserContracts());
-		return "/index";
+		return "index";
 	}
 	
+	//assign a specific user to a contract
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/assign/{requestid}")
 	public String assignUser(@PathVariable("requestid") int requestid, Model model) {
 		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
@@ -196,10 +265,31 @@ public class ContractController {
 		return "redirect:/my_contracts";
 	}
 	
-	@PostMapping("/api/contracts/search")
-	public List<Contract> searchContracts(@RequestParam String search)
+	@GetMapping("/contracts/search")
+	public String searchContracts(ModelMap map, @RequestParam String search, Model model)
 	{
-		return contractService.searchContracts(search);
+		List<Contract> allContracts = contractService.getAllContracts();
+		List favStatus = new ArrayList<>();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		for (int i = 0; i < allContracts.size(); i++) {
+			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
+				favStatus.add("favourited");
+			}
+			else {
+				favStatus.add("unfavourited");
+			}
+		}
+		
+
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+		map.put("search", search);
+		model.addAttribute("contracts", contractService.searchContracts(search));	
+		model.addAttribute("favstatus", favStatus);
+		//return contractService.searchContracts(search);
+		return "search_contracts";
 	}
 	
 	@PostMapping("/api/contracts/search/location")
@@ -228,12 +318,24 @@ public class ContractController {
 	
 	@GetMapping("/view_details/{requestid}")
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
+		slRepo.findById(requestid).ifPresent(o->model.addAttribute("status", o));
+		opRepo.findById(requestid).ifPresent(o->model.addAttribute("operative", o));
+		exRepo.findById(requestid).ifPresent(o->model.addAttribute("expired", o));
+		negRepo.findById(requestid).ifPresent(o->model.addAttribute("in_negotiation", o));
+		model.addAttribute("contracts", contractService.getRelatedContracts(requestid));
+		model.addAttribute("audits", auditService.getContractsByAuditsRequestID(requestid));
 		return "view_details";
 	}
 	
+	//get the contract object from the db to update
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/update_details/{requestid}")
 	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
 		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
 		List <User> users = contractService.getAllUsers();
@@ -241,9 +343,13 @@ public class ContractController {
 		return "update_details";
 	}
 	
+	//update a contract and store the results of the changes in the audit table
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/updates")
-	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br)
+	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
 	{	
+	Integer i = currentService.getCurrent();
+	currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 	String fieldUpdatedList = "";
 	String fieldBeforeList = "";
 	String fieldAfterList = "";
@@ -274,7 +380,37 @@ public class ContractController {
 		fieldAfterList += ((String.valueOf((contract.getAgreement_location()))))+ (", ");
 		fieldUpdatedList += ("agreement_location") + (", ");
 	}
-	if (!foundContract.getLanguage().equals(contract.getLanguage())) {
+	if (!foundContract.getBusinessname().equals(contract.getBusinessname())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getBusinessname()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getBusinessname()))))+ (", ");
+		fieldUpdatedList += ("businessname") + (", ");
+	}
+	if (!foundContract.getClientname().equals(contract.getClientname())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getClientname()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getClientname()))))+ (", ");
+		fieldUpdatedList += ("clientname") + (", ");
+	}
+	if (!foundContract.getAddress().equals(contract.getAddress())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getAddress()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getAddress()))))+ (", ");
+		fieldUpdatedList += ("address") + (", ");
+	}
+	if (!foundContract.getPhone().equals(contract.getPhone())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getPhone()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getPhone()))))+ (", ");
+		fieldUpdatedList += ("phone") + (", ");
+	}
+	if (!foundContract.getEmail().equals(contract.getEmail())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getEmail()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getEmail()))))+ (", ");
+		fieldUpdatedList += ("email") + (", ");
+	}
+	if (!foundContract.getFax().equals(contract.getFax())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getFax()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getFax()))))+ (", ");
+		fieldUpdatedList += ("fax") + (", ");
+	}
+	if(!foundContract.getLanguage().equals(contract.getLanguage())) {
 		fieldBeforeList += ((String.valueOf((foundContract.getLanguage()))))+ (", ");
 		fieldAfterList += ((String.valueOf((contract.getLanguage()))))+ (", ");
 		fieldUpdatedList += ("language") + (", ");
@@ -290,11 +426,14 @@ public class ContractController {
 		fieldUpdatedList += ("related_agreements") + (", ");
 	}
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
 		contract.setDate_updated(timeNow);
 		blank.setField_after(fieldAfterList);
 		blank.setField_before(fieldBeforeList);
 		blank.setField_updated(fieldUpdatedList);
-		blank.setUserid(contract.getUser());
+		blank.setUserid(user);
 		blank.setRequestedid(contract);
 		blank.setDate(contract.getDate_updated());
 		contractService.update(contract);
@@ -302,16 +441,24 @@ public class ContractController {
 		return "redirect:/update_status/" + contract.getRequestid();
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/update_status/{requestid}")
 	public String updateStatus(@PathVariable("requestid") int requestid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
 		opRepo.findById(requestid).ifPresent(operative->model.addAttribute("operative", operative));
 		exRepo.findById(requestid).ifPresent(expired->model.addAttribute("expired", expired));
+		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
 		return "update_status";	
 	}
 	
+	//updates an in negotiation status 
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL" })
 	@PostMapping("/api/update/in_negotiation")
-	public String updateInNegotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation) {
+	public String updateInNegotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		in_negotiationService.update(in_negotiation);
 		Integer requestid = in_negotiation.getRequestId();
 		StatusLink stat = new StatusLink(requestid, "in_negotiation");
@@ -319,8 +466,12 @@ public class ContractController {
 		return "redirect:/";
 	}
 	
+	//updates an operative status
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL" })
 	@PostMapping("/api/update/operative")
-	public String updateOperative(@ModelAttribute(name="operative") Operative operative) {
+	public String updateOperative(@ModelAttribute(name="operative") Operative operative, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		operativeService.update(operative);
 		Integer requestid = operative.getRequestId();
 		StatusLink stat = new StatusLink(requestid, "operative");
@@ -328,29 +479,38 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
+	//updates an expired status
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/update/expired")
-	public String updateExpired(@ModelAttribute(name="expired") Expired expired) {
+	public String updateExpired(@ModelAttribute(name="expired") Expired expired, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		expiredService.update(expired);
-		Integer requestid = expired.getRequestid();
+		Integer requestid = expired.getRequestId();
 		StatusLink stat = new StatusLink(requestid, "expired");
 		statuslinkService.update(stat);
 		return "redirect:/search_contracts";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/archive_contracts/{requestid}")
 	public String archiveContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
 		foundContract.setArchived("T");
 		contractService.addContract(foundContract);
-		return "redirect:/archive_contracts";
+		return "redirect:/search_contracts";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/archive_contracts")
 	public String getArchivedContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getArchivedContracts());
 		return "archive_contracts";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/unarchive_contracts/{requestid}")
 	public String unarchiveContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract unarchiveContract = contractService.findContract(requestid).orElse(new Contract());
@@ -359,14 +519,19 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/unarchive_contracts")
 	public String getUnarchivedContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getAllContracts());
 		return "search_contracts";
 	}
 	
 	@GetMapping("/my_contracts")
     public String showMyContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
@@ -375,6 +540,7 @@ public class ContractController {
         return "my_contracts";
     }
 	
+	//adds a contract to a users favourited contracts
 	@PostMapping("/favourite_contracts/{requestid}")
 	public String favouritedContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract favouritedContract = contractService.findContract(requestid).orElse(new Contract());
@@ -385,11 +551,13 @@ public class ContractController {
 		favourite.setUser(user);
 		favourite.setContract(favouritedContract);
 		favouritedService.addFavourite(favourite);
-		return "redirect:/favourite_contracts";
+		return "redirect:/search_contracts";
 	}
 
 	@GetMapping("/favourite_contracts")
 	public String getFavouritedContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
@@ -398,6 +566,31 @@ public class ContractController {
 		return "favourite_contracts";
 	}
 	
+	@GetMapping("/add_related/{requestid}")
+	public String relatedContracts(@PathVariable("requestid") int requestid, Model model) {
+		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
+		model.addAttribute("contracts", contractService.getAllExceptCurrent(requestid));
+		Contract newContract = contractService.findContract(requestid).orElse(new Contract()); 
+		model.addAttribute("currentContract", newContract.getAgreement_title());
+		RelatedAgreements relatedAgreement = new RelatedAgreements();
+		Contract related = contractService.findContract(requestid).orElse(new Contract());
+		relatedAgreement.setRequestid_related(related);
+		relatedAgreementsService.addRelatedAgreements(relatedAgreement);
+		return "add_related";
+	}
+	
+	@PostMapping("/related_contracts/{requestid}")
+	public String getRelatedContracts(@PathVariable("requestid") int requestid, Model model) {
+		Contract relatedContract = contractService.findContract(requestid).orElse(new Contract());
+		Integer relatedid = relatedAgreementsService.findNewestRelated();
+		RelatedAgreements relatedAgreement = relatedAgreementsService.findbyId(relatedid).orElse(new RelatedAgreements());
+		relatedAgreement.setRequestid_relatedto(requestid);
+		relatedAgreementsService.addRelatedAgreements(relatedAgreement);
+		Contract newRelated = relatedAgreement.getRequestid_related();
+		return "redirect:/view_details/" + newRelated.getRequestid();
+	}
+	
+	//removes a contract from a users favourite contracts
 	@PostMapping("/unfavourite_contracts/{requestid}")
 	public String unfavouritContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract unfavouriteContract = contractService.findContract(requestid).orElse(new Contract());
@@ -410,15 +603,51 @@ public class ContractController {
 	}
 	
 	@GetMapping("/help")
-	public String help() {
+	public String help(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		return "/help";
 	}
 	
-	@GetMapping("/admin_settings")
-	public String adminSettings() {
-		return "/admin_settings";
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
+	@GetMapping("/reassign/{requestid}")
+	public String reassignContractForm(@PathVariable("requestid") int requestid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+		repo.findById(requestid).ifPresent(contract->model.addAttribute("contract", contract));
+		negRepo.findById(requestid).ifPresent(in_negotiation->model.addAttribute("in_negotiation", in_negotiation));
+		List <User> users = contractService.getAllUsers();
+		model.addAttribute("users", users);
+		return "reassign";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
+	@PostMapping("/api/reassignment")
+	public String reassignContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
+	{	
+	Integer i = currentService.getCurrent();
+	currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+	String fieldUpdatedList = "";
+	String fieldBeforeList = "";
+	String fieldAfterList = "";
+	Contract foundContract = contractService.findContract(contract.getRequestid()).orElse(new Contract());
+	Audit blank = new Audit();
+	if (!foundContract.getUser().equals(contract.getUser())) {
+		fieldBeforeList += ((String.valueOf((foundContract.getUser().getUserid()))))+ (", ");
+		fieldAfterList += ((String.valueOf((contract.getUser().getUserid()))))+ (", ");
+		fieldUpdatedList += ("userid") + (", ");
+	}
+		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		contract.setDate_updated(timeNow);
+		blank.setField_after(fieldAfterList);
+		blank.setField_before(fieldBeforeList);
+		blank.setField_updated(fieldUpdatedList);
+		blank.setUserid(contract.getUser());
+		blank.setRequestedid(contract);
+		blank.setDate(contract.getDate_updated());
+		contractService.update(contract);
+		auditService.addAudit(blank);
+		return "redirect:/view_details/" + contract.getRequestid();
+	}
 
 }
-	

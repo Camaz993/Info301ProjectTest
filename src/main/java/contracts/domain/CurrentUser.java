@@ -1,13 +1,28 @@
 package contracts.domain;
 
+
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import contracts.security.SecurityConfig;
 
 public class CurrentUser implements UserDetails {
+	
+	@Bean
+	public PasswordEncoder passwordEncoder2() {
+	    return new BCryptPasswordEncoder();
+	}
 
 	private User user;
 	
@@ -18,7 +33,7 @@ public class CurrentUser implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.singleton(new SimpleGrantedAuthority(user.getRole()));
+		return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
 	}
 
 	@Override
@@ -46,6 +61,12 @@ public class CurrentUser implements UserDetails {
 
 	@Override
 	public boolean isCredentialsNonExpired() {
+		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		if (user.getExpiryDate() != null) {
+			if (user.getExpiryDate().compareTo(timeNow) < 0) {
+				return false;
+			}
+		}
 		return true;
 	}
 

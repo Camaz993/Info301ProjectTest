@@ -10,12 +10,17 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import contracts.domain.Contract;
+import contracts.domain.Favourited;
+import contracts.domain.StatusLink;
 
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Integer> {
 
-	@Query(value = "SELECT * FROM CONTRACT WHERE LOWER(Agreement_Title) LIKE CONCAT(LOWER(:search), '%') OR RequestID LIKE CONCAT(:search, '%')", nativeQuery = true)
+	@Query(value = "SELECT * FROM CONTRACT c WHERE c.Agreement_Title LIKE %:search%", nativeQuery = true)
     public List<Contract> searchContracts(@Param("search") String search);
+  
+	/*@Query(value = "SELECT * FROM CONTRACT c WHERE c.Agreement_Title LIKE :word or c.Description LIKE word")
+	public List<Contract> searchContracts(String search);*/
     
 	@Query(value = "SELECT * FROM CONTRACT WHERE LOWER(Agreement_Location) LIKE CONCAT(LOWER(:search), '%') OR RequestID LIKE CONCAT(:search, '%')", nativeQuery = true)
     public List<Contract> searchLocation(@Param("search") String search);
@@ -54,5 +59,15 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     @Modifying
     @Query(value = "DELETE FROM FAVOURITED WHERE requestid = ?1 AND userid = ?2", nativeQuery = true)
     public void unfavouriteContract(Integer requestid, Integer userid);
+    
+    @Query(value = "SELECT COUNT(*) FROM FAVOURITED WHERE requestid = ?1 AND userid = ?2 limit 1", nativeQuery = true)
+    public Integer checkFavourited(Integer requestid, Integer userid);
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.requestid != ?1", nativeQuery = true)
+    public List<Contract> getAllExceptCurrent(Integer requestid);
+    
+    @Query(value = "SELECT * FROM CONTRACT WHERE requestid IN (select requestid_relatedto FROM related_agreements WHERE requestid_related= ?1)", nativeQuery=true)
+    public List<Contract> getRelatedContracts(Integer requestid); 
+    
 }
 

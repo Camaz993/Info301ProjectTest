@@ -9,7 +9,7 @@ body{
 
 .headerContainer {
 	background: #122848;
-	width:100%;
+	width:auto;
 }
 
 .header {
@@ -18,20 +18,22 @@ body{
 	padding: 30px;
 	color: #1380A1;
 	padding-left: 50px;
+	width:auto;
 	}
 
 .sidenav {
   overflow: hidden;
   background-color: #122848;
-  width: 100%;
-  padding-left: 50px;
+  width: auto;
+  padding-left: 10px;
 }
 
 .sidenav div {
-  float: left;
   display: block;
+  float:left;
   text-align: center;
-  padding: 14px 16px;
+  margin-top:10px;
+  padding-left:10px;
   text-decoration: none;
   color: #1380A1;
 }
@@ -56,18 +58,19 @@ body{
 .links {
 	margin-left:auto;
 	margin-right:auto;
-	width:80%;
+	width:90%;
 }
 
 .links a {
 	font-weight: bold;
-	color: #1380A1;
+	color: #F2F2F2;
 	padding:5px;
 	font-size:10pt;
 	}
+
+.logout a {
+	color:#1380A1;
 	
-.links a:hover {
-  color: #F2F2F2;
 }
 
 .sub {
@@ -79,15 +82,48 @@ body{
 
 
 .logout {
-	width:15%;
 	padding:0px;
+	width:170px;
 	position:absolute;
-    top:20px;
-    right:10px;
+    top:30px;
+    right:20px;
   	display: inline-block;
   	color:#D0D3D4;
 }
 
+.logoutButton {
+	margin-top:5px;
+	background-color: #4CAF50;
+  color: white;
+  padding: 8px 8px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width:80px;
+  float:left;
+  margin-right:5px;
+}
+
+.logoutButtonCancel {
+	margin-top:5px;
+	background-color:#bfbfbf;
+  color: white;
+  padding: 8px 8px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width:80px;
+  float:left;
+  margin-right:5px;
+}
+
+.logoutButton:hover {
+	background-color: #45a049;
+}
+
+.logoutButtonCancel:hover {
+	background-color: grey;
+}
 
 .wrongth th {
 	font-weight: normal;
@@ -104,18 +140,42 @@ body{
     overflow: hidden;
     padding: 20px;
     position: relative;
+    margin-bottom:10px;  
+}
+
+.content a {
+	color:#1380A1;
+	text-decoration:none;
+}
+
+.content a:hover {
+	color:navy;
+}
+
+.links a:hover {
+  color: white;
 }
 
 .content_search {
 	margin: auto;
 	width: 90%;
 	margin-top: 50px;
+	margin-bottom: 50px;
   	background-color: #f2f2f2;
     border-radius: 12px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     overflow: hidden;
     padding: 20px;
     position: relative;
+}
+
+.content_search a {
+	color:teal;
+	text-decoration:none;
+}
+
+.content_search a:hover {
+	color:navy;
 }
 
 .display-none {
@@ -141,7 +201,13 @@ body{
 
 table{
 	width: 100%;
+	table-layout: fixed;
+	font-size:14px;
 	}
+
+.error {
+	color: red;
+}
 	
 input, select, textarea, tr, th {
   width: 100%;
@@ -154,6 +220,33 @@ input, select, textarea, tr, th {
   resize: vertical;
 }
 
+td, input{
+	width: 250px;
+	}
+	
+input {
+    margin-bottom:5px;
+    width: 300px;
+    padding:10px;
+    display:inline-block;
+    text-align:left;
+ }
+ 
+ label {
+	font-variant-caps: all-small-caps;
+	font-size:17px;
+	margin-right:30%;
+	display: inline-block;
+    margin-bottom:5px;
+    width:100px;
+    text-align: left;
+
+}
+
+#addContract td {
+	float:left;
+}
+
 input[type=submit] {
   background-color: #4CAF50;
   color: white;
@@ -161,10 +254,65 @@ input[type=submit] {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  width:120px;
 }
 
 input[type=submit]:hover {
   background-color: #45a049;
+}
+
+.btn {
+background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  }
+  
+.btn:hover {
+  background-color: #45a049;
+}
+
+.btnCancel {
+background-color: #bfbfbf;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  }
+  
+.btnCancel:hover {
+  background-color: grey;
+}
+
+.btnSmall {
+	background-color: #4CAF50;
+  color: white;
+  padding: 6px 5px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;	
+}
+
+.btnSmall:hover {
+  background-color: #45a049;
+}
+
+#searchbar {
+	margin-bottom:150px;
+}
+
+#searchForm {
+	float:left;
+	clear:both;
+}
+
+#searchReset {
+	float:left;
+	margin-left:5px;
+	margin-top:1px;
 }
 
 h1{
@@ -172,9 +320,14 @@ h1{
   font-size: 200%;
 }
 
+h3 {
+font-weight:normal;
+color:grey;
+}
+
 .footerContainer {
 	background: #122848;
-	width:100%;
+	width:auto;
 }
 
 footer {
@@ -253,3 +406,55 @@ footer a {
 .vdbutton button:hover {
   background-color:  #808080;
 }
+
+/* Style the alert messages */
+.alertMessage {
+	color: black;
+	text-align:center;
+	font-style:italic;
+	background-color:#4CAF50;
+	width:100%;
+	padding:1px;
+	margin-bottom:10px;
+}
+
+img.logo{
+	border-radius: 50%;
+	float: left;
+    margin-right: 20px;
+}
+
+h1.header{
+	display: inline-block;
+}
+
+
+#relatedRequestid {
+	display: block;
+	margin-top: 5px;
+}
+
+#relatedAgreementTable {
+	width: 40%;
+}
+
+#relatedAgreementTableId {
+	width: 20%;
+}
+
+thead {
+ background-color: white;
+}
+
+.content_search thead {
+	font-size:12px;
+}
+
+.content_search table {
+	font-size:12px;
+}
+
+tr:nth-child(even) {
+	background-color: white;
+}
+

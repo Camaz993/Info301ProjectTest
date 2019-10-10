@@ -3,20 +3,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Contract Search</title>
-<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" title="style" id="style"/>
+<link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
+<link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
+<link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
 </head>
-<body>
+<body onload="setColours();">
 
-	<div class="headerContainer">
 	<div class="header">
+	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
-	</div>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
-        <form th:action="@{/logout}" method="post"> 
-            <input type="submit" value="Logout"/> 
+    	<form th:action="@{/change_password}" method="get"> 
+            <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
         </form>
-    	</div>
+        <form th:action="@{/logout}" method="post"> 
+            <button type="submit" value="Logout" class="logoutButtonCancel"/>Logout</button>
+        </form>
     	</div>
 	<div class="sidenav">
 			<div>
@@ -27,24 +31,38 @@
 	 		<p class="sub">Create a new contract</p>
 	 		</div>
 	 		<div>
-	 		<a>Search Contacts</a></li>
+	 		<a href="/search_contracts">Search Contacts</a></li>
 	 		<p class="sub">Search for a contract</p>
-	 		</div>
-	 		<div>
-	 		<a href="/archive_contracts">Archived Contracts</a></li>
-	 		<p class="sub">View archived contracts</p>
 	 		</div>
 	 		<div>
 	 		<a href="/my_contracts">My Contracts</a></li>
 	 		<p class="sub">View your assigned contracts</p>
  			</div>
  			<div>
- 			<a href="/create_account">Create Account</a></li>
- 			<p class="sub">Create a new account</p>
- 			</div>
+ 		<a href="/favourite_contracts">Favourited Contracts</a></li>
+ 		<p class="sub">View your favourited contracts</p>
+ 		</div>
+ 			<div>
+ 		<a href="/help">Help</a></li>
+ 		<p class="sub">Find help for system</p>
+ 		</div>
+ 		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+ 		<a href="/favourite_contracts">Admin</a></li>
+ 		<p class="sub">View the admin settings</p>
+ 		</div>
+	</div>
 	</div>
 	<div class="content_search">
 	<h2>Audit Table</h2>
+	<div class="subnav">
+	<div class="links">
+	<a href="/admin_settings">Home</a>
+	<a href="/create_account">Create User Account</a>
+	<a href="/manage_users">Manage User Accounts</a>
+	<a href="/site_settings">Site Settings</a>
+	<a>Track Changes</a>
+	</div>
+	</div>
     <h2>Audits</h2>
 	<table id="viewcontracts">
 	<thead>
@@ -55,6 +73,7 @@
     <th>Field Updated</th>
      <th>Field Before</th>
      <th>Field After</th>
+     <th>Archived</th>
     </tr>
     </thead>
     <tbody class="wrongth">
@@ -65,12 +84,39 @@
         <th th:text="${audit.field_updated}"></th>
         <th th:text="${audit.field_before}"></th>
         <th th:text="${audit.field_after}"></th>
+        <th th:text="${audit.archived_contract}"></th>
     </tr>
     </tbody>
     </table>
     </div>
     
+<footer>
+	<a href="/admin_settings">Admin</a>
+	<a href="/help">Help Page</a>
+</footer>
+
+    <table class="display-none">
+    <td th:text="${currentCss.idcurrent_css}"></td>
+    <td th:text="${currentCss.colour}" id="css"></td>
+    </table>
+         
 <script>
+
+function setColours(){
+  var i, link_tag ;
+  var currcss = document.getElementById("css");
+  console.log(currcss);
+  for (i = 0, link_tag = document.getElementsByTagName("link") ; i < link_tag.length ; i++ ) {
+    if ((link_tag[i].rel.indexOf( "stylesheet" ) != -1) && link_tag[i].title) {
+      link_tag[i].disabled = true ;
+      if (currcss.innerHTML.indexOf(link_tag[i].title) != -1) {
+        document.getElementById(link_tag[i].title).disabled = false;
+      }
+    }
+  }
+}
 </script>
 </body>
+<footer>
+</footer>
 </html>

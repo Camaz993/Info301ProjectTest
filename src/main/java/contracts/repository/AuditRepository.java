@@ -16,6 +16,8 @@ import contracts.domain.User;
 @Repository
 public interface AuditRepository extends JpaRepository<Audit, Integer> {
 
-
+	  @Query(value = "SELECT * FROM AUDIT WHERE fk_requestid_audit = ?1", nativeQuery = true)
+	    public List<Audit> getContractsByAuditsRequestID(Integer requestid);
+    
 }
 

@@ -16,7 +16,7 @@ public class AccountService implements IAccountService {
 	@Autowired
 	AccountRepository accountRepository;
 	
-	private String passwordRegex = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+	private String passwordRegex = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
 
 	@Override
 	public void addAccount(User newAccount) {
@@ -58,6 +58,11 @@ public class AccountService implements IAccountService {
 	@Override
 	public List<String> getUserRoles() {
 		return accountRepository.getUserRoles();
+	}
+	
+	@Override
+	public void update(User user) {	
+		accountRepository.save(user);
 	}
 	
 	

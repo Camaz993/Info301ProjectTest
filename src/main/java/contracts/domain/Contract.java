@@ -40,19 +40,18 @@ public class Contract {
 	@JoinColumn(name = "statusid")
 	private List<Status> statusid = new ArrayList<Status>();
 	
-	@NotBlank(message="Agreement title cannot be empty")
+	@NotBlank(message="Enter agreement title")
 	@Column(name = "Agreement_Title")
 	private String agreement_title;
 	
-	@NotBlank(message="Agreement type cannot be empty")
+	@NotBlank(message="Enter agreement type")
 	@Column(name = "Agreement_Type")
 	private String agreement_type;
 	
-	@NotBlank(message="Description cannot be empty")
+	@NotBlank(message="Enter description")
 	@Column(name = "Description")
 	private String description;
 	
-	@NotBlank(message="Agreement location cannot be empty")
 	@Column(name = "Agreement_Location")
 	private String agreement_location;
 	
@@ -67,29 +66,30 @@ public class Contract {
 	private String address;
 	
 	@Column(name = "Phone", length = 11)
-	@Size(min = 5, max = 11, message = "Phone number length must be between 9 and 11 characters. Be sure to include the area code but not country code.")
+	@Size(min = 5, max = 11, message = "Enter number. Be sure to include area code.")
 	@Pattern(regexp = "([0-9]){9,11}", message = "Phone number must be numerical")
 	private String phone;
 	
 	@Column(name = "Email", length = 254)
-	@Size(min = 3, max = 254, message = "Email address must contain between 3 and 254 characters.")
+	@Size(min = 3, max = 254, message="Enter email")
 	// Email address regex from http://emailregex.com (works for 99.99% of email
 	// addresses - as good as it gets!)
 	@Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", message = "Email address must be valid.")
 	private String email;
 
 	@Column(name = "Fax")
+	@Pattern(regexp = "([0-9]){9,11}", message = "Fax number must be numerical")
 	private String fax;
 	
-	@NotBlank(message="Language cannot be empty")
+	@NotBlank(message="Enter language")
 	@Column(name = "Language")
 	private String language;
 	
-	@NotBlank(message="Region cannot be empty")
+	@NotBlank(message="Enter region")
 	@Column(name = "Region")
 	private String region;
 	
-	@NotBlank(message="Related agreements cannot be null")
+	@NotBlank(message="Enter related agreements")
 	@Column(name = "Related_Agreements")
 	private String related_agreements;
 	

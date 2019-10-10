@@ -2,21 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Add Contract Status</title>
-<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
+<title>Update Status</title>
+<link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" title="style" id="style"/>
+<link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
+<link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
+<link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
 </head>
-<body>
-	<div class="headerContainer">
+<body onload="setColours();">
 	<div class="header">
+	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
 	<h1>Contract Management</h1>
-	</div>
-		<div class="logout">
+	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
+    	<form th:action="@{/change_password}" method="post"> 
+            <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
+        </form>
         <form th:action="@{/logout}" method="post"> 
-            <input type="submit" value="Logout"/> 
+            <button type="submit" value="Logout" class="logoutButton"/>Logout</button>
         </form>
     	</div>
-    </div>
     
 	<div class="sidenav">
 		<div>
@@ -30,81 +34,204 @@
  		<a href="/search_contracts">Search Contracts</a></li>
  		<p class="sub">Search for a contract</p>
  		</div>
- 		<div>
+ 		<!--  <div>
  		<a href="/archive_contracts">Archived Contracts</a></li>
  		<p class="sub">View Archived Contracts</p>
- 		</div>
+ 		</div>-->
  		<div>
  		<a href="/my_contracts">My Contracts</a></li>
  		<p class="sub">View your assigned contracts</p>
  		</div>
  		<div>
- 			<a href="/create_account">Create Account</a></li>
- 			<p class="sub">Create a new account</p>
+ 			<a href="/favourite_contracts">Favourite Contracts</a></li>
+ 			<p class="sub">View your favourited contracts</p>
+ 		</div>
+ 			<div>
+ 		<a href="/help">Help</a></li>
+ 		<p class="sub">Find help for system</p>
+ 		</div>
+ 		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+ 		<a href="/favourite_contracts">Admin</a></li>
+ 		<p class="sub">View the admin settings</p>
  		</div>
 	</div>
-	
-	
-	
-	
-
+	</div>              
+    
 <div class="content">	
-
-        
-	<h3>Select Contract Type: </h3>    
-    	<select id="dropdown" onchange="changeStatus()">
-		    <option value="-1">Select Contract Type</option>
-		    <option value="in_negotiation">In Negotiation</option>
-		    <option value="operative">Operative</option>
-		    <option value="expired">Expired</option>
-		</select>
-    <p><br></p>      
-        
-        
-	<form action="#" th:action="@{/api/update/in_negotiation}" th:object="${in_negotiation}" id="in_negotiation" class="display-none" method="post" >
-		<td>Comments: <input type="text" th:field="*{comments}"/></td>	
-		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
-		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
-	</form>
-		
-	<form action="#" th:action="@{/api/update/operative}" th:object="${operative}" id="operative" class="display-none" method="post" >
-		<td>Date Signed <input type="date" th:field="*{date_signed}" /></td>
-		<td>Date Commenced: <input type="date" th:field="*{date_commenced}"/></td>
-		<td>Date Expires: <input type="date" th:field="*{date_expire}"/></td>
-		<td>Verification: <input type="text" th:field="*{verification}"/></td>
-		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
-		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>		
-	</form>
-		
-	<form action="#" th:action="@{/api/update/expired}" th:object="${expired}" id="expired" class="display-none" method="post" >
-		<td>Ending Reason: <input type="text" th:field="*{ending_reason}"/></td>
-		<td>Expiry Date:  <input type="date" th:field="*{expiry_date}"/></td>
-		<td>Termination Date: <input type="date" th:field="*{termination_date}"/></td>
-		<td>Termination Notice Date: <input type="text" th:field="*{termination_notice_date}"/></td>
-		<td>Binding Terms Active: <input type="text" th:field="*{binding_terms_active}"/></td>
-		<input type="hidden" th:field="*{requestid}" th:value="${requestid}"/>		
-		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
-	</form> 
-        
-        
-        
+  <h2>Update Status</h2>
+    <h4>Page 2 of 2: Update Status Details</h4>       
+     
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'InNegotiation')">In Negotiation</button>
+      <button class="tablinks" onclick="openTab(event, 'Operative')">Operative</button>
+      <button class="tablinks" onclick="openTab(event, 'Expired')">Expired</button>
+    </div>
+     
+    <div id="InNegotiation" class="tabcontent">
+    	  <h3>Contract Details:</h3>
+    	  <table class = "viewdetails">
+    	 
+    	 <tr>
+    	 <th>Request Id </th>
+    	 <td th:text ="${selectedContract.requestid}"/>
+    	 </tr>
+    	 <tr>
+    	 <th>User </th> 
+    	  <td th:text ="${selectedContract?.user?.username}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Agreement Title </th> 
+    	 <td th:text ="${selectedContract.agreement_title}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Agreement Type </th> 
+    	 <td th:text ="${selectedContract?.agreement_type}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Description </th> 
+    	 <td th:text ="${selectedContract?.description}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Language </th> 
+    	 <td th:text ="${selectedContract?.language}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Region </th> 
+    	 <td th:text ="${selectedContract?.region}"/>
+    	  </tr>
+    	  </table>
+    	<form action="#" th:action="@{/api/update/in_negotiation}" th:object="${in_negotiation}" id="in_negotiation" method="post" >
+    		<td>Comments: <input type="text" th:field="*{comments}"/></td>	
+    		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
+    		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+    	</form>
+    </div>
+     
+    <div id="Operative" class="tabcontent">
+    	  <h3>Contract Details:</h3>
+    	  <table class = "viewdetails">
+    	 
+    	 <tr>
+    	 <th>Request Id </th>
+    	 <td th:text ="${selectedContract.requestid}"/>
+    	 </tr>
+    	 <tr>
+    	 <th>User </th> 
+    	  <td th:text ="${selectedContract?.user?.username}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Agreement Title </th> 
+    	 <td th:text ="${selectedContract.agreement_title}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Agreement Type </th> 
+    	 <td th:text ="${selectedContract?.agreement_type}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Description </th> 
+    	 <td th:text ="${selectedContract?.description}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Language </th> 
+    	 <td th:text ="${selectedContract?.language}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Region </th> 
+    	 <td th:text ="${selectedContract?.region}"/>
+    	  </tr>
+    	  </table>
+    		
+    	<form action="#" th:action="@{/api/update/operative}" th:object="${operative}" id="operative" method="post" >
+    		<td>Date Signed <input type="date" th:field="*{date_signed}" /></td>
+    		<td>Date Commenced: <input type="date" th:field="*{date_commenced}"/></td>
+    		<td>Date Expires: <input type="date" th:field="*{date_expire}"/></td>
+    		<td>Verification: <input type="text" th:field="*{verification}"/></td>
+    		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
+    		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>		
+    	</form>
+    </div>
+     
+    <div id="Expired" class="tabcontent">
+    	  <h3>Contract Details:</h3>
+    	  <table class = "viewdetails">
+    	 
+    	 <tr>
+    	 <th>Request Id </th>
+    	 <td th:text ="${selectedContract.requestid}"/>
+    	 </tr>
+    	 <tr>
+    	 <th>User </th> 
+    	  <td th:text ="${selectedContract?.user?.username}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Agreement Title </th> 
+    	 <td th:text ="${selectedContract.agreement_title}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Agreement Type </th> 
+    	 <td th:text ="${selectedContract?.agreement_type}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Description </th> 
+    	 <td th:text ="${selectedContract?.description}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Language </th> 
+    	 <td th:text ="${selectedContract?.language}"/>
+    	  </tr>
+    	 <tr>
+    	 <th>Region </th> 
+    	 <td th:text ="${selectedContract?.region}"/>
+    	  </tr>
+    	  </table>
+    	<form action="#" th:action="@{/api/update/expired}" th:object="${expired}" id="expired" method="post" >
+    		<td>Ending Reason: <input type="text" th:field="*{ending_reason}"/></td>
+    		<td>Expiry Date:  <input type="date" th:field="*{expiry_date}"/></td>
+    		<td>Termination Date: <input type="date" th:field="*{termination_date}"/></td>
+    		<td>Termination Notice Date: <input type="text" th:field="*{termination_notice_date}"/></td>
+    		<td>Binding Terms Active: <input type="text" th:field="*{binding_terms_active}"/></td>
+    		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>		
+    		<td><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></td>
+    	</form>
+    </div>             
         
 </div>
-    
 		 
-	<script type="text/javascript">
-		 
-		    function changeStatus() {
-		        var allForms = document.getElementsByTagName('form');
-		        var dropdown = document.getElementById("dropdown");
-		        if (dropdown.value != "-1") {
-		            var form = document.getElementById(dropdown.value);
-		            for (var i = 0; i < allForms.length; i++) {
-		                allForms[i].setAttribute("class", "display-none");
-		            }
-		            form.setAttribute("class", "");
-		        }
-		    }
+    <table class="display-none">
+    <td th:text="${currentCss.idcurrent_css}"></td>
+    <td th:text="${currentCss.colour}" id="css"></td>
+    </table>
+         
+<script>
+
+function setColours(){
+  var i, link_tag ;
+  var currcss = document.getElementById("css");
+  console.log(currcss);
+  for (i = 0, link_tag = document.getElementsByTagName("link") ; i < link_tag.length ; i++ ) {
+    if ((link_tag[i].rel.indexOf( "stylesheet" ) != -1) && link_tag[i].title) {
+      link_tag[i].disabled = true ;
+      if (currcss.innerHTML.indexOf(link_tag[i].title) != -1) {
+        document.getElementById(link_tag[i].title).disabled = false;
+      }
+    }
+  }
+}
+		    
+		    function openTab(evt, tabName) {
+			  var i, tabcontent, tablinks;
+			  tabcontent = document.getElementsByClassName("tabcontent");
+			  for (i = 0; i < tabcontent.length; i++) {
+			    tabcontent[i].style.display = "none";
+			  }
+			  tablinks = document.getElementsByClassName("tablinks");
+			  for (i = 0; i < tablinks.length; i++) {
+			    tablinks[i].className = tablinks[i].className.replace(" active", "");
+			  }
+			  document.getElementById(tabName).style.display = "block";
+			  evt.currentTarget.className += " active";
+			  
+			}
 		</script>
 </body>
 </html>

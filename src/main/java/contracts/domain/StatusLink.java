@@ -38,9 +38,6 @@ public class StatusLink{
 	}
 	
 	//Getters and Setters
-	
-
-	
 	@Override
 	public String toString() {
 		return "status_link [requestid=" + requestid + ", currentstatus=" + currentstatus + "]";

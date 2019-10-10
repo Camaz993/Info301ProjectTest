@@ -1,14 +1,20 @@
 package contracts.domain;
 
 
+
+import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = User.TABLE_NAME)
@@ -55,14 +61,22 @@ public class User {
 	@Column(name="passrepeat")
 	private String passrepeat;
 	
-	
 	 @NotNull
 	 @Column(name = "locked")
 	private boolean locked;
+	 
+	 @Column(name = "email")
+	 private String email;
+	 
+	 @Column(name = "token")
+	 private String token;
+	 
+	 @Column(name = "expirydate")
+	 private Date expirydate;
 	
 	//Constructor 
 	public User(Integer userid, String firstname, String lastname, String role, String username, String password, String passrepeat,
-			boolean locked) {
+			boolean locked, String email, String token, Date expirydate) {
 		super();
 		this.userid = userid;
 		this.firstname = firstname;
@@ -72,6 +86,9 @@ public class User {
 		this.password = password;
 		this.passrepeat = passrepeat;
 		this.locked = locked;
+		this.email = email;
+		this.token = token;
+		this.expirydate = expirydate;
 		}
 	 
 	//Getters and setters
@@ -124,10 +141,33 @@ public class User {
 		this.locked = locked;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public String getToken() {
+		return token;
+	}
+	
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
+	public Date getExpiryDate() {
+		return expirydate;
+	}
+	
+	public void setExpiryDate(Date expirydate) {
+		this.expirydate = expirydate;
+	}
 	
 	@Override
 	public String toString() {
-		return "username=" + username + "";
+		return "Username:" + username;
 	}
 	
 	
