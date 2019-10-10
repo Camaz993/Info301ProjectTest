@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -259,10 +260,44 @@ public class ContractController {
 		return "redirect:/my_contracts";
 	}
 	
+	/*
 	@PostMapping("/api/contracts/search")
 	public List<Contract> searchContracts(@RequestParam String search)
 	{
 		return contractService.searchContracts(search);
+	}
+	@GetMapping("/contracts/search")
+	public String searchContracts(@RequestParam String search, Model model)
+	{
+		model.addAttribute("contracts/search", contractService.searchContracts(search));
+		return "search_contracts";
+	}*/
+	
+	@GetMapping("/contracts/search")
+	public String searchContracts(ModelMap map, @RequestParam String search, Model model)
+	{
+		List<Contract> allContracts = contractService.getAllContracts();
+		List favStatus = new ArrayList<>();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		for (int i = 0; i < allContracts.size(); i++) {
+			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
+				favStatus.add("favourited");
+			}
+			else {
+				favStatus.add("unfavourited");
+			}
+		}
+		
+
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+		map.put("search", search);
+		model.addAttribute("contracts", contractService.searchContracts(search));	
+		model.addAttribute("favstatus", favStatus);
+		//return contractService.searchContracts(search);
+		return "search_contracts";
 	}
 	
 	@PostMapping("/api/contracts/search/location")
