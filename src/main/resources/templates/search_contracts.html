@@ -53,7 +53,7 @@
     <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Title .." title="Type in a Title Name etc....">
     <form th:object="${search}" th:action="@{/contracts/search}" method="get">
         <input type="text" placeholder="Search by Agreement Title .." id="search" name="search" th:value="${search}"/>
-        <input type="submit" value="search"/>
+        <input type="submit" value="search"/>Search
     </form>
     <th th:text="${search}"></th>
     <h2>Contracts</h2>

@@ -267,12 +267,30 @@ public class ContractController {
 	}*/
 	
 	@GetMapping("/contracts/search")
-	public List<Contract> searchContracts(@PathVariable("search") String search, Model model, ModelMap map)
+	public String searchContracts(ModelMap map, @RequestParam String search, Model model)
 	{
-		model.addAttribute("search", search);
-		//map.put("search", search);
-		return contractService.searchContracts(search);
-		//return "search";
+		List<Contract> allContracts = contractService.getAllContracts();
+		List favStatus = new ArrayList<>();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		for (int i = 0; i < allContracts.size(); i++) {
+			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
+				favStatus.add("favourited");
+			}
+			else {
+				favStatus.add("unfavourited");
+			}
+		}
+		
+
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+		map.put("search", search);
+		model.addAttribute("contracts", contractService.searchContracts(search));	
+		model.addAttribute("favstatus", favStatus);
+		//return contractService.searchContracts(search);
+		return "search_contracts";
 	}
 	
 	@PostMapping("/api/contracts/search/location")
