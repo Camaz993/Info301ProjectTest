@@ -137,5 +137,15 @@ public class ContractService implements IContractService{
 		}
 		return true;
 	}
+	
+	@Override
+	public List<Contract> getAllExceptCurrent(Integer requestid) {
+		return contractRepository.getAllExceptCurrent(requestid);
+	}
+	
+	@Override
+	public List<Contract> getRelatedContracts(Integer requestid) {
+		return contractRepository.getRelatedContracts(requestid);
+	}
 
 }

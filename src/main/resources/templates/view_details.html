@@ -56,6 +56,7 @@
   <button class="tablinks" onclick="openTab(event, 'ContractDetails')">Contract Details</button>
   <button class="tablinks" onclick="openTab(event, 'PartyDetails')">Party Details</button>
   <button class="tablinks" onclick="openTab(event, 'Attachments')">Attachments</button>
+  <button class="tablinks" onclick="openTab(event, 'RelatedAgreements')">Related Agreements</button>
   <button class="tablinks" onclick="openTab(event, 'History')">History</button>
   <button class="tablinks" onclick="openTab(event, 'In Negotiation')">Negotiation Details</button>
   <button class="tablinks" onclick="openTab(event, 'Operative')">Operative Details</button>
@@ -195,11 +196,35 @@
 	 	<a th:href = "${selectedContract?.agreement_location}" th:text ="${selectedContract?.agreement_location}" target="_blank"></a>
 		</td>
 	  </tr>
-	<tr>
-	 <th>Related Agreements </th>
-	 <td th:text ="${selectedContract?.related_agreements}"/>
-	  </tr>
 	 </table>
+</div>
+
+<div id="RelatedAgreements" class="tabcontent">
+	<h3>Related Agreements:</h3>
+	<table class="viewdetails">
+	<tr>
+	<th>Related Agreements </th>
+	<td th:text ="${selectedContract?.related_agreements}"/>
+		<form action="#" th:action="@{/add_related/{requestid} (requestid=${selectedContract.requestid})}" method="post">
+			<input type="hidden"/>
+	  		<a th:href="@{/add_related/{requestid} (requestid=${selectedContract.requestid})}" type="submit" id="submitButton">Add Related Agreements</a>
+		</form>
+		</tr>
+	</table>
+	<table id="viewcontracts">
+	<thead>
+	<tr>
+	<th id="relatedAgreementTableId">Request Id</th>
+    <th id="relatedAgreementTable">Agreement Title</th>
+    <th id="relatedAgreementTable">Business Name</th>
+    </tr>
+    </thead>
+    <tr th:each="contract : ${contracts}">
+    	<td><a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" id="relatedRequestid"></a></td>
+        <td th:text="${contract.agreement_title}"></td>	 
+        <td th:text="${contract?.businessname}" id="relatedAgreementTable"></td>
+     </tr>
+     </table>
 </div>
 
 <div id = "History" class="tabcontent">
@@ -207,20 +232,20 @@
 </div>
 
 <div class = "vdbutton">
-<form action="#" th:action="@{/update_details/{requestid}(requestid=${selectedContract.requestid})}" target="blank">
-  			<input type="hidden"/>
-  			<button class="vdbutton" type="submit" id="submitButton">Update</button>
-		</form>
+	<form action="#" th:action="@{/update_details/{requestid}(requestid=${selectedContract.requestid})}" target="blank">
+  		<input type="hidden"/>
+  		<button class="vdbutton" type="submit" id="submitButton">Update</button>
+	</form>
 
-       	<form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
-  			<input type="hidden"/>
-  			<button class="vdbutton" onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
-		</form>
+    <form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
+  		<input type="hidden"/>
+ 		<button class="vdbutton" onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
+	</form>
 
-       		<form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
-  				<input type="hidden"/>
-  				<button class="vdbutton" onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Favourite</button>
-			</form>
+    <form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
+  		<input type="hidden"/>
+  		<button class="vdbutton" onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Favourite</button>
+	</form>
 </div>
    
     <table class="display-none">

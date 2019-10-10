@@ -286,3 +286,22 @@ img.logo{
 h1.header{
 	display: inline-block;
 }
+
+
+#relatedRequestid {
+	display: block;
+	margin-top: 5px;
+}
+
+#relatedAgreementTable {
+	width: 40%;
+}
+
+#relatedAgreementTableId {
+	width: 20%;
+}
+
+tr:nth-child(even) {
+	background-color: white;
+}
+

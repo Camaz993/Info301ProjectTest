@@ -34,6 +34,7 @@ import contracts.domain.Expired;
 import contracts.domain.Favourited;
 import contracts.domain.InNegotiation;
 import contracts.domain.Operative;
+import contracts.domain.RelatedAgreements;
 import contracts.domain.Status;
 import contracts.domain.StatusLink;
 import contracts.domain.User;
@@ -51,6 +52,7 @@ import contracts.service.IExpiredService;
 import contracts.service.IFavouritedService;
 import contracts.service.IInNegotiationService;
 import contracts.service.IOperativeService;
+import contracts.service.IRelatedAgreementsService;
 import contracts.service.IStatusLinkService;
 
 @Controller
@@ -82,6 +84,9 @@ public class ContractController {
 	
 	@Autowired
 	private ContractRepository repo;
+	
+	@Autowired
+	private IRelatedAgreementsService relatedAgreementsService;
 	
 	@Autowired
 	private InNegotiationRepository negRepo;
@@ -333,6 +338,7 @@ public class ContractController {
 		opRepo.findById(requestid).ifPresent(o->model.addAttribute("operative", o));
 		exRepo.findById(requestid).ifPresent(o->model.addAttribute("expired", o));
 		negRepo.findById(requestid).ifPresent(o->model.addAttribute("in_negotiation", o));
+		model.addAttribute("contracts", contractService.getRelatedContracts(requestid));
 		return "view_details";
 	}
 	
@@ -567,6 +573,30 @@ public class ContractController {
 		model.addAttribute("contracts", contractService.getFavouritedContracts(user.getUserid()));
 		model.addAttribute("currentuser", user.getUsername());
 		return "favourite_contracts";
+	}
+	
+	@GetMapping("/add_related/{requestid}")
+	public String relatedContracts(@PathVariable("requestid") int requestid, Model model) {
+		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
+		model.addAttribute("contracts", contractService.getAllExceptCurrent(requestid));
+		Contract newContract = contractService.findContract(requestid).orElse(new Contract()); 
+		model.addAttribute("currentContract", newContract.getAgreement_title());
+		RelatedAgreements relatedAgreement = new RelatedAgreements();
+		Contract related = contractService.findContract(requestid).orElse(new Contract());
+		relatedAgreement.setRequestid_related(related);
+		relatedAgreementsService.addRelatedAgreements(relatedAgreement);
+		return "add_related";
+	}
+	
+	@PostMapping("/related_contracts/{requestid}")
+	public String getRelatedContracts(@PathVariable("requestid") int requestid, Model model) {
+		Contract relatedContract = contractService.findContract(requestid).orElse(new Contract());
+		Integer relatedid = relatedAgreementsService.findNewestRelated();
+		RelatedAgreements relatedAgreement = relatedAgreementsService.findbyId(relatedid).orElse(new RelatedAgreements());
+		relatedAgreement.setRequestid_relatedto(requestid);
+		relatedAgreementsService.addRelatedAgreements(relatedAgreement);
+		Contract newRelated = relatedAgreement.getRequestid_related();
+		return "redirect:/view_details/" + newRelated.getRequestid();
 	}
 	
 	//removes a contract from a users favourite contracts

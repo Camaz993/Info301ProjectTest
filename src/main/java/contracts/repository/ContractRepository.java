@@ -62,5 +62,12 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     
     @Query(value = "SELECT COUNT(*) FROM FAVOURITED WHERE requestid = ?1 AND userid = ?2 limit 1", nativeQuery = true)
     public Integer checkFavourited(Integer requestid, Integer userid);
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.requestid != ?1", nativeQuery = true)
+    public List<Contract> getAllExceptCurrent(Integer requestid);
+    
+    @Query(value = "SELECT * FROM CONTRACT WHERE requestid IN (select requestid_relatedto FROM related_agreements WHERE requestid_related= ?1)", nativeQuery=true)
+    public List<Contract> getRelatedContracts(Integer requestid); 
+    
 }
 

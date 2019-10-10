@@ -47,4 +47,8 @@ public interface IContractService {
 	public void unfavouriteContract(Integer requestid, Integer userid);
 	
 	public Boolean checkFavourited(Integer requestid, Integer userid);
+	
+	List<Contract> getAllExceptCurrent(Integer requestid);
+
+	public Object getRelatedContracts(Integer requestid);
 }

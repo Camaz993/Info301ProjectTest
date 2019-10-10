@@ -130,10 +130,10 @@
         <td>URL or Description of Agreement File Location: <input type="text"  th:field="*{agreement_location}" placeholder="https://www....."/></td>
         <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}" class="error">Location Error</td>
     </tr>   
-    <tr>
-        <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
-        <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}" class="error">Related Agreements Error</td>
-    </tr>
+    <!--<tr>
+        <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" />
+        <td>Related Agreements</td> <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error<td/>  
+    </tr>-->
     </table>
      </div>
      <div>
