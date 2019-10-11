@@ -105,6 +105,19 @@ public class ContractController {
 	
 	@Autowired
 	private CurrentRepository currentRepository;
+	
+	//See stack overflow: 
+	//https://stackoverflow.com/questions/11271554/compare-two-objects-in-java-with-possible-null-values/11271611
+	public static boolean compare(String str1, String str2) {
+	    return (str1 == null ? str2 == null : str1.equals(str2));
+	}
+	
+	public User getCurrentUser() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		return user;
+	}
 
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/add_contracts")
@@ -148,7 +161,7 @@ public class ContractController {
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
 		contract.setDate_updated(timeNow);
 		contractService.addContract(contract);
-		auditService.addAuditDetails(contract);
+		auditService.addAuditDetails(contract, getCurrentUser());
 		return "redirect:/add_status";
 	}
 	
@@ -233,8 +246,6 @@ public class ContractController {
 				favStatus.add("unfavourited");
 			}
 		}
-		
-
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getAllContracts());
@@ -256,11 +267,40 @@ public class ContractController {
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/assign/{requestid}")
 	public String assignUser(@PathVariable("requestid") int requestid, Model model) {
+		String fieldUpdatedList = "";
+		String fieldBeforeList = "";
+		String fieldAfterList = "";
 		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
 		foundContract.setUserid(user);
+		Audit blank = new Audit();
+		if (!compare(String.valueOf(foundContract.getUser()),String.valueOf(user))) {
+			if (foundContract.getUser() != null) {
+				fieldBeforeList += ((String.valueOf((foundContract.getUser().getUserid()))))+ (", ");
+			}
+			else {
+				fieldBeforeList += (" ")+ (", ");
+			}
+			if (user != null) {
+				fieldAfterList += ((String.valueOf((user.getUserid()))))+ (", ");
+			}
+			else {
+				fieldAfterList += (" ")+ (", ");
+			}
+			fieldUpdatedList += ("userid") + (", ");
+		}
+			Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+			foundContract.setDate_updated(timeNow);
+			blank.setField_after(fieldAfterList);
+			blank.setField_before(fieldBeforeList);
+			blank.setField_updated(fieldUpdatedList);
+			blank.setUserid(getCurrentUser());
+			blank.setRequestedid(foundContract);
+			blank.setDate(foundContract.getDate_updated());
+			contractService.update(foundContract);
+			auditService.addAudit(blank);
 		contractService.update(foundContract);
 		return "redirect:/my_contracts";
 	}
@@ -325,6 +365,14 @@ public class ContractController {
 		opRepo.findById(requestid).ifPresent(o->model.addAttribute("operative", o));
 		exRepo.findById(requestid).ifPresent(o->model.addAttribute("expired", o));
 		negRepo.findById(requestid).ifPresent(o->model.addAttribute("in_negotiation", o));
+		String favStatus = "";
+		if (contractService.checkFavourited(requestid, getCurrentUser().getUserid())) {
+				favStatus = "favourited";
+			}
+			else {
+				favStatus = "unfavourited";
+		}
+		model.addAttribute("favstatus", favStatus);
 		model.addAttribute("contracts", contractService.getRelatedContracts(requestid));
 		model.addAttribute("audits", auditService.getContractsByAuditsRequestID(requestid));
 		return "view_details";
@@ -343,103 +391,7 @@ public class ContractController {
 		return "update_details";
 	}
 	
-	//update a contract and store the results of the changes in the audit table
-	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
-	@PostMapping("/api/updates")
-	public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)
-	{	
-	Integer i = currentService.getCurrent();
-	currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
-	String fieldUpdatedList = "";
-	String fieldBeforeList = "";
-	String fieldAfterList = "";
-	Contract foundContract = contractService.findContract(contract.getRequestid()).orElse(new Contract());
-	Audit blank = new Audit();
-	if (!foundContract.getUser().equals(contract.getUser())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getUser().getUserid()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getUser().getUserid()))))+ (", ");
-		fieldUpdatedList += ("userid") + (", ");
-	}
-	if (!foundContract.getAgreement_title().equals(contract.getAgreement_title())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getAgreement_title()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getAgreement_title()))))+ (", ");
-		fieldUpdatedList += ("agreement_title") + (", ");
-	}
-	if (!foundContract.getAgreement_type().equals(contract.getAgreement_type())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getAgreement_type()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getAgreement_type()))))+ (", ");
-		fieldUpdatedList += ("agreement_type") + (", ");
-	}
-	if (!foundContract.getDescription().equals(contract.getDescription())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getDescription()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getDescription()))))+ (", ");
-		fieldUpdatedList += ("description") + (", ");
-	}
-	if (!foundContract.getAgreement_location().equals(contract.getAgreement_location())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getAgreement_location()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getAgreement_location()))))+ (", ");
-		fieldUpdatedList += ("agreement_location") + (", ");
-	}
-	if (!foundContract.getBusinessname().equals(contract.getBusinessname())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getBusinessname()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getBusinessname()))))+ (", ");
-		fieldUpdatedList += ("businessname") + (", ");
-	}
-	if (!foundContract.getClientname().equals(contract.getClientname())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getClientname()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getClientname()))))+ (", ");
-		fieldUpdatedList += ("clientname") + (", ");
-	}
-	if (!foundContract.getAddress().equals(contract.getAddress())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getAddress()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getAddress()))))+ (", ");
-		fieldUpdatedList += ("address") + (", ");
-	}
-	if (!foundContract.getPhone().equals(contract.getPhone())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getPhone()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getPhone()))))+ (", ");
-		fieldUpdatedList += ("phone") + (", ");
-	}
-	if (!foundContract.getEmail().equals(contract.getEmail())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getEmail()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getEmail()))))+ (", ");
-		fieldUpdatedList += ("email") + (", ");
-	}
-	if (!foundContract.getFax().equals(contract.getFax())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getFax()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getFax()))))+ (", ");
-		fieldUpdatedList += ("fax") + (", ");
-	}
-	if(!foundContract.getLanguage().equals(contract.getLanguage())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getLanguage()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getLanguage()))))+ (", ");
-		fieldUpdatedList += ("language") + (", ");
-	}
-	if (!foundContract.getRegion().equals(contract.getRegion())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getRegion()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getRegion()))))+ (", ");
-		fieldUpdatedList += ("region") + (", ");
-	}
-	if (!foundContract.getRelated_agreements().equals(contract.getRelated_agreements())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getRelated_agreements()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getRelated_agreements()))))+ (", ");
-		fieldUpdatedList += ("related_agreements") + (", ");
-	}
-		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = ((UserDetails)principal).getUsername();
-		User user = accountService.findUser(username);
-		contract.setDate_updated(timeNow);
-		blank.setField_after(fieldAfterList);
-		blank.setField_before(fieldBeforeList);
-		blank.setField_updated(fieldUpdatedList);
-		blank.setUserid(user);
-		blank.setRequestedid(contract);
-		blank.setDate(contract.getDate_updated());
-		contractService.update(contract);
-		auditService.addAudit(blank);
-		return "redirect:/update_status/" + contract.getRequestid();
-	}
+	
 	
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/update_status/{requestid}")
@@ -497,6 +449,7 @@ public class ContractController {
 	public String archiveContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract foundContract = contractService.findContract(requestid).orElse(new Contract());
 		foundContract.setArchived("T");
+		auditService.addAuditArchived(foundContract, getCurrentUser());
 		contractService.addContract(foundContract);
 		return "redirect:/search_contracts";
 	}
@@ -632,9 +585,19 @@ public class ContractController {
 	String fieldAfterList = "";
 	Contract foundContract = contractService.findContract(contract.getRequestid()).orElse(new Contract());
 	Audit blank = new Audit();
-	if (!foundContract.getUser().equals(contract.getUser())) {
-		fieldBeforeList += ((String.valueOf((foundContract.getUser().getUserid()))))+ (", ");
-		fieldAfterList += ((String.valueOf((contract.getUser().getUserid()))))+ (", ");
+	if (!compare(String.valueOf(foundContract.getUser()),String.valueOf(contract.getUser()))) {
+		if (foundContract.getUser() != null) {
+			fieldBeforeList += ((String.valueOf((foundContract.getUser().getUserid()))))+ (", ");
+		}
+		else {
+			fieldBeforeList += (" ")+ (", ");
+		}
+		if (contract.getUser() != null) {
+			fieldAfterList += ((String.valueOf((contract.getUser().getUserid()))))+ (", ");
+		}
+		else {
+			fieldAfterList += (" ")+ (", ");
+		}
 		fieldUpdatedList += ("userid") + (", ");
 	}
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
@@ -642,7 +605,7 @@ public class ContractController {
 		blank.setField_after(fieldAfterList);
 		blank.setField_before(fieldBeforeList);
 		blank.setField_updated(fieldUpdatedList);
-		blank.setUserid(contract.getUser());
+		blank.setUserid(getCurrentUser());
 		blank.setRequestedid(contract);
 		blank.setDate(contract.getDate_updated());
 		contractService.update(contract);

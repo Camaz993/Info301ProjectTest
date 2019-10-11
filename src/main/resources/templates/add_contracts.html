@@ -10,6 +10,22 @@
 <link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
 <link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
 </head>
+<style>
+#userid {
+font-size: 11px;
+    padding: 10px;
+    background: #ddd;
+     border: none; 
+    margin-bottom:5px;
+    width:300px;
+}
+p{
+margin-left:80%;
+margin-bottom:0px;
+padding:0px;
+margin-top:0px;
+font-size:14px;
+}</style>
 <body onload="setColours();">
 
 	<div class="header">
@@ -29,28 +45,22 @@
  		<a href="/">Home</a>
  		</div>
  		<div>
- 		<a>New Contract</a></li>
- 		<p class="sub">Create a new contract</p>
+ 		<li>New Contract</li>
  		</div>
  		<div>
  		<a href="/search_contracts">Search Contracts</a></li>
- 		<p class="sub">Search for a contract</p>
  		</div>
  		<div>
  		<a href="/my_contracts">My Contracts</a></li>
- 		<p class="sub">View your assigned contracts</p>
  		</div>
  		<div>
  		<a href="/favourite_contracts">Favourited Contracts</a></li>
- 		<p class="sub">View your favourited contracts</p>
  		</div>
  		<div>
  		<a href="/help">Help</a></li>
- 		<p class="sub">Find help for system</p>
  		</div>
  		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
  		<a href="/admin_settings">Admin</a></li>
- 		<p class="sub">View the admin settings</p>
  		</div>
 	</div>
 	</div>
@@ -67,37 +77,29 @@
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
      <div id="ContractDetails" class="tabcontent">
     <h3>Contract Details:</h3>
-    <table>
-    <tr>
-        <td>User: <select id="userid" name="userid">
+		<label for="userid">User</label>
+		<select id="userid" name="userid">
     	<option value="">Select a user</option>
     	<option th:each="user : ${users}"
     	th:value="${user.userid}"
     	th:utext="${user.username}"
     	th:selected="${user.userid==contract?.user?.userid}"/>
-    	</select></td>
-   	</tr>
-   	<tr>
-    	<td>Agreement Title: <input type="text"  th:field="*{agreement_title}"/></td>
-    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}" class="error">Title Error</td>
-    </tr>
-    <tr>
-    	<td>Agreement Type: <input type="text"  th:field="*{agreement_type}" /></td>
-    	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}" class="error">Type Error</td>
-    </tr>
-    <tr>
-    	<td>Description: <input type="text"  th:field="*{description}" /></td>
-    	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error">Description Error</td>
-    </tr>
-     <tr>
-        <td>Language: <input type="text"  th:field="*{language}" /></td>
-        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}" class="error">Language Error</td>
-    </tr>
-    <tr>
-        <td>Region: <input type="text"  th:field="*{region}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="error">Region Error</td>
-    </tr>
-    </table>
+    	</select>
+    	<label for="agreement_title">Agreement Title</label>
+    	<input type="text"  th:field="*{agreement_title}"/>
+    	<p th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}" class="error">Title Error</p>
+		<label for="agreement_type">Agreement Type</label>
+    	<input type="text"  th:field="*{agreement_type}" />
+    	<p th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}" class="error">Type Error</p>
+    	<label for="description">Description</label>
+    	<input type="text"  th:field="*{description}" />
+    	<p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error">Description Error</p>
+		<label for="language">Language</label>
+        <input type="text"  th:field="*{language}" />
+        <p th:if="${#fields.hasErrors('language')}" th:errors="*{language}" class="error">Language Error</p>
+        <label for="region">Region</label>
+        <input type="text"  th:field="*{region}" />
+        <p th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="error">Region Error</p>
     </div>
      <div id="PartyDetails" class="tabcontent">
      <table>
@@ -209,5 +211,7 @@ function setColours(){
 
 </body>
 <footer>
+<p class="footerText">Contract Management System</p>
+<p class="footerText">See <a href="/help">help</a> page for further contact info</p>
 </footer>
 </html>

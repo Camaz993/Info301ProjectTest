@@ -33,14 +33,24 @@ body{
   float:left;
   text-align: center;
   margin-top:10px;
-  padding-left:10px;
+  padding-left:25px;
+  padding-right:25px;
   text-decoration: none;
   color: #1380A1;
+  margin-left:auto;
+  margin-right:auto;
+  width:auto;
+}
+
+.sidenav li {
+	list-style-type:none;
+	font-weight: bold;
+	color: #f2f2f2;
 }
 
 .sidenav a {
-	font-weight: bold;
 	color: #1380A1;
+	text-decoration:none;
 	}
 
 .sidenav a:hover {
@@ -227,7 +237,7 @@ td, input{
 input {
     margin-bottom:5px;
     width: 300px;
-    padding:10px;
+    padding:6px;
     display:inline-block;
     text-align:left;
  }
@@ -235,10 +245,8 @@ input {
  label {
 	font-variant-caps: all-small-caps;
 	font-size:17px;
-	margin-right:30%;
 	display: inline-block;
-    margin-bottom:5px;
-    width:100px;
+    width:215px;
     text-align: left;
 
 }
@@ -336,6 +344,7 @@ footer {
 	padding: 30px;
 	color: #1380A1;
 	padding-left: 50px;
+	margin-top:50px;
 	}
 	
 footer a:hover {
@@ -457,4 +466,20 @@ thead {
 tr:nth-child(even) {
 	background-color: white;
 }
+
+/*Footer Styling */
+.footerText{
+font-size:11px;
+text-align:center;
+padding:0px;
+margin:2px;
+font-variant-caps: all-small-caps;
+}
+footer a {
+display:inline-block;
+text-decoration:none;
+color:#f2f2f2;
+}
+footer a:hover{
+color:#4CAF50;
 

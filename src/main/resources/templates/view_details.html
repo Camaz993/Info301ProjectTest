@@ -21,7 +21,7 @@
             <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
         </form>
         <form th:action="@{/logout}" method="post"> 
-     	<button type="submit" value="Logout" class="logoutButton"/>Logout</button>
+     	<button type="submit" value="Logout" class="logoutButtonCancel"/>Logout</button>
         </form>
     	</div>
 
@@ -31,31 +31,21 @@
 	 		</div>
 	 		<div>
 	 		<a href="/add_contracts">New Contract</a></li>
-	 		<p class="sub">Create a new contract</p>
 	 		</div>
 	 		<div>
 	 		<a href="/search_contracts">Search Contacts</a></li>
-	 		<p class="sub">Search for a contract</p>
 	 		</div>
-	 		<!--  <div>
-	 		<a href="/archive_contracts">Archived Contracts</a></li>
-	 		<p class="sub">View archived contracts</p>
-	 		</div>-->
 	 		<div>
 	 		<a href="/my_contracts">My Contracts</a></li>
-	 		<p class="sub">View your assigned contracts</p>
  			</div>
  			<div>
 	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
-	 		<p class="sub">View your favourited contracts</p>
 	 		</div>
 	 			<div>
  		<a href="/help">Help</a></li>
- 		<p class="sub">Find help for system</p>
  		</div>
  		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
  		<a href="/favourite_contracts">Admin</a></li>
- 		<p class="sub">View the admin settings</p>
  		</div>
 	</div>
 	</div>
@@ -275,10 +265,18 @@
  		<button class="vdbutton" onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
 	</form>
 
+    <div th:if="${favstatus == 'unfavourited'}">
     <form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
   		<input type="hidden"/>
   		<button class="vdbutton" onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Favourite</button>
 	</form>
+	</div>
+	<div th:if="${favstatus == 'favourited'}">
+	<form action="#" th:action="@{/unfavourite_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
+  		<input type="hidden"/>
+  		<button class="vdbutton" onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Unfavourite</button>
+	</form>
+	</div>
 </div>
    
     <table class="display-none">

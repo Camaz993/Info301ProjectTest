@@ -48,18 +48,18 @@ public class AuditService implements IAuditService {
 		
 	}
 	
-	public void addAuditDetails(Contract contract){
+	public void addAuditDetails(Contract contract, User user){
 		Audit newAudit = new Audit();
-		newAudit.setUserid(contract.getUser());
+		newAudit.setUserid(user);
 		newAudit.setRequestedid(contract);
 		newAudit.setDate(contract.getDate_updated());
 		newAudit.setAdd_contract("Y");
 		addAudit(newAudit);
 	}
 	
-	public void addAuditArchived(Contract contract){
+	public void addAuditArchived(Contract contract, User user){
 		Audit newAudit = new Audit();
-		newAudit.setUserid(contract.getUser());
+		newAudit.setUserid(user);
 		newAudit.setRequestedid(contract);
 		newAudit.setDate(contract.getDate_updated());
 		newAudit.setArchived_contract("Y");
