@@ -29,28 +29,22 @@
  		<a href="/">Home</a>
  		</div>
  		<div>
- 		<a>New Contract</a></li>
- 		<p class="sub">Create a new contract</p>
+ 		<li>New Contract</li>
  		</div>
  		<div>
  		<a href="/search_contracts">Search Contracts</a></li>
- 		<p class="sub">Search for a contract</p>
  		</div>
  		<div>
  		<a href="/my_contracts">My Contracts</a></li>
- 		<p class="sub">View your assigned contracts</p>
  		</div>
  		<div>
  		<a href="/favourite_contracts">Favourited Contracts</a></li>
- 		<p class="sub">View your favourited contracts</p>
  		</div>
  		<div>
  		<a href="/help">Help</a></li>
- 		<p class="sub">Find help for system</p>
  		</div>
  		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
  		<a href="/admin_settings">Admin</a></li>
- 		<p class="sub">View the admin settings</p>
  		</div>
 	</div>
 	</div>
@@ -67,21 +61,18 @@
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
      <div id="ContractDetails" class="tabcontent">
     <h3>Contract Details:</h3>
-    <table>
-    <tr>
-        <td>User: <select id="userid" name="userid">
+		<label for="userid">User:</label>
+		<select id="userid" name="userid">
     	<option value="">Select a user</option>
     	<option th:each="user : ${users}"
     	th:value="${user.userid}"
     	th:utext="${user.username}"
     	th:selected="${user.userid==contract?.user?.userid}"/>
-    	</select></td>
-   	</tr>
-   	<tr>
-    	<td>Agreement Title: <input type="text"  th:field="*{agreement_title}"/></td>
-    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}" class="error">Title Error</td>
-    </tr>
-    <tr>
+    	</select>
+    	<label for="agreement_title">Agreement Title</label>
+    	<input type="text"  th:field="*{agreement_title}"/>
+    	<p th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}" class="error">Title Error</p>
+		<label for="agreement_type">Agreement Type</label>
     	<td>Agreement Type: <input type="text"  th:field="*{agreement_type}" /></td>
     	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}" class="error">Type Error</td>
     </tr>
