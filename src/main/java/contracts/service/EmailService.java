@@ -4,6 +4,7 @@ import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
@@ -31,5 +32,7 @@ public class EmailService {
 
         this.sender.send(message);
     }
+    
+
 }
 
