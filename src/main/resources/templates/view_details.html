@@ -21,7 +21,7 @@
             <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
         </form>
         <form th:action="@{/logout}" method="post"> 
-            <button type="submit" value="Logout" class="logoutButton"/>Logout</button>
+     	<button type="submit" value="Logout" class="logoutButtonCancel"/>Logout</button>
         </form>
     	</div>
 
@@ -31,31 +31,21 @@
 	 		</div>
 	 		<div>
 	 		<a href="/add_contracts">New Contract</a></li>
-	 		<p class="sub">Create a new contract</p>
 	 		</div>
 	 		<div>
 	 		<a href="/search_contracts">Search Contacts</a></li>
-	 		<p class="sub">Search for a contract</p>
 	 		</div>
-	 		<!--  <div>
-	 		<a href="/archive_contracts">Archived Contracts</a></li>
-	 		<p class="sub">View archived contracts</p>
-	 		</div>-->
 	 		<div>
 	 		<a href="/my_contracts">My Contracts</a></li>
-	 		<p class="sub">View your assigned contracts</p>
  			</div>
  			<div>
 	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
-	 		<p class="sub">View your favourited contracts</p>
 	 		</div>
 	 			<div>
  		<a href="/help">Help</a></li>
- 		<p class="sub">Find help for system</p>
  		</div>
  		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
  		<a href="/favourite_contracts">Admin</a></li>
- 		<p class="sub">View the admin settings</p>
  		</div>
 	</div>
 	</div>
@@ -213,7 +203,6 @@
 	<h3>Related Agreements:</h3>
 	<table class="viewdetails">
 	<tr>
-	<th>Related Agreements </th>
 	<td th:text ="${selectedContract?.related_agreements}"/>
 		<form action="#" th:action="@{/add_related/{requestid} (requestid=${selectedContract.requestid})}" method="post">
 			<input type="hidden"/>
@@ -230,9 +219,9 @@
     </tr>
     </thead>
     <tr th:each="contract : ${contracts}">
-    	<td><a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" id="relatedRequestid"></a></td>
-        <td th:text="${contract.agreement_title}"></td>	 
-        <td th:text="${contract?.businessname}" id="relatedAgreementTable"></td>
+    	<th><a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" id="relatedRequestid"></a></th>
+        <th th:text="${contract.agreement_title}"></th>	 
+        <th th:text="${contract?.businessname}" id="relatedAgreementTable"></th>
      </tr>
      </table>
 </div>
@@ -251,10 +240,10 @@
      <th>Archived</th>
     </tr>
     </thead>
-    <tbody class="wrongth">
+    <tbody class="wrongth" style = "word-break:break-all;">
     <tr th:each="audit : ${audits}">
         <th th:text=${audit.userid}></th>	
-        <th th:text=${audit.Requestedid}></th>	 
+        <th th:text=${audit.Requestedid} ></th>	 
         <th th:text="${audit.date}"></th>
         <th th:text="${audit.field_updated}"></th>
         <th th:text="${audit.field_before}"></th>
@@ -276,10 +265,18 @@
  		<button class="vdbutton" onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
 	</form>
 
+    <div th:if="${favstatus == 'unfavourited'}">
     <form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
   		<input type="hidden"/>
   		<button class="vdbutton" onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Favourite</button>
 	</form>
+	</div>
+	<div th:if="${favstatus == 'favourited'}">
+	<form action="#" th:action="@{/unfavourite_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
+  		<input type="hidden"/>
+  		<button class="vdbutton" onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Unfavourite</button>
+	</form>
+	</div>
 </div>
    
     <table class="display-none">
@@ -321,8 +318,8 @@ function openTab(evt, tabName) {
 </div>
    
 <footer>
-	<a href="/admin_settings">Admin</a>
-	<a href="/help">Help Page</a>
+	<p class="footerText">Contract Management System</p>
+<p class="footerText">See <a href="/help">help</a> page for further contact info</p>
 </footer>
 
 </body>

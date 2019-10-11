@@ -28,45 +28,77 @@
 	 		</div>
 	 		<div>
 	 		<a href="/add_contracts">New Contract</a></li>
-	 		<p class="sub">Create a new contract</p>
 	 		</div>
 	 		<div>
 	 		<a href="/search_contracts">Search Contacts</a></li>
-	 		<p class="sub">Search for a contract</p>
 	 		</div>
-	 		<!--  <div>
-	 		<a href="/archive_contracts">Archived Contracts</a></li>
-	 		<p class="sub">View archived contracts</p>
-	 		</div>-->
 	 		<div>
 	 		<a href="/my_contracts">My Contracts</a></li>
-	 		<p class="sub">View your assigned contracts</p>
  			</div>
  			<div>
 	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
-	 		<p class="sub">View your favourited contracts</p>
 	 		</div>
 	 			<div>
- 		<a href="/help">Help</a></li>
- 		<p class="sub">Find help for system</p>
+ 		<li>Help</li>
  		</div>
  		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
  		<a href="/favourite_contracts">Admin</a></li>
- 		<p class="sub">View the admin settings</p>
  		</div>
 	</div>
 </div>
 <div class = "content">
 
-<h3>About</h3>
-<p>This is a Contract Management System which enables you to administrate contracts within a business.</p>
+<h2>Help</h2>
 
-<h3>Need help?</h3>
-<p> Contact the site admin on contractmanagementsystem123@gmail.com</p>
+<h3><b>About</b></h3>
+<p>This is a Contract Management System which enables you to administrate contracts within a business.</p><br>
+<h4>Click the links below to get detailed help on those sections:<h4>
+
+<a href="#features"><b>Features</b></a><br>
+<a href="#login">&emsp; Login</a><br>
+<a href="#logout">&emsp; Log Out</a><br>
+<a href="#recent">&emsp; Most Recently Updated Contracts</a><br>
+<a href="#mycontracts">&emsp; My Contracts</a><br>
+<a href="#favourited">&emsp; Favourited Contracts</a><br>
+<a href="#new">&emsp; New Contract</a><br>
+<a href="#details">&emsp; View Details</a><br>
+<a href="#update">&emsp; Update Details</a><br><br>
+<a href="#contact"><b>Contact us</b></a><br><br>
+
+<h3 id="features"><b>Features</b></h3>
+<h3 id="login">Login</h3>
+<p>Users can log into the system using the username and password provided by the system admin.</p>
+<h3 id="logout">Log Out</h3>
+<p>It is good practice to log out of the system when it is not in use so it cannot be accessed by unauthorised users. Logout using the button on the top right corner of the screen when logged in. </p>
+<h3 id="recent">Most Recently Updated Contracts</h3>
+<p>Most Recently Updated Contracts shows the contracts that have been updated by any user most recently. When a user updates any field in the contract, it will show up in this table with the date updated.</p>
+<h3 id="unassigned">Unassigned Contracts</h3>
+<p>Shows contracts that currently have no one assigned to them. This means that no one is "in charge" of this contract and it may require action. Pressing "Assign to me" will update the contract so that user is assigned to it. Contracts can be assigned to someone else by updating the contract.</p>
+<h3 id="mycontracts">My Contracts</h3>
+<p>This page shows you the contracts that are assigned to you.</p>
+<h3 id="favourited">Favourited Contracts</h3>
+<p>This page shows you the contracts you have "favourited". This means you have flagged that you are interested in the contract so you can follow it and easily access it.</p>
+<h3 id="new">New Contract</h3>
+<p>This function enables you to create new contracts to be recorded in the system. The first page allows you to record basic information about the contract, party, attachments and related agreements. The second page allows you to add details about the status. The status that has had information recorded in it most recently will be the recorded status in the database.</p>
+<h3 id="update">Update Details</h3>
+<p>The update details functionality can be accessed by clicking the "Update" button next to the contract in the Search page or in the individual contract's details page. The first page allows you to make any changes to the basic information of the contract. The second page allows you to make any changes to the status information. The status the contract is tagged to will be the status information that has been most recently updated.</p>
+<h3 id="details">View Details</h3>
+<p>Pressing the Request ID of the contact on most pages will take you to that contract's details page. Here you can see all the information that has been recorded about that contract and can update, favourite or archive it.</p>
+<p>The History tab shows the changes users have made to the contract including what they changed and when.</p>
+<h3 id="archived">Archived Contracts</h3>
+<p>Contracts are archived by users when they are idle - meaning no work is required on them and they are inactive. When a contract is archived, it transfers that contract to a new table so they do not come up in the search. Archived contracts are accessed on the Search page by the button in the top right corner. Archived contracts also do not show up in My Contracts or Favourited Contracts.</p>
+
+
+<h3 id="contact"><b>Need help? Contact us</b></h3>
+<p> Contact the site admin on tonymillernz@gmail.com</p>
+
+<button onclick="topFunction()" id = "myBtn" title = "Back to Top">Back to Top</button>
 
 </div>
 
 <footer>
+<p class="footerText">Contract Management System</p>
+<p class="footerText">See <a href="/help">help</a> page for further contact info</p>
 </footer>
     <table class="display-none">
     <td th:text="${currentCss.idcurrent_css}"></td>
@@ -87,6 +119,26 @@ function setColours(){
       }
     }
   }
+}
+
+//Get the button:
+mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 </script>
 </body>

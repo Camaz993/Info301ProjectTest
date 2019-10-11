@@ -1,12 +1,28 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Create Account</title>
+<title>Favourite Contracts</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" title="style" id="style"/>
 <link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
 <link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
 <link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
+<style>
+#role {
+font-size: 11px;
+    padding: 10px;
+    background: #ddd;
+     border: none; 
+    margin-bottom:5px;
+    width:300px;
+}
+
+label {
+padding-top:0px;
+margin-top:0px;
+width:350px;
+}
+</style>
 </head>
 <body onload="setColours();">
 	<div class="header">
@@ -27,97 +43,72 @@
 	 		</div>
 	 		<div>
 	 		<a href="/add_contracts">New Contract</a></li>
-	 		<p class="sub">Create a new contract</p>
 	 		</div>
 	 		<div>
 	 		<a href="/search_contracts">Search Contacts</a></li>
-	 		<p class="sub">Search for a contract</p>
 	 		</div>
-	 		<!--  <div>
-	 		<a href="/archive_contracts">Archived Contracts</a></li>
-	 		<p class="sub">View archived contracts</p>
-	 		</div> -->
 	 		<div>
 	 		<a href="/my_contracts">My Contracts</a></li>
-	 		<p class="sub">View your assigned contracts</p>
  			</div>
  			<div>
-	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
-	 		<p class="sub">View your favourited contracts</p>
+	 		<a href="/favourited_contracts">Favourited Contracts</a>
 	 		</div>
 	 			<div>
  		<a href="/help">Help</a></li>
- 		<p class="sub">Find help for system</p>
  		</div>
  		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
- 		<a href="/favourite_contracts">Admin</a></li>
- 		<p class="sub">View the admin settings</p>
+ 		<li>Admin</li>
  		</div>
-</div>
-</div>
+ 			</div>
+ 			</div>
 
-<div class="content">
-<form action="#" th:action="@{/api/staff}" th:object="${user}" method="post" id="addUser">
+	<div class="content">
+    <form action="#" th:action="@{/api/staff}" th:object="${user}" method="post" id="addUser">
 <div th:if="${message}" th:text="${message}" class="alertMessage"/>
 	<h2>Add New User</h2>
 	<div class="subnav">
 	<div class="links">
 	<a href="/admin_settings">Home</a>
-<<<<<<< HEAD
 	<a>Create User Account</a>
 	<a href="/manage_users">Manage User Accounts</a>
 	<a href="/site_settings">Site Settings</a>
-=======
-	<a>Create Account</a>
-	<a href="/manage_users">Manage Users</a>
->>>>>>> branch 'development_release3' of https://isgb.otago.ac.nz/info301/git/grana036/contract-mgmt-system.git
 	<a href="/audit">Track Changes</a>
 	</div>
 	</div>
 	<p> Fill in this form to create an account </p>    
-    <table>
-    <tr>
-   		<td>First Name: <input type="text" th:field="*{firstname}" /></td>
-   		<td th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Name Error</td>
-   	</tr>
-   	<tr>
-    	<td>Last Name: <input type="text"  th:field="*{lastname}"/></td>
-    	<td th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Name Error</td>
-    </tr>
-    <tr>
-    	<td>Role: <select id="role" name="role">
+	<form>
+	<label for="firstname">First Name</label>
+   		<input type="text" th:field="*{firstname}" />
+   		<p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Name Error</p>
+	<label for="lastname">Last Name</label>
+    	<input type="text"  th:field="*{lastname}"/>
+    	<p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Name Error</p>
+	<label for="role">Role</label>
+    	<select id="role" name="role">
     	<option disabled="">Select a role</option>
     	<option value="Admin">Admin</option>
     	<option value="Legal">Legal</option>
-    	</select></td>
-    </tr>
-    <tr>
-    	<td>Username: <input type="text"  th:field="*{username}" /></td>
-    	<td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</td>
-        <td th:text="${message1}"></td>
-    </tr>
-    <tr>
-        <td>Password: <input type="password"  th:field="*{password}" /></td>
-        <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
-    </tr>
-     <tr>
-        <td>Password Repeat: <input type="password" th:field="*{passrepeat}"/></td>
-        <td th:if="${#fields.hasErrors('passrepeat')}" th:errors="*{passrepeat}">Password Error</td>
-        <td th:text="${message2}"></td>
-        <td th:text="${message3}"></td>
-    </tr>
-    <tr>
-        <td><input type="submit" value="Submit"/></td>
-    </tr>
-    </table>
+    	</select>
+	<label for="username">Username</label>
+    	<input type="text"  th:field="*{username}" />
+    	<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
+        <p th:text="${message1}"></p>
+        <label for="password">Password</label>
+        <input type="password"  th:field="*{password}" />
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+        <label for="passrepeat">Password Repeat</label>
+        <input type="password" th:field="*{passrepeat}"/>
+        <p th:if="${#fields.hasErrors('passrepeat')}" th:errors="*{passrepeat}">Password Error</p>
+        <label for="email">Email</label>
+        <input type="email" th:field="*{email}"/>
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</p>
+        <p th:text="${message2}"></p>
+        <p th:text="${message3}"></p>
+        <input type="submit" value="Submit"/>
 </form>
-</div>
-
-<footer>
-	<a href="/admin_settings">Admin</a>
-	<a href="/help">Help Page</a>
-</footer>
-
+    
+    </div>
+    
     <table class="display-none">
     <td th:text="${currentCss.idcurrent_css}"></td>
     <td th:text="${currentCss.colour}" id="css"></td>
@@ -138,6 +129,51 @@ function setColours(){
     }
   }
 }
+
+// Accordion 
+function searchID() {
+
+	  // Declare variables 
+	  var input = document.getElementById("myInput");
+	  var filter = input.value.toUpperCase();
+	  var table = document.getElementById("viewcontracts");
+	  var trs = table.tBodies[0].getElementsByTagName("tr");
+
+	  // Loop through first tbody's rows
+	  for (var i = 0; i < trs.length; i++) {
+
+	    // define the row's cells
+	    var tds = trs[i].getElementsByTagName("th");
+
+	    // hide the row
+	    trs[i].style.display = "none";
+
+	    // loop through row cells
+	    for (var i2 = 0; i2 < tds.length; i2++) {
+
+	      // if there's a match
+	      if (tds[i2].innerHTML.toUpperCase().indexOf(filter) > -1) {
+
+	        // show the row
+	        trs[i].style.display = "";
+
+	        // skip to the next row
+	     	continue;
+
+	      }
+	    }
+	  }
+	}
+function ifEmpty(){
+	
+}
 </script>
+
+<footer>
+<p class="footerText">Contract Management System</p>
+<p class="footerText">See <a href="/help">help</a> page for further contact info</p>
+</footer>
+
+
 </body>
 </html>

@@ -20,27 +20,15 @@ public class CurrentCss {
 	@Column(name = "idcurrent_css")
 	private Integer id;
 	
-	@Column(name = "background")
-	private String background;
-	
-	@Column(name="logo")
-	private String logo;
-	
-	@Column(name="button")
-	private String button;
-	
-	@Column(name="links")
-	private String links;
+	@Column(name = "colour")
+	private String colour;
 	
 	public CurrentCss() {}
 
-	public CurrentCss(Integer id, String background, String logo, String button, String links) {
+	public CurrentCss(Integer id, String colour) {
 		super();
 		this.id = id;
-		this.background = background;
-		this.logo = logo;
-		this.button = button;
-		this.links = links;
+		this.colour = colour;
 	}
 
 
@@ -53,42 +41,17 @@ public class CurrentCss {
 		this.id = id;
 	}
 
-	public String getBackground() {
-		return background;
+	public String getColour() {
+		return colour;
 	}
 
-	public void setBackground(String background) {
-		this.background = background;
-	}
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
-
-	public String getButton() {
-		return button;
-	}
-
-	public void setButton(String button) {
-		this.button = button;
-	}
-
-	public String getLinks() {
-		return links;
-	}
-
-	public void setLinks(String links) {
-		this.links = links;
+	public void setColour(String colour) {
+		this.colour = colour;
 	}
 
 	@Override
 	public String toString() {
-		return "CurrentCss [id=" + id + ", background=" + background + ", logo=" + logo + ", button=" + button
-				+ ", links=" + links + "]";
+		return "CurrentCss [id=" + id;
 	}
 	
 	

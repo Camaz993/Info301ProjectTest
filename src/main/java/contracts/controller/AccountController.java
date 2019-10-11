@@ -33,9 +33,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import contracts.domain.Contract;
 import contracts.domain.User;
+import contracts.repository.CurrentRepository;
+import contracts.service.CurrentService;
 import contracts.service.EmailService;
 import contracts.service.IAccountService;
 import contracts.service.IContractService;
@@ -57,8 +60,16 @@ public class AccountController {
 	
 	private User newUser;
 	
+	@Autowired
+	private CurrentService currentService;
+	
+	@Autowired
+	private CurrentRepository currentRepository;
+	
 	@GetMapping("/create_account")
     public String showSignUpForm(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("user", new User());
 		model.addAttribute("roles", accountService.getUserRoles());
         return "create_account";
@@ -66,6 +77,8 @@ public class AccountController {
 	
 	@PostMapping("/api/staff")
 	public String addUser(@Valid @ModelAttribute(name="user") User user, BindingResult br, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		if(br.hasErrors()) {
 			return "create_account";
 		}
@@ -115,6 +128,8 @@ public class AccountController {
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/manage_users")
 	public String manageUsers(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
 	    return "manage_users";
@@ -123,6 +138,8 @@ public class AccountController {
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/lock_users/{userid}")
 	public String selectedUserLock(@PathVariable("userid") int userid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		User foundUser = contractService.findById(userid).orElse(new User());
 		foundUser.setLocked(true);
 		accountService.addAccount(foundUser);
@@ -132,6 +149,8 @@ public class AccountController {
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/unlock_users/{userid}")
 	public String selectedUserUnlock(@PathVariable("userid") int userid, Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		User foundUser = contractService.findById(userid).orElse(new User());
 		foundUser.setLocked(false);
 		accountService.addAccount(foundUser);
@@ -144,7 +163,7 @@ public class AccountController {
 	}
 	
 	@RequestMapping("/forgotpassword")
-	public String forgotPassword(ModelMap map, Model model, @RequestParam String username) {
+	public String forgotPassword(ModelMap map, Model model, @RequestParam String username, RedirectAttributes redirectAttributes) {
 		map.put("username",username);
 		newUser = accountService.findUser(username);
 		try {
@@ -169,13 +188,16 @@ public class AccountController {
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date expiryDate = new Date(System.currentTimeMillis()+3*60*1000);
 		emailService.send(newUser.getEmail(), "Password Recovery: Contract Management System", 
-				token);
+				"Hi there,\n Here is the password recovery token. If you have not requested one please contact your admin"
+				+ "team ASAP. Otherwise, log into your account with this token:\n"
+				+ token + "\nFrom the Contract Management Team.");
 		String pass = newUser.getPassword();
 		newUser.setExpiryDate(expiryDate);
 		newUser.setPassword(passwordEncoder.encode(token));
 		newUser.setPassrepeat(passwordEncoder.encode(token));
 		accountService.update(newUser);
-		return "forgot_password";	
+		redirectAttributes.addFlashAttribute("message2", "Email successfully sent");
+		return "redirect:/forgot_password";	
 	}
 	
 	@GetMapping("/change_password")
@@ -183,6 +205,8 @@ public class AccountController {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("firstname", user.getFirstname());
 		model.addAttribute("lastname", user.getLastname());
 		model.addAttribute("email", user.getEmail());

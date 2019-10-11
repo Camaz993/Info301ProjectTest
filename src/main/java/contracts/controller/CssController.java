@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import contracts.domain.Current;
 import contracts.domain.CurrentCss;
 import contracts.service.ICurrentCssService;
 
@@ -20,6 +21,7 @@ public class CssController {
 	public String getAllContracts(Model model) {
 		Integer id = cssService.getCurrentCss();
 		model.addAttribute("currentCss", cssService.findCss(id));
+		model.addAttribute("current", new Current());
 		return "site_settings";
 	}
 	

@@ -42,28 +42,22 @@ function setColours(){
  		<a href="/">Home</a>
  		</div>
  		<div>
- 		<a>New Contract</a></li>
- 		<p class="sub">Create a new contract</p>
+ 		<a href="/add_contract">New Contract</a></li>
  		</div>
  		<div>
  		<a href="/search_contracts">Search Contracts</a></li>
- 		<p class="sub">Search for a contract</p>
  		</div>
  		<div>
  		<a href="/my_contracts">My Contracts</a></li>
- 		<p class="sub">View your assigned contracts</p>
  		</div>
  		<div>
  		<a href="/favourite_contracts">Favourite Contracts</a></li>
- 		<p class="sub">View your favourited contracts</p>
  		</div>
  			<div>
  		<a href="/help">Help</a></li>
- 		<p class="sub">Find help for system</p>
  		</div>
  		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
- 		<a>Admin</a></li>
- 		<p class="sub">View the admin settings</p>
+ 		<li>Admin</li>
  		</div>
 	</div>
 	</div>
@@ -91,5 +85,7 @@ function setColours(){
     </table>
 </body>
 <footer>
+<p class="footerText">Contract Management System</p>
+<p class="footerText">See <a href="/help">help</a> page for further contact info</p>
 </footer>
 </html>

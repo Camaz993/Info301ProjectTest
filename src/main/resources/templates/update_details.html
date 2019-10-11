@@ -33,7 +33,7 @@ input[type='checkbox']:checked {
             <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
         </form>
         <form th:action="@{/logout}" method="post"> 
-            <button type="submit" value="Logout" class="logoutButton"/>Logout</button>
+            <button type="submit" value="Logout" class="logoutButtonCancel"/>Logout</button>
         </form>
     	</div>
 	<div class="sidenav">
@@ -42,31 +42,21 @@ input[type='checkbox']:checked {
 	 		</div>
 	 		<div>
 	 		<a href="/add_contracts">New Contract</a></li>
-	 		<p class="sub">Create a new contract</p>
 	 		</div>
 	 		<div>
 	 		<a href="/search_contracts">Search Contracts</a></li>
-	 		<p class="sub">Search for a contract</p>
 	 		</div>
-	 		<!-- <div>
-	 		<a href="/archive_contracts">Archived Contracts</a></li>
-	 		<p class="sub">View archived contracts</p>
-	 		</div>-->
 	 		<div>
 	 		<a href="/my_contracts">My Contracts</a></li>
-	 		<p class="sub">View your assigned contracts</p>
  			</div>
  			<div>
 	 		<a href="/favourite_contracts">Favourited Contracts</a></li>
-	 		<p class="sub">View your favourited contracts</p>
 	</div>
 		<div>
  		<a href="/help">Help</a></li>
- 		<p class="sub">Find help for system</p>
  		</div>
  		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
  		<a href="/favourite_contracts">Admin</a></li>
- 		<p class="sub">View the admin settings</p>
  		</div>
 	</div>
 	</div>
@@ -115,7 +105,8 @@ input[type='checkbox']:checked {
         <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
     </tr>
     <tr>
-   		<td>Please Check To Validate Information: <input type="checkbox" name="option1" value="1" style="/* height: 10px; *//* display: inline; */position: absolute;/* top: 0; *//* left: 0; */bottom: 130px;height: 25px;width: 25px;"></td>
+   		<td>Please Check To Validate Information: <input type="checkbox" name="option1" value="1" style="/* height: 10px; */display: inline;/* top: 0; *//* left: 0; */bottom: 130px;height: 25px;width: 25px;padding-bottom: initial;
+    padding-top: inherit;"></td>
     </tr>
     </table>
     </div>
@@ -165,7 +156,7 @@ input[type='checkbox']:checked {
    <div class="vdbutton">
    <table>
     <tr>
-        <td><input type="submit" value="Submit"/>  <input type="button" value="Cancel" onclick="self.close()">
+        <td><input type="button" value="Cancel" onclick="self.close()"><input type="submit" value="Submit"/>  
     </tr>
         </table>
         </form>        
@@ -206,7 +197,8 @@ function setColours(){
 </script>
 </div>
 <footer>
-	<a href="/help">Help Page</a>
+	<p class="footerText">Contract Management System</p>
+<p class="footerText">See <a href="/help">help</a> page for further contact info</p>
 </footer> 
  <script>
     function Validate(){

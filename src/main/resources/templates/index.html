@@ -10,6 +10,11 @@
 <link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
 <link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
 <title>Home Page</title>
+<style>
+.empty{
+font-variant-caps: all-small-caps;
+}
+</style>
 </head>
 <body  onload="setColours(); sortByDate(); showTen();">
 	<div class="header">
@@ -26,31 +31,25 @@
     	</div>
 	<div class="sidenav">
 		<div>
- 		<a>Home</a>
+ 		<li>Home</li>
  		</div>
  		<div>
  		<a href="/add_contracts">New Contract</a></li>
- 		<p class="sub">Create a new contract</p>
  		</div>
  		<div>
  		<a href="/search_contracts">Search Contracts</a></li>
- 		<p class="sub">Search for a contract</p>
  		</div>
  		<div>
  		<a href="/my_contracts">My Contracts</a></li>
- 		<p class="sub">View your assigned contracts</p>
  		</div>
  		<div>
  		<a href="/favourite_contracts">Favourited Contracts</a></li>
- 		<p class="sub">View your favourited contracts</p>
  		</div>
  		<div>
  		<a href="/help">Help</a></li>
- 		<p class="sub">Find help for system</p>
  		</div>
  		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
- 		<a href="/favourite_contracts">Admin</a></li>
- 		<p class="sub">View the admin settings</p>
+ 		<a href="/admin_settings">Admin</a></li>
  		</div>
 	</div>
 	</div>
@@ -59,8 +58,11 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<h2>Welcome to the Contract Management System</h2>
 
-    <div>
      <h3>Most Recently Updated Contracts</h3>
+     <div th:if= "${contracts.isEmpty()}">
+     <p class="empty">There are currently no recent contracts</p>
+     </div>
+     <div th:if= "${!contracts.isEmpty()}">
 	<table id="viewcontracts">
 	<thead>
 	<tr>
@@ -89,12 +91,13 @@
     </div>
      <h3>Unassigned Contracts</h3>
      <div th:if= "${contracts2.isEmpty()}">
-     <p>There are currently no unassigned contracts</p>
+     <p class="empty">There are currently no unassigned contracts</p>
      </div>
      <div th:if= "${!contracts2.isEmpty()}">
         <table id="unassigned">
 	<thead>
 	<tr>
+	<th>Request ID</th>
     <th>Agreement Title</th>
     <th>Agreement Type</th>
     <th>Description</th>
@@ -104,6 +107,9 @@
     </thead>
     <tbody class="wrongth">
     <tr th:each="contract : ${contracts2}">
+     	<th>
+        	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" target="_blank"></a>
+        </th>
         <th th:text="${contract.agreement_title}"></th>
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
@@ -118,6 +124,7 @@
     </table>
     </div>
     </div>
+ 
  
     <table class="display-none">
     <td th:text="${currentCss.idcurrent_css}"></td>
@@ -170,6 +177,8 @@ function convertDate(d) {
 </script>
 
 <footer>
+<p class="footerText">Contract Management System</p>
+<p class="footerText">See <a href="/help">help</a> page for further contact info</p>
 </footer>
 
 </body>
