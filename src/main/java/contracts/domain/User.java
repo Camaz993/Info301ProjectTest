@@ -68,15 +68,12 @@ public class User {
 	 @Column(name = "email")
 	 private String email;
 	 
-	 @Column(name = "token")
-	 private String token;
-	 
 	 @Column(name = "expirydate")
 	 private Date expirydate;
 	
 	//Constructor 
 	public User(Integer userid, String firstname, String lastname, String role, String username, String password, String passrepeat,
-			boolean locked, String email, String token, Date expirydate) {
+			boolean locked, String email, Date expirydate) {
 		super();
 		this.userid = userid;
 		this.firstname = firstname;
@@ -87,7 +84,6 @@ public class User {
 		this.passrepeat = passrepeat;
 		this.locked = locked;
 		this.email = email;
-		this.token = token;
 		this.expirydate = expirydate;
 		}
 	 
@@ -147,14 +143,6 @@ public class User {
 	
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	
-	public String getToken() {
-		return token;
-	}
-	
-	public void setToken(String token) {
-		this.token = token;
 	}
 	
 	public Date getExpiryDate() {

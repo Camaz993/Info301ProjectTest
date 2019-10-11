@@ -21,20 +21,22 @@ body{
 	padding: 30px;
 	color: #CCE3CE;
 	padding-left: 50px;
+	width:auto;
 	}
 
 .sidenav {
   overflow: hidden;
   background-color: #1E6A26;
-  width: 100%;
-  padding-left: 50px;
+  width: auto;
+  padding-left: 10px;
 }
 
 .sidenav div {
-  float: left;
   display: block;
+  float:left;
   text-align: center;
-  padding: 14px 16px;
+  margin-top:10px;
+  padding-left:10px;
   text-decoration: none;
   color: #CCE3CE;
 }
@@ -59,7 +61,7 @@ body{
 .links {
 	margin-left:auto;
 	margin-right:auto;
-	width:95%;
+	width:90%;
 }
 
 .links a {
@@ -78,6 +80,11 @@ body{
 	font-size: 10pt;
 	margin-top: 0px;
 	padding: 0px;
+}
+
+.logout a {
+	color:#1380A1;
+	
 }
 
 
@@ -279,4 +286,115 @@ img.logo{
 
 h1.header{
 	display: inline-block;
+}
+
+.logoutButton {
+	margin-top:5px;
+	background-color: #4CAF50;
+  color: white;
+  padding: 8px 8px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width:80px;
+  float:left;
+  margin-right:5px;
+}
+
+.logoutButtonCancel {
+	margin-top:5px;
+	background-color:#bfbfbf;
+  color: white;
+  padding: 8px 8px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width:80px;
+  float:left;
+  margin-right:5px;
+}
+
+.logoutButton:hover {
+	background-color: #45a049;
+}
+
+.logoutButtonCancel:hover {
+	background-color: grey;
+}
+
+.content a {
+	color:#1380A1;
+	text-decoration:none;
+}
+
+.content a:hover {
+	color:navy;
+}
+
+.links a:hover {
+  color: white;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+.btnCancel {
+background-color: #bfbfbf;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  }
+  
+.btnCancel:hover {
+  background-color: grey;
+}
+
+.btnSmall {
+	background-color: #4CAF50;
+  color: white;
+  padding: 6px 5px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;	
+}
+
+.btnSmall:hover {
+  background-color: #45a049;
+}
+
+h3 {
+font-weight:normal;
+color:grey;
+}
+
+#relatedRequestid {
+	display: block;
+	margin-top: 5px;
+}
+
+#relatedAgreementTable {
+	width: 40%;
+}
+
+#relatedAgreementTableId {
+	width: 20%;
+}
+
+thead {
+ background-color: white;
+}
+
+.content_search thead {
+	font-size:12px;
+}
+
+.content_search table {
+	font-size:12px;
+}
+
+tr:nth-child(even) {
+	background-color: white;
 }
