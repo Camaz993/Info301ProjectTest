@@ -274,7 +274,6 @@ public class ContractController {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
-		foundContract.setUserid(user);
 		Audit blank = new Audit();
 		if (!compare(String.valueOf(foundContract.getUser()),String.valueOf(user))) {
 			if (foundContract.getUser() != null) {
@@ -299,9 +298,10 @@ public class ContractController {
 			blank.setUserid(getCurrentUser());
 			blank.setRequestedid(foundContract);
 			blank.setDate(foundContract.getDate_updated());
-			contractService.update(foundContract);
+			foundContract.setArchived("F");
+			foundContract.setUserid(user);
 			auditService.addAudit(blank);
-		contractService.update(foundContract);
+			contractService.update(foundContract);
 		return "redirect:/my_contracts";
 	}
 	
@@ -608,6 +608,7 @@ public class ContractController {
 		blank.setUserid(getCurrentUser());
 		blank.setRequestedid(contract);
 		blank.setDate(contract.getDate_updated());
+		contract.setArchived("F");
 		contractService.update(contract);
 		auditService.addAudit(blank);
 		return "redirect:/view_details/" + contract.getRequestid();
