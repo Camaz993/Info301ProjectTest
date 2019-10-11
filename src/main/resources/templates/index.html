@@ -102,6 +102,7 @@ font-variant-caps: all-small-caps;
         <table id="unassigned">
 	<thead>
 	<tr>
+	<th>Request ID</th>
     <th>Agreement Title</th>
     <th>Agreement Type</th>
     <th>Description</th>
@@ -111,6 +112,9 @@ font-variant-caps: all-small-caps;
     </thead>
     <tbody class="wrongth">
     <tr th:each="contract : ${contracts2}">
+     	<th>
+        	<a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" target="_blank"></a>
+        </th>
         <th th:text="${contract.agreement_title}"></th>
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
