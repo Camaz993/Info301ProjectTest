@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Contract Search</title>
+<title>Add Related Agreement</title>
 <link href="../static/style.css" th:href="@{/style.css}" rel="stylesheet" />
 </head>
 <body>
@@ -46,7 +46,7 @@
 	</div>-->
 	</div>
 	<div class="content_search">
-	<h2 th:text="'Add related agreements for' + ${currentContract}"></h2>
+	<h2 th:text="'Add related agreements for ' + ${currentContract}"></h2>
     <!--<form action="#" th:action="@{/api/contracts}" th:object="${contracts}" method="get">
       <label for="search">Search:</label><input name="search" id="search"> 
     <p><input type="submit" value="Submit" /> </p>
