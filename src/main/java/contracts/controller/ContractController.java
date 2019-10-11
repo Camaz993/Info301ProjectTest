@@ -157,8 +157,8 @@ public class ContractController {
 		if(br.hasErrors()) {
 		return "add_contracts";
 		}
-		contract.setArchived("F");
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		contract.setArchived("F");
 		contract.setDate_updated(timeNow);
 		contractService.addContract(contract);
 		auditService.addAuditDetails(contract, getCurrentUser());
