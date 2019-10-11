@@ -17,7 +17,7 @@ font-size: 11px;
     background: #ddd;
      border: none; 
     margin-bottom:5px;
-    width:300px;
+    width:500px;
 }
 p{
 margin-left:80%;
@@ -25,7 +25,13 @@ margin-bottom:0px;
 padding:0px;
 margin-top:0px;
 font-size:14px;
-}</style>
+}
+input{
+width:500px;}
+
+#agreement_location {
+font-size:14px;}
+</style>
 <body onload="setColours();">
 
 	<div class="header">
@@ -124,7 +130,7 @@ font-size:14px;
     </div>
      <div id="Attachments" class="tabcontent">
     <h3>Attachments</h3>
-    <label for="agreement_location">URL or Description of Agreement File Location</label>
+    <label for="agreement_location" id="agreement_location">URL or Description of Agreement File Location</label>
      <input type="text"  th:field="*{agreement_location}" placeholder="https://www....."/>
         <p th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}" class="error">Location Error</p>
      </div>
