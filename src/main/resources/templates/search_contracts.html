@@ -55,10 +55,10 @@ margin-top:-45px;
  			<a href="/help">Help</a></li>
  			<p class="sub">Find help for system</p>
  			</div>
- 			<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
- 			<a href="/favourite_contracts">Admin</a></li>
- 			<p class="sub">View the admin settings</p>
- 			</div>
+ 		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+ 		<a href="/admin_settings">Admin</a></li>
+ 		<p class="sub">View the admin settings</p>
+ 		</div>
 	</div>
 	</div>
 	<div class="content_search">
