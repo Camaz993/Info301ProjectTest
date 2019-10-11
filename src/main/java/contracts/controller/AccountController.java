@@ -205,6 +205,8 @@ public class AccountController {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("firstname", user.getFirstname());
 		model.addAttribute("lastname", user.getLastname());
 		model.addAttribute("email", user.getEmail());
