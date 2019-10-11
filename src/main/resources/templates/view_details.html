@@ -21,7 +21,7 @@
             <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
         </form>
         <form th:action="@{/logout}" method="post"> 
-            <button type="submit" value="Logout" class="logoutButton"/>Logout</button>
+     	<button type="submit" value="Logout" class="logoutButton"/>Logout</button>
         </form>
     	</div>
 
@@ -213,7 +213,6 @@
 	<h3>Related Agreements:</h3>
 	<table class="viewdetails">
 	<tr>
-	<th>Related Agreements </th>
 	<td th:text ="${selectedContract?.related_agreements}"/>
 		<form action="#" th:action="@{/add_related/{requestid} (requestid=${selectedContract.requestid})}" method="post">
 			<input type="hidden"/>
@@ -230,9 +229,9 @@
     </tr>
     </thead>
     <tr th:each="contract : ${contracts}">
-    	<td><a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" id="relatedRequestid"></a></td>
-        <td th:text="${contract.agreement_title}"></td>	 
-        <td th:text="${contract?.businessname}" id="relatedAgreementTable"></td>
+    	<th><a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" id="relatedRequestid"></a></th>
+        <th th:text="${contract.agreement_title}"></th>	 
+        <th th:text="${contract?.businessname}" id="relatedAgreementTable"></th>
      </tr>
      </table>
 </div>
@@ -251,10 +250,10 @@
      <th>Archived</th>
     </tr>
     </thead>
-    <tbody class="wrongth">
+    <tbody class="wrongth" style = "word-break:break-all;">
     <tr th:each="audit : ${audits}">
         <th th:text=${audit.userid}></th>	
-        <th th:text=${audit.Requestedid}></th>	 
+        <th th:text=${audit.Requestedid} ></th>	 
         <th th:text="${audit.date}"></th>
         <th th:text="${audit.field_updated}"></th>
         <th th:text="${audit.field_before}"></th>
