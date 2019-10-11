@@ -4,6 +4,7 @@ import java.util.List;
 
 import contracts.domain.Audit;
 import contracts.domain.Contract;
+import contracts.domain.User;
 
 public interface IAuditService {
 
@@ -11,9 +12,9 @@ public interface IAuditService {
 
 	public void addAudit(Audit newAudit);
 	
-	public void addAuditDetails(Contract contract);
+	public void addAuditDetails(Contract contract, User user);
 	
-	public void addAuditArchived(Contract contract);
+	public void addAuditArchived(Contract contract, User user);
 	
 	public List<Audit> getContractsByAuditsRequestID(Integer requestid);
 

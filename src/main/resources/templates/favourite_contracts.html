@@ -56,7 +56,8 @@
     <h2>Favourited Contracts</h2>
     <h3 th:text="'Favourited Contracts for User: ' + ${currentuser}"></h3>
     <div th:if= "${contracts.isEmpty()}">
-    <p>You have not favourited any contracts. To favourite contracts, return to the search page 
+    <p>You have not favourited any contracts. </p>
+    <p>To favourite contracts, return to the <a href="/search_contracts">search</a> page 
     and press the "favourite" button by the contract you wish to favourite.</p>
     </div>  
     <div th:if= "${!contracts.isEmpty()}">

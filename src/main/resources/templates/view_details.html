@@ -260,16 +260,22 @@
   		<input type="hidden"/>
   		<button class="vdbutton" type="submit" id="submitButton">Update</button>
 	</form>
-
     <form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
   		<input type="hidden"/>
  		<button class="vdbutton" onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
 	</form>
-
+	<div th:if="${favstatus == 'unfavourited'}">
     <form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
   		<input type="hidden"/>
   		<button class="vdbutton" onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Favourite</button>
 	</form>
+	</div>
+	<div th:if="${favstatus == 'favourited'}">
+	<form action="#" th:action="@{/unfavourite_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
+  		<input type="hidden"/>
+  		<button class="vdbutton" onclick="return confirm('Are you sure want to favourite this?');" type="submit" id="fav_button">Unfavourite</button>
+	</form>
+	</div>
 </div>
    
     <table class="display-none">
