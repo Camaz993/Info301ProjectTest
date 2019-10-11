@@ -115,7 +115,8 @@ input[type='checkbox']:checked {
         <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
     </tr>
     <tr>
-   		<td>Please Check To Validate Information: <input type="checkbox" name="option1" value="1" style="/* height: 10px; *//* display: inline; */position: absolute;/* top: 0; *//* left: 0; */bottom: 130px;height: 25px;width: 25px;"></td>
+   		<td>Please Check To Validate Information: <input type="checkbox" name="option1" value="1" style="/* height: 10px; */display: inline;/* top: 0; *//* left: 0; */bottom: 130px;height: 25px;width: 25px;padding-bottom: initial;
+    padding-top: inherit;"></td>
     </tr>
     </table>
     </div>

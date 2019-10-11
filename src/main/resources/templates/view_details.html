@@ -21,7 +21,7 @@
             <button type="submit" value="My Account" class="logoutButton"/>My Account</button>
         </form>
         <form th:action="@{/logout}" method="post"> 
-            <button type="submit" value="Logout" class="logoutButton"/>Logout</button>
+     	<button type="submit" value="Logout" class="logoutButton"/>Logout</button>
         </form>
     	</div>
 
@@ -251,10 +251,10 @@
      <th>Archived</th>
     </tr>
     </thead>
-    <tbody class="wrongth">
+    <tbody class="wrongth" style = "word-break:break-all;">
     <tr th:each="audit : ${audits}">
         <th th:text=${audit.userid}></th>	
-        <th th:text=${audit.Requestedid}></th>	 
+        <th th:text=${audit.Requestedid} ></th>	 
         <th th:text="${audit.date}"></th>
         <th th:text="${audit.field_updated}"></th>
         <th th:text="${audit.field_before}"></th>
