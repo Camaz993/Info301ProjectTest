@@ -1,6 +1,5 @@
 package contracts.controller;
 
-import java.io.File;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,12 +20,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.google.common.io.Files;
 
 import contracts.domain.Audit;
 import contracts.domain.Contract;
@@ -157,8 +153,8 @@ public class ContractController {
 		if(br.hasErrors()) {
 		return "add_contracts";
 		}
-		contract.setArchived("F");
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		contract.setArchived("F");
 		contract.setDate_updated(timeNow);
 		contractService.addContract(contract);
 		auditService.addAuditDetails(contract, getCurrentUser());
@@ -274,7 +270,6 @@ public class ContractController {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
-		foundContract.setUserid(user);
 		Audit blank = new Audit();
 		if (!compare(String.valueOf(foundContract.getUser()),String.valueOf(user))) {
 			if (foundContract.getUser() != null) {
@@ -299,9 +294,10 @@ public class ContractController {
 			blank.setUserid(getCurrentUser());
 			blank.setRequestedid(foundContract);
 			blank.setDate(foundContract.getDate_updated());
-			contractService.update(foundContract);
+			foundContract.setArchived("F");
+			foundContract.setUserid(user);
 			auditService.addAudit(blank);
-		contractService.update(foundContract);
+			contractService.update(foundContract);
 		return "redirect:/my_contracts";
 	}
 	
@@ -608,6 +604,7 @@ public class ContractController {
 		blank.setUserid(getCurrentUser());
 		blank.setRequestedid(contract);
 		blank.setDate(contract.getDate_updated());
+		contract.setArchived("F");
 		contractService.update(contract);
 		auditService.addAudit(blank);
 		return "redirect:/view_details/" + contract.getRequestid();

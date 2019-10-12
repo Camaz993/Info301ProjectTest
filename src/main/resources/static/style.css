@@ -419,13 +419,27 @@ footer a {
 
 /* Style the alert messages */
 .alertMessage {
-	color: black;
+	color: white;
+	text-align:center;
+	font-style:italic;
+	background-color:#E95959;
+	width:100%;
+	padding:1px;
+	margin-bottom:10px;
+	font-variant-caps: all-small-caps;
+	font-size:17px;
+}
+
+.successMessage {
+	color: white;
 	text-align:center;
 	font-style:italic;
 	background-color:#4CAF50;
 	width:100%;
 	padding:1px;
 	margin-bottom:10px;
+	font-variant-caps: all-small-caps;
+	font-size:17px;
 }
 
 img.logo{

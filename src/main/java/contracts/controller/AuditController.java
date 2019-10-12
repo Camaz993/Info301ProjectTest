@@ -307,6 +307,7 @@ public class AuditController {
 			blank.setUserid(getCurrentUser());
 			blank.setRequestedid(contract);
 			blank.setDate(contract.getDate_updated());
+			contract.setArchived("F");
 			contractService.update(contract);
 			auditService.addAudit(blank);
 			return "redirect:/update_status/" + contract.getRequestid();
