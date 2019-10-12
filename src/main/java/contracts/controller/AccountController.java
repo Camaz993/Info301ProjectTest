@@ -214,12 +214,14 @@ public class AccountController {
 	}
 	
 	@PostMapping("/update_password")
-	public String updatePassword(ModelMap map, Model model, @RequestParam String passwordChange, @RequestParam String passwordChangeRepeat){
+	public String updatePassword(ModelMap map, Model model, @RequestParam String passwordChange, @RequestParam String passwordChangeRepeat, RedirectAttributes redirectAttributes){
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
 		map.put("passwordChange", passwordChange);
 		map.put("passwordChangeRepeat", passwordChangeRepeat);
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		try {	
 			if (!(passwordChange.equals(passwordChangeRepeat))) {
 				throw new IllegalArgumentException("Password must match password repeat");
@@ -227,24 +229,37 @@ public class AccountController {
 		}
 		catch (IllegalArgumentException e){
 			model.addAttribute("message", e.getMessage());
+			model.addAttribute("message4", "There were errors in your password submission!");
+			return "change_password";
+		}
+		try {	
+			if (accountService.validate(passwordChange)==false) {
+				throw new IllegalArgumentException("Password must be between 6-20 characters, contain 1 digit, 1 lowercase letter, 1 uppercase letter");
+			}
+		}
+		catch (IllegalArgumentException e){
+			model.addAttribute("message3", e.getMessage());
+			model.addAttribute("message4", "There were errors in your password submission!");
 			return "change_password";
 		}
 		user.setPassword(passwordEncoder.encode(passwordChange));
 		user.setPassrepeat(passwordEncoder.encode(passwordChangeRepeat));
 		user.setExpiryDate(null);
 		accountService.update(user);
+		redirectAttributes.addFlashAttribute("message2", "Password successfully changed!");
 		return "redirect:/change_password";
 	}
 	
 	@PostMapping("/update_email")
-	public String updateEmail(ModelMap map, @RequestParam String updateEmail){
+	public String updateEmail(ModelMap map, @RequestParam String updateEmail, RedirectAttributes redirectAttributes){
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
 		map.put("updateEmail", updateEmail);
 		user.setEmail(updateEmail);
 		accountService.update(user);
-		return "change_password";
+		redirectAttributes.addFlashAttribute("message2", "Email successfully updated!");
+		return "redirect:/change_password";
 	}
 	
 	
