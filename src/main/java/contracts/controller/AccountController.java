@@ -76,7 +76,7 @@ public class AccountController {
     }
 	
 	@PostMapping("/api/staff")
-	public String addUser(@Valid @ModelAttribute(name="user") User user, BindingResult br, Model model) {
+	public String addUser(@Valid @ModelAttribute(name="user") User user, BindingResult br, Model model, RedirectAttributes redirectAttributes) {
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		if(br.hasErrors()) {
@@ -117,7 +117,8 @@ public class AccountController {
 		user.setPassrepeat(passwordEncoder.encode(user.getPassrepeat()));
 		user.setLocked(false);
 		accountService.addAccount(user);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message4", "Account successfully sent");
+		return "redirect:/create_account";
 	}
 	
 	@RequestMapping(value = "/login")
