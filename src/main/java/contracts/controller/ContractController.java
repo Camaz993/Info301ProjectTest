@@ -551,11 +551,11 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
-	@GetMapping("/help")
+	@GetMapping("help")
 	public String help(Model model) {
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
-		return "/help";
+		return "help";
 	}
 	
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
