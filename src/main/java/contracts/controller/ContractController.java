@@ -151,6 +151,7 @@ public class ContractController {
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
 		if(br.hasErrors()) {
+		model.addAttribute("message2", "There have been errors processing your contract. Please see tabs below.");
 		return "add_contracts";
 		}
 		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());

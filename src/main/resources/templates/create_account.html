@@ -75,33 +75,37 @@ width:350px;
 	<a href="/audit">Track Changes</a>
 	</div>
 	</div>
+	<h3>Create User Account</h3>
+	<div th:if="${message4}" th:text="${message4}" class="successMessage"/>
 	<p> Fill in this form to create an account </p>    
 	<form>
 	<label for="firstname">First Name</label>
    		<input type="text" th:field="*{firstname}" />
-   		<p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Name Error</p>
+   		<p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="error">Name Error</p>
 	<label for="lastname">Last Name</label>
     	<input type="text"  th:field="*{lastname}"/>
-    	<p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Name Error</p>
+    	<p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="error">Name Error</p>
 	<label for="role">Role</label>
     	<select id="role" name="role">
     	<option disabled="">Select a role</option>
-    	<option value="Admin">Admin</option>
-    	<option value="Legal">Legal</option>
+    	<option value="ADMIN">Admin</option>
+    	<option value="LEGAL">Legal</option>
+    	<option value="EXTERNAL">External</option>
     	</select>
+    	<p th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="error">Role Error</p>
 	<label for="username">Username</label>
     	<input type="text"  th:field="*{username}" />
-    	<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
+    	<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error">Username Error</p>
         <p th:text="${message1}"></p>
         <label for="password">Password</label>
         <input type="password"  th:field="*{password}" />
-        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error">Password Error</p>
         <label for="passrepeat">Password Repeat</label>
         <input type="password" th:field="*{passrepeat}"/>
-        <p th:if="${#fields.hasErrors('passrepeat')}" th:errors="*{passrepeat}">Password Error</p>
+        <p th:if="${#fields.hasErrors('passrepeat')}" th:errors="*{passrepeat}" class="error">Password Error</p>
         <label for="email">Email</label>
         <input type="email" th:field="*{email}"/>
-        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</p>
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error">Email Error</p>
         <p th:text="${message2}"></p>
         <p th:text="${message3}"></p>
         <input type="submit" value="Submit"/>
