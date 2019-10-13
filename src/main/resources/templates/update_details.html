@@ -69,7 +69,7 @@ input[type='checkbox']:checked {
 		  <button class="tablinks" onclick="openTab(event, 'PartyDetails')">Party Details</button>
 		  <button class="tablinks" onclick="openTab(event, 'Attachments')">Attachments</button>
 		</div>
-    <form action="#" th:action="@{/api/updates}" th:object="${contract}" method="post" id="updateContract">
+    <form action="#" th:action="@{/api/updates}" th:object="${contract}" method="post" id="updateContract" onsubmit="return checkForm(this);">
     <input type="hidden" th:field="*{requestid}"/>
     
     <div id="ContractDetails" class="tabcontent">
@@ -108,7 +108,7 @@ input[type='checkbox']:checked {
         <input type="text"  th:field="*{region}" />
         <p th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="error">Region Error</p>
 </div>
-   		<label for="validate">Please Check To Validate Information: <input type="checkbox" name="option1" value="1" style="/* height: 10px; */display: inline;/* top: 0; *//* left: 0; */bottom: 130px;height: 25px;width: 25px;padding-bottom: initial;
+   		<label for="validate">Please Check To Validate Information: <input type="checkbox" name="validate_update" value="1" style="/* height: 10px; */display: inline;/* top: 0; *//* left: 0; */bottom: 130px;height: 25px;width: 25px;padding-bottom: initial;
     padding-top: inherit;"></label>
     </div>
     
@@ -193,6 +193,16 @@ function setColours(){
       }
     }
   }
+}
+
+function checkForm(form)
+{
+  if(!form.validate_update.checked) {
+    alert("Please click checkbox in Contract Details to submit changes");
+    form.validate_update.focus();
+    return false;
+  }
+  return true;
 }
 </script>
 </div>
