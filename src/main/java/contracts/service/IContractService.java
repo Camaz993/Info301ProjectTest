@@ -16,6 +16,8 @@ public interface IContractService {
 
 	public List<Contract> getAllContracts();
 	
+	public List<Contract> getContractsShortList();
+	
 	public Optional<User> findById(Integer id);
 	
 	public List<Contract> searchContracts(String search);

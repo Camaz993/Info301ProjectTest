@@ -2,6 +2,8 @@ package contracts.controller;
 
 import java.sql.Date;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -303,14 +305,14 @@ public class AuditController {
 			}
 			fieldUpdatedList += ("related_agreements") + (", ");
 		}
-			Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
-			contract.setDate_updated(timeNow);
+			LocalDateTime date = LocalDateTime.now();
+			contract.setDate_updated(date);
 			blank.setField_after(fieldAfterList);
 			blank.setField_before(fieldBeforeList);
 			blank.setField_updated(fieldUpdatedList);
 			blank.setUserid(getCurrentUser());
 			blank.setRequestedid(contract);
-			blank.setDate(contract.getDate_updated());
+			blank.setDate(date);
 			contract.setArchived("F");
 			contractService.update(contract);
 			auditService.addAudit(blank);

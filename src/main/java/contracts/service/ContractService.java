@@ -50,6 +50,11 @@ public class ContractService implements IContractService{
 	}
 	
 	@Override
+	public List<Contract> getContractsShortList() {
+		return contractRepository.getContractsShortList();
+	}
+	
+	@Override
     public Optional<Contract> findContract(Integer id) {
         return contractRepository.findById(id);
     }

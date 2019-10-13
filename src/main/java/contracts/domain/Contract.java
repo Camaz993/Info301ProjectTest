@@ -1,7 +1,6 @@
 package contracts.domain;
 
-import java.sql.Date;
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.Pattern;
@@ -99,12 +98,12 @@ public class Contract {
 	private String favourited;
 	
 	@Column(name = "date_updated")
-	private Date date_updated;
+	private LocalDateTime date_updated;
 	
 	public Contract(Integer requestid, User user, List<Status> statusid, String agreement_title, String agreement_type,
 			String description, String agreement_location, String businessname, String clientname, String address, String phone, String email, String fax,
 		 String language, String region, String related_agreements, String archived,
-			String favourited, Date date_updated) {
+			String favourited, LocalDateTime date_updated) {
 		super();
 		this.requestid = requestid;
 		this.user = user;
@@ -131,11 +130,11 @@ public class Contract {
 		
 	} 
 
-	public Date getDate_updated() {
+	public LocalDateTime getDate_updated() {
 		return date_updated;
 	}
 
-	public void setDate_updated(Date date_updated) {
+	public void setDate_updated(LocalDateTime date_updated) {
 		this.date_updated = date_updated;
 	}
 	

@@ -38,9 +38,13 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     		  nativeQuery = true)
     public List<Contract> getArchivedContracts();
     
-    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F' OR c.archived IS NULL", 
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F'", 
   		  nativeQuery = true)
     public List<Contract> getCurrentContracts();
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F' limit 20 ORDER BY date_updated", 
+    		  nativeQuery = true)
+      public List<Contract> getContractsShortList();
     
     @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid = ?1 AND archived = 'F'", nativeQuery = true)
     public List<Contract> getContractsByUser(Integer userid);

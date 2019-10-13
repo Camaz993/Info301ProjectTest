@@ -1,6 +1,8 @@
 package contracts.controller;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -154,9 +156,9 @@ public class ContractController {
 		model.addAttribute("message2", "There have been errors processing your contract. Please see tabs below.");
 		return "add_contracts";
 		}
-		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		LocalDateTime date = LocalDateTime.now();
 		contract.setArchived("F");
-		contract.setDate_updated(timeNow);
+		contract.setDate_updated(date);
 		contractService.addContract(contract);
 		auditService.addAuditDetails(contract, getCurrentUser());
 		return "redirect:/add_status";
@@ -226,9 +228,7 @@ public class ContractController {
 		return "redirect:/view_details/" + requestid;
 	}
 	
-	//Method to bring up search results and checks if user has item favourited or not.
-	//If they have the item favourited, the button dynamically updates to unfavourited.
-	@GetMapping("/search_contracts")
+	@GetMapping("/search_contracts_all")
 	public String getAllContracts(Model model) {
 		List<Contract> allContracts = contractService.getAllContracts();
 		List favStatus = new ArrayList<>();
@@ -246,6 +246,30 @@ public class ContractController {
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		model.addAttribute("contracts", contractService.getAllContracts());
+		model.addAttribute("favstatus", favStatus);
+		return "search_contracts";
+	}
+	
+	//Method to bring up search results and checks if user has item favourited or not.
+	//If they have the item favourited, the button dynamically updates to unfavourited.
+	@GetMapping("/search_contracts")
+	public String getAllContractsShort(Model model) {
+		List<Contract> allContracts = contractService.getContractsShortList();
+		List favStatus = new ArrayList<>();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		for (int i = 0; i < allContracts.size(); i++) {
+			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
+				favStatus.add("favourited");
+			}
+			else {
+				favStatus.add("unfavourited");
+			}
+		}
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+		model.addAttribute("contracts", contractService.getContractsShortList());
 		model.addAttribute("favstatus", favStatus);
 		return "search_contracts";
 	}
@@ -287,14 +311,14 @@ public class ContractController {
 			}
 			fieldUpdatedList += ("userid") + (", ");
 		}
-			Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
-			foundContract.setDate_updated(timeNow);
+			LocalDateTime date = LocalDateTime.now();
+			foundContract.setDate_updated(date);
 			blank.setField_after(fieldAfterList);
 			blank.setField_before(fieldBeforeList);
 			blank.setField_updated(fieldUpdatedList);
 			blank.setUserid(getCurrentUser());
 			blank.setRequestedid(foundContract);
-			blank.setDate(foundContract.getDate_updated());
+			blank.setDate(date);
 			foundContract.setArchived("F");
 			foundContract.setUserid(user);
 			auditService.addAudit(blank);
@@ -597,14 +621,14 @@ public class ContractController {
 		}
 		fieldUpdatedList += ("userid") + (", ");
 	}
-		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
-		contract.setDate_updated(timeNow);
+		LocalDateTime date = LocalDateTime.now();
+		contract.setDate_updated(date);
 		blank.setField_after(fieldAfterList);
 		blank.setField_before(fieldBeforeList);
 		blank.setField_updated(fieldUpdatedList);
 		blank.setUserid(getCurrentUser());
 		blank.setRequestedid(contract);
-		blank.setDate(contract.getDate_updated());
+		blank.setDate(date);
 		contract.setArchived("F");
 		contractService.update(contract);
 		auditService.addAudit(blank);
