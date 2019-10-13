@@ -1,3 +1,7 @@
+/** 
+** The audit domain class includes all of the columns that match the database along with the getter and setter methods, and the to string method
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.domain;
 
 import java.util.Date;
