@@ -17,5 +17,7 @@ public interface IAccountService {
 	public List<String> getUserRoles();
 	
 	public void update(User user);
+	
+	public boolean validateEmail(String email);
 
 }

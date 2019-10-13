@@ -84,7 +84,7 @@ font-variant-caps: all-small-caps;
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.businessname}"></th>
-        <th th:text="${contract.date_updated}"></th>
+        <th th:text="${#temporals.format(contract.date_updated, 'dd-MM-yyyy')}"></th>
     </tr>
     </tbody>
     </table>

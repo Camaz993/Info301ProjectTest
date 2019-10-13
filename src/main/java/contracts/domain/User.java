@@ -49,6 +49,7 @@ public class User {
 	private String role;
 	
 	@NotBlank(message="Username cannot be blank")
+	@Size(min=4, max=50, message="Username must be between 4 and 50 characters")
 	@Column(name="username")
 	private String username;
 	

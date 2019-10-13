@@ -168,6 +168,15 @@ public class AccountController {
 		map.put("username",username);
 		newUser = accountService.findUser(username);
 		try {
+			if (username.length() > 50) {
+				throw new IllegalArgumentException("Not a valid username!");
+			}
+			}
+				catch (IllegalArgumentException e){
+					model.addAttribute("message", e.getMessage());
+					return "forgot_password";
+				}
+		try {
 		if (newUser == null) {
 			throw new UsernameNotFoundException("Error: Unable to locate your details!");
 		}
@@ -191,7 +200,8 @@ public class AccountController {
 		emailService.send(newUser.getEmail(), "Password Recovery: Contract Management System", 
 				"Hi there,\n Here is the password recovery token. If you have not requested one please contact your admin"
 				+ "team ASAP. Otherwise, log into your account with this token:\n"
-				+ token + "\nFrom the Contract Management Team.");
+				+ token + "\nThis token will expire after 3 minutes but you can"
+						+ "request another one if needed. \nFrom the Contract Management Team.");
 		String pass = newUser.getPassword();
 		newUser.setExpiryDate(expiryDate);
 		newUser.setPassword(passwordEncoder.encode(token));
@@ -252,11 +262,23 @@ public class AccountController {
 	}
 	
 	@PostMapping("/update_email")
-	public String updateEmail(ModelMap map, @RequestParam String updateEmail, RedirectAttributes redirectAttributes){
+	public String updateEmail(ModelMap map, @RequestParam String updateEmail, RedirectAttributes redirectAttributes, Model model){
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		map.put("updateEmail", updateEmail);
+		try {
+			if (accountService.validateEmail(updateEmail)==false) {
+				throw new IllegalArgumentException("Not a valid email address!");
+			}
+		}
+		catch (IllegalArgumentException e){
+			model.addAttribute("message5", e.getMessage());
+			model.addAttribute("message4", "There were errors in your email submission!");
+			return "change_password";
+		}
 		user.setEmail(updateEmail);
 		accountService.update(user);
 		redirectAttributes.addFlashAttribute("message2", "Email successfully updated!");

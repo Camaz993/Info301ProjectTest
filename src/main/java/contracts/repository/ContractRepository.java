@@ -42,7 +42,7 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
   		  nativeQuery = true)
     public List<Contract> getCurrentContracts();
     
-    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F' limit 20 ORDER BY date_updated", 
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F' ORDER BY date_updated desc limit 2", 
     		  nativeQuery = true)
       public List<Contract> getContractsShortList();
     
