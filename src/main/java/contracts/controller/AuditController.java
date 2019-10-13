@@ -86,6 +86,10 @@ public class AuditController {
 		String fieldBeforeList = "";
 		String fieldAfterList = "";
 		Contract foundContract = contractService.findContract(contract.getRequestid()).orElse(new Contract());
+		if(br.hasErrors()) {
+			model.addAttribute("message", "There have been errors processing your update. Please see tabs below.");
+			return "update_details";
+			}
 		Audit blank = new Audit();
 		if (!compare(String.valueOf(foundContract.getUser()),String.valueOf(contract.getUser()))) {
 			if (foundContract.getUser() != null) {
