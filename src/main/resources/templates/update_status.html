@@ -90,10 +90,13 @@
     	 <td th:text ="${selectedContract?.region}"/>
     	  </tr>
     	  </table>
-    	<form action="#" th:action="@{/api/update/in_negotiation}" th:object="${in_negotiation}" id="in_negotiation" method="post" >
-    		<td>Comments: <input type="text" th:field="*{comments}"/></td>	
+    	<form action="#" th:action="@{/api/update/in_negotiation}" th:object="${in_negotiation}" id="in_negotiation" method="post">
+    	<div class="update_details">
+    		<label for="comments">Comments:</label> 
+    		<input type="text" th:field="*{comments}"/>	
+    		</div>
     		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
-    		<td><input type="button" value="Cancel" onclick="self.close()"><input type="submit" value="Submit"/>  </td>
+    		<input type="submit" value="Submit"/><input type="button" value="Cancel" onclick="self.close()" id="cancel_button">
     	</form>
     </div>
      
@@ -131,13 +134,25 @@
     	  </tr>
     	  </table>
     		
-    	<form action="#" th:action="@{/api/update/operative}" th:object="${operative}" id="operative" method="post" >
-    		<td>Date Signed <input type="date" th:field="*{date_signed}" /></td>
-    		<td>Date Commenced: <input type="date" th:field="*{date_commenced}"/></td>
-    		<td>Date Expires: <input type="date" th:field="*{date_expire}"/></td>
-    		<td>Verification: <input type="text" th:field="*{verification}"/></td>
+    	<form action="#" th:action="@{/api/update/operative}" th:object="${operative}" id="operative" method="post">
+    	<div class="update_details">
+    		<label for="date_signed">Date Signed:</label>
+    		<input type="date" th:field="*{date_signed}"/>
+    		</div>
+    		<div class="update_details">
+    		<label for="date_commenced">Date Commenced:</label>
+    		<input type="date" th:field="*{date_commenced}"/>
+    		</div>
+    		<div class="update_details">
+    		<label for="date_expire">Date Expires:</label>
+    		<input type="date" th:field="*{date_expire}"/>
+    		</div>
+    		<div class="update_details">
+    		<label for="verification">Verification:</label>
+    		<input type="text" th:field="*{verification}"/>
+    		</div>
     		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
-    		<td><input type="button" value="Cancel" onclick="self.close()"><input type="submit" value="Submit"/></td>		
+    		<input type="submit" value="Submit"/><input type="button" value="Cancel" onclick="self.close()" id="cancel_button">		
     	</form>
     </div>
      
@@ -174,14 +189,29 @@
     	 <td th:text ="${selectedContract?.region}"/>
     	  </tr>
     	  </table>
-    	<form action="#" th:action="@{/api/update/expired}" th:object="${expired}" id="expired" method="post" >
-    		<td>Ending Reason: <input type="text" th:field="*{ending_reason}"/></td>
-    		<td>Expiry Date:  <input type="date" th:field="*{expiry_date}"/></td>
-    		<td>Termination Date: <input type="date" th:field="*{termination_date}"/></td>
-    		<td>Termination Notice Date: <input type="text" th:field="*{termination_notice_date}"/></td>
-    		<td>Binding Terms Active: <input type="text" th:field="*{binding_terms_active}"/></td>
+    	<form action="#" th:action="@{/api/update/expired}" th:object="${expired}" id="expired" method="post">
+    	<div class="update_details">
+    		<label for="ending_reason">Ending Reason:</label>
+    		<input type="text" th:field="*{ending_reason}"/>
+    		</div>
+    		<div class="update_details">
+    		<label for="expiry_date">Expiry Date:</label>
+    		<input type="date" th:field="*{expiry_date}"/>
+    		</div>
+    		<div class="update_details">
+    		<label for="termination_date">Termination Date:</label>
+    		<input type="date" th:field="*{termination_date}"/>
+    		</div>
+    		<div class="update_details">
+    		<label for="termination_notice_date">Termination Notice Date:</label>
+    		<input type="text" th:field="*{termination_notice_date}"/>
+    		</div>
+    		<div class="update_details">
+    		<label for="binding_terms_active">Binding Terms Active:</label>
+    		<input type="text" th:field="*{binding_terms_active}"/>
+    		</div>
     		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>		
-    		<td><input type="button" value="Cancel" onclick="self.close()"><input type="submit" value="Submit"/></td>
+    		<input type="submit" value="Submit"/><input type="button" value="Cancel" onclick="self.close()" id="cancel_button">
     	</form>
     </div>             
         

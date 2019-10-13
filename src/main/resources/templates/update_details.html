@@ -69,94 +69,94 @@ input[type='checkbox']:checked {
 		  <button class="tablinks" onclick="openTab(event, 'PartyDetails')">Party Details</button>
 		  <button class="tablinks" onclick="openTab(event, 'Attachments')">Attachments</button>
 		</div>
-    <form action="#" th:action="@{/api/updates}" th:object="${contract}" method="post" id="updateContract">
+    <form action="#" th:action="@{/api/updates}" th:object="${contract}" method="post" id="updateContract" onsubmit="return checkForm(this);">
     <input type="hidden" th:field="*{requestid}"/>
     
     <div id="ContractDetails" class="tabcontent">
     <h3>Contract Details:</h3>
-    <table>
-    <tr>
-        <td>User: <select id="userid" name="userid">
+        <label for="userid">User</label>
+		<select id="userid" name="userid">
     	<option value="">Select a user</option>
     	<option th:each="user : ${users}"
     	th:value="${user.userid}"
     	th:utext="${user.username}"
     	th:selected="${user.userid==contract?.user?.userid}"/>
-    	</select></td>
-   	</tr>
-   	<tr>
-    	<td>Agreement Title: <input type="text"  th:field="*{agreement_title}"/></td>
-    	<td th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}">Title Error</td>
-    </tr>
-    <tr>
-    	<td>Agreement Type: <input type="text"  th:field="*{agreement_type}" /></td>
-    	<td th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}">Type Error</td>
-    </tr>
-    <tr>
-    	<td>Description: <input type="text"  th:field="*{description}" /></td>
-    	<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
-    </tr>
-    <tr>
-        <td>Language: <input type="text"  th:field="*{language}" /></td>
-        <td th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Language Error</td>
-    </tr>
-    <tr>
-        <td>Region: <input type="text"  th:field="*{region}" /></td>
-        <td th:if="${#fields.hasErrors('region')}" th:errors="*{region}">Region Error</td>
-    </tr>
-    <tr>
-   		<td>Please Check To Validate Information: <input type="checkbox" name="option1" value="1" style="/* height: 10px; */display: inline;/* top: 0; *//* left: 0; */bottom: 130px;height: 25px;width: 25px;padding-bottom: initial;
-    padding-top: inherit;"></td>
-    </tr>
-    </table>
+    	</select>
+    	
+    	<div class="update_details">
+    	<label for="agreement_title">Agreement Title</label>
+    	<input type="text"  th:field="*{agreement_title}"/>
+    	<p th:if="${#fields.hasErrors('agreement_title')}" th:errors="*{agreement_title}" class="error">Title Error</p>
+</div>
+<div class="update_details">
+    	<label for="agreement_type">Agreement Type</label>
+    	<input type="text"  th:field="*{agreement_type}" />
+    	<p th:if="${#fields.hasErrors('agreement_type')}" th:errors="*{agreement_type}" class="error">Type Error</p>
+</div>
+<div class="update_details">
+    	<label for="description">Description</label>
+    	<input type="text"  th:field="*{description}" />
+    	<p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error">Description Error</p>
+</div>
+<div class="update_details">
+       <label for="language">Language</label>
+        <input type="text"  th:field="*{language}" />
+        <p th:if="${#fields.hasErrors('language')}" th:errors="*{language}" class="error">Language Error</p>
+</div>
+<div class="update_details">
+        <label for="region">Region</label>
+        <input type="text"  th:field="*{region}" />
+        <p th:if="${#fields.hasErrors('region')}" th:errors="*{region}" class="error">Region Error</p>
+</div>
+   		<label for="validate">Please Check To Validate Information: <input type="checkbox" name="validate_update" value="1" style="/* height: 10px; */display: inline;/* top: 0; *//* left: 0; */bottom: 130px;height: 25px;width: 25px;padding-bottom: initial;
+    padding-top: inherit;"></label>
     </div>
     
     <div id="PartyDetails" class="tabcontent">
-    <table>
-     <tr>
-        <td>Business Name: <input type="text"  th:field="*{businessname}" /></td>
-        <td th:if="${#fields.hasErrors('businessname')}" th:errors="*{businessname}">Business Name Error</td>
-    </tr>
-    <tr>
-        <td>Client Name: <input type="text"  th:field="*{clientname}" /></td>
-        <td th:if="${#fields.hasErrors('clientname')}" th:errors="*{clientname}">Client Name Error</td>
-    </tr>
-    <tr>
-        <td>Address: <input type="text"  th:field="*{address}" /></td>
-        <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</td>
-    </tr>
-    <tr>
-        <td>Phone: <input type="text"  th:field="*{phone}" /></td>
-        <td th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone Error</td>
-    </tr>
-    <tr>
-        <td>Email: <input type="text"  th:field="*{email}" /></td>
-        <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
-    </tr>
-    <tr>
-        <td>Fax: <input type="text"  th:field="*{fax}" /></td>
-        <td th:if="${#fields.hasErrors('fax')}" th:errors="*{fax}">Fax Error</td>
-    </tr>
-    </table>
+    <h3>Party Details:</h3>
+    <div class="update_details">
+    <label for="businessname">Business Name</label>
+        <input type="text"  th:field="*{businessname}" />
+        <p th:if="${#fields.hasErrors('businessname')}" th:errors="*{businessname}" class="error">Business name Error</p>
+        </div>
+        <div class="update_details">
+    <label for="clientname">Client Name</label>
+        <input type="text"  th:field="*{clientname}" />
+        <p th:if="${#fields.hasErrors('clientname')}" th:errors="*{clientname}" class="error">Client name Error</p>
+      </div>
+      <div class="update_details">  
+   <label for="address">Address</label>
+        <input type="text"  th:field="*{address}" />
+        <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="error">Address Error</p>
     </div>
-    
+    <div class="update_details">    
+   <label for="phone">Phone</label>
+        <input type="text"  th:field="*{phone}" />
+        <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="error">Phone Error</p>
+   </div> 
+    <div class="update_details">    
+  <label for="email">Email</label>
+        <input type="text"  th:field="*{email}" />
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error">Email Error</p>
+ </div>    
+     <div class="update_details">   
+  <label for="fax">Fax</label>
+        <input type="text"  th:field="*{fax}" />
+        <p th:if="${#fields.hasErrors('fax')}" th:errors="*{fax}" class="error">Fax Error</p> 
+    </div>
+  </div>  
+    <div class="update_details">
     <div id="Attachments" class="tabcontent">
-    <table>
-       <tr>
-        <td>URL or Description of Agreement File Location: <input type="text"  th:field="*{agreement_location}" placeholder="https://www....."/></td>
-        <td th:if="${#fields.hasErrors('agreement_location')}" th:errors="*{agreement_location}">Location Error</td>
-    </tr>
-    <tr>
-        <td>Related Agreements: <input type="text"  th:field="*{related_agreements}" /></td>
-        <td th:if="${#fields.hasErrors('related_agreements')}" th:errors="*{related_agreements}">Related Agreements Error</td>
-    </tr>
-    </table>
+    <h3>Attachments</h3>
+        <label for="agreement_location" id="agreement_location">URL or Description of Agreement File Location</label>
+     <input type="text"  th:field="*{agreement_location}" placeholder="https://www....."/>
+  </div> 
     </div>
    
    <div class="vdbutton">
    <table>
     <tr>
-        <td><input type="button" value="Cancel" onclick="self.close()"><input type="submit" value="Submit"/>  
+        <td><input type="submit" value="Submit"/><input type="button" value="Cancel" onclick="self.close()" id="cancel_button">
     </tr>
         </table>
         </form>        
@@ -193,6 +193,16 @@ function setColours(){
       }
     }
   }
+}
+
+function checkForm(form)
+{
+  if(!form.validate_update.checked) {
+    alert("Please click checkbox in Contract Details to submit changes");
+    form.validate_update.focus();
+    return false;
+  }
+  return true;
 }
 </script>
 </div>
