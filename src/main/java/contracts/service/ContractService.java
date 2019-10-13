@@ -80,13 +80,13 @@ public class ContractService implements IContractService{
 	}
 	
 	@Override
-	public List<Contract> searchLocation(String search) {
-		return contractRepository.searchLocation(search);
+	public List<Contract> getContractsSorted() {
+		return contractRepository.getContractsSorted();
 	}
 	
 	@Override
-	public List<Contract> searchContractType(String search) {
-		return contractRepository.searchContractType(search);
+	public List<Contract> getContractsSortedParty() {
+		return contractRepository.getContractsSortedParty();
 	}
 	
 	@Override

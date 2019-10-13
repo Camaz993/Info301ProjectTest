@@ -22,10 +22,6 @@ public interface IContractService {
 	
 	public List<Contract> searchContracts(String search);
 	
-	public List<Contract> searchLocation(String search);
-	
-	public List<Contract> searchContractType(String search);
-	
 	public Contract update(Contract contract);
 
 	public List<User> getAllUsers();
@@ -55,4 +51,8 @@ public interface IContractService {
 	public Object getRelatedContracts(Integer requestid);
 
 	public void unrelateContract(Integer requestid, Integer requestid2);
+	
+	public List<Contract> getContractsSorted();
+	
+	public List<Contract> getContractsSortedParty();
 }

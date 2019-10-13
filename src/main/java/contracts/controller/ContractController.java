@@ -232,9 +232,7 @@ public class ContractController {
 	public String getAllContracts(Model model) {
 		List<Contract> allContracts = contractService.getAllContracts();
 		List favStatus = new ArrayList<>();
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = ((UserDetails)principal).getUsername();
-		User user = accountService.findUser(username);
+		User user = accountService.findUser(getCurrentUser().getUsername());
 		for (int i = 0; i < allContracts.size(); i++) {
 			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
 				favStatus.add("favourited");
@@ -353,22 +351,46 @@ public class ContractController {
 		return "search_contracts";
 	}
 	
-	@PostMapping("/api/contracts/search/location")
-	public List<Contract> searchLocation(@RequestParam String search)
+	@GetMapping("/contracts/sorted")
+	public String allContractsSorted(Model model)
 	{
-		return contractService.searchLocation(search);
+		List<Contract> allContracts = contractService.getContractsSorted();
+		List favStatus = new ArrayList<>();
+		User user = accountService.findUser(getCurrentUser().getUsername());
+		for (int i = 0; i < allContracts.size(); i++) {
+			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
+				favStatus.add("favourited");
+			}
+			else {
+				favStatus.add("unfavourited");
+			}
+		}
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+		model.addAttribute("contracts", contractService.getContractsSorted());
+		model.addAttribute("favstatus", favStatus);
+		return "search_contracts";
 	}
 	
-	@PostMapping("/api/contracts/search/type")
-	public List<Contract> searchContractType(@RequestParam String search)
+	@GetMapping("/contracts/sortedparty")
+	public String allContractsSortedParty(Model model)
 	{
-		return contractService.searchContractType(search);
-	}
-
-	@GetMapping("/api/contracts")
-	public List<Contract> allContracts()
-	{
-		return contractService.getAllContracts();
+		List<Contract> allContracts = contractService.getContractsSortedParty();
+		List favStatus = new ArrayList<>();
+		User user = accountService.findUser(getCurrentUser().getUsername());
+		for (int i = 0; i < allContracts.size(); i++) {
+			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
+				favStatus.add("favourited");
+			}
+			else {
+				favStatus.add("unfavourited");
+			}
+		}
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+		model.addAttribute("contracts", contractService.getContractsSortedParty());
+		model.addAttribute("favstatus", favStatus);
+		return "search_contracts";
 	}
 	
 	@GetMapping("/contract/{requestid}")
