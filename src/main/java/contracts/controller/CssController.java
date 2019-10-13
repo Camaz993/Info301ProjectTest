@@ -1,3 +1,7 @@
+/**
+ * The css controller contains the get, post and request mappings for all of the css html pages
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,9 @@ public class CssController {
 	@Autowired
 	private CurrentRepository currentRepository;
 	
+	/**
+	 * adds the css to the site settings page
+	 */
 	@GetMapping("/site_settings")
 	public String getAllContracts(Model model) {
 		Integer i = currentService.getCurrent();
@@ -33,6 +40,9 @@ public class CssController {
 		return "site_settings";
 	}
 	
+	/**
+	 * Updates the current css
+	 */
 	@PostMapping("/api/css")
 	public String addCss(@ModelAttribute(name="currentCss") CurrentCss css) {
 		cssService.addCurrentCss(css);
