@@ -495,7 +495,6 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
-	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/archive_contracts")
 	public String getArchivedContracts(Model model) {
 		Integer i = currentService.getCurrent();
@@ -560,6 +559,7 @@ public class ContractController {
 		return "favourite_contracts";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/add_related/{requestid}")
 	public String relatedContracts(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
@@ -573,6 +573,7 @@ public class ContractController {
 		return "add_related";
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/related_contracts/{requestid}")
 	public String getRelatedContracts(@PathVariable("requestid") int requestid, Model model) {
 		Contract relatedContract = contractService.findContract(requestid).orElse(new Contract());

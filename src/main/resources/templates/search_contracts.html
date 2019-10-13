@@ -47,7 +47,7 @@ width:230px;}
 			<div>
 	 		<a href="/">Home</a>
 	 		</div>
-	 		<div>
+	 		<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
 	 		<a href="/add_contracts">New Contract</a></li>
 	 		</div>
 	 		<div>
@@ -99,9 +99,9 @@ width:230px;}
     <th>Description</th>
     <th>Business Name</th>
     <th>Date Updated</th>
-    <th>Assigned to User</th>
-    <th>Update Details</th>
-    <th>Archive Contract</th>
+    <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">Assigned to User</th>
+    <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">Update Details</th>
+    <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">Archive Contract</th>
     <th>Favourite Contract</th>
     </tr>
     </thead>
@@ -115,13 +115,13 @@ width:230px;}
         <th th:text="${contract.description}"></th>
         <th th:text="${contract?.businessname}"></th>
         <th th:text="${#temporals.format(contract.date_updated, 'dd-MM-yyyy')}"></th>
-        <th> 
+        <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}"> 
       	  <a th:href="@{/reassign/{requestid}(requestid=${contract.requestid})}" th:text="${contract?.user?.username}" target="_blank"></a>
         </th>
-        <th>
+        <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
         	<a th:href="@{/update_details/{requestid}(requestid=${contract.requestid})}" target="_blank">Update</a>
         </th>
-		<th>
+		<th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
        		<form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
   				<button onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton" class="btnSmall">Archive</button>

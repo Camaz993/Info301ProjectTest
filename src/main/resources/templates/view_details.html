@@ -29,7 +29,7 @@
 			<div>
 	 		<a href="/">Home</a>
 	 		</div>
-	 		<div>
+	 		<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
 	 		<a href="/add_contracts">New Contract</a></li>
 	 		</div>
 	 		<div>
@@ -201,6 +201,7 @@
 
 <div id="RelatedAgreements" class="tabcontent">
 	<h3>Related Agreements:</h3>
+	<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
 	<table class="viewdetails">
 	<tr>
 	<td th:text ="${selectedContract?.related_agreements}"/>
@@ -210,20 +211,21 @@
 		</form>
 		</tr>
 	</table>
+	</div>
 	<table id="viewcontracts">
 	<thead>
 	<tr>
 	<th id="relatedAgreementTableId">Request Id</th>
     <th id="relatedAgreementTable">Agreement Title</th>
     <th id="relatedAgreementTable">Business Name</th>
-    <th id="relatedAgreementTable">Delete Related</th>
+    <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}" id="relatedAgreementTable">Delete Related</th>
     </tr>
     </thead>
     <tr th:each="contract : ${contracts}">
     	<td><a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" id="relatedRequestid"></a></td>
         <td th:text="${contract.agreement_title}"></td>	 
         <td th:text="${contract?.businessname}" id="relatedAgreementTable"></td>
-        <td>
+        <td th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
        		<form action="#" th:action="@{/unrelate_contracts/{request}/{requestid}(request=${contract.requestid},requestid=${selectedContract.requestid})}" method="post">
   				<input type="hidden"/>
   				<button onclick="return confirm('Are you sure want to unrelate this contract?');" type="submit" id="submitButton" class='btn'>Unrelate Agreement</button>
@@ -262,6 +264,7 @@
 </div>
 
 <div class = "vdbutton">
+<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
 	<form action="#" th:action="@{/update_details/{requestid}(requestid=${selectedContract.requestid})}" target="blank">
   		<input type="hidden"/>
   		<button class="vdbutton" type="submit" id="submitButton">Update</button>
@@ -271,7 +274,7 @@
   		<input type="hidden"/>
  		<button class="vdbutton" onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton">Archive</button>
 	</form>
-
+</div>
     <div th:if="${favstatus == 'unfavourited'}">
     <form action="#" th:action="@{/favourite_contracts/{requestid}(requestid=${selectedContract.requestid})}" method="post">
   		<input type="hidden"/>
