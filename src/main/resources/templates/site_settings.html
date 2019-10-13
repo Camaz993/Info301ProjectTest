@@ -91,28 +91,25 @@
     </div>
 	<script>
 	 
-		function setColours(){
-		var x = document.getElementsByTagName("H1");
-		var i;
-		var col = document.getElementById('clogo');
-		for (i = 0; i < x.length; i++) {
-		  x[i].style.color = col;
-		}
-		
-		
-		  document.body.style.backgroundColor = document.getElementById('cbackground');
-		  var style = document.createElement('style');
-			  style.innerHTML = `
-			  h1 {
-			  color: ` + document.getElementById('clogo'); + `
-			  }
-			  `;
-  		document.head.appendChild(style);
-		}
-	
-	</script>
+function setColours(){
+  var i, link_tag ;
+  var currcss = document.getElementById("css");
+  console.log(currcss);
+  for (i = 0, link_tag = document.getElementsByTagName("link") ; i < link_tag.length ; i++ ) {
+    if ((link_tag[i].rel.indexOf( "stylesheet" ) != -1) && link_tag[i].title) {
+      link_tag[i].disabled = true ;
+      if (currcss.innerHTML.indexOf(link_tag[i].title) != -1) {
+        document.getElementById(link_tag[i].title).disabled = false;
+      }
+    }
+  }
+}	
+</script>
 
-           
+        <table class="display-none">
+    <td th:text="${currentCss.idcurrent_css}"></td>
+    <td th:text="${currentCss.colour}" id="css"></td>
+    </table>          
 <footer>
 <p class="footerText">Contract Management System</p>
 <p class="footerText">See <a href="/help">help</a> page for further contact info</p>

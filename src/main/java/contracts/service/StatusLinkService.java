@@ -46,5 +46,8 @@ public class StatusLinkService implements IStatusLinkService{
 		return statuslinkRepository.findAll();
 	}
 	
+
+	
+	
 	
 }

@@ -1,3 +1,8 @@
+/**
+ * The account controller contains the get, post and request mappings for all of the account html pages
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ * 
+ */
 package contracts.controller;
 
 import java.sql.Date;
@@ -66,6 +71,9 @@ public class AccountController {
 	@Autowired
 	private CurrentRepository currentRepository;
 	
+	/**
+	 * Adds the current css, user and user roles to the create account page
+	 */
 	@GetMapping("/create_account")
     public String showSignUpForm(Model model) {
 		Integer i = currentService.getCurrent();
@@ -75,6 +83,11 @@ public class AccountController {
         return "create_account";
     }
 	
+	/**
+	 * Adds the new account to the database with an encoded password
+	 * @param user the user account to add
+	 * @param br the bindingresult to check for errors in the user account
+	 */
 	@PostMapping("/api/staff")
 	public String addUser(@Valid @ModelAttribute(name="user") User user, BindingResult br, Model model) {
 		Integer i = currentService.getCurrent();
@@ -125,6 +138,9 @@ public class AccountController {
 	    return "login";
 	}
 	
+	/**
+	 * Adds the current css and users to the manage users page
+	 */
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/manage_users")
 	public String manageUsers(Model model) {
@@ -135,6 +151,10 @@ public class AccountController {
 	    return "manage_users";
 	}
 	
+	/**
+	 * Adds the current css, and the user account to lock
+	 * @param userid the userid of the account to lock
+	 */
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/lock_users/{userid}")
 	public String selectedUserLock(@PathVariable("userid") int userid, Model model) {
@@ -146,6 +166,10 @@ public class AccountController {
 		return "redirect:/manage_users";
 	}
 	
+	/**
+	 * Adds the current css, and the user account to unlock
+	 * @param userid the userid of the account to unlock
+	 */
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/unlock_users/{userid}")
 	public String selectedUserUnlock(@PathVariable("userid") int userid, Model model) {
@@ -157,11 +181,16 @@ public class AccountController {
 		return "redirect:/manage_users";
 	}
 	
+
 	@GetMapping("/forgot_password")
 	public String getForgotPassword() {
 		return "forgot_password";
 	}
 	
+	/**
+	 * Helps a user to regain access to their account if they have forgotten their password
+	 * @param username the username of the forgotten password account
+	 */
 	@RequestMapping("/forgotpassword")
 	public String forgotPassword(ModelMap map, Model model, @RequestParam String username, RedirectAttributes redirectAttributes) {
 		map.put("username",username);
@@ -200,6 +229,9 @@ public class AccountController {
 		return "redirect:/forgot_password";	
 	}
 	
+	/**
+	 * Adds the user details to the change password form
+	 */
 	@GetMapping("/change_password")
 	public String showPasswordForm(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -213,6 +245,12 @@ public class AccountController {
 		return "change_password";
 	}
 	
+	/**
+	 * Changes a users password and encodes the new password
+	 * @param passwordChange the new password
+	 * @param passwordChangeRepeat the new password repeated
+	 * @return
+	 */
 	@PostMapping("/update_password")
 	public String updatePassword(ModelMap map, Model model, @RequestParam String passwordChange, @RequestParam String passwordChangeRepeat){
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -236,6 +274,10 @@ public class AccountController {
 		return "redirect:/change_password";
 	}
 	
+	/**
+	 * Changes a users email
+	 * @param updateEmail the new email to add to the user account
+	 */
 	@PostMapping("/update_email")
 	public String updateEmail(ModelMap map, @RequestParam String updateEmail){
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
