@@ -7,7 +7,12 @@
 <link href="../static/greenstyle.css" th:href="@{/greenstyle.css}" rel="stylesheet" title="greenstyle" id="greenstyle"/>
 <link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
 <link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
-
+<style>
+.button2 {background-color: #4CAF50;} 
+.button1 {background-color: #008CBA;} 
+.button4 {background-color: #f44336;} 
+.button3 {background-color: #e7e7e7;} 
+</style>
 </head>
 
 <body onload="setColours()">
@@ -66,22 +71,22 @@
 	<tr>
  	<th>	<form action="#" th:action="@{/api_adminblue}" th:object="${current}" method="post">
  		    	<input type="hidden"  th:field="*{colour}"/>
-  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Blue</button>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit" class="button1">Blue</button>
 		</form></th>
 	<th>	 
  		<form action="#" th:action="@{/api_admingreen}" th:object="${current}" method="post">
  		    	<input type="hidden"  th:field="*{colour}"class="display-none"/>
-  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Green</button>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit" class="button2">Green</button>
 		</form></th>
 	<th>	 
  		<form action="#" th:action="@{/api_admingrey}" th:object="${current}" method="post">
  		    	<input type="hidden"  th:field="*{colour}"/>
-  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Grey</button>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit" class="button3">Grey</button>
 		</form></th>
 	<th>	 
  		<form action="#" th:action="@{/api_adminred}" th:object="${current}" method="post">
  		    	<input type="hidden"  th:field="*{colour}"/>
-  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit">Red</button>
+  				<button onclick="return confirm('Are you sure want to change the colour?');" type="submit" class="button4">Red</button>
 		</form></th>
 	</tr>
 	</table>

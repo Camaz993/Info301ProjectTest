@@ -1,3 +1,8 @@
+/**
+ * The contract controller contains the get, post and request mappings for all of the contract html pages
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ * 
+ */
 package contracts.controller;
 
 import java.io.File;
@@ -119,6 +124,9 @@ public class ContractController {
 		return user;
 	}
 
+	/**
+	 * 
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
