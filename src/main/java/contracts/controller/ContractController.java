@@ -562,6 +562,12 @@ public class ContractController {
 		return "redirect:/view_details/" + newRelated.getRequestid();
 	}
 	
+	@PostMapping("/unrelate_contracts/{request}/{requestid}")
+	public String unrelateContracts(@PathVariable("request") int request, @PathVariable("requestid") int requestid, Model model) {
+		contractService.unrelateContract(requestid, request);
+		return "redirect:/view_details/" + requestid;
+	}
+	
 	//removes a contract from a users favourite contracts
 	@PostMapping("/unfavourite_contracts/{requestid}")
 	public String unfavouritContract(@PathVariable("requestid") int requestid, Model model) {
