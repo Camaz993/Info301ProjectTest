@@ -264,6 +264,15 @@ input[type=submit] {
   border-radius: 4px;
   cursor: pointer;
   width:120px;
+  text-align: center;
+}
+
+#cancel_button {
+	margin-left: 10px;
+    width: 120px;
+    text-align: center;
+    height: 39px;
+    cursor: pointer;
 }
 
 input[type=submit]:hover {
@@ -332,6 +341,10 @@ h1{
 h3 {
 font-weight:normal;
 color:grey;
+}
+
+.update_details input {
+	width: 500px;
 }
 
 .footerContainer {
@@ -480,6 +493,15 @@ thead {
 
 tr:nth-child(even) {
 	background-color: white;
+}
+
+#userid {
+	font-size: 11px;
+    padding: 10px;
+    background: #ddd;
+    border: none;
+    margin-bottom: 5px;
+    width: 500px;
 }
 
 /*Footer Styling */

@@ -387,8 +387,6 @@ public class ContractController {
 		return "update_details";
 	}
 	
-	
-	
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/update_status/{requestid}")
 	public String updateStatus(@PathVariable("requestid") int requestid, Model model) {
