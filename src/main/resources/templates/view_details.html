@@ -60,7 +60,7 @@
 	</div>
 	</div>
 <div class="content">
-<div th:if="${message}" th:text="${message}" class="alertMessage"/>	
+<div th:if="${message}" th:text="${message}" class="alertMessage"></div>	
 <h2 th:text ="${selectedContract.agreement_title}"></h2>
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'ContractDetails')">Contract Details</button>
@@ -233,6 +233,12 @@
     	<td><a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" id="relatedRequestid"></a></td>
         <td th:text="${contract.agreement_title}"></td>	 
         <td th:text="${contract?.businessname}" id="relatedAgreementTable"></td>
+        <td>
+       		<form action="#" th:action="@{/unrelate_contracts/{requestid} (requestid=${contract.requestid})}" method="post">
+  				<input type="hidden"/>
+  				<button onclick="return confirm('Are you sure want to unrelate this contract?');" type="submit" id="submitButton">Unrelate</button>
+			</form>
+     	</td>
      </tr>
      </table>
 </div>

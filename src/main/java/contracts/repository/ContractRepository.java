@@ -67,7 +67,17 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     public List<Contract> getAllExceptCurrent(Integer requestid);
     
     @Query(value = "SELECT * FROM CONTRACT WHERE requestid IN (select requestid_relatedto FROM related_agreements WHERE requestid_related= ?1)", nativeQuery=true)
-    public List<Contract> getRelatedContracts(Integer requestid); 
-    
+    public List<Contract> getRelatedContracts(Integer requestid);
+
+    @Transactional
+    @Modifying
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.Related_Agreements = NULL", nativeQuery=true)
+	public List<Contract> getUnrelatedContracts();
 }
+/*
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM RELATED_AGREEMENTS WHERE requestid_relatedto = requestid_related", nativeQuery=true)
+	public void unrelateContract(Integer requestid); 
+    */
 

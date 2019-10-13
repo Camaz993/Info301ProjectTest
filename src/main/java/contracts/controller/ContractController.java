@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -217,7 +218,7 @@ public class ContractController {
 	}
 	
 	//Method to bring up search results and checks if user has item favourited or not.
-	//If they have the item favourited, the button dynamically updates to unfavourited.
+	//If they have the item favourited, the button odynamically updates to unfavourited.
 	@GetMapping("/search_contracts")
 	public String getAllContracts(Model model) {
 		List<Contract> allContracts = contractService.getAllContracts();
@@ -589,6 +590,23 @@ public class ContractController {
 		Contract newRelated = relatedAgreement.getRequestid_related();
 		return "redirect:/view_details/" + newRelated.getRequestid();
 	}
+	
+	@PostMapping("/unrelate_contracts/{requestid}")
+	public String unrelateContracts(@PathVariable("requestid") int requestid, Model model) {
+		Integer relatedid = relatedAgreementsService.findNewestRelated();
+		RelatedAgreements relatedAgreement = relatedAgreementsService.findbyId(relatedid).orElse(new RelatedAgreements());
+		relatedAgreementsService.unrelateContract(relatedAgreement);
+		return "view_details";
+	}
+	
+	@GetMapping("/unrelate_contracts")
+	public String getUnrelatedContracts(Model model) {
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+		model.addAttribute("contracts", contractService.getAllContracts());
+		return "search_contracts";
+	}
+	
 	
 	//removes a contract from a users favourite contracts
 	@PostMapping("/unfavourite_contracts/{requestid}")

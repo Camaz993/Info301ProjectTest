@@ -51,4 +51,8 @@ public interface IContractService {
 	List<Contract> getAllExceptCurrent(Integer requestid);
 
 	public Object getRelatedContracts(Integer requestid);
+
+	List<Contract> getUnrelatedContracts();
+
+	//public void unrelateContract(Integer requestid);
 }

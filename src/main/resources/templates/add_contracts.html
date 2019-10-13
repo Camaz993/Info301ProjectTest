@@ -62,6 +62,7 @@
 		<div class="tab">
 		  <button class="tablinks" onclick="openTab(event, 'ContractDetails')">Contract Details</button>
 		  <button class="tablinks" onclick="openTab(event, 'PartyDetails')">Party Details</button>
+		  <button class="tablinks" onclick="openTab(event, 'RelatedAgreements')">Related Agreements</button>
 		  <button class="tablinks" onclick="openTab(event, 'Attachments')">Attachments</button>
 		</div>
     <form action="#" th:action="@{/api/contracts}" th:object="${contract}" method="post" id="addContract">
@@ -128,6 +129,32 @@
     </tr>
     </table>
     </div>
+     <div id="RelatedAgreements" class="tabcontent">
+	<h3>Related Agreements:</h3>
+	<table>
+	<tr>
+	<td th:text ="${selectedContract?.related_agreements}"/>
+		<form action="#" th:action="@{/add_related/{requestid} (requestid=${selectedContract.requestid})}" method="post">
+			<input type="hidden"/>
+	  		<a th:href="@{/add_related/{requestid} (requestid=${selectedContract.requestid})}" type="submit" id="submitButton">Add Related Agreements</a>
+		</form>
+		</tr>
+	</table>
+	<table>
+	<thead>
+	<tr>
+	<th id="relatedAgreementTableId">Request Id</th>
+    <th id="relatedAgreementTable">Agreement Title</th>
+    <th id="relatedAgreementTable">Business Name</th>
+    </tr>
+    </thead>
+    <tr th:each="contract : ${contracts}">
+    	<th><a th:text="${contract.requestid}" th:href="@{/view_details/{requestid}(requestid=${contract.requestid})}" id="relatedRequestid"></a></th>
+        <th th:text="${contract.agreement_title}"></th>	 
+        <th th:text="${contract?.businessname}" id="relatedAgreementTable"></th>
+     </tr>
+     </table>
+</div>
      <div id="Attachments" class="tabcontent">
     <h3>Attachments</h3>
     <table>
