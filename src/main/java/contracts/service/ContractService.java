@@ -147,14 +147,10 @@ public class ContractService implements IContractService{
 	public List<Contract> getRelatedContracts(Integer requestid) {
 		return contractRepository.getRelatedContracts(requestid);
 	}
-	/*
+	
 	@Override
-	public void unrelateContract(Integer requestid) {
-		contractRepository.unrelateContract(requestid);
+	public void unrelateContract(Integer requestid, Integer requestid2) {
+		contractRepository.unrelateContract(requestid, requestid2);
 	}
-	*/
-	@Override
-	public List<Contract> getUnrelatedContracts() {
-		return contractRepository.getUnrelatedContracts();
-	}
+	
 }

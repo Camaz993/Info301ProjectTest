@@ -213,7 +213,6 @@
 	<h3>Related Agreements:</h3>
 	<table class="viewdetails">
 	<tr>
-	<th>Related Agreements </th>
 	<td th:text ="${selectedContract?.related_agreements}"/>
 		<form action="#" th:action="@{/add_related/{requestid} (requestid=${selectedContract.requestid})}" method="post">
 			<input type="hidden"/>
@@ -227,6 +226,7 @@
 	<th id="relatedAgreementTableId">Request Id</th>
     <th id="relatedAgreementTable">Agreement Title</th>
     <th id="relatedAgreementTable">Business Name</th>
+    <th id="relatedAgreementTable">Delete Related</th>
     </tr>
     </thead>
     <tr th:each="contract : ${contracts}">
@@ -234,9 +234,9 @@
         <td th:text="${contract.agreement_title}"></td>	 
         <td th:text="${contract?.businessname}" id="relatedAgreementTable"></td>
         <td>
-       		<form action="#" th:action="@{/unrelate_contracts/{requestid} (requestid=${contract.requestid})}" method="post">
+       		<form action="#" th:action="@{/unrelate_contracts/{request}/{requestid}(request=${contract.requestid},requestid=${selectedContract.requestid})}" method="post">
   				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to unrelate this contract?');" type="submit" id="submitButton">Unrelate</button>
+  				<button onclick="return confirm('Are you sure want to unrelate this contract?');" type="submit" id="submitButton" class='btn'>Unrelate</button>
 			</form>
      	</td>
      </tr>

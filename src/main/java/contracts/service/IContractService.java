@@ -52,7 +52,5 @@ public interface IContractService {
 
 	public Object getRelatedContracts(Integer requestid);
 
-	List<Contract> getUnrelatedContracts();
-
-	//public void unrelateContract(Integer requestid);
+	public void unrelateContract(Integer requestid, Integer requestid2);
 }

@@ -591,22 +591,11 @@ public class ContractController {
 		return "redirect:/view_details/" + newRelated.getRequestid();
 	}
 	
-	@PostMapping("/unrelate_contracts/{requestid}")
-	public String unrelateContracts(@PathVariable("requestid") int requestid, Model model) {
-		Integer relatedid = relatedAgreementsService.findNewestRelated();
-		RelatedAgreements relatedAgreement = relatedAgreementsService.findbyId(relatedid).orElse(new RelatedAgreements());
-		relatedAgreementsService.unrelateContract(relatedAgreement);
-		return "view_details";
+	@PostMapping("/unrelate_contracts/{request}/{requestid}")
+	public String unrelateContracts(@PathVariable("request") int request, @PathVariable("requestid") int requestid, Model model) {
+		contractService.unrelateContract(requestid, request);
+		return "redirect:/view_details/" + requestid;
 	}
-	
-	@GetMapping("/unrelate_contracts")
-	public String getUnrelatedContracts(Model model) {
-		Integer i = currentService.getCurrent();
-		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
-		model.addAttribute("contracts", contractService.getAllContracts());
-		return "search_contracts";
-	}
-	
 	
 	//removes a contract from a users favourite contracts
 	@PostMapping("/unfavourite_contracts/{requestid}")
