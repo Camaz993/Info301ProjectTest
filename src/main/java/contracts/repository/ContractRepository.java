@@ -18,9 +18,6 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
 
 	@Query(value = "SELECT * FROM CONTRACT c WHERE c.Agreement_Title LIKE %:search%", nativeQuery = true)
     public List<Contract> searchContracts(@Param("search") String search);
-  
-	/*@Query(value = "SELECT * FROM CONTRACT c WHERE c.Agreement_Title LIKE :word or c.Description LIKE word")
-	public List<Contract> searchContracts(String search);*/
     
 	@Query(value = "SELECT * FROM CONTRACT WHERE LOWER(Agreement_Location) LIKE CONCAT(LOWER(:search), '%') OR RequestID LIKE CONCAT(:search, '%')", nativeQuery = true)
     public List<Contract> searchLocation(@Param("search") String search);
@@ -38,9 +35,21 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     		  nativeQuery = true)
     public List<Contract> getArchivedContracts();
     
-    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F' OR c.archived IS NULL", 
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F'", 
   		  nativeQuery = true)
     public List<Contract> getCurrentContracts();
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F' ORDER BY date_updated desc limit 25", 
+    		  nativeQuery = true)
+      public List<Contract> getContractsShortList();
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F' ORDER BY agreement_title", 
+  		  nativeQuery = true)
+    public List<Contract> getContractsSorted();
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F' ORDER BY businessname", 
+    		  nativeQuery = true)
+      public List<Contract> getContractsSortedParty();
     
     @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid = ?1 AND archived = 'F'", nativeQuery = true)
     public List<Contract> getContractsByUser(Integer userid);
@@ -63,11 +72,18 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     @Query(value = "SELECT COUNT(*) FROM FAVOURITED WHERE requestid = ?1 AND userid = ?2 limit 1", nativeQuery = true)
     public Integer checkFavourited(Integer requestid, Integer userid);
     
-    @Query(value = "SELECT * FROM CONTRACT c WHERE c.requestid != ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.requestid != ?1 AND c.requestid NOT IN (select requestid_relatedto FROM related_agreements WHERE requestid_related= ?1)", nativeQuery = true)
     public List<Contract> getAllExceptCurrent(Integer requestid);
     
     @Query(value = "SELECT * FROM CONTRACT WHERE requestid IN (select requestid_relatedto FROM related_agreements WHERE requestid_related= ?1)", nativeQuery=true)
-    public List<Contract> getRelatedContracts(Integer requestid); 
+    public List<Contract> getRelatedContracts(Integer requestid);
     
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM RELATED_AGREEMENTS WHERE requestid_related = ?1 AND requestid_relatedto = ?2", nativeQuery=true)
+	public void unrelateContract(Integer requestid, Integer requestid2); 
 }
+
+    
+    
 

@@ -41,7 +41,7 @@ function setColours(){
 		<div>
  		<a href="/">Home</a>
  		</div>
- 		<div>
+ 		<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
  		<a href="/add_contracts">New Contract</a></li>
  		</div>
  		<div>
@@ -67,7 +67,7 @@ function setColours(){
 	<div class="subnav">
 	<div class="links">
 
-	<a>Home</a>
+	<li>Home</li>
 	<a href="/create_account">Create User Account</a>
 	<a href="/manage_users">Manage User Accounts</a>
 	<a href="/site_settings">Site Settings</a>

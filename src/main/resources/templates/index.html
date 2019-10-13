@@ -33,7 +33,7 @@ font-variant-caps: all-small-caps;
 		<div>
  		<li>Home</li>
  		</div>
- 		<div>
+ 		<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
  		<a href="/add_contracts">New Contract</a></li>
  		</div>
  		<div>
@@ -84,7 +84,7 @@ font-variant-caps: all-small-caps;
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.businessname}"></th>
-        <th th:text="${contract.date_updated}"></th>
+        <th th:text="${#temporals.format(contract.date_updated, 'dd-MM-yyyy')}"></th>
     </tr>
     </tbody>
     </table>
@@ -102,7 +102,7 @@ font-variant-caps: all-small-caps;
     <th>Agreement Type</th>
     <th>Description</th>
     <th>Business Name</th>
-    <th>Assign</th>
+    <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">Assign</th>
     </tr>
     </thead>
     <tbody class="wrongth">
@@ -114,7 +114,7 @@ font-variant-caps: all-small-caps;
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.businessname}"></th>
-        <th>
+        <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
         <form action="#" th:action="@{/assign/{requestid}(requestid=${contract.requestid})}" method="post">			
   				<button onclick="return confirm('Are you sure want to assign this to you?');" type="submit" id="submitButton2" class="btn">Assign to Me</button>
 			</form>

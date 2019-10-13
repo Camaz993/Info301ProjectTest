@@ -16,13 +16,11 @@ public interface IContractService {
 
 	public List<Contract> getAllContracts();
 	
+	public List<Contract> getContractsShortList();
+	
 	public Optional<User> findById(Integer id);
 	
 	public List<Contract> searchContracts(String search);
-	
-	public List<Contract> searchLocation(String search);
-	
-	public List<Contract> searchContractType(String search);
 	
 	public Contract update(Contract contract);
 
@@ -51,4 +49,10 @@ public interface IContractService {
 	List<Contract> getAllExceptCurrent(Integer requestid);
 
 	public Object getRelatedContracts(Integer requestid);
+
+	public void unrelateContract(Integer requestid, Integer requestid2);
+	
+	public List<Contract> getContractsSorted();
+	
+	public List<Contract> getContractsSortedParty();
 }

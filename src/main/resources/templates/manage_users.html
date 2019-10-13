@@ -25,7 +25,7 @@
 		<div>
  			<a href="/">Home</a>
  		</div>
- 		<div>
+ 		<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
 	 		<a href = "/add_contracts">New Contract</a>
  		</div>
  		<div>
@@ -47,12 +47,12 @@
 	</div>
 	
 	<div class="content">
-		<h2>Manage Users</h2>
+		<h2>Manage User Accounts</h2>
 	<div class="subnav">
 	<div class="links">
 	<a href="/admin_settings">Home</a>
 	<a href="/create_account">Create User Account</a>
-	<a>Manage User Accounts</a>
+	<li>Manage User Accounts</li>
 	<a href="/site_settings">Site Settings</a>
 	<a href="/audit">Track Changes</a>
 	</div>
@@ -81,13 +81,13 @@
              	<th>
        		<form action="#" th:action="@{/lock_users/{userid}(userid=${user.userid})}" method="get">
   				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to lock this user?');" type="submit" id="lock_button">Lock</button>
+  				<button onclick="return confirm('Are you sure want to lock this user?');" type="submit" id="lock_button" class="btn">Lock</button>
 			</form>
      	</th>
      	<th>
        		<form action="#" th:action="@{/unlock_users/{userid}(userid=${user.userid})}" method="get">
   				<input type="hidden"/>
-  				<button onclick="return confirm('Are you sure want to unlock this user?');" type="submit" id="un_button">Unlock</button>
+  				<button onclick="return confirm('Are you sure want to unlock this user?');" type="submit" id="un_button" class="btn">Unlock</button>
 			</form>
      	</th>
     </tr>

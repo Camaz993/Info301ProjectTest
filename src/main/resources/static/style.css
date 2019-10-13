@@ -68,13 +68,23 @@ body{
 .links {
 	margin-left:auto;
 	margin-right:auto;
-	width:90%;
+	width:75%;
+}
+
+.links li {
+	color:white;
+	font-weight:bold;
+	font-size:14px;
+	padding-right:10px;
+	padding-left:10px;
+	padding-top:5px;
+	padding-bottom:5px;
+	display:inline-block;
 }
 
 .links a {
-	font-weight: bold;
 	color: #F2F2F2;
-	padding:5px;
+	padding:15px;
 	font-size:10pt;
 	}
 
@@ -264,6 +274,15 @@ input[type=submit] {
   border-radius: 4px;
   cursor: pointer;
   width:120px;
+  text-align: center;
+}
+
+#cancel_button {
+	margin-left: 10px;
+    width: 120px;
+    text-align: center;
+    height: 39px;
+    cursor: pointer;
 }
 
 input[type=submit]:hover {
@@ -332,6 +351,10 @@ h1{
 h3 {
 font-weight:normal;
 color:grey;
+}
+
+.update_details input {
+	width: 500px;
 }
 
 .footerContainer {
@@ -419,13 +442,27 @@ footer a {
 
 /* Style the alert messages */
 .alertMessage {
-	color: black;
+	color: white;
+	text-align:center;
+	font-style:italic;
+	background-color:#E95959;
+	width:100%;
+	padding:1px;
+	margin-bottom:10px;
+	font-variant-caps: all-small-caps;
+	font-size:17px;
+}
+
+.successMessage {
+	color: white;
 	text-align:center;
 	font-style:italic;
 	background-color:#4CAF50;
 	width:100%;
 	padding:1px;
 	margin-bottom:10px;
+	font-variant-caps: all-small-caps;
+	font-size:17px;
 }
 
 img.logo{
@@ -466,6 +503,15 @@ thead {
 
 tr:nth-child(even) {
 	background-color: white;
+}
+
+#userid {
+	font-size: 11px;
+    padding: 10px;
+    background: #ddd;
+    border: none;
+    margin-bottom: 5px;
+    width: 500px;
 }
 
 /*Footer Styling */

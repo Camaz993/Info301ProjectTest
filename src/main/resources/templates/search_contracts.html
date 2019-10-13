@@ -14,13 +14,25 @@ float:right;
 margin-top:-45px;
 }
 
+#searchButton {
+float:none;
+margin-right:0px;}
+
+#resetContracts {
+margin-left:0px;
+}
+
+.inputBar {
+width:230px;}
+
+
 
 </style>
 </head>
 <body onload="setColours();">
 
 	<div class="header">
-	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
+	<img class="logo" width="70" th:src="@{/logoimage/logo.png}">
 	<h1>Contract Management</h1>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
@@ -35,11 +47,11 @@ margin-top:-45px;
 			<div>
 	 		<a href="/">Home</a>
 	 		</div>
-	 		<div>
+	 		<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
 	 		<a href="/add_contracts">New Contract</a></li>
 	 		</div>
 	 		<div>
-	 		<li>Search Contacts</li>
+	 		<li>Search Contracts</li>
 	 		</div>
 	 		<div>
 	 		<a href="/my_contracts">My Contracts</a></li>
@@ -59,22 +71,24 @@ margin-top:-45px;
 	<h2>Search for Contracts</h2>
 	<div id="searchbar" style="margin-bottom:75px;">
 	<a href="/archive_contracts"><button id="ArchBut" class='btn'>View Archived Contracts</button></a>
-	<p>This search bar will search the whole database</p>
+	<p>This search bar will search the whole database <a href="/help#search"><button class='btn' style="background:#1380A1; color:white; font-size: 15px; float:none; margin-top: 7px;padding:4px;">?</button></a></p>
 	<form th:object="${search}" th:action="@{/contracts/search}" method="get" id="searchForm">
         <input type="text" placeholder="Search database by Agreement Title .." id="search" name="search" th:value="${search}"/>
-        <input type="submit" value="Search"/>
+        <button type="submit" value="Search" class='logoutButton' id="searchButton">Search</button>
     </form>
-    <th th:text="${search}"></th>
 	<form th:object="${search}" th:action="@{/search_contracts}" method="get" id="searchReset">
-        <input type="submit" class="resetbutton" value="Reset Table">
+        <button type="submit" class="logoutButtonCancel" id="resetContracts">Reset</button>
     </form>
-      <a href="/help"><button class='btn' style="background:teal; color:white; font-size: 20px; float:none; margin-top: 7px; margin-left: 5px; ">?</button></a>
 
     </div>
-    <input type="text" id="myInput" onkeyup="searchID()" placeholder="Search by fields .." title="Type in a ID or Name etc....">
-    <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Title .." title="Type in a Title Name etc....">
-    <input type="text" id="secondInput" onkeyup="searchByParty()" placeholder="Search by Business Name .." title="Type in a Bussiness Name etc....">
     <h3>Contracts</h3>
+    <div th:if="${search}"><th th:text="'Search Results for Search: '+ ${search}"></th></div>
+    <input type="text" id="myInput" class="inputBar" onkeyup="searchID()" placeholder="Filter by fields .." title="Type in a ID or Name etc....">
+    <input type="text" id="secondInput" class="inputBar" onkeyup="searchByParty()" placeholder="Filter by Title .." title="Type in a Title Name etc....">
+    <input type="text" id="thirdInput" class="inputBar" onkeyup="searchByParty()" placeholder="Filter by Business Name .." title="Type in a Bussiness Name etc....">
+    <a href="/search_contracts_all"><button id="search_all" class='btn'>View All Contracts</button></a>
+    <a href="/contracts/sorted"><button id="search_all" class='btn'>Sort A-Z Title</button></a>
+    <a href="/contracts/sortedparty"><button id="search_all" class='btn'>Sort A-Z Business Name</button></a>
     <div style="overflow-x:auto;">
 	<table id="viewcontracts">
 	<thead>
@@ -85,9 +99,9 @@ margin-top:-45px;
     <th>Description</th>
     <th>Business Name</th>
     <th>Date Updated</th>
-    <th>Assigned to User</th>
-    <th>Update Details</th>
-    <th>Archive Contract</th>
+    <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">Assigned to User</th>
+    <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">Update Details</th>
+    <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">Archive Contract</th>
     <th>Favourite Contract</th>
     </tr>
     </thead>
@@ -100,14 +114,14 @@ margin-top:-45px;
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
         <th th:text="${contract?.businessname}"></th>
-        <th th:text="${contract.date_updated}"></th>
-        <th> 
+        <th th:text="${#temporals.format(contract.date_updated, 'dd-MM-yyyy')}"></th>
+        <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}"> 
       	  <a th:href="@{/reassign/{requestid}(requestid=${contract.requestid})}" th:text="${contract?.user?.username}" target="_blank"></a>
         </th>
-        <th>
+        <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
         	<a th:href="@{/update_details/{requestid}(requestid=${contract.requestid})}" target="_blank">Update</a>
         </th>
-		<th>
+		<th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
        		<form action="#" th:action="@{/archive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
   				<button onclick="return confirm('Are you sure want to archive this?');" type="submit" id="submitButton" class="btnSmall">Archive</button>

@@ -39,5 +39,11 @@ public class RelatedAgreementsService implements IRelatedAgreementsService {
 	public Optional<RelatedAgreements> findbyId(Integer id_relatedagreement) {
 		return relatedAgreementsRepository.findById(id_relatedagreement);
 	}
+	
+	@Override
+	public void unrelateContract(RelatedAgreements relatedAgreement) {
+		relatedAgreementsRepository.unrelateContract(relatedAgreement);
+		//relatedAgreementsRepository.delete(relatedAgreement);
+	}
 
 }

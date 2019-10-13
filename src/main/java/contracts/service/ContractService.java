@@ -50,6 +50,11 @@ public class ContractService implements IContractService{
 	}
 	
 	@Override
+	public List<Contract> getContractsShortList() {
+		return contractRepository.getContractsShortList();
+	}
+	
+	@Override
     public Optional<Contract> findContract(Integer id) {
         return contractRepository.findById(id);
     }
@@ -75,13 +80,13 @@ public class ContractService implements IContractService{
 	}
 	
 	@Override
-	public List<Contract> searchLocation(String search) {
-		return contractRepository.searchLocation(search);
+	public List<Contract> getContractsSorted() {
+		return contractRepository.getContractsSorted();
 	}
 	
 	@Override
-	public List<Contract> searchContractType(String search) {
-		return contractRepository.searchContractType(search);
+	public List<Contract> getContractsSortedParty() {
+		return contractRepository.getContractsSortedParty();
 	}
 	
 	@Override
@@ -147,5 +152,10 @@ public class ContractService implements IContractService{
 	public List<Contract> getRelatedContracts(Integer requestid) {
 		return contractRepository.getRelatedContracts(requestid);
 	}
-
+	
+	@Override
+	public void unrelateContract(Integer requestid, Integer requestid2) {
+		contractRepository.unrelateContract(requestid, requestid2);
+	}
+	
 }

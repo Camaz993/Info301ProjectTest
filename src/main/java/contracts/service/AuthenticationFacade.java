@@ -1,3 +1,8 @@
+/*
+ * Class adapted from tutorial: 
+ * https://www.baeldung.com/get-user-in-spring-security
+ *  */
+
 package contracts.service;
 
 import org.springframework.security.core.Authentication;
