@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -227,7 +228,7 @@ public class ContractController {
 	}
 	
 	//Method to bring up search results and checks if user has item favourited or not.
-	//If they have the item favourited, the button dynamically updates to unfavourited.
+	//If they have the item favourited, the button odynamically updates to unfavourited.
 	@GetMapping("/search_contracts")
 	public String getAllContracts(Model model) {
 		List<Contract> allContracts = contractService.getAllContracts();
@@ -536,6 +537,12 @@ public class ContractController {
 		relatedAgreementsService.addRelatedAgreements(relatedAgreement);
 		Contract newRelated = relatedAgreement.getRequestid_related();
 		return "redirect:/view_details/" + newRelated.getRequestid();
+	}
+	
+	@PostMapping("/unrelate_contracts/{request}/{requestid}")
+	public String unrelateContracts(@PathVariable("request") int request, @PathVariable("requestid") int requestid, Model model) {
+		contractService.unrelateContract(requestid, request);
+		return "redirect:/view_details/" + requestid;
 	}
 	
 	//removes a contract from a users favourite contracts
