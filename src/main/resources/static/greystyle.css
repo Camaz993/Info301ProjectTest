@@ -398,4 +398,20 @@ thead {
 tr:nth-child(even) {
 	background-color: white;
 }
+
+/*Footer Styling */
+.footerText{
+font-size:11px;
+text-align:center;
+padding:0px;
+margin:2px;
+font-variant-caps: all-small-caps;
+}
+footer a {
+display:inline-block;
+text-decoration:none;
+color:#f2f2f2;
+}
+footer a:hover{
+color:#4CAF50;
   
