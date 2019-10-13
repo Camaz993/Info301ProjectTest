@@ -117,7 +117,7 @@ public class AccountController {
 		user.setPassrepeat(passwordEncoder.encode(user.getPassrepeat()));
 		user.setLocked(false);
 		accountService.addAccount(user);
-		redirectAttributes.addFlashAttribute("message4", "Account successfully sent");
+		redirectAttributes.addFlashAttribute("message4", "Account successfully created");
 		return "redirect:/create_account";
 	}
 	
