@@ -17,6 +17,14 @@ font-size: 11px;
     width:300px;
 }
 
+p{
+margin-left:80%;
+margin-bottom:0px;
+padding:0px;
+margin-top:0px;
+font-size:14px;
+}
+
 label {
 padding-top:0px;
 margin-top:0px;
@@ -26,7 +34,7 @@ width:350px;
 </head>
 <body onload="setColours();">
 	<div class="header">
-	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
+	<img class="logo" width="70" th:src="@{/logoimage/logo.png}">
 	<h1>Contract Management</h1>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
@@ -65,19 +73,18 @@ width:350px;
 	<div class="content">
     <form action="#" th:action="@{/api/staff}" th:object="${user}" method="post" id="addUser">
 <div th:if="${message}" th:text="${message}" class="alertMessage"/>
-	<h2>Add New User</h2>
+	<h2>Create User Account</h2>
 	<div class="subnav">
 	<div class="links">
 	<a href="/admin_settings">Home</a>
-	<a>Create User Account</a>
+	<li>Create User Account</li>
 	<a href="/manage_users">Manage User Accounts</a>
 	<a href="/site_settings">Site Settings</a>
 	<a href="/audit">Track Changes</a>
 	</div>
 	</div>
-	<h3>Create User Account</h3>
 	<div th:if="${message4}" th:text="${message4}" class="successMessage"/>
-	<p> Fill in this form to create an account </p>    
+	<h3> Fill in this form to create an account </h3>    
 	<form>
 	<label for="firstname">First Name</label>
    		<input type="text" th:field="*{firstname}" />

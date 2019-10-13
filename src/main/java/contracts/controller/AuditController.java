@@ -290,21 +290,6 @@ public class AuditController {
 			}
 			fieldUpdatedList += ("region") + (", ");
 		}
-		if (!compare(foundContract.getRelated_agreements(), contract.getRelated_agreements())) {
-			if (foundContract.getRelated_agreements() != null) {
-				fieldBeforeList += ((String.valueOf((foundContract.getRelated_agreements()))))+ (", ");
-			}
-			else {
-				fieldBeforeList += (" ")+ (", ");
-			}
-			if (contract.getRelated_agreements() != null) {
-				fieldAfterList += ((String.valueOf((contract.getRelated_agreements()))))+ (", ");
-			}
-			else {
-				fieldAfterList += (" ")+ (", ");
-			}
-			fieldUpdatedList += ("related_agreements") + (", ");
-		}
 			LocalDateTime date = LocalDateTime.now();
 			contract.setDate_updated(date);
 			blank.setField_after(fieldAfterList);

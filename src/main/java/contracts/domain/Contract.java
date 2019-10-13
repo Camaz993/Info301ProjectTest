@@ -255,6 +255,6 @@ public class Contract {
 	
 	@Override
 	public String toString() {
-		return "requestid = " + requestid + ", agreement_title = " + agreement_title + "";
+		return "requestid: " + requestid + ", title: " + agreement_title + "";
 	}
 }

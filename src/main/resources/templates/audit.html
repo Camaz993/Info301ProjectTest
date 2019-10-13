@@ -8,10 +8,14 @@
 <link href="../static/greystyle.css" th:href="@{/greystyle.css}" rel="stylesheet" title="greystyle" id="greystyle"/>
 <link href="../static/redstyle.css" th:href="@{/redstyle.css}" rel="stylesheet" title="redstyle" id="redstyle"/>
 </head>
+<style>
+th {
+font-size:12px;}
+</style>
 <body onload="setColours();">
 
 	<div class="header">
-	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
+	<img class="logo" width="70" th:src="@{/logoimage/logo.png}">
 	<h1>Contract Management</h1>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
@@ -46,15 +50,15 @@
  		</div>
 	</div>
 	</div>
-	<div class="content_search">
-	<h2>Audit Table</h2>
+	<div class="content">
+	<h2>Track Changes</h2>
 	<div class="subnav">
 	<div class="links">
 	<a href="/admin_settings">Home</a>
 	<a href="/create_account">Create User Account</a>
 	<a href="/manage_users">Manage User Accounts</a>
 	<a href="/site_settings">Site Settings</a>
-	<a>Track Changes</a>
+	<li>Track Changes</li>
 	</div>
 	</div>
     <h2>Audits</h2>
@@ -68,6 +72,7 @@
      <th>Field Before</th>
      <th>Field After</th>
      <th>Archived</th>
+     <th>Added</th>
     </tr>
     </thead>
     <tbody class="wrongth">
@@ -79,6 +84,7 @@
         <th th:text="${audit.field_before}"></th>
         <th th:text="${audit.field_after}"></th>
         <th th:text="${audit.archived_contract}"></th>
+        <th th:text="${audit.add_contract}"></th>
     </tr>
     </tbody>
     </table>
