@@ -8,6 +8,7 @@ import contracts.service.FavouritedService;
 @Controller
 public class FavouritedController {
 	
+	@SuppressWarnings("unused")
 	@Autowired
 	private FavouritedService favouritedService;
 	

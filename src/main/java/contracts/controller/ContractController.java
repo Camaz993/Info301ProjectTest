@@ -5,11 +5,8 @@
  */
 package contracts.controller;
 
-import java.io.File;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,12 +24,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.google.common.io.Files;
 
 import contracts.domain.Audit;
 import contracts.domain.Contract;
@@ -260,9 +254,11 @@ public class ContractController {
 	 * Method to bring up search results and checks if user has item favourited or not.
 	 * If they have the item favourited, the button dynamically updates to unfavourited.
 	 */
+	@SuppressWarnings("unchecked")
 	@GetMapping("/search_contracts")
 	public String getAllContractsShort(Model model) {
 		List<Contract> allContracts = contractService.getContractsShortList();
+		@SuppressWarnings("rawtypes")
 		List favStatus = new ArrayList<>();
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
@@ -342,6 +338,7 @@ public class ContractController {
 	/**
 	 * adds all of the contracts and whether they have been favourited or not to the page
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("/contracts/search")
 	public String searchContracts(ModelMap map, @RequestParam String search, Model model)
 	{
@@ -369,6 +366,7 @@ public class ContractController {
 		return "search_contracts";
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("/contracts/sorted")
 	public String allContractsSorted(Model model)
 	{
@@ -390,10 +388,12 @@ public class ContractController {
 		return "search_contracts";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("/contracts/sortedparty")
 	public String allContractsSortedParty(Model model)
 	{
 		List<Contract> allContracts = contractService.getContractsSortedParty();
+		@SuppressWarnings("rawtypes")
 		List favStatus = new ArrayList<>();
 		User user = accountService.findUser(getCurrentUser().getUsername());
 		for (int i = 0; i < allContracts.size(); i++) {
@@ -652,7 +652,6 @@ public class ContractController {
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/related_contracts/{requestid}")
 	public String getRelatedContracts(@PathVariable("requestid") int requestid, Model model) {
-		Contract relatedContract = contractService.findContract(requestid).orElse(new Contract());
 		Integer relatedid = relatedAgreementsService.findNewestRelated();
 		RelatedAgreements relatedAgreement = relatedAgreementsService.findbyId(relatedid).orElse(new RelatedAgreements());
 		relatedAgreement.setRequestid_relatedto(requestid);
