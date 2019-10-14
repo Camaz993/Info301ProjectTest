@@ -13,7 +13,7 @@
 <body onload="setColours();">
 
 	<div class="header">
-	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
+	<img class="logo" width="70" th:src="@{/logoimage/logo.png}">
 	<h1>Contract Management</h1>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
@@ -28,7 +28,7 @@
 		<div>
 	 		<a href="/">Home</a>
 	 		</div>
-	 		<div>
+	 		<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
 	 		<a href="/add_contracts">New Contract</a></li>
 	 		</div>
 	 		<div>
@@ -67,7 +67,7 @@
     <th>Agreement Type</th>
     <th>Description</th>
     <th>Business Name</th>
-    <th>Unarchive Contract</th>
+    <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">Unarchive Contract</th>
     </tr>
     </thead>
     <tbody class="wrongth">
@@ -79,7 +79,7 @@
         <th th:text="${contract.agreement_type}"></th>
         <th th:text="${contract.description}"></th>
         <th th:text="${contract.businessname}"></th>
-        <th>
+        <th th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
        		<form action="#" th:action="@{/unarchive_contracts/{requestid}(requestid=${contract.requestid})}" method="post">
   				<input type="hidden"/>
   				<button onclick="return confirm('Are you sure want to unarchive this?');" type="submit" id="submitButton">Unarchive</button>

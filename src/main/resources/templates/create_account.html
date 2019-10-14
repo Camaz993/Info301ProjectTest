@@ -19,6 +19,14 @@ font-size: 11px;
     width:300px;
 }
 
+p{
+margin-left:80%;
+margin-bottom:0px;
+padding:0px;
+margin-top:0px;
+font-size:14px;
+}
+
 label {
 padding-top:0px;
 margin-top:0px;
@@ -28,7 +36,7 @@ width:350px;
 </head>
 <body onload="setColours();">
 	<div class="header">
-	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
+	<img class="logo" width="70" th:src="@{/logoimage/logo.png}">
 	<h1>Contract Management</h1>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
@@ -43,7 +51,7 @@ width:350px;
 		<div>
 	 		<a href="/">Home</a>
 	 		</div>
-	 		<div>
+	 		<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
 	 		<a href="/add_contracts">New Contract</a></li>
 	 		</div>
 	 		<div>
@@ -67,43 +75,46 @@ width:350px;
 	<div class="content">
     <form action="#" th:action="@{/api/staff}" th:object="${user}" method="post" id="addUser">
 <div th:if="${message}" th:text="${message}" class="alertMessage"/>
-	<h2>Add New User</h2>
+	<h2>Create User Account</h2>
 	<div class="subnav">
 	<div class="links">
 	<a href="/admin_settings">Home</a>
-	<a>Create User Account</a>
+	<li>Create User Account</li>
 	<a href="/manage_users">Manage User Accounts</a>
 	<a href="/site_settings">Site Settings</a>
 	<a href="/audit">Track Changes</a>
 	</div>
 	</div>
-	<p> Fill in this form to create an account </p>    
+	<div th:if="${message4}" th:text="${message4}" class="successMessage"/>
+	<h3> Fill in this form to create an account </h3>    
 	<form>
 	<label for="firstname">First Name</label>
    		<input type="text" th:field="*{firstname}" />
-   		<p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Name Error</p>
+   		<p th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="error">Name Error</p>
 	<label for="lastname">Last Name</label>
     	<input type="text"  th:field="*{lastname}"/>
-    	<p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Name Error</p>
+    	<p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="error">Name Error</p>
 	<label for="role">Role</label>
     	<select id="role" name="role">
     	<option disabled="">Select a role</option>
-    	<option value="Admin">Admin</option>
-    	<option value="Legal">Legal</option>
+    	<option value="ADMIN">Admin</option>
+    	<option value="LEGAL">Legal</option>
+    	<option value="EXTERNAL">External</option>
     	</select>
+    	<p th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="error">Role Error</p>
 	<label for="username">Username</label>
     	<input type="text"  th:field="*{username}" />
-    	<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
+    	<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error">Username Error</p>
         <p th:text="${message1}"></p>
         <label for="password">Password</label>
         <input type="password"  th:field="*{password}" />
-        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error">Password Error</p>
         <label for="passrepeat">Password Repeat</label>
         <input type="password" th:field="*{passrepeat}"/>
-        <p th:if="${#fields.hasErrors('passrepeat')}" th:errors="*{passrepeat}">Password Error</p>
+        <p th:if="${#fields.hasErrors('passrepeat')}" th:errors="*{passrepeat}" class="error">Password Error</p>
         <label for="email">Email</label>
         <input type="email" th:field="*{email}"/>
-        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</p>
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error">Email Error</p>
         <p th:text="${message2}"></p>
         <p th:text="${message3}"></p>
         <input type="submit" value="Submit"/>

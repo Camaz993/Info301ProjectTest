@@ -54,6 +54,18 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     public List<Contract> getCurrentContracts();
     
     //get all contracts associated with the given user
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F' ORDER BY date_updated desc limit 25", 
+    		  nativeQuery = true)
+      public List<Contract> getContractsShortList();
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F' ORDER BY agreement_title", 
+  		  nativeQuery = true)
+    public List<Contract> getContractsSorted();
+    
+    @Query(value = "SELECT * FROM CONTRACT c WHERE c.archived = 'F' ORDER BY businessname", 
+    		  nativeQuery = true)
+      public List<Contract> getContractsSortedParty();
+    
     @Query(value = "SELECT * FROM CONTRACT c WHERE c.userid = ?1 AND archived = 'F'", nativeQuery = true)
     public List<Contract> getContractsByUser(Integer userid);
     
@@ -86,7 +98,12 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     
     //get all related contracts to the given contract
     @Query(value = "SELECT * FROM CONTRACT WHERE requestid IN (select requestid_relatedto FROM related_agreements WHERE requestid_related= ?1)", nativeQuery=true)
-    public List<Contract> getRelatedContracts(Integer requestid); 
+    public List<Contract> getRelatedContracts(Integer requestid);
+    
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM RELATED_AGREEMENTS WHERE requestid_related = ?1 AND requestid_relatedto = ?2", nativeQuery=true)
+	public void unrelateContract(Integer requestid, Integer requestid2); 
     
 }
 

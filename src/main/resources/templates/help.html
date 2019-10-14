@@ -28,7 +28,7 @@
 			<div>
 	 		<a href="/">Home</a>
 	 		</div>
-	 		<div>
+	 		<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
 	 		<a href="/add_contracts">New Contract</a></li>
 	 		</div>
 	 		<div>
@@ -44,7 +44,7 @@
  		<li>Help</li>
  		</div>
  		<div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
- 		<a href="/favourite_contracts">Admin</a></li>
+ 		<a href="/favourite_contracts">Admin</a>
  		</div>
 	</div>
 </div>
@@ -54,17 +54,20 @@
 
 <h3><b>About</b></h3>
 <p>This is a Contract Management System which enables you to administrate contracts within a business.</p><br>
-<h4>Click the links below to get detailed help on those sections:<h4>
+<p>To get detailed information on how features of the system work, see the User Documentation file which can be obtained from your system admin.</p>
+<h4>Click the links below to get quick help on those sections:<h4>
 
 <a href="#features"><b>Features</b></a><br>
 <a href="#login">&emsp; Login</a><br>
 <a href="#logout">&emsp; Log Out</a><br>
+<a href="#myaccount">&emsp; My Account</a><br>
 <a href="#recent">&emsp; Most Recently Updated Contracts</a><br>
 <a href="#mycontracts">&emsp; My Contracts</a><br>
 <a href="#favourited">&emsp; Favourited Contracts</a><br>
 <a href="#new">&emsp; New Contract</a><br>
 <a href="#details">&emsp; View Details</a><br>
-<a href="#update">&emsp; Update Details</a><br><br>
+<a href="#update">&emsp; Update Details</a><br>
+<a href="#search">&emsp; Search Contracts</a><br><br>
 <a href="#contact"><b>Contact us</b></a><br><br>
 
 <h3 id="features"><b>Features</b></h3>
@@ -72,6 +75,8 @@
 <p>Users can log into the system using the username and password provided by the system admin.</p>
 <h3 id="logout">Log Out</h3>
 <p>It is good practice to log out of the system when it is not in use so it cannot be accessed by unauthorised users. Logout using the button on the top right corner of the screen when logged in. </p>
+<h3 id="myaccount">My Account</h3>
+<p>Allows you to view account details, change email and change password.</p>
 <h3 id="recent">Most Recently Updated Contracts</h3>
 <p>Most Recently Updated Contracts shows the contracts that have been updated by any user most recently. When a user updates any field in the contract, it will show up in this table with the date updated.</p>
 <h3 id="unassigned">Unassigned Contracts</h3>
@@ -89,12 +94,26 @@
 <p>The History tab shows the changes users have made to the contract including what they changed and when.</p>
 <h3 id="archived">Archived Contracts</h3>
 <p>Contracts are archived by users when they are idle - meaning no work is required on them and they are inactive. When a contract is archived, it transfers that contract to a new table so they do not come up in the search. Archived contracts are accessed on the Search page by the button in the top right corner. Archived contracts also do not show up in My Contracts or Favourited Contracts.</p>
+<h3 id="search">Search Contracts</h3>
+<p>By default, 25 contracts will show up per page. <br><br>
+The bottom three search bars are a quick search and only search the current page. <br>
+-	A real time search – the table will change and search as you type <br>
+-	Search by fields searches all the fields associated with the contract. Therefore, you should enter key words. <br>
+-	Search by title searches the agreement titles <br>
+-	Search by business name searches by party <br><br>
+The View All Contracts button will bring all the contracts from the database onto one page and sorts it by date updated. <br><br>
+Sort A-Z Title button sorts the contracts in the database (excluding Archived contracts) in alphabetical order based on Agreement Title. <br><br>
+Sort A-Z Business Name button sorts the contracts in the database (excluding Archived contracts) in alphabetical order based on Business Name. <br><br>
+The top search bar searches the entire database based on agreement title. <br>
+-	When you have entered what you want to search for, press “Search” <br>
+-	The “Reset” button resets the table and shows all contracts again. <br>
+</p>
 
 
 <h3 id="contact"><b>Need help? Contact us</b></h3>
 <p> Contact the site admin on tonymillernz@gmail.com</p>
 
-<button onclick="topFunction()" id = "myBtn" title = "Back to Top">Back to Top</button>
+<button onclick="topFunction()" id = "myBtn" title = "Back to Top" class='btn'>Back to Top</button>
 
 </div>
 

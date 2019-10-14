@@ -4,7 +4,7 @@
  */
 package contracts.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +40,7 @@ public class Audit {
 	private Contract requestid;
 	
 	@Column(name = "date")
-	private Date date;
+	private LocalDateTime date;
 	
 	@Column(name = "field_updated")
 	private String field_updated;
@@ -81,10 +81,10 @@ public class Audit {
 	public void setRequestedid(Contract requestid) {
 		this.requestid = requestid;
 	}
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 	public String getField_updated() {
@@ -105,7 +105,7 @@ public class Audit {
 	public void setField_after(String field_after) {
 		this.field_after = field_after;
 	}
-	public Audit(Integer auditid, User userid, Contract requestid, Date date, String field_updated,
+	public Audit(Integer auditid, User userid, Contract requestid, LocalDateTime date, String field_updated,
 			String field_before, String field_after, String add_contract, String archived_contract) {
 		super();
 		this.auditid = auditid;

@@ -89,7 +89,7 @@ public class AccountController {
 	 * @param br the bindingresult to check for errors in the user account
 	 */
 	@PostMapping("/api/staff")
-	public String addUser(@Valid @ModelAttribute(name="user") User user, BindingResult br, Model model) {
+	public String addUser(@Valid @ModelAttribute(name="user") User user, BindingResult br, Model model, RedirectAttributes redirectAttributes) {
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		if(br.hasErrors()) {
@@ -130,7 +130,8 @@ public class AccountController {
 		user.setPassrepeat(passwordEncoder.encode(user.getPassrepeat()));
 		user.setLocked(false);
 		accountService.addAccount(user);
-		return "redirect:/";
+		redirectAttributes.addFlashAttribute("message4", "Account successfully created");
+		return "redirect:/create_account";
 	}
 	
 	@RequestMapping(value = "/login")
@@ -196,6 +197,15 @@ public class AccountController {
 		map.put("username",username);
 		newUser = accountService.findUser(username);
 		try {
+			if (username.length() > 50) {
+				throw new IllegalArgumentException("Not a valid username!");
+			}
+			}
+				catch (IllegalArgumentException e){
+					model.addAttribute("message", e.getMessage());
+					return "forgot_password";
+				}
+		try {
 		if (newUser == null) {
 			throw new UsernameNotFoundException("Error: Unable to locate your details!");
 		}
@@ -219,7 +229,8 @@ public class AccountController {
 		emailService.send(newUser.getEmail(), "Password Recovery: Contract Management System", 
 				"Hi there,\n Here is the password recovery token. If you have not requested one please contact your admin"
 				+ "team ASAP. Otherwise, log into your account with this token:\n"
-				+ token + "\nFrom the Contract Management Team.");
+				+ token + "\nThis token will expire after 3 minutes but you can"
+						+ "request another one if needed. \nFrom the Contract Management Team.");
 		String pass = newUser.getPassword();
 		newUser.setExpiryDate(expiryDate);
 		newUser.setPassword(passwordEncoder.encode(token));
@@ -252,12 +263,14 @@ public class AccountController {
 	 * @return
 	 */
 	@PostMapping("/update_password")
-	public String updatePassword(ModelMap map, Model model, @RequestParam String passwordChange, @RequestParam String passwordChangeRepeat){
+	public String updatePassword(ModelMap map, Model model, @RequestParam String passwordChange, @RequestParam String passwordChangeRepeat, RedirectAttributes redirectAttributes){
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
 		map.put("passwordChange", passwordChange);
 		map.put("passwordChangeRepeat", passwordChangeRepeat);
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		try {	
 			if (!(passwordChange.equals(passwordChangeRepeat))) {
 				throw new IllegalArgumentException("Password must match password repeat");
@@ -265,12 +278,24 @@ public class AccountController {
 		}
 		catch (IllegalArgumentException e){
 			model.addAttribute("message", e.getMessage());
+			model.addAttribute("message4", "There were errors in your password submission!");
+			return "change_password";
+		}
+		try {	
+			if (accountService.validate(passwordChange)==false) {
+				throw new IllegalArgumentException("Password must be between 6-20 characters, contain 1 digit, 1 lowercase letter, 1 uppercase letter");
+			}
+		}
+		catch (IllegalArgumentException e){
+			model.addAttribute("message3", e.getMessage());
+			model.addAttribute("message4", "There were errors in your password submission!");
 			return "change_password";
 		}
 		user.setPassword(passwordEncoder.encode(passwordChange));
 		user.setPassrepeat(passwordEncoder.encode(passwordChangeRepeat));
 		user.setExpiryDate(null);
 		accountService.update(user);
+		redirectAttributes.addFlashAttribute("message2", "Password successfully changed!");
 		return "redirect:/change_password";
 	}
 	
@@ -279,14 +304,27 @@ public class AccountController {
 	 * @param updateEmail the new email to add to the user account
 	 */
 	@PostMapping("/update_email")
-	public String updateEmail(ModelMap map, @RequestParam String updateEmail){
+	public String updateEmail(ModelMap map, @RequestParam String updateEmail, RedirectAttributes redirectAttributes, Model model){
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
 		User user = accountService.findUser(username);
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
 		map.put("updateEmail", updateEmail);
+		try {
+			if (accountService.validateEmail(updateEmail)==false) {
+				throw new IllegalArgumentException("Not a valid email address!");
+			}
+		}
+		catch (IllegalArgumentException e){
+			model.addAttribute("message5", e.getMessage());
+			model.addAttribute("message4", "There were errors in your email submission!");
+			return "change_password";
+		}
 		user.setEmail(updateEmail);
 		accountService.update(user);
-		return "change_password";
+		redirectAttributes.addFlashAttribute("message2", "Email successfully updated!");
+		return "redirect:/change_password";
 	}
 	
 	

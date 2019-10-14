@@ -7,6 +7,8 @@ package contracts.controller;
 
 import java.sql.Date;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -97,6 +99,10 @@ public class AuditController {
 		String fieldBeforeList = "";
 		String fieldAfterList = "";
 		Contract foundContract = contractService.findContract(contract.getRequestid()).orElse(new Contract());
+		if(br.hasErrors()) {
+			model.addAttribute("message", "There have been errors processing your update. Please see tabs below.");
+			return "update_details";
+			}
 		Audit blank = new Audit();
 		if (!compare(String.valueOf(foundContract.getUser()),String.valueOf(contract.getUser()))) {
 			if (foundContract.getUser() != null) {
@@ -295,29 +301,14 @@ public class AuditController {
 			}
 			fieldUpdatedList += ("region") + (", ");
 		}
-		if (!compare(foundContract.getRelated_agreements(), contract.getRelated_agreements())) {
-			if (foundContract.getRelated_agreements() != null) {
-				fieldBeforeList += ((String.valueOf((foundContract.getRelated_agreements()))))+ (", ");
-			}
-			else {
-				fieldBeforeList += (" ")+ (", ");
-			}
-			if (contract.getRelated_agreements() != null) {
-				fieldAfterList += ((String.valueOf((contract.getRelated_agreements()))))+ (", ");
-			}
-			else {
-				fieldAfterList += (" ")+ (", ");
-			}
-			fieldUpdatedList += ("related_agreements") + (", ");
-		}
-			Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
-			contract.setDate_updated(timeNow);
+			LocalDateTime date = LocalDateTime.now();
+			contract.setDate_updated(date);
 			blank.setField_after(fieldAfterList);
 			blank.setField_before(fieldBeforeList);
 			blank.setField_updated(fieldUpdatedList);
 			blank.setUserid(getCurrentUser());
 			blank.setRequestedid(contract);
-			blank.setDate(contract.getDate_updated());
+			blank.setDate(date);
 			contract.setArchived("F");
 			contractService.update(contract);
 			auditService.addAudit(blank);

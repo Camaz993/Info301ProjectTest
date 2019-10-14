@@ -34,7 +34,7 @@
 			<div>
 	 		<a href="/">Home</a>
 	 		</div>
-	 		<div>
+	 		<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
 	 		<a href="/add_contracts">New Contract</a></li>
 	 		</div>
 	 		<div>
@@ -62,7 +62,7 @@
 	<a href="/admin_settings">Home</a>
 	<a href="/create_account">Create User Account</a>
 	<a href="/manage_users">Manage User Accounts</a>
-	<a>Site Settings</a>
+	<li>Site Settings</li>
 	<a href="/audit">Track Changes</a>
 	</div>
 	</div>

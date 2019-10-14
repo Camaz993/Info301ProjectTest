@@ -7,6 +7,7 @@ package contracts.controller;
 
 import java.io.File;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -171,11 +172,12 @@ public class ContractController {
 		List <User> users = contractService.getAllUsers();
 		model.addAttribute("users", users);
 		if(br.hasErrors()) {
+		model.addAttribute("message2", "There have been errors processing your contract. Please see tabs below.");
 		return "add_contracts";
 		}
-		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
+		LocalDateTime date = LocalDateTime.now();
 		contract.setArchived("F");
-		contract.setDate_updated(timeNow);
+		contract.setDate_updated(date);
 		contractService.addContract(contract);
 		auditService.addAuditDetails(contract, getCurrentUser());
 		return "redirect:/add_status";
@@ -259,8 +261,8 @@ public class ContractController {
 	 * If they have the item favourited, the button dynamically updates to unfavourited.
 	 */
 	@GetMapping("/search_contracts")
-	public String getAllContracts(Model model) {
-		List<Contract> allContracts = contractService.getAllContracts();
+	public String getAllContractsShort(Model model) {
+		List<Contract> allContracts = contractService.getContractsShortList();
 		List favStatus = new ArrayList<>();
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = ((UserDetails)principal).getUsername();
@@ -275,7 +277,7 @@ public class ContractController {
 		}
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
-		model.addAttribute("contracts", contractService.getAllContracts());
+		model.addAttribute("contracts", contractService.getContractsShortList());
 		model.addAttribute("favstatus", favStatus);
 		return "search_contracts";
 	}
@@ -322,14 +324,14 @@ public class ContractController {
 			}
 			fieldUpdatedList += ("userid") + (", ");
 		}
-			Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
-			foundContract.setDate_updated(timeNow);
+			LocalDateTime date = LocalDateTime.now();
+			foundContract.setDate_updated(date);
 			blank.setField_after(fieldAfterList);
 			blank.setField_before(fieldBeforeList);
 			blank.setField_updated(fieldUpdatedList);
 			blank.setUserid(getCurrentUser());
 			blank.setRequestedid(foundContract);
-			blank.setDate(foundContract.getDate_updated());
+			blank.setDate(date);
 			foundContract.setArchived("F");
 			foundContract.setUserid(user);
 			auditService.addAudit(blank);
@@ -367,28 +369,46 @@ public class ContractController {
 		return "search_contracts";
 	}
 	
-	/**
-	 * Displays the location of the selected contract
-	 */
-	@PostMapping("/api/contracts/search/location")
-	public List<Contract> searchLocation(@RequestParam String search)
+	@GetMapping("/contracts/sorted")
+	public String allContractsSorted(Model model)
 	{
-		return contractService.searchLocation(search);
+		List<Contract> allContracts = contractService.getContractsSorted();
+		List favStatus = new ArrayList<>();
+		User user = accountService.findUser(getCurrentUser().getUsername());
+		for (int i = 0; i < allContracts.size(); i++) {
+			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
+				favStatus.add("favourited");
+			}
+			else {
+				favStatus.add("unfavourited");
+			}
+		}
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+		model.addAttribute("contracts", contractService.getContractsSorted());
+		model.addAttribute("favstatus", favStatus);
+		return "search_contracts";
 	}
 	
-	/**
-	 * Displays the type of the selected contract
-	 */
-	@PostMapping("/api/contracts/search/type")
-	public List<Contract> searchContractType(@RequestParam String search)
+	@GetMapping("/contracts/sortedparty")
+	public String allContractsSortedParty(Model model)
 	{
-		return contractService.searchContractType(search);
-	}
-
-	@GetMapping("/api/contracts")
-	public List<Contract> allContracts()
-	{
-		return contractService.getAllContracts();
+		List<Contract> allContracts = contractService.getContractsSortedParty();
+		List favStatus = new ArrayList<>();
+		User user = accountService.findUser(getCurrentUser().getUsername());
+		for (int i = 0; i < allContracts.size(); i++) {
+			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
+				favStatus.add("favourited");
+			}
+			else {
+				favStatus.add("unfavourited");
+			}
+		}
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+		model.addAttribute("contracts", contractService.getContractsSortedParty());
+		model.addAttribute("favstatus", favStatus);
+		return "search_contracts";
 	}
 	
 	/**
@@ -611,6 +631,7 @@ public class ContractController {
 	 * gets all of the contracts that are related to the selected contract
 	 * @param requestid the requestid of the contract to find all of the related contracts to
 	 */
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/add_related/{requestid}")
 	public String relatedContracts(@PathVariable("requestid") int requestid, Model model) {
 		repo.findById(requestid).ifPresent(o->model.addAttribute("selectedContract", o));
@@ -628,6 +649,7 @@ public class ContractController {
 	 * adds a related agreement to the current contract
 	 * @param requestid the requestid of the contract that is having a new related contract added to it
 	 */
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/related_contracts/{requestid}")
 	public String getRelatedContracts(@PathVariable("requestid") int requestid, Model model) {
 		Contract relatedContract = contractService.findContract(requestid).orElse(new Contract());
@@ -711,14 +733,14 @@ public class ContractController {
 		}
 		fieldUpdatedList += ("userid") + (", ");
 	}
-		Date timeNow = new Date(Calendar.getInstance().getTimeInMillis());
-		contract.setDate_updated(timeNow);
+		LocalDateTime date = LocalDateTime.now();
+		contract.setDate_updated(date);
 		blank.setField_after(fieldAfterList);
 		blank.setField_before(fieldBeforeList);
 		blank.setField_updated(fieldUpdatedList);
 		blank.setUserid(getCurrentUser());
 		blank.setRequestedid(contract);
-		blank.setDate(contract.getDate_updated());
+		blank.setDate(date);
 		contract.setArchived("F");
 		contractService.update(contract);
 		auditService.addAudit(blank);

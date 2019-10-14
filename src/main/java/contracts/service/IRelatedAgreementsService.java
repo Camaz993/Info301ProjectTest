@@ -16,4 +16,6 @@ public interface IRelatedAgreementsService {
 	
 	public Optional<RelatedAgreements> findbyId(Integer id_relatedagreement);
 
+	public void unrelateContract(RelatedAgreements relatedAgreement);
+
 }

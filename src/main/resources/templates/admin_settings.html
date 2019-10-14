@@ -28,7 +28,7 @@ function setColours(){
 </head>
 <body onload="setColours();">
 	<div class="header">
-	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
+	<img class="logo" width="70" th:src="@{/logoimage/logo.png}">
 	<h1>Contract Management</h1>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
@@ -43,7 +43,7 @@ function setColours(){
 		<div>
  		<a href="/">Home</a>
  		</div>
- 		<div>
+ 		<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
  		<a href="/add_contracts">New Contract</a></li>
  		</div>
  		<div>
@@ -69,7 +69,7 @@ function setColours(){
 	<div class="subnav">
 	<div class="links">
 
-	<a>Home</a>
+	<li>Home</li>
 	<a href="/create_account">Create User Account</a>
 	<a href="/manage_users">Manage User Accounts</a>
 	<a href="/site_settings">Site Settings</a>

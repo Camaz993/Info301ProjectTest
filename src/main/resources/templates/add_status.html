@@ -12,7 +12,7 @@
 </head>
 <body onload="setColours();">
 	<div class="header">
-	<img class="logo" src="../resources/static/logoimage/logo.png" width="70" th:src="@{logoimage/logo.png}">
+	<img class="logo" width="70" th:src="@{/logoimage/logo.png}">
 	<h1>Contract Management</h1>
 	<div class="logout">
     	<div sec:authorize="isAuthenticated()">Welcome, <span sec:authentication="name"></span></div>
@@ -27,7 +27,7 @@
 		<div>
  		<a href="/">Home</a>
  		</div>
- 		<div>
+ 		<div th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'',''ROLE_LEGAL'')')}">
  		<li>New Contract</li>
  		</div>
  		<div>
@@ -92,9 +92,12 @@
 	  </tr>
 	  </table>
 	<form action="#" th:action="@{/api/in_negotiation}" th:object="${in_negotiation}" id="in_negotiation" method="post" >
-		<td>Comments: <input type="text" th:field="*{comments}"/></td>	
+	<h3>Please add to the form below:</h3>
+		<label for="comments">Comments</label>
+		<input type="text" th:field="*{comments}" id="comments"/>
 		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
-		<td><input type="submit" value="Submit"/><a href="/"><input type="button" value="Cancel"/></a> 
+		<br>
+		<button type="submit" value="Submit" class='btn'>Submit</button><a href="/"><button type="button" value="Cancel" class='btnCancel'>Cancel</button></a>
 	</form>
 </div>
 
@@ -133,12 +136,19 @@
 	  </table>
 		
 	<form action="#" th:action="@{/api/operative}" th:object="${operative}" id="operative" method="post" >
-		<td>Date Signed <input type="date" th:field="*{date_signed}" /></td>
-		<td>Date Commenced: <input type="date" th:field="*{date_commenced}"/></td>
-		<td>Date Expires: <input type="date" th:field="*{date_expire}"/></td>
-		<td>Verification: <input type="text" th:field="*{verification}"/></td>
+	<br>
+	<h3>Please add to the form below:</h3>
+		<label for="date_signed">Date Signed</label>
+		<input type="date" th:field="*{date_signed}" />
+		<label for="date_commenced">Date Commenced</label>
+		<input type="date" th:field="*{date_commenced}"/>
+		<label for="date_expire">Date Expire</label>
+		<input type="date" th:field="*{date_expire}"/>
+		<label for="verification">Verification</label>
+		<input type="text" th:field="*{verification}"/>
 		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
-		<td><input type="submit" value="Submit"/><a href="/"><input type="button" value="Cancel"/></a> 		
+		<br>
+		<button type="submit" value="Submit" class='btn'>Submit</button><a href="/"><button type="button" value="Cancel" class='btnCancel'>Cancel</button></a>	
 	</form>
 </div>
 
@@ -178,13 +188,21 @@
 	  </table>
 	  
 	<form action="#" th:action="@{/api/expired}" th:object="${expired}" id="expired" method="post" >
-		<td>Ending Reason: <input type="text" th:field="*{ending_reason}"/></td>
-		<td>Expiry Date:  <input type="date" th:field="*{expiry_date}"/></td>
-		<td>Termination Date: <input type="date" th:field="*{termination_date}"/></td>
-		<td>Termination Notice Date: <input type="text" th:field="*{termination_notice_date}"/></td>
-		<td>Binding Terms Active: <input type="text" th:field="*{binding_terms_active}"/></td>
-		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>		
-		<td><a href="/"><input type="button" value="Cancel"/></a><input type="submit" value="Submit"/></td>
+	<br>
+	<h3>Please add to the form below:</h3>
+		<label for="ending_reason">Ending Reason</label>
+		<input type="text" th:field="*{ending_reason}"/>
+		<label for="expiry_date">Expiry Date</label>
+		<input type="date" th:field="*{expiry_date}"/>
+		<label for="termination_date">Termination Date</label>
+		<input type="date" th:field="*{termination_date}"/>
+		<label for="termination_notice_date">Date Signed</label>
+		<input type="text" th:field="*{termination_notice_date}"/>
+		<label for="binding_terms_active">Binding Terms Active</label>
+		<input type="text" th:field="*{binding_terms_active}"/>
+		<input type="hidden" th:field="*{RequestId}" th:value="${requestid}"/>
+		<br>	
+		<button type="submit" value="Submit" class='btn'>Submit</button><a href="/"><button type="button" value="Cancel" class='btnCancel'>Cancel</button></a>
 	</form>
 </div>             
         
