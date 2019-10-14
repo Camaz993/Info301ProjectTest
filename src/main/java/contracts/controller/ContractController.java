@@ -279,6 +279,33 @@ public class ContractController {
 	}
 	
 	/**
+	 * Method to bring up all contracts on search page.
+	 */
+	@SuppressWarnings("unchecked")
+	@GetMapping("/search_contracts_all")
+	public String getAllContracts(Model model) {
+		List<Contract> allContracts = contractService.getAllContracts();
+		@SuppressWarnings("rawtypes")
+		List favStatus = new ArrayList<>();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User user = accountService.findUser(username);
+		for (int i = 0; i < allContracts.size(); i++) {
+			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
+				favStatus.add("favourited");
+			}
+			else {
+				favStatus.add("unfavourited");
+			}
+		}
+		Integer i = currentService.getCurrent();
+		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
+		model.addAttribute("contracts", contractService.getAllContracts());
+		model.addAttribute("favstatus", favStatus);
+		return "search_contracts";
+	}
+	
+	/**
 	 * adds the most recent contracts to the page
 	 **/
 	@GetMapping("/")
