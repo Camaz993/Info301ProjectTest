@@ -709,7 +709,7 @@ public class ContractController {
 	public String help(Model model) {
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
-		return "/help";
+		return "help";
 	}
 	
 	/**

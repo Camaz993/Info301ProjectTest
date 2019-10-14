@@ -73,7 +73,7 @@ width:230px;}
 	<h2>Search for Contracts</h2>
 	<div id="searchbar" style="margin-bottom:75px;">
 	<a href="/archive_contracts"><button id="ArchBut" class='btn'>View Archived Contracts</button></a>
-	<p>This search bar will search the whole database <a href="/help#search"><button class='btn' style="background:#1380A1; color:white; font-size: 15px; float:none; margin-top: 7px;padding:4px;">?</button></a></p>
+	<p>This search bar will search the whole database <a href="help#search"><button class='btn' style="background:#1380A1; color:white; font-size: 15px; float:none; margin-top: 7px;padding:4px;">?</button></a></p>
 	<form th:object="${search}" th:action="@{/contracts/search}" method="get" id="searchForm">
         <input type="text" placeholder="Search database by Agreement Title .." id="search" name="search" th:value="${search}"/>
         <button type="submit" value="Search" class='logoutButton' id="searchButton">Search</button>
