@@ -1,3 +1,7 @@
+/** 
+ * The contract service class for accessing the contract table in the database
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.service;
 
 import java.util.List;

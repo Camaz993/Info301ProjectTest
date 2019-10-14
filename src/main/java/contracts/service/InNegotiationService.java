@@ -1,3 +1,7 @@
+/** 
+ * The innegotiation service class for accessing the innegotiation table in the database
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.service;
 
 

@@ -1,3 +1,7 @@
+/** 
+ ** The current controller contains the get, post and request mappings for all of the css html pages
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.controller;
 
 import java.util.List;
@@ -25,7 +29,9 @@ public class CurrentController {
 	@Autowired
 	private CurrentRepository currentRepository;
 
-	
+	/**
+	 * adds the current css to the admin settings page
+	 */
 	@GetMapping("/admin_settings")
     public String showAdmin(Model model) {
 		Integer i = currentService.getCurrent();
@@ -34,25 +40,39 @@ public class CurrentController {
         return "admin_settings";
     }
 	
+	/**
+	 * updates the css to the blue theme
+	 */
 	@PostMapping("/api_adminblue")
 	public String changeColourBlue(@ModelAttribute(name="current") Current current) {
 		current.setColour("style");
 		currentService.addCurrent(current);
 		return "redirect:/admin_settings";
 	}
-	
+
+	/**
+	 * updates the css to the green theme
+	 */
 	@PostMapping("/api_admingreen")
 	public String changeColourGreen(@ModelAttribute(name="current") Current current) {
 		current.setColour("greenstyle");
 		currentService.addCurrent(current);
 		return "redirect:/admin_settings";
 	}
+	
+	/**
+	 * updates the css to the grey theme
+	 */
 	@PostMapping("/api_admingrey")
 	public String changeColourGrey(@ModelAttribute(name="current") Current current) {
 		current.setColour("greystyle");
 		currentService.addCurrent(current);
 		return "redirect:/admin_settings";
 	}
+	
+	/**
+	 * updates the css to the red theme
+	 */
 	@PostMapping("/api_adminred")
 	public String changeColourRed(@ModelAttribute(name="current") Current current) {
 		current.setColour("redstyle");

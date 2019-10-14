@@ -1,7 +1,12 @@
+/**
+ * The contract controller contains the get, post and request mappings for all of the contract html pages
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ * 
+ */
 package contracts.controller;
 
+import java.io.File;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,9 +27,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.google.common.io.Files;
 
 import contracts.domain.Audit;
 import contracts.domain.Contract;
@@ -117,6 +125,9 @@ public class ContractController {
 		return user;
 	}
 
+	/**
+	 * Adds a contract and status object + all of the users to the create contract html page
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/add_contracts")
     public String showSignUpForm(Model model) {
@@ -129,6 +140,9 @@ public class ContractController {
         return "add_contracts";
     }
 	
+	/**
+	 * Adds all of the different status objects + the request id from the current contract to the add status html page
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/add_status")
 	public String showStatusForm(Model model) {
@@ -143,6 +157,11 @@ public class ContractController {
 		return "add_status";
 	}
 	
+	/**
+	 * Checks whether the contract is valid and then adds it to the database, also adds the audit details to the db
+	 * @param contract the contract to add to the database
+	 * @param br the bindingresult to check whether there's errors in the contract
+	 */
 	//add a new contract to the database
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/contracts")
@@ -164,7 +183,10 @@ public class ContractController {
 		return "redirect:/add_status";
 	}
 	
-	//add an in negotiation status to the database, along with null operative and expired status'
+	/**
+	 * Adds an in negotation status to the database, along with null operative and expired status'
+	 * @param in_negotiation the in negotiation status to add to the database
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/in_negotiation")
 	public String add_in_negotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation, RedirectAttributes redirectAttributes, Model model)
@@ -186,7 +208,10 @@ public class ContractController {
 		return "redirect:/view_details/" + requestid;
 	}
 	
-	//add an operative status to the db, along with null in negotiation and expired status'
+	/**
+	 * Adds an operative status to the database, along with null in negotiation and expired status'
+	 * @param operative the operative status to add to the database
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL" })
 	@PostMapping("/api/operative")
 	public String add_operative(@ModelAttribute(name="operative") Operative operative, RedirectAttributes redirectAttributes, Model model) {
@@ -207,7 +232,10 @@ public class ContractController {
 		return "redirect:/view_details/" + requestid;
 	}
 	
-	//add an expired status in the db, along with in negotiation and operative status'
+	/**
+	 * Adds an expired status to the database, along with null operative and in negotiation status'
+	 * @param expired the expired status to add to the database
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/expired")
 	public String add_expired(@ModelAttribute(name="expired") Expired expired, RedirectAttributes redirectAttributes, Model model) {
@@ -228,28 +256,10 @@ public class ContractController {
 		return "redirect:/view_details/" + requestid;
 	}
 	
-	@GetMapping("/search_contracts_all")
-	public String getAllContracts(Model model) {
-		List<Contract> allContracts = contractService.getAllContracts();
-		List favStatus = new ArrayList<>();
-		User user = accountService.findUser(getCurrentUser().getUsername());
-		for (int i = 0; i < allContracts.size(); i++) {
-			if (contractService.checkFavourited(allContracts.get(i).getRequestid(), user.getUserid())) {
-				favStatus.add("favourited");
-			}
-			else {
-				favStatus.add("unfavourited");
-			}
-		}
-		Integer i = currentService.getCurrent();
-		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
-		model.addAttribute("contracts", contractService.getAllContracts());
-		model.addAttribute("favstatus", favStatus);
-		return "search_contracts";
-	}
-	
-	//Method to bring up search results and checks if user has item favourited or not.
-	//If they have the item favourited, the button dynamically updates to unfavourited.
+	/**
+	 * Method to bring up search results and checks if user has item favourited or not.
+	 * If they have the item favourited, the button dynamically updates to unfavourited.
+	 */
 	@GetMapping("/search_contracts")
 	public String getAllContractsShort(Model model) {
 		List<Contract> allContracts = contractService.getContractsShortList();
@@ -272,7 +282,9 @@ public class ContractController {
 		return "search_contracts";
 	}
 	
-	
+	/**
+	 * adds the most recent contracts to the page
+	 **/
 	@GetMapping("/")
 	public String mostRecent(Model model) {
 		Integer i = currentService.getCurrent();
@@ -282,7 +294,10 @@ public class ContractController {
 		return "index";
 	}
 	
-	//assign a specific user to a contract
+	/**
+	 * assigns a specific user to a contract
+	 * @param requestid the requestid of the contract that the user is being assigned to
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/assign/{requestid}")
 	public String assignUser(@PathVariable("requestid") int requestid, Model model) {
@@ -324,6 +339,9 @@ public class ContractController {
 		return "redirect:/my_contracts";
 	}
 	
+	/**
+	 * adds all of the contracts and whether they have been favourited or not to the page
+	 */
 	@GetMapping("/contracts/search")
 	public String searchContracts(ModelMap map, @RequestParam String search, Model model)
 	{
@@ -393,12 +411,20 @@ public class ContractController {
 		return "search_contracts";
 	}
 	
+	/**
+	 * adds the selected contract to the page
+	 * @param requestid
+	 */
 	@GetMapping("/contract/{requestid}")
 	@ResponseBody 
 	public Optional<Contract> getContract(@PathVariable("requestid") int requestid) {
 		return repo.findById(requestid);
 	}
 	
+	/**
+	 * adds the selected contract and all of its associated status objects to the page
+	 * @param requestid the requestid of the contract you want to view the details of
+	 */
 	@GetMapping("/view_details/{requestid}")
 	public String selectedContract(@PathVariable("requestid") int requestid, Model model) {
 		Integer i = currentService.getCurrent();
@@ -421,7 +447,10 @@ public class ContractController {
 		return "view_details";
 	}
 	
-	//get the contract object from the db to update
+	/**
+	 * gets the contract object from the database to update
+	 * @param requestid the request id of the contract to be updated
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/update_details/{requestid}")
 	public String updateContractForm(@PathVariable("requestid") int requestid, Model model) {
@@ -434,6 +463,11 @@ public class ContractController {
 		return "update_details";
 	}
 	
+	
+	/**
+	 * gets the contract and all of the associated status objects to update
+	 * @param requestid the requestid of the contract object being updated
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/update_status/{requestid}")
 	public String updateStatus(@PathVariable("requestid") int requestid, Model model) {
@@ -446,7 +480,10 @@ public class ContractController {
 		return "update_status";	
 	}
 	
-	//updates an in negotiation status 
+	/**
+	 * updates the in negotiation status of the associated contract
+	 * @param in_negotiation the status object to update
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL" })
 	@PostMapping("/api/update/in_negotiation")
 	public String updateInNegotiation(@ModelAttribute(name="in_negotiation") InNegotiation in_negotiation, Model model) {
@@ -459,7 +496,10 @@ public class ContractController {
 		return "redirect:/";
 	}
 	
-	//updates an operative status
+	/**
+	 * updates the operative status of the associated contract
+	 * @param operative the status object to update
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL" })
 	@PostMapping("/api/update/operative")
 	public String updateOperative(@ModelAttribute(name="operative") Operative operative, Model model) {
@@ -472,7 +512,10 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
-	//updates an expired status
+	/**
+	 * updates the expired status of the associated contract
+	 * @param expired the status object to update
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/update/expired")
 	public String updateExpired(@ModelAttribute(name="expired") Expired expired, Model model) {
@@ -485,6 +528,10 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
+	/**
+	 * archives the selected contract
+	 * @param requestid the requestid of the contract to archive
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/archive_contracts/{requestid}")
 	public String archiveContract(@PathVariable("requestid") int requestid, Model model) {
@@ -495,6 +542,10 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
+	/**
+	 * gets all of the archived contracts
+	 */
+	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/archive_contracts")
 	public String getArchivedContracts(Model model) {
 		Integer i = currentService.getCurrent();
@@ -503,6 +554,10 @@ public class ContractController {
 		return "archive_contracts";
 	}
 	
+	/**
+	 * unarchives the selected contract
+	 * @param requestid the requestid of the contract to be unarchived
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/unarchive_contracts/{requestid}")
 	public String unarchiveContract(@PathVariable("requestid") int requestid, Model model) {
@@ -512,6 +567,9 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
+	/**
+	 * gets all of the unarchived contracts
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/unarchive_contracts")
 	public String getUnarchivedContracts(Model model) {
@@ -521,6 +579,9 @@ public class ContractController {
 		return "search_contracts";
 	}
 	
+	/**
+	 * gets all of the contracts associated with the current user
+	 */
 	@GetMapping("/my_contracts")
     public String showMyContracts(Model model) {
 		Integer i = currentService.getCurrent();
@@ -533,6 +594,10 @@ public class ContractController {
         return "my_contracts";
     }
 	
+	/**
+	 * adds a contract to the users favourited contracts
+	 * @param requestid the requestid of the contract to add
+	 */
 	//adds a contract to a users favourited contracts
 	@PostMapping("/favourite_contracts/{requestid}")
 	public String favouritedContract(@PathVariable("requestid") int requestid, Model model) {
@@ -547,6 +612,9 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 
+	/**
+	 * gets all of the favourited contracts associated with the current user
+	 */
 	@GetMapping("/favourite_contracts")
 	public String getFavouritedContracts(Model model) {
 		Integer i = currentService.getCurrent();
@@ -559,6 +627,10 @@ public class ContractController {
 		return "favourite_contracts";
 	}
 	
+	/**
+	 * gets all of the contracts that are related to the selected contract
+	 * @param requestid the requestid of the contract to find all of the related contracts to
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/add_related/{requestid}")
 	public String relatedContracts(@PathVariable("requestid") int requestid, Model model) {
@@ -573,6 +645,10 @@ public class ContractController {
 		return "add_related";
 	}
 	
+	/**
+	 * adds a related agreement to the current contract
+	 * @param requestid the requestid of the contract that is having a new related contract added to it
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/related_contracts/{requestid}")
 	public String getRelatedContracts(@PathVariable("requestid") int requestid, Model model) {
@@ -585,13 +661,10 @@ public class ContractController {
 		return "redirect:/view_details/" + newRelated.getRequestid();
 	}
 	
-	@PostMapping("/unrelate_contracts/{request}/{requestid}")
-	public String unrelateContracts(@PathVariable("request") int request, @PathVariable("requestid") int requestid, Model model) {
-		contractService.unrelateContract(requestid, request);
-		return "redirect:/view_details/" + requestid;
-	}
-	
-	//removes a contract from a users favourite contracts
+	/**
+	 * removes a contract from a users favourite contracts
+	 * @param requestid the requestid of the contract to remove
+	 */
 	@PostMapping("/unfavourite_contracts/{requestid}")
 	public String unfavouritContract(@PathVariable("requestid") int requestid, Model model) {
 		Contract unfavouriteContract = contractService.findContract(requestid).orElse(new Contract());
@@ -603,13 +676,20 @@ public class ContractController {
 		return "redirect:/search_contracts";
 	}
 	
-	@GetMapping("help")
+	/**
+	 * adds the css to the help page
+	 */
+	@GetMapping("/help")
 	public String help(Model model) {
 		Integer i = currentService.getCurrent();
 		currentRepository.findById(i).ifPresent(current->model.addAttribute("currentCss", current));
-		return "help";
+		return "/help";
 	}
 	
+	/**
+	 * adds all of the necessary objects to the reassign contract form
+	 * @param requestid the requestid of the contract to be reassigned
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@GetMapping("/reassign/{requestid}")
 	public String reassignContractForm(@PathVariable("requestid") int requestid, Model model) {
@@ -622,6 +702,11 @@ public class ContractController {
 		return "reassign";
 	}
 	
+	/**
+	 * reassigns a contract to a new user
+	 * @param contract the contract to be reassigned
+	 * @param br the bindingresult to check there are no errors
+	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_LEGAL"  })
 	@PostMapping("/api/reassignment")
 	public String reassignContract(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)

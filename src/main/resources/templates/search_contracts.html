@@ -1,3 +1,5 @@
+<!--The HTML page for searching contracts-->
+<!--@author Alice, Caleb, Laurie, Natalie, Poppy-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -90,6 +92,10 @@ width:230px;}
     <a href="/contracts/sorted"><button id="search_all" class='btn'>Sort A-Z Title</button></a>
     <a href="/contracts/sortedparty"><button id="search_all" class='btn'>Sort A-Z Business Name</button></a>
     <div style="overflow-x:auto;">
+    <div th:if= "${contracts.isEmpty()}"> 
+    <p>There are currently no contracts fitting that result</p>
+    </div>
+    <div th:if= "${!contracts.isEmpty()}"> 
 	<table id="viewcontracts">
 	<thead>
 	<tr>
@@ -142,6 +148,7 @@ width:230px;}
     </tr>
     </tbody>
     </table>
+    </div>
     </div>
     </div>
    

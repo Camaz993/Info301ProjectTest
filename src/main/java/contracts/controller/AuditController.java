@@ -1,3 +1,8 @@
+/**
+ * The audit controller contains the get, post and request mappings for all of the audit html pages so as to keep track of changes within the system
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ * 
+ */
 package contracts.controller;
 
 import java.sql.Date;
@@ -69,6 +74,9 @@ public class AuditController {
 		return user;
 	}
 	
+	/**
+	 * Adds all of the audit history to the audit html page
+	 */
 	@GetMapping("/audit")
 	public String getAllContracts(Model model) {
 		Integer i = currentService.getCurrent();
@@ -76,8 +84,11 @@ public class AuditController {
 		model.addAttribute("audits", auditService.getAudit());
 		return "audit";
 	}
-	
-	//update a contract and store the results of the changes in the audit table
+	/**
+	 * Updates a contract and stores the results of the changes in the audit table
+	 * @param contract the contract to update
+	 * @param br the bindingresult to check there are no errors in the contract
+	 */
 		@Secured({ "ROLE_ADMIN", "ROLE_LEGAL" })
 		@PostMapping("/api/updates")
 		public String updateDetails(@Valid @ModelAttribute(name="contract") Contract contract, BindingResult br, Model model)

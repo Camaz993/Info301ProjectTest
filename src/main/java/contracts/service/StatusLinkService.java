@@ -1,3 +1,7 @@
+/** 
+** The statuslink service class for accessing the statuslink table in the database
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.service;
 
 
@@ -45,6 +49,9 @@ public class StatusLinkService implements IStatusLinkService{
 	public List<StatusLink> getAllStatus() {
 		return statuslinkRepository.findAll();
 	}
+	
+
+	
 	
 	
 }
