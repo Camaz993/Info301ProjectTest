@@ -16,7 +16,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 import contracts.domain.Contract;
@@ -63,7 +62,8 @@ public class ContractControllerUnitTests {
         			.build();
         }
         
-        @Test
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+		@Test
         public void testFindAll() throws Exception {
         	List<Contract> contracts = new ArrayList<>();
         	contracts.add(new Contract());
@@ -82,7 +82,8 @@ public class ContractControllerUnitTests {
     		.andExpect(view().name("add_contracts"));	
         }
         
-        @Test
+        @SuppressWarnings({ "rawtypes", "unchecked" })
+		@Test
         public void testFindUsers() throws Exception {
         	List<User> users = new ArrayList<>();
         	users.add(new User());
