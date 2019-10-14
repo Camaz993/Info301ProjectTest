@@ -1,3 +1,7 @@
+/** 
+ * The favourited service class for accessing the favourited table in the database
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.service;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,3 +1,7 @@
+/** 
+** The security config set up
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.security;
 
 import org.springframework.beans.factory.annotation.Autowired;

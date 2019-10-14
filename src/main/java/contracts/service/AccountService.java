@@ -1,3 +1,7 @@
+/** 
+ * The account service class for accessing the account table in the database
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.service;
 
 import java.util.List;

@@ -1,3 +1,7 @@
+/** 
+ * The operative service class for accessing the operative table in the database
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.service;
 
 

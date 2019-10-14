@@ -1,3 +1,7 @@
+/** 
+ * The contractuserdetails service class for accessing the currentuserdetails table in the database
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.service;
 
 import org.springframework.beans.factory.annotation.Autowired;

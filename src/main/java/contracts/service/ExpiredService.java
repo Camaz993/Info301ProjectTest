@@ -1,3 +1,7 @@
+/** 
+ * The expired service class for accessing the expired table in the database
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.service;
 
 
