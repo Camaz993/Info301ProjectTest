@@ -6,11 +6,6 @@
 package contracts.controller;
 
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -18,15 +13,10 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import contracts.domain.Contract;
 import contracts.domain.User;
 import contracts.repository.CurrentRepository;
 import contracts.service.CurrentService;
@@ -224,14 +213,12 @@ public class AccountController {
 					return "forgot_password";
 				}
 		String token = UUID.randomUUID().toString();
-		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date expiryDate = new Date(System.currentTimeMillis()+3*60*1000);
 		emailService.send(newUser.getEmail(), "Password Recovery: Contract Management System", 
 				"Hi there,\n Here is the password recovery token. If you have not requested one please contact your admin"
 				+ "team ASAP. Otherwise, log into your account with this token:\n"
 				+ token + "\nThis token will expire after 3 minutes but you can"
 						+ "request another one if needed. \nFrom the Contract Management Team.");
-		String pass = newUser.getPassword();
 		newUser.setExpiryDate(expiryDate);
 		newUser.setPassword(passwordEncoder.encode(token));
 		newUser.setPassrepeat(passwordEncoder.encode(token));
