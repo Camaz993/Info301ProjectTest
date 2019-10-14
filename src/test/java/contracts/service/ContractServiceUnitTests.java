@@ -61,6 +61,14 @@ public class ContractServiceUnitTests {
     			.setViewResolvers(viewResolver)
     			.build();
     }
+	
+	@Test
+    public void testFindAll() throws Exception {
+    	List<Contract> contracts = new ArrayList<>();
+    	contracts.add(new Contract());
+    	contracts.add(new Contract());
+    	when(contractService.getAllContracts()).thenReturn((List) contracts);     	
+    }
 
 
 }
