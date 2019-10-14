@@ -10,8 +10,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import contracts.domain.Contract;
-import contracts.domain.Favourited;
-import contracts.domain.StatusLink;
 import contracts.domain.User;
 import contracts.repository.AccountRepository;
 import contracts.repository.ContractRepository;
