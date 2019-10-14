@@ -14,8 +14,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import contracts.domain.Contract;
-import contracts.domain.Favourited;
-import contracts.domain.StatusLink;
 
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Integer> {
