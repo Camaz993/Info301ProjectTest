@@ -1,3 +1,7 @@
+/** 
+ * The account interface for the service class
+ * @author Alice, Caleb, Laurie, Natalie, Poppy
+ */
 package contracts.service;
 
 import java.util.List;
